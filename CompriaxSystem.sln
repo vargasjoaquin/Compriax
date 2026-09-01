@@ -3,7 +3,51 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.37516.0 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "CompriaxSystem.BBDD", "CompriaxSystem.BBDD\CompriaxSystem.BBDD.sqlproj", "{9FA351BC-705A-4392-817D-320FC5BAFC27}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.Domain", "CompriaxSystem.Domain\CompriaxSystem.Domain.csproj", "{63E74D87-E94F-4767-834B-248187ED7377}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.Application", "CompriaxSystem.Application\CompriaxSystem.Application.csproj", "{021C7FDD-05BE-42F1-85D3-576382702E80}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.Infrastructure", "CompriaxSystem.Infrastructure\CompriaxSystem.Infrastructure.csproj", "{17FB0C0F-D6E0-4F59-B983-17AB5EF997AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.WinFormsUI", "CompriaxSystem.WinFormsUI\CompriaxSystem.WinFormsUI.csproj", "{3F28C892-B035-48BD-95A7-9A402788AFF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.SetupActivator", "CompriaxSystem.SetupActivator\CompriaxSystem.SetupActivator.csproj", "{730C5AB6-FC1D-43DF-8371-72B93FD13AF3}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FA351BC-705A-4392-817D-320FC5BAFC27}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{63E74D87-E94F-4767-834B-248187ED7377}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63E74D87-E94F-4767-834B-248187ED7377}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63E74D87-E94F-4767-834B-248187ED7377}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63E74D87-E94F-4767-834B-248187ED7377}.Release|Any CPU.Build.0 = Release|Any CPU
+		{021C7FDD-05BE-42F1-85D3-576382702E80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{021C7FDD-05BE-42F1-85D3-576382702E80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{021C7FDD-05BE-42F1-85D3-576382702E80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{021C7FDD-05BE-42F1-85D3-576382702E80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17FB0C0F-D6E0-4F59-B983-17AB5EF997AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17FB0C0F-D6E0-4F59-B983-17AB5EF997AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17FB0C0F-D6E0-4F59-B983-17AB5EF997AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17FB0C0F-D6E0-4F59-B983-17AB5EF997AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F28C892-B035-48BD-95A7-9A402788AFF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F28C892-B035-48BD-95A7-9A402788AFF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F28C892-B035-48BD-95A7-9A402788AFF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F28C892-B035-48BD-95A7-9A402788AFF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{730C5AB6-FC1D-43DF-8371-72B93FD13AF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{730C5AB6-FC1D-43DF-8371-72B93FD13AF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{730C5AB6-FC1D-43DF-8371-72B93FD13AF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{730C5AB6-FC1D-43DF-8371-72B93FD13AF3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
