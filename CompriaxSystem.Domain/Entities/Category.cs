@@ -2,7 +2,7 @@
 
 namespace CompriaxSystem.Domain.Entities
 {
-    internal class Category : AuditableEntity
+    public class Category : AuditableEntity
     {
         public string Name { get; set; } = null!;
         public string? Description { get; set; }
