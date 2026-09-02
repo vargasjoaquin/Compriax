@@ -8,10 +8,13 @@
 
   <ItemGroup>
 	 <PackageReference Include="AutoMapper" Version="13.0.1" />
+	 <PackageReference Include="ClosedXML" Version="0.105.1" />
 	 <PackageReference Include="CloudinaryDotNet" Version="1.29.3" />
 	 <PackageReference Include="FluentValidation" Version="12.1.1" />
 	 <PackageReference Include="QuestPDF" Version="2024.3.0" />
 	 <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+	  <PackageReference Include="OpenCvSharp4.Extensions" Version="4.11.0.20250507" />
+	  <PackageReference Include="OpenCvSharp4.Windows" Version="4.11.0.20250507" />
    </ItemGroup>
 
   <ItemGroup>
