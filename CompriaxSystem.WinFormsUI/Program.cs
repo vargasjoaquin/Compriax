@@ -28,32 +28,65 @@ namespace CompriaxSystem.WinFormsUI
             using (var startupScope = host.Services.CreateScope())
             {
                 var services = startupScope.ServiceProvider;
-                
-                /*
-                // 1. Verificación de Licencia Criptográfica
-                var licenseService = services.GetRequiredService<ILicenseManagerService>();
-                var validation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
 
-                if (!validation.Success)
+#if !DEBUG
+                //Verificación de Licencia Criptográfica (Solo en Release / Instalador)
+                try
                 {
-                    var activationForm = services.GetRequiredService<FormActivation>();
-                    if (activationForm.ShowDialog() != DialogResult.OK)
+                    var licenseService = services.GetRequiredService<ILicenseManagerService>();
+                    var validation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
+
+                    if (!validation.Success)
                     {
-                        MessageBox.Show(
-                            $"El sistema no puede iniciar:\n\n{validation.Message}\n\nComuníquese con el proveedor del software para activar este puesto.",
-                            "Licencia Requerida",
-                            MessageBoxButtons.OK,
-                            MessageBoxIcon.Stop);
-                        return;
+                        var activationForm = services.GetRequiredService<FormActivation>();
+                        if (activationForm.ShowDialog() != DialogResult.OK)
+                        {
+                            MessageBox.Show(
+                                $"El sistema no puede iniciar sin una licencia activa:\n\n{validation.Message}",
+                                "Licencia Requerida",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Stop);
+                            return;
+                        }
                     }
                 }
-                */
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error en el módulo de licencias:\n\n{ex.Message}", "Fallo de Licenciamiento", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+#endif
 
-                var db = services.GetRequiredService<ApplicationDbContext>();
-                db.Database.EnsureCreated();
+                try
+                {
+                    var db = services.GetRequiredService<ApplicationDbContext>();
+                    db.Database.Migrate();
+                    DbInitializer.SeedAsync(db).GetAwaiter().GetResult();
+                }
+                catch (Exception ex)
+                {
+                    string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                    
+                    if (ex.InnerException?.InnerException != null)
+                    {
+                        realError += "\n-> " + ex.InnerException.InnerException.Message;
+                    }
 
-                var recordingService = services.GetRequiredService<ISecurityRecordingService>();
-                recordingService.Start();
+                    MessageBox.Show(
+                        $"Error al conectar o inicializar la base de datos SQL Server:\n\n{realError}\n\nVerifique que SQL Server esté en ejecución.",
+                        "Error de Base de Datos",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
+                    return;
+                }
+
+                try
+                {
+                    var recordingService = services.GetRequiredService<ISecurityRecordingService>();
+                    recordingService.Start();
+                }
+                catch
+                {
+                }
             }
 
             var loginForm = host.Services.GetRequiredService<FormLogin>();
@@ -123,6 +156,7 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddScoped<ITicketDataBuilder, TicketDataBuilder>();
 
                     // 6. Formularios WinForms
+                    services.AddTransient<FormActivation>();
                     services.AddTransient<FormLogin>();
                     services.AddTransient<FormPanelControl>();
                     services.AddTransient<FormSelectCashRegister>();
