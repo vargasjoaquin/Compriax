@@ -28,6 +28,27 @@ namespace CompriaxSystem.WinFormsUI
             using (var startupScope = host.Services.CreateScope())
             {
                 var services = startupScope.ServiceProvider;
+                
+                /*
+                // 1. Verificación de Licencia Criptográfica
+                var licenseService = services.GetRequiredService<ILicenseManagerService>();
+                var validation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
+
+                if (!validation.Success)
+                {
+                    var activationForm = services.GetRequiredService<FormActivation>();
+                    if (activationForm.ShowDialog() != DialogResult.OK)
+                    {
+                        MessageBox.Show(
+                            $"El sistema no puede iniciar:\n\n{validation.Message}\n\nComuníquese con el proveedor del software para activar este puesto.",
+                            "Licencia Requerida",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Stop);
+                        return;
+                    }
+                }
+                */
+
                 var db = services.GetRequiredService<ApplicationDbContext>();
                 db.Database.EnsureCreated();
 
@@ -48,7 +69,7 @@ namespace CompriaxSystem.WinFormsUI
                     // 1. Persistencia e Infraestructura
                     services.AddDbContext<ApplicationDbContext>(options =>
                          options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")
-                             ?? "Server=.;Database=CompriaxDB;Integrated Security=True;TrustServerCertificate=True"));
+                             ?? "Server=.;Database=Supermarket;Integrated Security=True;TrustServerCertificate=True"));
 
                     services.AddValidatorsFromAssembly(typeof(ProductCreateValidator).Assembly);
 
