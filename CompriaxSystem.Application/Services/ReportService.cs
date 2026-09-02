@@ -1,6 +1,7 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Entities;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -8,8 +9,8 @@ namespace CompriaxSystem.Application.Services
     {
         public async Task<IEnumerable<SalesReportDto>> GetSalesHistoryAsync(DateTime start, DateTime end, int? cashRegisterId = null)
         {
-            var shifts = await unitOfWork.CashShifts.GetHistoryAsync(start, end);
-            var allSales = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Domain.Entities.Sale>());
+            var shifts = (await unitOfWork.CashShifts.GetHistoryAsync(start.Date, end.Date.AddDays(1))).ToList();
+            var allSales = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Sale>());
 
             if (cashRegisterId.HasValue && cashRegisterId.Value > 0)
                 allSales = allSales.Where(s => s.CashRegisterId == cashRegisterId.Value);
@@ -36,9 +37,24 @@ namespace CompriaxSystem.Application.Services
 
             var products = (await unitOfWork.Products.GetAllWithDetailsAsync()).ToList();
             var shiftsToday = (await unitOfWork.CashShifts.GetHistoryAsync(today, today.AddDays(1))).ToList();
-            var salesToday = shiftsToday.SelectMany(s => s.Sales ?? Enumerable.Empty<Domain.Entities.Sale>()).ToList();
+            var salesToday = shiftsToday.SelectMany(s => s.Sales ?? Enumerable.Empty<Sale>()).ToList();
+
             var shiftsWeek = (await unitOfWork.CashShifts.GetHistoryAsync(sevenDaysAgo, today.AddDays(1))).ToList();
-            var salesWeek = shiftsWeek.SelectMany(s => s.Sales ?? Enumerable.Empty<Domain.Entities.Sale>()).ToList();
+            var salesWeek = shiftsWeek.SelectMany(s => s.Sales ?? Enumerable.Empty<Sale>()).ToList();
+
+            var topProducts = salesToday
+                .SelectMany(s => s.SaleItems ?? Enumerable.Empty<SaleItem>())
+                .GroupBy(i => i.Product != null ? i.Product.Name : $"Producto #{i.ProductId}")
+                .Select(g => new TopProductDto { ProductName = g.Key, QuantitySold = g.Sum(x => x.Quantity) })
+                .OrderByDescending(x => x.QuantitySold)
+                .Take(5)
+                .ToList();
+
+            var categorySales = salesToday
+                .SelectMany(s => s.SaleItems ?? Enumerable.Empty<SaleItem>())
+                .GroupBy(i => i.Product?.Category != null ? i.Product.Category.Name : "General")
+                .Select(g => new CategorySalesDto { CategoryName = g.Key, TotalRevenue = g.Sum(x => x.SubTotal) })
+                .ToList();
 
             return new DashboardDto
             {
@@ -46,6 +62,8 @@ namespace CompriaxSystem.Application.Services
                 TotalSalesWeek = salesWeek.Sum(s => s.TotalAmount),
                 SalesCountToday = salesToday.Count,
                 ProductsLowStockCount = products.Count(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock),
+                TopSellingProducts = topProducts,
+                SalesByCategory = categorySales,
                 CriticalStockList = products
                     .Where(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock)
                     .OrderBy(p => p.CurrentStock)
@@ -62,9 +80,9 @@ namespace CompriaxSystem.Application.Services
         public async Task<SaleDto?> GetSaleDetailsAsync(int saleId)
         {
             var shifts = await unitOfWork.CashShifts.GetHistoryAsync(DateTime.MinValue, DateTime.MaxValue);
-            var sale = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Domain.Entities.Sale>()).FirstOrDefault(s => s.Id == saleId);
+            var sale = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Sale>()).FirstOrDefault(s => s.Id == saleId);
 
-            if (sale == null) 
+            if (sale == null)
                 return null;
 
             return new SaleDto
@@ -79,7 +97,7 @@ namespace CompriaxSystem.Application.Services
                 CashierName = sale.User?.Username,
                 PaymentReceived = sale.PaymentReceived,
                 TotalAmount = sale.TotalAmount,
-                Items = (sale.SaleItems ?? Enumerable.Empty<Domain.Entities.SaleItem>()).Select(i => new SaleItemDto
+                Items = (sale.SaleItems ?? Enumerable.Empty<SaleItem>()).Select(i => new SaleItemDto
                 {
                     ProductId = i.ProductId,
                     ProductName = i.Product?.Name ?? $"Producto #{i.ProductId}",
@@ -111,12 +129,12 @@ namespace CompriaxSystem.Application.Services
         public async Task<SaleDto?> GetSaleByDocumentNumberAsync(string documentNumber)
         {
             var shifts = await unitOfWork.CashShifts.GetHistoryAsync(DateTime.MinValue, DateTime.MaxValue);
-            var sale = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Domain.Entities.Sale>())
+            var sale = shifts.SelectMany(s => s.Sales ?? Enumerable.Empty<Sale>())
                              .FirstOrDefault(s => s.DocumentNumber == documentNumber.Trim());
 
-            if (sale == null) 
+            if (sale == null)
                 return null;
-            
+
             return await GetSaleDetailsAsync(sale.Id);
         }
     }
