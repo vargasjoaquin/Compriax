@@ -1,4 +1,6 @@
-﻿namespace CompriaxSystem.Application.Interfaces.Services
+﻿using CompriaxSystem.Application.DTOs;
+
+namespace CompriaxSystem.Application.Interfaces.Services
 {
     public interface IReportService
     {

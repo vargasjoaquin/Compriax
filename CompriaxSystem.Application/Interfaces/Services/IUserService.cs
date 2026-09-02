@@ -1,4 +1,6 @@
 ﻿using CompriaxSystem.Application.Common;
+using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Domain.Entities;
 
 namespace CompriaxSystem.Application.Interfaces.Services
 {

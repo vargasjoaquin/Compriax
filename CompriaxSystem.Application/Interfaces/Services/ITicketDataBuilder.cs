@@ -1,4 +1,5 @@
-﻿using CompriaxSystem.Domain.Enums;
+﻿using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Domain.Enums;
 
 namespace CompriaxSystem.Application.Interfaces.Services
 {
