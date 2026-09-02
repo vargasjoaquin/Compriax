@@ -19,6 +19,7 @@ namespace CompriaxSystem.WinFormsUI
         private string? _customerPhone = null;
         private string? _customerName = null;
         private byte[]? _currentTicketBytes = null;
+        private string? _lastGeneratedTempPdf = null;
 
         public FormTicketPreview(
             IDocumentService documentService,
@@ -73,14 +74,14 @@ namespace CompriaxSystem.WinFormsUI
                     _currentTicketBytes = await _documentService.GenerateThermalTicketReceiptAsync(
                         _sale, _docNumber, _cashierName, size);
 
-                    string tempPdfPath = Path.Combine(Path.GetTempPath(), $"ticket_preview_{Guid.NewGuid()}.pdf");
-                    await File.WriteAllBytesAsync(tempPdfPath, _currentTicketBytes);
+                    _lastGeneratedTempPdf = Path.Combine(Path.GetTempPath(), $"ticket_preview_{Guid.NewGuid()}.pdf");
+                    await File.WriteAllBytesAsync(_lastGeneratedTempPdf, _currentTicketBytes);
 
-                    pdfViewer.Navigate(tempPdfPath);
+                    pdfViewer.Navigate(_lastGeneratedTempPdf);
                 }
                 catch (Exception ex)
                 {
-                    UIHelper.ErrorMessage(this, $"Error al renderizar la vista previa del ticket:\n{ex.Message}", "Fallo de Generación");
+                    UIHelper.ErrorMessage(this, $"Error al renderizar ticket:\n{ex.Message}", "Fallo de Generación");
                 }
             }
         }
@@ -125,7 +126,6 @@ namespace CompriaxSystem.WinFormsUI
                     {
                         string tempPdfPath = Path.Combine(Path.GetTempPath(), $"ticket_print_{_docNumber.Replace('/', '-')}.pdf");
                         File.WriteAllBytes(tempPdfPath, _currentTicketBytes);
-
                         Process.Start(new ProcessStartInfo(tempPdfPath) { UseShellExecute = true });
                     }
                     catch (Exception ex)
