@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
-using CompriaxSystem.Domain.Common;
 using CompriaxSystem.Domain.Entities;
+using FluentValidation;
+using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -33,9 +33,25 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
+            string employeeCode = dto.EmployeeCode.Trim();
+            string documentNumber = dto.DocumentNumber.Trim();
+
+            var allEmployees = await unitOfWork.Employees.GetAllAsync();
+
+            bool employeeCodeExists = allEmployees.Any(e => e.EmployeeCode.Equals(employeeCode, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
+            bool documentNumberExists = allEmployees.Any(e => e.DocumentNumber.Equals(documentNumber, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
+
+            if (employeeCodeExists)
+                return OperationResult.Failure($"El legajo '{employeeCode}' ya pertenece a otro empleado registrado.");
+
+            if (documentNumberExists)
+                return OperationResult.Failure($"El número de DNI '{documentNumber}' ya está registrado para otro empleado.");
+            
             if (dto.Id == 0)
             {
                 var employee = mapper.Map<Employee>(dto);
+                employee.EmployeeCode = employeeCode;
+                employee.DocumentNumber = documentNumber;
                 employee.Position = null!;
                 employee.Gender = null!;
                 employee.CivilStatus = null!;
@@ -52,6 +68,8 @@ namespace CompriaxSystem.Application.Services
                     return OperationResult.Failure("Empleado no encontrado.");
 
                 mapper.Map(dto, employee);
+                employee.EmployeeCode = employeeCode;
+                employee.DocumentNumber = documentNumber;
                 employee.Position = null!;
                 employee.Gender = null!;
                 employee.CivilStatus = null!;
