@@ -1,15 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using DocumentFormat.OpenXml.Drawing;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -25,10 +15,10 @@ namespace CompriaxSystem.WinFormsUI
 
         private async void FormHome_Load(object sender, EventArgs e)
         {
-            await LoadDashboardData();
+            await RefreshDashboardAsync();
         }
 
-        private async Task LoadDashboardData()
+        public async Task RefreshDashboardAsync()
         {
             using (new WaitCursorHelper(this))
             {
@@ -41,12 +31,13 @@ namespace CompriaxSystem.WinFormsUI
                     lblSalesCount.Text = stats.SalesCountToday.ToString("N0");
                     lblLowStockCount.Text = stats.ProductsLowStockCount.ToString("N0");
 
-                    // Resaltar alerta visual si hay stock bajo
                     cardStockAlert.BackColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.DangerLight : UIThemeHelper.Surface;
                     lblLowStockCount.ForeColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.Danger : UIThemeHelper.TextMain;
 
-                    // Carga de Grillas
+                    dgvTopProducts.DataSource = null;
                     dgvTopProducts.DataSource = stats.TopSellingProducts.ToList();
+
+                    dgvCriticalStock.DataSource = null;
                     dgvCriticalStock.DataSource = stats.CriticalStockList.ToList();
 
                     UIHelper.FormatGrid(dgvTopProducts);
