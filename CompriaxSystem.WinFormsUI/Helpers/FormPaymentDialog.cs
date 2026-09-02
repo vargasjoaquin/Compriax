@@ -1,4 +1,6 @@
-﻿namespace CompriaxSystem.WinFormsUI.Helpers
+﻿using CompriaxSystem.Domain.Entities;
+
+namespace CompriaxSystem.WinFormsUI.Helpers
 {
     public class FormPaymentDialog : Form
     {

@@ -90,7 +90,7 @@ namespace CompriaxSystem.WinFormsUI
                 NewPassword = txtEditPassword.Text
             };
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var result = await _userService.UpdateProfileAsync(dto);
 

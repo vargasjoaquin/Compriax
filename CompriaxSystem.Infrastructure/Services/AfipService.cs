@@ -1,11 +1,12 @@
-﻿using CompriaxSystem.Application.Configuration;
+﻿using Microsoft.Extensions.Options;
+using CompriaxSystem.Application.Configuration;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
-using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
 using ZXing;
+using ZXing.Windows.Compatibility;
 
 namespace CompriaxSystem.Infrastructure.Services
 {
@@ -33,13 +34,13 @@ namespace CompriaxSystem.Infrastructure.Services
                 // Modo Simulación/Offline si el servicio está deshabilitado o no hay certificados
                 if (!_settings.Enabled || string.IsNullOrWhiteSpace(_settings.CertificatePath) || !File.Exists(_settings.CertificatePath))
                 {
-                    return ProcessOfflineAuthorization(sale, emisorCuit, ptoVta);
+                    return ProcessOfflineAuthorization(sale, emisorCuit, pointOfSale);
                 }
 
                 try
                 {
                     // En modo con certificados configurados
-                    return ProcessOfflineAuthorization(sale, emisorCuit, ptoVta);
+                    return ProcessOfflineAuthorization(sale, emisorCuit, pointOfSale);
                 }
                 catch (Exception ex)
                 {

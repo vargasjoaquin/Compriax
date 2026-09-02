@@ -1,4 +1,12 @@
-﻿namespace CompriaxSystem.Infrastructure.Services
+﻿using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Application.Interfaces.Repositories;
+using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Enums;
+
+namespace CompriaxSystem.Infrastructure.Services
 {
     public class DocumentService : IDocumentService
     {
