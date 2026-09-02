@@ -5,6 +5,7 @@ using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
+using DocumentFormat.OpenXml.Drawing;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
@@ -29,9 +30,18 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
+            string cuit = dto.CUIT.Trim();
+
+            var allSuppliers = await unitOfWork.Suppliers.GetAllAsync();
+            bool cuitExists = allSuppliers.Any(s => s.CUIT.Equals(cuit, StringComparison.OrdinalIgnoreCase) && s.Id != dto.Id);
+
+            if (cuitExists)
+                return OperationResult.Failure($"El CUIT '{cuit}' ya se encuentra registrado por otro proveedor activo.");
+
             if (dto.Id == 0)
             {
                 var supplier = mapper.Map<Supplier>(dto);
+                supplier.CUIT = cuit;
                 await unitOfWork.Suppliers.AddAsync(supplier);
             }
             else
@@ -42,6 +52,7 @@ namespace CompriaxSystem.Application.Services
                     return OperationResult.Failure("Proveedor no encontrado.");
 
                 mapper.Map(dto, supplier);
+                supplier.CUIT = cuit;
                 unitOfWork.Suppliers.Update(supplier);
             }
 
@@ -56,6 +67,9 @@ namespace CompriaxSystem.Application.Services
             
             if (supplier == null)
                 return OperationResult.Failure("Proveedor no encontrado.");
+
+            var purchases = await unitOfWork.Purchases.GetHistoryAsync(DateTime.MinValue, DateTime.MaxValue);
+            bool hasPurchases = purchases.Any(p => p.SupplierId == id);
 
             supplier.IsDeleted = true;
             supplier.LastUpdatedBy = currentUser.CurrentUser!.Username;
@@ -106,6 +120,7 @@ namespace CompriaxSystem.Application.Services
                     item.SubTotal = item.Quantity * item.BuyPrice;
 
                     var product = await unitOfWork.Products.GetByIdAsync(item.ProductId);
+                    
                     if (product == null)
                         continue;
 
