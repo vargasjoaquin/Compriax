@@ -2,7 +2,6 @@
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Enums;
 using CompriaxSystem.WinFormsUI.Helpers;
-using System.Data;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -23,7 +22,6 @@ namespace CompriaxSystem.WinFormsUI
             _promotionService = promotionService;
             _productService = productService;
             _catalogService = catalogService;
-
             InitializeComponent();
 
             this.Load += async (s, e) => await InitializeFormAsync();
@@ -39,7 +37,6 @@ namespace CompriaxSystem.WinFormsUI
         {
             using (new WaitCursorHelper(this))
             {
-                // Tipos de Promoción
                 cboType.DataSource = Enum.GetValues(typeof(PromotionType))
                     .Cast<PromotionType>()
                     .Select(t => new { Id = t, Name = GetPromoTypeName(t) })
@@ -47,14 +44,12 @@ namespace CompriaxSystem.WinFormsUI
                 cboType.DisplayMember = "Name";
                 cboType.ValueMember = "Id";
 
-                // Productos
                 var products = (await _productService.GetProductListAsync()).ToList();
                 products.Insert(0, new ProductDto { Id = 0, Name = "[ Ninguno / Aplica a otro ]" });
                 cboProduct.DataSource = products;
                 cboProduct.DisplayMember = "Name";
                 cboProduct.ValueMember = "Id";
 
-                // Categorías
                 var categories = (await _catalogService.GetActiveCategoriesAsync()).ToList();
                 categories.Insert(0, new CategoryDto { Id = 0, Name = "[ Ninguna / Aplica a otro ]" });
                 cboCategory.DataSource = categories;
@@ -103,20 +98,29 @@ namespace CompriaxSystem.WinFormsUI
             if (cboType.SelectedValue is not PromotionType selectedType)
                 return;
 
-            cboProduct.Enabled = selectedType == PromotionType.PercentageOnProduct || selectedType == PromotionType.BuyXPayY;
-            cboCategory.Enabled = selectedType == PromotionType.PercentageOnCategory;
-            numDiscount.Enabled = selectedType != PromotionType.BuyXPayY;
-            numRequired.Enabled = selectedType == PromotionType.BuyXPayY;
-            numPay.Enabled = selectedType == PromotionType.BuyXPayY;
+            bool isProd = selectedType == PromotionType.PercentageOnProduct || selectedType == PromotionType.BuyXPayY;
+            bool isCat = selectedType == PromotionType.PercentageOnCategory;
+            bool isNxM = selectedType == PromotionType.BuyXPayY;
+
+            cboProduct.Enabled = isProd;
+            cboCategory.Enabled = isCat;
+            numDiscount.Enabled = !isNxM;
+            numRequired.Enabled = isNxM;
+            numPay.Enabled = isNxM;
+
+            if (!isProd) 
+                cboProduct.SelectedValue = 0;
+            
+            if (!isCat) 
+                cboCategory.SelectedValue = 0;
         }
 
         private void SyncEntityToFields()
         {
-            if (dgvPromotions.CurrentRow == null)
+            if (dgvPromotions.CurrentRow == null) 
                 return;
 
             var p = (PromotionDto)dgvPromotions.CurrentRow.DataBoundItem;
-
             _selectedPromoId = p.Id;
             txtName.Text = p.Name;
             cboType.SelectedValue = p.PromotionType;
@@ -168,7 +172,6 @@ namespace CompriaxSystem.WinFormsUI
                 UIHelper.WarnMessage(this, "Debe seleccionar una promoción de la lista para poder editarla.", "Selección Requerida");
                 return;
             }
-
             await ProcessAction(_selectedPromoId);
         }
 
