@@ -59,20 +59,23 @@ namespace CompriaxSystem.WinFormsUI
                 try
                 {
                     var db = services.GetRequiredService<ApplicationDbContext>();
-                    db.Database.Migrate();
-                    DbInitializer.SeedAsync(db).GetAwaiter().GetResult();
+
+                    if (!db.Database.CanConnect())
+                    {
+                        throw new InvalidOperationException("No se pudo conectar a SQL Server. Verifique que la base de datos 'Compriax' exista y el servicio esté en ejecución.");
+                    }
                 }
                 catch (Exception ex)
                 {
                     string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                    
+
                     if (ex.InnerException?.InnerException != null)
                     {
                         realError += "\n-> " + ex.InnerException.InnerException.Message;
                     }
 
                     MessageBox.Show(
-                        $"Error al conectar o inicializar la base de datos SQL Server:\n\n{realError}\n\nVerifique que SQL Server esté en ejecución.",
+                        $"Error al conectar con la base de datos SQL Server:\n\n{realError}\n\nVerifique que SQL Server esté en ejecución.",
                         "Error de Base de Datos",
                         MessageBoxButtons.OK,
                         MessageBoxIcon.Error);
@@ -101,8 +104,14 @@ namespace CompriaxSystem.WinFormsUI
 
                     // 1. Persistencia e Infraestructura
                     services.AddDbContext<ApplicationDbContext>(options =>
-                         options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")
-                             ?? "Server=.;Database=Compriax;Integrated Security=True;TrustServerCertificate=True"));
+                    {
+                        string connectionString = context.Configuration.GetConnectionString("DefaultConnection")
+                            ?? "Server=.;Database=Compriax;Integrated Security=True;TrustServerCertificate=True";
+
+                        options.UseSqlServer(connectionString)
+                               .ConfigureWarnings(warnings =>
+                                   warnings.Ignore(Microsoft.EntityFrameworkCore.Diagnostics.RelationalEventId.PendingModelChangesWarning));
+                    });
 
                     services.AddValidatorsFromAssembly(typeof(ProductCreateValidator).Assembly);
 
