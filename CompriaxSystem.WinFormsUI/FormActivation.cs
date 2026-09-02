@@ -36,7 +36,7 @@ namespace CompriaxSystem.WinFormsUI
             btnActivate.Text = "ACTIVANDO...";
             lblStatusMessage.Visible = false;
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var result = await _licenseService.ActivateOnlineAsync(txtCuit.Text.Trim(), txtLicenseKey.Text.Trim());
 
