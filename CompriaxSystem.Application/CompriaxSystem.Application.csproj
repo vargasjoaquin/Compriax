@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+	 <PackageReference Include="AutoMapper" Version="13.0.1" />
+	 <PackageReference Include="CloudinaryDotNet" Version="1.29.3" />
+	 <PackageReference Include="FluentValidation" Version="12.1.1" />
+	 <PackageReference Include="QuestPDF" Version="2024.3.0" />
+	 <PackageReference Include="System.Drawing.Common" Version="9.0.0" />
+   </ItemGroup>
+
+  <ItemGroup>
+	 <ProjectReference Include="..\CompriaxSystem.Domain\CompriaxSystem.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
