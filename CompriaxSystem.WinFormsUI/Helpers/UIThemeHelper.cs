@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using static System.Net.Mime.MediaTypeNames;
-
-namespace CompriaxSystem.WinFormsUI.Helpers
+﻿namespace CompriaxSystem.WinFormsUI.Helpers
 {
     public static class UIThemeHelper
     {
@@ -109,3 +106,4 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         }
     }
 }
+

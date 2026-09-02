@@ -170,7 +170,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             {
                 dgv.CellClick -= oldState.OnCellClick;
                 dgv.MouseDown -= oldState.OnDgvMouseDown;
-                
+
                 foreach (var (control, handler) in oldState.ExternalHandlers)
                     control.Click -= handler;
             }
@@ -189,10 +189,10 @@ namespace CompriaxSystem.WinFormsUI.Helpers
 
             void OnCellClick(object? sender, DataGridViewCellEventArgs e)
             {
-                if (e.RowIndex < 0 || dgv.CurrentRow == null) 
+                if (e.RowIndex < 0 || dgv.CurrentRow == null)
                     return;
-                
-                if (state.SelectedRowIndex == e.RowIndex) 
+
+                if (state.SelectedRowIndex == e.RowIndex)
                     SafeClear();
                 else
                 {
@@ -251,7 +251,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         public static List<SearchCriteria> GetSearchableCriteria(params string[] propertyNames)
         {
             var list = new List<SearchCriteria>();
-            
+
             foreach (var prop in propertyNames)
             {
                 string displayName = _translations.ContainsKey(prop) ? _translations[prop] : prop;

@@ -1,6 +1,6 @@
 ﻿namespace CompriaxSystem.WinFormsUI.Helpers
 {
-    internal class NavMenuItemHelper
+    public class NavMenuItemHelper
     {
         public string Title { get; set; } = null!;
         public string? Tooltip { get; set; }

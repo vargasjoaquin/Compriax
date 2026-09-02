@@ -40,7 +40,7 @@
             try
             {
                 var fileInfo = new FileInfo(ofd.FileName);
-                
+
                 if (fileInfo.Length > MaxFileSizeBytes)
                 {
                     errorMessage = "La imagen seleccionada supera el límite máximo permitido de 5 MB.";
@@ -48,7 +48,7 @@
                 }
 
                 byte[] bytes = File.ReadAllBytes(ofd.FileName);
-               
+
                 using (var ms = new MemoryStream(bytes))
                 {
                     using var img = Image.FromStream(ms);

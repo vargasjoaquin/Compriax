@@ -1,9 +1,6 @@
-﻿using CompriaxSystem.Domain.Entities;
-using DocumentFormat.OpenXml.Drawing;
-
-namespace CompriaxSystem.WinFormsUI.Helpers
+﻿namespace CompriaxSystem.WinFormsUI.Helpers
 {
-    public class FormPaymentDialogHelper : Form
+    public class FormPaymentDialog : Form
     {
         public decimal TotalAmount { get; }
         public decimal AmountPaid => numAmountPaid.Value;
@@ -16,7 +13,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         private readonly Label lblChangeAmount;
         private readonly Button btnConfirm;
 
-        public FormPaymentDialogHelper(decimal totalAmount, IEnumerable<PaymentMethod> paymentMethods)
+        public FormPaymentDialog(decimal totalAmount, IEnumerable<PaymentMethod> paymentMethods)
         {
             TotalAmount = totalAmount;
 
@@ -219,5 +216,6 @@ namespace CompriaxSystem.WinFormsUI.Helpers
 
             this.DialogResult = DialogResult.OK;
         }
+
     }
 }

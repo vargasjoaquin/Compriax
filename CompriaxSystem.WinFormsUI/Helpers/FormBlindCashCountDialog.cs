@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CompriaxSystem.WinFormsUI.Helpers
+﻿namespace CompriaxSystem.WinFormsUI.Helpers
 {
-    public class FormBlindCashCountDialogHelper : Form
+    public class FormBlindCashCountDialog : Form
     {
         public decimal CountedCash => numRealCash.Value;
         public string Notes => txtNotes.Text.Trim();
@@ -15,7 +9,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         private TextBox txtNotes;
         private Button btnConfirm, btnCancel;
 
-        public FormBlindCashCountDialogHelper(decimal expectedSystemCash)
+        public FormBlindCashCountDialog(decimal expectedSystemCash)
         {
             this.Text = "Arqueo y Cierre Definitivo de Caja (Z)";
             this.Size = new Size(480, 320);
@@ -83,6 +77,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
 
                 this.Controls.AddRange(new Control[] { lbl1, numAmount, lbl2, txtDesc, btnCancel, btnOk });
             }
+
         }
     }
 }
