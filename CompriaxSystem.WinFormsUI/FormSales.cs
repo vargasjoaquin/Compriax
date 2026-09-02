@@ -3,7 +3,6 @@ using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 using System.Media;
 using static CompriaxSystem.WinFormsUI.Helpers.FormBlindCashCountDialog;
 
@@ -78,26 +77,30 @@ namespace CompriaxSystem.WinFormsUI
                         txtProductCode.Focus();
                         txtProductCode.SelectAll();
                         break;
+
                     case UIThemeHelper.Shortcuts.SelectCustomer:
                         await PromptSelectCustomerAsync();
                         break;
+
                     case UIThemeHelper.Shortcuts.ChangeQuantity:
                         numQuantity.Focus();
                         numQuantity.Select(0, numQuantity.Text.Length);
                         break;
+
                     case UIThemeHelper.Shortcuts.Checkout:
                         await ExecuteCheckoutAsync();
                         break;
+
                     case UIThemeHelper.Shortcuts.DeleteItem:
                         RemoveSelectedItem();
                         break;
+
                     case UIThemeHelper.Shortcuts.ClearOrCancel:
                         ResetInputBar();
                         break;
                 }
             };
 
-            // Escaneo continuo con Enter
             this.txtProductCode.KeyDown += async (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
@@ -113,7 +116,6 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task InitializeFormAsync()
         {
-            // Si no tiene caja asignada (ej. un Administrador que entra al POS desde el menú), solicitarla
             var user = _currentUser.CurrentUser;
             bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
 
@@ -296,7 +298,6 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            // 1. Abrir Pasarela Modal de Cobro
             using var payDialog = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
             if (payDialog.ShowDialog(this) != DialogResult.OK)
             {
@@ -304,7 +305,6 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            // 2. Procesar Venta
             using (new WaitCursorHelper(this))
             {
                 var saleDto = new SaleDto
@@ -314,9 +314,9 @@ namespace CompriaxSystem.WinFormsUI
                     PaymentMethodId = payDialog.SelectedPaymentMethodId,
                     PaymentMethodName = payDialog.SelectedPaymentMethodName,
                     CustomerId = _selectedCustomer?.Id,
-                    CustomerDoc = _selectedCustomer?.DocumentNumber ?? "S/D",
-                    CustomerName = _selectedCustomer?.FullName ?? "Consumidor Final",
-                    CashierName = _currentUser.CurrentUser?.FullName,
+                    CustomerDoc = _selectedCustomer?.DocumentNumber,
+                    CustomerName = _selectedCustomer?.FullName,
+                    CashierName = _currentUser.CurrentUser!.FullName,
                     SubTotal = _currentCalculation.SubTotal,
                     DiscountAmount = _currentCalculation.TotalDiscount,
                     TotalAmount = _currentCalculation.FinalTotal,
