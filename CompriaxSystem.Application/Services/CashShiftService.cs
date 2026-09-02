@@ -138,19 +138,33 @@ namespace CompriaxSystem.Application.Services
             if (shift == null || shift.Status != "Abierta")
                 return OperationResult.Failure("El turno especificado no existe o ya fue cerrado.");
 
+            var sales = new List<Sale>();
+            var movements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id)).ToList();
+
             var summary = await GetCurrentShiftSummaryAsync();
+
+            decimal cashSales = sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
+            decimal debitSales = sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
+            decimal creditSales = sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount);
+            decimal transferSales = sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount);
+            decimal qrSales = sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount);
+
+            decimal manualIn = movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
+            decimal manualOut = movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
+
+            decimal expectedCashInDrawer = shift.InitialCash + cashSales + manualIn - manualOut;
 
             shift.ClosingDate = DateTime.UtcNow;
             shift.RealCash = dto.RealCash;
-            shift.ExpectedCash = summary.ExpectedCashInDrawer;
-            shift.Difference = dto.RealCash - summary.ExpectedCashInDrawer;
-            shift.TotalCashSales = summary.TotalCashSales;
-            shift.TotalDebitSales = summary.TotalDebitSales;
-            shift.TotalCreditSales = summary.TotalCreditSales;
-            shift.TotalTransferSales = summary.TotalTransferSales;
-            shift.TotalQrSales = summary.TotalQrSales;
-            shift.TotalManualCashIn = summary.TotalManualCashIn;
-            shift.TotalManualCashOut = summary.TotalManualCashOut;
+            shift.ExpectedCash = expectedCashInDrawer;
+            shift.Difference = dto.RealCash - expectedCashInDrawer;
+            shift.TotalCashSales = cashSales;
+            shift.TotalDebitSales = debitSales;
+            shift.TotalCreditSales = creditSales;
+            shift.TotalTransferSales = transferSales;
+            shift.TotalQrSales = qrSales;
+            shift.TotalManualCashIn = manualIn;
+            shift.TotalManualCashOut = manualOut;
             shift.Status = "Cerrada";
             shift.ClosingNotes = dto.ClosingNotes?.Trim();
 
