@@ -32,7 +32,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 cboSearchBy.DataSource = UIHelper.GetSearchableCriteria(
                     nameof(SalesReportDto.DocumentNumber),
@@ -50,7 +50,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteSearchAction()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var data = await _reportService.GetSalesHistoryAsync(dtpStart.Value, dtpEnd.Value);
                 _fullHistory = data.ToList();
@@ -80,7 +80,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 byte[] fileBytes = _excelService.ExportToExcel((List<SalesReportDto>)dgvData.DataSource, "Ventas");
                 string fileName = $"Ventas_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";

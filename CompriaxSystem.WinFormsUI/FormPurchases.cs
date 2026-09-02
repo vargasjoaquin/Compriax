@@ -77,7 +77,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var docTypes = (await _lookupService.GetDocumentTypesAsync()).ToList();
                 cboDocType.DataSource = docTypes;
@@ -169,7 +169,7 @@ namespace CompriaxSystem.WinFormsUI
 
             try
             {
-                using (new WaitCursor(this))
+                using (new WaitCursorHelper(this))
                 {
                     string supplierName = txtSupplierName.Text.Trim();
                     string supplierCuit = txtSupplierDoc.Text.Trim();
@@ -293,7 +293,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 _foundProduct = await _productService.GetByBarcodeAsync(txtProductCode.Text.Trim());
 
@@ -322,7 +322,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var list = await _supplyService.GetSuppliersAsync();
                 var supplier = list.FirstOrDefault(x => x.CUIT == txtSupplierDoc.Text.Trim());

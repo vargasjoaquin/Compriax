@@ -29,7 +29,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 var suppliers = (await _supplyService.GetSuppliersAsync()).ToList();
 
@@ -53,7 +53,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task ExecuteSearchAction()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 int? supId = (int)cboSupplierFilter.SelectedValue == 0 ? null : (int)cboSupplierFilter.SelectedValue;
                 var data = await _reportService.GetPurchaseHistoryAsync(dtpStart.Value, dtpEnd.Value, supId);
@@ -70,7 +70,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 byte[] fileBytes = _excelService.ExportToExcel((List<PurchaseReportDto>)dgvData.DataSource, "Compras");
                 string fileName = $"Compras_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
