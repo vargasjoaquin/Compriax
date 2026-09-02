@@ -32,7 +32,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 cboCategory.DataSource = (await _catalogService.GetActiveCategoriesAsync()).ToList();
                 cboCategory.DisplayMember = "Name";
@@ -174,7 +174,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 byte[] pdfBytes = await _documentService.GenerateInventoryReportAsync(products);
                 string fileName = $"Reporte_Stock_{DateTime.Now:yyyyMMdd_HHmm}.pdf";

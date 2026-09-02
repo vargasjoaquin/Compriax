@@ -30,7 +30,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task LoadDashboardData()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 try
                 {
@@ -42,8 +42,8 @@ namespace CompriaxSystem.WinFormsUI
                     lblLowStockCount.Text = stats.ProductsLowStockCount.ToString("N0");
 
                     // Resaltar alerta visual si hay stock bajo
-                    cardStockAlert.BackColor = stats.ProductsLowStockCount > 0 ? UITheme.DangerLight : UITheme.Surface;
-                    lblLowStockCount.ForeColor = stats.ProductsLowStockCount > 0 ? UITheme.Danger : UITheme.TextMain;
+                    cardStockAlert.BackColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.DangerLight : UIThemeHelper.Surface;
+                    lblLowStockCount.ForeColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.Danger : UIThemeHelper.TextMain;
 
                     // Carga de Grillas
                     dgvTopProducts.DataSource = stats.TopSellingProducts.ToList();

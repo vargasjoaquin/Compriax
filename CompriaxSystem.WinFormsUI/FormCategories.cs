@@ -22,7 +22,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
-            using (new WaitCursor(this))
+            using (new WaitCursorHelper(this))
             {
                 await RefreshGridAsync();
                 UIHelper.AttachManagedSelection(this, dgvCategories, SyncEntityToFields, ResetUI);
