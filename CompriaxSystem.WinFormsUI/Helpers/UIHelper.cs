@@ -37,12 +37,15 @@ namespace CompriaxSystem.WinFormsUI.Helpers
 
         private static readonly Dictionary<string, string> _translations = new()
         {
+            // 1. Cajas y Puestos POS (Multi-Caja)
             { "Number", "N.° Caja" },
             { "CashRegisterName", "Caja / Terminal" },
             { "CashRegisterNumber", "N.° Caja" },
             { "CurrentCashierName", "Cajero/a en Turno" },
             { "CurrentShiftId", "Turno Activo" },
             { "HasOpenShift", "¿Turno Abierto?" },
+
+            // 2. Productos e Inventario
             { "Barcode", "Código de Barras" },
             { "ProductName", "Producto" },
             { "Description", "Descripción" },
@@ -53,10 +56,15 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             { "CurrentStock", "Stock Actual" },
             { "MinimumStock", "Stock Mínimo" },
             { "StockStatus", "Estado Stock" },
+            { "UnitOfMeasureName", "Unidad de Medida" },
+            { "InitialStock", "Stock Inicial" },
+
+            // 3. Personas (Clientes, Proveedores, Empleados)
             { "DocumentNumber", "N.° Documento / DNI" },
             { "FirstName", "Nombre" },
             { "LastName", "Apellido" },
             { "FullName", "Nombre Completo" },
+            { "TaxCondition", "Cond. Fiscal" },
             { "TaxConditionName", "Condición Tributaria" },
             { "Cuil", "CUIL / CUIT" },
             { "CUIT", "CUIT / CUIL" },
@@ -67,28 +75,84 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             { "CompanyName", "Razón Social / Empresa" },
             { "ContactName", "Contacto Comercial" },
             { "EmployeeCode", "Legajo" },
+            { "Position", "Cargo" },
             { "PositionName", "Puesto / Cargo" },
             { "GenderName", "Género" },
             { "CivilStatusName", "Estado Civil" },
+            { "ChildrenCount", "Hijos" },
+
+            // 4. Operaciones, Ventas y Compras
             { "Date", "Fecha y Hora" },
+            { "DocumentType", "Tipo Comprobante" },
             { "DocumentTypeName", "Comprobante" },
             { "PaymentMethodName", "Medio de Pago" },
             { "CustomerName", "Cliente" },
+            { "CustomerDoc", "DNI/CUIT Cliente" },
             { "CashierName", "Cajero/a" },
             { "Quantity", "Cantidad" },
             { "UnitPrice", "Precio Unit." },
+            { "CostPrice", "Costo Unit." },
             { "DiscountAmount", "Descuento" },
             { "SubTotal", "Subtotal" },
             { "TotalAmount", "Total Facturado" },
             { "PaymentReceived", "Monto Abonado" },
             { "PaymentChange", "Vuelto" },
+            { "PointOfSale", "Punto de Venta" },
+            { "Cae", "CAE Oficial" },
+            { "CaeExpirationDate", "Vto. CAE" },
+            { "FiscalStatus", "Estado Fiscal" },
+            { "QuantitySold", "Cant. Vendida" },
             { "TotalRevenue", "Recaudación Total" },
             { "SupplierName", "Proveedor" },
             { "SupplierTaxId", "CUIT Proveedor" },
+
+            // 5. Control de Caja, Turnos y Arqueos (X/Z)
+            { "UserName", "Cajero / Responsable" },
+            { "OpeningDate", "Fecha Apertura" },
+            { "ClosingDate", "Fecha Cierre" },
+            { "InitialCash", "Fondo Inicial" },
+            { "RealCash", "Efectivo Real Contado" },
+            { "ExpectedCash", "Efectivo Esperado" },
+            { "Difference", "Diferencia / Balance" },
+            { "TotalCashSales", "Ventas Efectivo" },
+            { "TotalDebitSales", "Ventas Débito" },
+            { "TotalCreditSales", "Ventas Crédito" },
+            { "TotalTransferSales", "Ventas Transferencia" },
+            { "TotalQrSales", "Ventas QR / MP" },
+            { "TotalManualCashIn", "Ingresos Manuales" },
+            { "TotalManualCashOut", "Egresos / Retiros" },
+            { "CurrentSystemCash", "Efectivo en Gaveta" },
+            { "TotalTurnover", "Facturación Turno" },
+            { "ClosingNotes", "Observaciones Cierre" },
+            { "MovementTypeName", "Tipo Movimiento" },
+            { "Amount", "Importe" },
+            { "CreatedAt", "Fecha de Registro" },
+            { "Remarks", "Observaciones / Detalle" },
+
+            // 6. Seguridad y Usuarios
             { "Username", "Usuario (Login)" },
             { "RoleName", "Rol / Acceso" },
             { "Status", "Estado" },
-            { "StatusSummary", "Estado Actual" }
+            { "StatusSummary", "Estado Actual" },
+
+            // 7. Promociones y Descuentos
+            { "PromotionTypeName", "Tipo de Regla" },
+            { "DiscountPercentage", "% Descuento" },
+            { "RequiredQuantity", "Lleva (N)" },
+            { "PayQuantity", "Paga (M)" },
+            { "StartDate", "Fecha Inicio" },
+            { "EndDate", "Fecha Fin" },
+
+            // 8. Papelera de Reciclaje / Auditoría (Soft Delete)
+            { "EntityType", "Módulo / Entidad" },
+            { "Identifier", "Identificador" },
+            { "Name", "Nombre / Detalle" },
+            { "AdditionalInfo", "Información Extra" },
+            { "DeletedAt", "Fecha Eliminación" },
+            { "DeletedBy", "Eliminado Por" },
+            { "CreatedBy", "Creado Por" },
+            { "LastUpdatedAt", "Última Modificación" },
+            { "LastUpdatedBy", "Modificado Por" }
         };
 
         public static void FormatGrid(DataGridView dgv)
