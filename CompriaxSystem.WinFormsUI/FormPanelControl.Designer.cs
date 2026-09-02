@@ -197,7 +197,7 @@
             this.Controls.Add(this.pnlTopNav);
             this.Name = "FormPanelControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Supermarket System - Panel de Control";
+            this.Text = "Compriax System - Panel de Control";
 
             this.pnlTopNav.ResumeLayout(false);
             this.pnlBrand.ResumeLayout(false);

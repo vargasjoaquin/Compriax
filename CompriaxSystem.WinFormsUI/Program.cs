@@ -102,7 +102,7 @@ namespace CompriaxSystem.WinFormsUI
                     // 1. Persistencia e Infraestructura
                     services.AddDbContext<ApplicationDbContext>(options =>
                          options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")
-                             ?? "Server=.;Database=Supermarket;Integrated Security=True;TrustServerCertificate=True"));
+                             ?? "Server=.;Database=Compriax;Integrated Security=True;TrustServerCertificate=True"));
 
                     services.AddValidatorsFromAssembly(typeof(ProductCreateValidator).Assembly);
 

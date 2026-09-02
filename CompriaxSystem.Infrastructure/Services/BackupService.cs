@@ -45,7 +45,7 @@ namespace CompriaxSystem.Infrastructure.Services
                     BACKUP DATABASE [{databaseName}] 
                     TO DISK = @backupPath 
                     WITH FORMAT, INIT, COMPRESSION, CHECKSUM, 
-                    NAME = 'Supermarket-AutoBackup';";
+                    NAME = 'Compriax-AutoBackup';";
 
                 await using (var conn = new SqlConnection(connectionString))
                 {

@@ -341,7 +341,7 @@
             this.KeyPreview = true;
             this.Name = "FormSales";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Punto de Venta POS - SupermarketSystem";
+            this.Text = "Punto de Venta POS - CompriaxSystem";
 
             this.pnlTopStatus.ResumeLayout(false);
             this.pnlTopStatus.PerformLayout();
