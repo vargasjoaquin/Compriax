@@ -34,6 +34,7 @@
             txtEmail = new TextBox();
             lblPassword = new Label();
             txtPassword = new TextBox();
+            btnTogglePassword = new Button();
             lblRole = new Label();
             cboRole = new ComboBox();
             btnSave = new Button();
@@ -95,6 +96,7 @@
             groupBoxData.Controls.Add(txtEmail);
             groupBoxData.Controls.Add(lblPassword);
             groupBoxData.Controls.Add(txtPassword);
+            groupBoxData.Controls.Add(btnTogglePassword);
             groupBoxData.Controls.Add(lblRole);
             groupBoxData.Controls.Add(cboRole);
             groupBoxData.Controls.Add(btnSave);
@@ -224,8 +226,20 @@
             txtPassword.Location = new Point(501, 111);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(239, 30);
+            txtPassword.Size = new Size(190, 30);
             txtPassword.TabIndex = 12;
+
+            // btnTogglePassword (Botón con Ojito)
+            btnTogglePassword.BackColor = Color.FromArgb(241, 245, 249);
+            btnTogglePassword.FlatStyle = FlatStyle.Flat;
+            btnTogglePassword.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+            btnTogglePassword.Font = new Font("Segoe UI", 10F);
+            btnTogglePassword.Location = new Point(697, 111);
+            btnTogglePassword.Name = "btnTogglePassword";
+            btnTogglePassword.Size = new Size(43, 30);
+            btnTogglePassword.TabIndex = 13;
+            btnTogglePassword.Text = "👁";
+            btnTogglePassword.UseVisualStyleBackColor = false;
 
             // lblRole
             lblRole.AutoSize = true;
@@ -233,7 +247,7 @@
             lblRole.Location = new Point(501, 165);
             lblRole.Name = "lblRole";
             lblRole.Size = new Size(119, 21);
-            lblRole.TabIndex = 13;
+            lblRole.TabIndex = 14;
             lblRole.Text = "Rol de Acceso:";
 
             // cboRole
@@ -242,7 +256,7 @@
             cboRole.Location = new Point(501, 190);
             cboRole.Name = "cboRole";
             cboRole.Size = new Size(239, 31);
-            cboRole.TabIndex = 14;
+            cboRole.TabIndex = 15;
 
             // btnSave
             btnSave.BackColor = Color.FromArgb(16, 185, 129);
@@ -253,7 +267,7 @@
             btnSave.Location = new Point(789, 8);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(251, 74);
-            btnSave.TabIndex = 15;
+            btnSave.TabIndex = 16;
             btnSave.Text = "💾 GUARDAR USUARIO";
             btnSave.UseVisualStyleBackColor = false;
 
@@ -263,7 +277,7 @@
             btnEdit.Location = new Point(789, 88);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(251, 81);
-            btnEdit.TabIndex = 16;
+            btnEdit.TabIndex = 17;
             btnEdit.Text = "EDITAR USUARIO";
             btnEdit.UseVisualStyleBackColor = true;
 
@@ -276,11 +290,12 @@
             btnDelete.Location = new Point(789, 177);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(251, 76);
-            btnDelete.TabIndex = 17;
+            btnDelete.TabIndex = 18;
             btnDelete.Text = "ACTIVAR / DESACTIVAR";
             btnDelete.UseVisualStyleBackColor = false;
 
             // dgvUsers
+            dgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgvUsers.BackgroundColor = Color.White;
             dgvUsers.BorderStyle = BorderStyle.None;
             dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -329,6 +344,7 @@
         private System.Windows.Forms.TextBox txtEmail;
         private System.Windows.Forms.Label lblPassword;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.Button btnTogglePassword;
         private System.Windows.Forms.Label lblRole;
         private System.Windows.Forms.ComboBox cboRole;
         private System.Windows.Forms.Button btnSave;

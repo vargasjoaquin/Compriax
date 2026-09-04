@@ -10,6 +10,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IDocumentService _documentService;
         private int _selectedUserId = 0;
         private byte[]? _imageBuffer = null;
+        private bool _isPasswordVisible = false;
 
         public FormUsers(IUserService userService, IDocumentService documentService)
         {
@@ -24,6 +25,7 @@ namespace CompriaxSystem.WinFormsUI
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowsePhoto.Click += (s, e) => HandlePhotoSelection();
             this.btnClearPhoto.Click += (s, e) => HandlePhotoRemoval();
+            this.btnTogglePassword.Click += (s, e) => TogglePasswordVisibility();
         }
 
         public async Task InitializeFormAsync()
@@ -36,6 +38,7 @@ namespace CompriaxSystem.WinFormsUI
 
                 await RefreshGridAsync();
                 UIHelper.AttachManagedSelection(this, dgvUsers, SyncEntityToFields, ResetUI);
+                ResetUI();
             }
         }
 
@@ -52,12 +55,14 @@ namespace CompriaxSystem.WinFormsUI
             if (dgvUsers.CurrentRow == null) return;
 
             var u = (UserDto)dgvUsers.CurrentRow.DataBoundItem;
+
             _selectedUserId = u.Id;
             txtUsername.Text = u.Username;
             txtFirstName.Text = u.FirstName;
             txtLastName.Text = u.LastName;
             txtEmail.Text = u.Email;
             cboRole.SelectedValue = u.RoleId;
+            txtPassword.Clear();
 
             _imageBuffer = u.Photo;
             ImageHelper.Clear(picPhoto);
@@ -68,7 +73,6 @@ namespace CompriaxSystem.WinFormsUI
 
             bool isAdmin = u.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
                            u.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
-
             btnDelete.Enabled = !isAdmin;
             cboRole.Enabled = !isAdmin;
         }
@@ -78,9 +82,20 @@ namespace CompriaxSystem.WinFormsUI
             _selectedUserId = 0;
             _imageBuffer = null;
             ImageHelper.Clear(picPhoto);
+
             UIHelper.CleanControls(groupBoxData);
-            SetButtonState(isEditing: false);
+
+            cboRole.SelectedIndex = -1;
+            cboRole.Enabled = true;
             txtUsername.ReadOnly = false;
+            txtPassword.Clear();
+
+            _isPasswordVisible = false;
+            txtPassword.PasswordChar = '●';
+            btnTogglePassword.Text = "👁";
+
+            SetButtonState(isEditing: false);
+            txtUsername.Focus();
         }
 
         private void SetButtonState(bool isEditing)
@@ -88,6 +103,14 @@ namespace CompriaxSystem.WinFormsUI
             btnSave.Enabled = !isEditing;
             btnEdit.Enabled = isEditing;
             btnDelete.Enabled = isEditing;
+        }
+
+        private void TogglePasswordVisibility()
+        {
+            _isPasswordVisible = !_isPasswordVisible;
+            txtPassword.PasswordChar = _isPasswordVisible ? '\0' : '●';
+            btnTogglePassword.Text = _isPasswordVisible ? "🔒" : "👁";
+            txtPassword.Focus();
         }
 
         private async Task ExecuteSaveAction() => await ProcessAction(0);
@@ -99,6 +122,7 @@ namespace CompriaxSystem.WinFormsUI
                 UIHelper.WarnMessage(this, "Debe seleccionar un usuario de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
+
             await ProcessAction(_selectedUserId);
         }
 
