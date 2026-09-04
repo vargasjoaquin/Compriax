@@ -30,39 +30,72 @@ namespace CompriaxSystem.WinFormsUI
                 txtPhone.Text = settings.Phone;
                 txtEmail.Text = settings.Email;
 
-                if (settings.Logo != null)
+                if (settings.Logo != null && settings.Logo.Length > 8)
                 {
-                    _logoBytes = settings.Logo;
-                    using var ms = new MemoryStream(_logoBytes);
-                    picLogo.Image = Image.FromStream(ms);
+                    try
+                    {
+                        using var ms = new MemoryStream(settings.Logo);
+                        picLogo.Image = new Bitmap(Image.FromStream(ms));
+                    }
+                    catch
+                    {
+                        picLogo.Image = null;
+                    }
                 }
             }
         }
 
         private async Task ExecuteSaveAction()
         {
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                UIHelper.WarnMessage(this, "El nombre del comercio es obligatorio.", "Campo Requerido");
+                txtName.Focus();
+                return;
+            }
+
             var dto = new StoreSettingsDto
             {
-                Name = txtName.Text,
-                CUIT = txtTaxId.Text,
-                Address = txtAddress.Text,
-                Phone = txtPhone.Text,
-                Email = txtEmail.Text,
+                Name = txtName.Text.Trim(),
+                CUIT = txtTaxId.Text.Trim(),
+                Address = txtAddress.Text.Trim(),
+                Phone = txtPhone.Text.Trim(),
+                Email = txtEmail.Text.Trim(),
                 Logo = _logoBytes
             };
 
-            var result = await _storeService.UpdateStoreProfileAsync(dto);
-            UIHelper.ShowResult(result, "Configuración Sistema");
+            using (new WaitCursorHelper(this))
+            {
+                var result = await _storeService.UpdateStoreProfileAsync(dto);
+
+                if (result.Success)
+                {
+                    var mainForm = System.Windows.Forms.Application.OpenForms.OfType<FormPanelControl>().FirstOrDefault();
+                    if (mainForm != null)
+                    {
+                        await mainForm.SetupAppearanceAsync();
+                    }
+
+                    UIHelper.InfoMessage(this, "¡Configuración guardada y actualizada!", "Ajustes Actualizados");
+                }
+                else
+                {
+                    UIHelper.ShowResult(result, "Configuración del Sistema");
+                }
+            }
         }
 
         private void ExecuteBrowseLogoAction()
         {
-            using OpenFileDialog ofd = new OpenFileDialog { Filter = "IMAGEN|*.jpg;*.png" };
-
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
             {
-                picLogo.Image = Image.FromFile(ofd.FileName);
-                _logoBytes = File.ReadAllBytes(ofd.FileName);
+                picLogo.Image?.Dispose();
+                _logoBytes = imageBytes;
+                picLogo.Image = displayImage;
+            }
+            else if (!string.IsNullOrEmpty(errorMessage))
+            {
+                UIHelper.WarnMessage(this, errorMessage, "Validación de Logo");
             }
         }
 

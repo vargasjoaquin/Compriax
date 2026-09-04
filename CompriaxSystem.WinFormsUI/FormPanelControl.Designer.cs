@@ -24,6 +24,7 @@
             this.picLogo = new System.Windows.Forms.PictureBox();
             this.lblSystemName = new System.Windows.Forms.Label();
             this.pnlStatusFooter = new System.Windows.Forms.Panel();
+            this.flowStatusLeft = new System.Windows.Forms.FlowLayoutPanel();
             this.pbUserIcon = new System.Windows.Forms.PictureBox();
             this.lblSessionUser = new System.Windows.Forms.Label();
             this.pbRoleIcon = new System.Windows.Forms.PictureBox();
@@ -37,6 +38,7 @@
             this.pnlTopNav.SuspendLayout();
             this.pnlBrand.SuspendLayout();
             this.pnlStatusFooter.SuspendLayout();
+            this.flowStatusLeft.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRoleIcon)).BeginInit();
@@ -77,7 +79,7 @@
             this.lblSystemName.Name = "lblSystemName";
             this.lblSystemName.Size = new System.Drawing.Size(130, 15);
             this.lblSystemName.TabIndex = 1;
-            this.lblSystemName.Text = "SUPERMARKET POS";
+            this.lblSystemName.Text = "COMPRIAX SYSTEM";
 
             // flowLayoutButtons
             this.flowLayoutButtons.AutoScroll = true;
@@ -91,11 +93,7 @@
 
             // ==================== pnlStatusFooter ====================
             this.pnlStatusFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
-            this.pnlStatusFooter.Controls.Add(this.pbUserIcon);
-            this.pnlStatusFooter.Controls.Add(this.lblSessionUser);
-            this.pnlStatusFooter.Controls.Add(this.pbRoleIcon);
-            this.pnlStatusFooter.Controls.Add(this.lblRoleName);
-            this.pnlStatusFooter.Controls.Add(this.lblShiftStatus);
+            this.pnlStatusFooter.Controls.Add(this.flowStatusLeft);
             this.pnlStatusFooter.Controls.Add(this.lblHora);
             this.pnlStatusFooter.Controls.Add(this.btnLogout);
             this.pnlStatusFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
@@ -104,10 +102,25 @@
             this.pnlStatusFooter.Size = new System.Drawing.Size(1280, 48);
             this.pnlStatusFooter.TabIndex = 1;
 
+            // flowStatusLeft 
+            this.flowStatusLeft.AutoSize = true;
+            this.flowStatusLeft.Controls.Add(this.pbUserIcon);
+            this.flowStatusLeft.Controls.Add(this.lblSessionUser);
+            this.flowStatusLeft.Controls.Add(this.pbRoleIcon);
+            this.flowStatusLeft.Controls.Add(this.lblRoleName);
+            this.flowStatusLeft.Controls.Add(this.lblShiftStatus);
+            this.flowStatusLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.flowStatusLeft.Location = new System.Drawing.Point(0, 0);
+            this.flowStatusLeft.Name = "flowStatusLeft";
+            this.flowStatusLeft.Padding = new System.Windows.Forms.Padding(12, 10, 10, 0);
+            this.flowStatusLeft.Size = new System.Drawing.Size(900, 48);
+            this.flowStatusLeft.TabIndex = 0;
+            this.flowStatusLeft.WrapContents = false;
+
             // pbUserIcon
-            this.pbUserIcon.Location = new System.Drawing.Point(15, 12);
+            this.pbUserIcon.Margin = new System.Windows.Forms.Padding(0, 2, 4, 0);
             this.pbUserIcon.Name = "pbUserIcon";
-            this.pbUserIcon.Size = new System.Drawing.Size(24, 24);
+            this.pbUserIcon.Size = new System.Drawing.Size(20, 20);
             this.pbUserIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbUserIcon.TabIndex = 0;
             this.pbUserIcon.TabStop = false;
@@ -116,16 +129,16 @@
             this.lblSessionUser.AutoSize = true;
             this.lblSessionUser.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblSessionUser.ForeColor = System.Drawing.Color.White;
-            this.lblSessionUser.Location = new System.Drawing.Point(45, 14);
+            this.lblSessionUser.Margin = new System.Windows.Forms.Padding(0, 2, 20, 0);
             this.lblSessionUser.Name = "lblSessionUser";
             this.lblSessionUser.Size = new System.Drawing.Size(77, 17);
             this.lblSessionUser.TabIndex = 1;
             this.lblSessionUser.Text = "USUARIO";
 
             // pbRoleIcon
-            this.pbRoleIcon.Location = new System.Drawing.Point(280, 12);
+            this.pbRoleIcon.Margin = new System.Windows.Forms.Padding(0, 2, 4, 0);
             this.pbRoleIcon.Name = "pbRoleIcon";
-            this.pbRoleIcon.Size = new System.Drawing.Size(24, 24);
+            this.pbRoleIcon.Size = new System.Drawing.Size(20, 20);
             this.pbRoleIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pbRoleIcon.TabIndex = 2;
             this.pbRoleIcon.TabStop = false;
@@ -134,7 +147,7 @@
             this.lblRoleName.AutoSize = true;
             this.lblRoleName.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblRoleName.ForeColor = System.Drawing.Color.White;
-            this.lblRoleName.Location = new System.Drawing.Point(310, 14);
+            this.lblRoleName.Margin = new System.Windows.Forms.Padding(0, 2, 25, 0);
             this.lblRoleName.Name = "lblRoleName";
             this.lblRoleName.Size = new System.Drawing.Size(130, 17);
             this.lblRoleName.TabIndex = 3;
@@ -144,7 +157,7 @@
             this.lblShiftStatus.AutoSize = true;
             this.lblShiftStatus.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
             this.lblShiftStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
-            this.lblShiftStatus.Location = new System.Drawing.Point(480, 14);
+            this.lblShiftStatus.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
             this.lblShiftStatus.Name = "lblShiftStatus";
             this.lblShiftStatus.Size = new System.Drawing.Size(135, 17);
             this.lblShiftStatus.TabIndex = 4;
@@ -188,7 +201,7 @@
             // HoraFecha
             this.HoraFecha.Interval = 1000;
 
-            // ==================== Form Properties ====================
+            // FormPanelControl
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1280, 800);
@@ -197,13 +210,15 @@
             this.Controls.Add(this.pnlTopNav);
             this.Name = "FormPanelControl";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Compriax System - Panel de Control";
+            this.Text = "CompriaxSystem - Panel de Control";
 
             this.pnlTopNav.ResumeLayout(false);
             this.pnlBrand.ResumeLayout(false);
             this.pnlBrand.PerformLayout();
             this.pnlStatusFooter.ResumeLayout(false);
             this.pnlStatusFooter.PerformLayout();
+            this.flowStatusLeft.ResumeLayout(false);
+            this.flowStatusLeft.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.picLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbUserIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pbRoleIcon)).EndInit();
@@ -218,6 +233,7 @@
         private System.Windows.Forms.Label lblSystemName;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutButtons;
         private System.Windows.Forms.Panel pnlStatusFooter;
+        private System.Windows.Forms.FlowLayoutPanel flowStatusLeft;
         private System.Windows.Forms.PictureBox pbUserIcon;
         private System.Windows.Forms.Label lblSessionUser;
         private System.Windows.Forms.PictureBox pbRoleIcon;

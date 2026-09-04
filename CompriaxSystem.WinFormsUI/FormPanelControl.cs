@@ -1,6 +1,7 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using CompriaxSystem.Application.Interfaces.Services;
+﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
+using DocumentFormat.OpenXml.Drawing;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -12,7 +13,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IBackupService _backupService;
         private readonly ICashShiftService _cashShiftService;
         private FormHome? _dashboardForm;
-        private bool _isShuttingDown = false; // Bandera para evitar cierres duplicados
+        private bool _isShuttingDown = false;
 
         public FormPanelControl(
             ICurrentUserService currentUserService,
@@ -41,23 +42,38 @@ namespace CompriaxSystem.WinFormsUI
             this.FormClosing -= FormPanelControl_FormClosing;
             this.FormClosing += FormPanelControl_FormClosing;
 
-            SetupAppearance();
+            // Refresco de apariencia y estado cada vez que se regresa al panel principal
+            this.Activated += async (s, e) => await SetupAppearanceAsync();
+
+            _ = SetupAppearanceAsync();
             LoadUserData();
             LoadDashboard();
         }
 
-        private async void SetupAppearance()
+        public async Task SetupAppearanceAsync()
         {
             try
             {
                 var settings = await _storeService.GetStoreProfileAsync();
                 lblSystemName.Text = settings.Name.ToUpper();
 
-                if (settings.Logo != null && settings.Logo.Length > 0)
+                picLogo.Image?.Dispose();
+                picLogo.Image = null;
+
+                if (settings.Logo != null && settings.Logo.Length > 8)
                 {
                     picLogo.Image = ImageHelper.LoadFromBytes(settings.Logo);
                 }
 
+                await RefreshShiftStatusAsync();
+            }
+            catch { }
+        }
+
+        public async Task RefreshShiftStatusAsync()
+        {
+            try
+            {
                 var user = _currentUserService.CurrentUser;
                 bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
                 var ctx = _currentUserService.OperationalContext;
@@ -75,12 +91,12 @@ namespace CompriaxSystem.WinFormsUI
                     if (activeShift != null)
                     {
                         lblShiftStatus.Text = $"🖥️ {regName} | 🟢 Turno #{activeShift.Id} ({activeShift.OpeningDate:HH:mm})";
-                        lblShiftStatus.ForeColor = UIThemeHelper.Success;
+                        lblShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
                     }
                     else
                     {
                         lblShiftStatus.Text = $"🖥️ {regName} | 🔴 Caja Cerrada";
-                        lblShiftStatus.ForeColor = UIThemeHelper.Danger;
+                        lblShiftStatus.ForeColor = Color.FromArgb(248, 113, 113);
                     }
                 }
             }
@@ -177,7 +193,7 @@ namespace CompriaxSystem.WinFormsUI
             flowLayoutButtons.ResumeLayout(true);
         }
 
-        private Button CreateNavButton(string title, Image icon)
+        private static Button CreateNavButton(string title, Image icon)
         {
             var btn = new Button
             {
@@ -270,15 +286,11 @@ namespace CompriaxSystem.WinFormsUI
             return resized;
         }
 
-        private void btnLogout_Click(object? sender, EventArgs e)
-        {
-            this.Close();
-        }
+        private void btnLogout_Click(object? sender, EventArgs e) => this.Close();
 
         private async void FormPanelControl_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            if (_isShuttingDown)
-                return;
+            if (_isShuttingDown) return;
 
             bool confirm = UIHelper.ConfirmMessage(
                 "¿Está seguro de que desea cerrar la sesión y salir del sistema?",
