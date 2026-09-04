@@ -26,7 +26,7 @@ namespace CompriaxSystem.Application.Mappings
 
             CreateMap<User, UserSessionDto>()
                 .ForMember(dest => dest.UserId, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.LastName}, {src.FirstName}".Trim()))
+                .ForMember(dest => dest.FullName, opt => opt.MapFrom(src => $"{src.LastName} {src.FirstName}".Trim()))
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role != null ? src.Role.Name : string.Empty))
                 .ForMember(dest => dest.Photo, opt => opt.MapFrom(src => src.Photo))
                 .ForMember(dest => dest.LoginTime, opt => opt.Ignore());

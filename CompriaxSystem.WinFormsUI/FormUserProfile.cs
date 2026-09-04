@@ -28,21 +28,20 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            lblNameVal.Text = user.FullName;
+            lblNameVal.Text = $"{user.FirstName} {user.LastName}".Trim();
             lblRoleVal.Text = user.RoleName.ToUpper();
             lblUserVal.Text = $"Usuario: {user.Username}";
-            lblEmailVal.Text = string.IsNullOrEmpty(user.Email) ? "Sin correo asignado" : user.Email;
+            lblEmailVal.Text = user.Email;
 
             ImageHelper.Clear(picAvatar);
             if (user.Photo != null && user.Photo.Length > 0)
             {
                 picAvatar.Image = ImageHelper.LoadFromBytes(user.Photo);
             }
-
-            var nameParts = user.FullName.Split(' ', 2);
-            txtEditFirstName.Text = nameParts.Length > 0 ? nameParts[0] : user.FullName;
-            txtEditLastName.Text = nameParts.Length > 1 ? nameParts[1] : "";
-            txtEditEmail.Text = user.Email ?? string.Empty;
+            
+            txtEditFirstName.Text = user.FirstName;
+            txtEditLastName.Text = user.LastName;
+            txtEditEmail.Text = user.Email;
 
             txtEditCurrentPass.Clear();
             txtEditPassword.Clear();
@@ -62,6 +61,13 @@ namespace CompriaxSystem.WinFormsUI
             {
                 UIHelper.WarnMessage(this, "Debe ingresar su apellido.", "Campo Obligatorio");
                 txtEditLastName.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEditEmail.Text))
+            {
+                UIHelper.WarnMessage(this, "Debe ingresar su correo electrónico.", "Campo Obligatorio");
+                txtEditEmail.Focus();
                 return;
             }
 
@@ -96,7 +102,9 @@ namespace CompriaxSystem.WinFormsUI
 
                 if (result.Success)
                 {
-                    _currentUserService.CurrentUser.FullName = $"{dto.LastName}, {dto.FirstName}";
+                    _currentUserService.CurrentUser.FirstName = dto.FirstName;
+                    _currentUserService.CurrentUser.LastName = dto.LastName;
+                    _currentUserService.CurrentUser.FullName = $"{dto.FirstName} {dto.LastName}".Trim();
                     _currentUserService.CurrentUser.Email = dto.Email;
 
                     UIHelper.ShowResult(result, "Perfil Actualizado");
