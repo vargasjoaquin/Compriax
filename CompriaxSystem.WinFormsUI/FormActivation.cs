@@ -13,7 +13,11 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             this.btnActivate.Click += async (s, e) => await ExecuteActivationAsync();
-            this.btnExit.Click += (s, e) => System.Windows.Forms.Application.Exit();
+            this.btnExit.Click += (s, e) => 
+            {
+                this.DialogResult = DialogResult.Cancel;
+                this.Close();
+            };
         }
 
         private async Task ExecuteActivationAsync()
