@@ -116,6 +116,7 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddValidatorsFromAssembly(typeof(ProductCreateValidator).Assembly);
 
                     services.Configure<SecurityRecordingSettings>(context.Configuration.GetSection("SecurityRecording"));
+                    services.Configure<EmailSettings>(context.Configuration.GetSection("EmailSettings"));
                     services.Configure<CloudinarySettings>(context.Configuration.GetSection("Cloudinary"));
                     services.Configure<DatabaseBackupSettings>(context.Configuration.GetSection("DatabaseBackup"));
                     services.Configure<AfipSettings>(context.Configuration.GetSection("AfipFiscal"));
@@ -140,6 +141,7 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddScoped<IFileStorageService, CloudinaryStorageService>();
                     services.AddScoped<IWhatsappService, WhatsappService>();
                     services.AddScoped<IBackupService, BackupService>();
+                    services.AddScoped<IEmailService, EmailService>();
                     services.AddSingleton<ITicketTemplateService, TicketTemplateService>();
                     services.AddSingleton<ITicketPrinter, TicketPrinter>();
                     services.AddScoped<IAfipService, AfipService>();
