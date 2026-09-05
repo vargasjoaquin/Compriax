@@ -6,20 +6,21 @@ namespace CompriaxSystem.WinFormsUI
     public partial class FormHome : Form
     {
         private readonly IReportService _reportService;
+        private readonly SemaphoreSlim _dashboardLock = new(1, 1);
 
         public FormHome(IReportService reportService)
         {
             _reportService = reportService;
             InitializeComponent();
-        }
 
-        private async void FormHome_Load(object sender, EventArgs e)
-        {
-            await RefreshDashboardAsync();
+            this.Load += async (s, e) => await RefreshDashboardAsync();
         }
 
         public async Task RefreshDashboardAsync()
         {
+            if (!await _dashboardLock.WaitAsync(0))
+                return;
+
             using (new WaitCursorHelper(this))
             {
                 try
@@ -35,17 +36,18 @@ namespace CompriaxSystem.WinFormsUI
                     lblLowStockCount.ForeColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.Danger : UIThemeHelper.TextMain;
 
                     dgvTopProducts.DataSource = null;
+                    dgvTopProducts.AutoGenerateColumns = true;
                     dgvTopProducts.DataSource = stats.TopSellingProducts.ToList();
+                    UIHelper.FormatGrid(dgvTopProducts);
 
                     dgvCriticalStock.DataSource = null;
+                    dgvCriticalStock.AutoGenerateColumns = true;
                     dgvCriticalStock.DataSource = stats.CriticalStockList.ToList();
-
-                    UIHelper.FormatGrid(dgvTopProducts);
                     UIHelper.FormatGrid(dgvCriticalStock);
                 }
                 catch (Exception ex)
                 {
-                    UIHelper.ErrorMessage(this, $"No se pudieron cargar las estadísticas del dashboard:\n{ex.Message}", "Error de Conexión");
+                    UIHelper.ErrorMessage(this, $"No se pudieron cargar las estadísticas del dashboard:\n{ex.Message}", "Dashboard");
                 }
             }
         }

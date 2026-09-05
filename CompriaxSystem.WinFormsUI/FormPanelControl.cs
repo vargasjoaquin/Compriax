@@ -14,6 +14,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ICashShiftService _cashShiftService;
         private FormHome? _dashboardForm;
         private bool _isShuttingDown = false;
+        private readonly SemaphoreSlim _appearanceLock = new(1, 1);
 
         public FormPanelControl(
             ICurrentUserService currentUserService,
@@ -42,16 +43,22 @@ namespace CompriaxSystem.WinFormsUI
             this.FormClosing -= FormPanelControl_FormClosing;
             this.FormClosing += FormPanelControl_FormClosing;
 
-            // Refresco de apariencia y estado cada vez que se regresa al panel principal
-            this.Activated += async (s, e) => await SetupAppearanceAsync();
+            this.Load += async (s, e) =>
+            {
+                await SetupAppearanceAsync();
+                await LoadDashboardAsync();
+            };
 
-            _ = SetupAppearanceAsync();
+            this.Activated += async (s, e) => await RefreshShiftStatusAsync();
+
             LoadUserData();
-            LoadDashboard();
         }
 
         public async Task SetupAppearanceAsync()
         {
+            if (!await _appearanceLock.WaitAsync(0))
+                return;
+
             try
             {
                 var settings = await _storeService.GetStoreProfileAsync();
@@ -67,7 +74,13 @@ namespace CompriaxSystem.WinFormsUI
 
                 await RefreshShiftStatusAsync();
             }
-            catch { }
+            catch 
+            {
+            }
+            finally
+            {
+                _appearanceLock.Release();
+            }
         }
 
         public async Task RefreshShiftStatusAsync()
@@ -106,7 +119,9 @@ namespace CompriaxSystem.WinFormsUI
         private void LoadUserData()
         {
             var user = _currentUserService.CurrentUser;
-            if (user == null) return;
+            
+            if (user == null)
+                return;
 
             lblSessionUser.Text = user.FullName.ToUpper();
             lblRoleName.Text = $"[{user.RoleName.ToUpper()}]";
@@ -122,7 +137,13 @@ namespace CompriaxSystem.WinFormsUI
 
             var menuDefinitions = new List<NavMenuItemHelper>
             {
-                NavMenuItemHelper.DirectAction("Inicio", "Dashboard Principal", Resources._051_dashboard, () => _dashboardForm?.BringToFront()),
+                NavMenuItemHelper.DirectAction("Inicio", "Dashboard Principal", Resources._051_dashboard, async () =>
+                {
+                    _dashboardForm?.BringToFront();
+                    
+                    if (_dashboardForm != null)
+                        await _dashboardForm.RefreshDashboardAsync();
+                }),
 
                 NavMenuItemHelper.Group("Punto de Venta ▾", "Terminal POS y Comprobantes", Resources._052_registrar_venta, new List<NavMenuItemHelper>
                 {
@@ -167,9 +188,13 @@ namespace CompriaxSystem.WinFormsUI
 
             foreach (var item in menuDefinitions)
             {
-                if (item.RequireAdmin && !isAdmin) continue;
+                if (item.RequireAdmin && !isAdmin) 
+                    continue;
+                
                 var subItemsAuth = item.SubItems.Where(s => !s.RequireAdmin || isAdmin).ToList();
-                if (item.HasSubItems && !subItemsAuth.Any()) continue;
+                
+                if (item.HasSubItems && !subItemsAuth.Any()) 
+                    continue;
 
                 var btn = CreateNavButton(item.Title, item.Icon ?? Resources._051_dashboard);
 
@@ -203,7 +228,7 @@ namespace CompriaxSystem.WinFormsUI
                 Text = title,
                 TextAlign = ContentAlignment.BottomCenter,
                 Font = UIThemeHelper.FontBodyBold,
-                ForeColor = UIThemeHelper.SidebarText,
+                ForeColor = UIThemeHelper.TextMain,
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.Transparent,
                 Cursor = Cursors.Hand,
@@ -212,7 +237,7 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = UIThemeHelper.SidebarHover;
+            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(215, 225, 235);
 
             return btn;
         }
@@ -229,7 +254,8 @@ namespace CompriaxSystem.WinFormsUI
 
             foreach (var item in items)
             {
-                if (item.RequireAdmin && !isAdmin) continue;
+                if (item.RequireAdmin && !isAdmin) 
+                    continue;
 
                 var menuItem = new ToolStripMenuItem(item.Title)
                 {
@@ -248,7 +274,7 @@ namespace CompriaxSystem.WinFormsUI
             return menu;
         }
 
-        private void LoadDashboard()
+        private async Task LoadDashboardAsync()
         {
             _dashboardForm = _serviceProvider.GetRequiredService<FormHome>();
             _dashboardForm.TopLevel = false;
@@ -257,6 +283,8 @@ namespace CompriaxSystem.WinFormsUI
 
             panelContenedor.Controls.Add(_dashboardForm);
             _dashboardForm.Show();
+
+            await _dashboardForm.RefreshDashboardAsync();
         }
 
         private void OpenWindowByType(Type formType)
@@ -290,7 +318,8 @@ namespace CompriaxSystem.WinFormsUI
 
         private async void FormPanelControl_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            if (_isShuttingDown) return;
+            if (_isShuttingDown) 
+                return;
 
             bool confirm = UIHelper.ConfirmMessage(
                 "¿Está seguro de que desea cerrar la sesión y salir del sistema?",
@@ -313,7 +342,9 @@ namespace CompriaxSystem.WinFormsUI
                     await _backupService.ExecuteAutomaticBackupAsync();
                 }
             }
-            catch { }
+            catch 
+            {
+            }
             finally
             {
                 System.Windows.Forms.Application.Exit();
