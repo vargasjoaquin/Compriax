@@ -37,9 +37,12 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
+            numInitialCash.Minimum = -100000000m;
+
             if (!_currentUserService.HasRegisterAssigned)
             {
                 var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
+                
                 if (selectForm.ShowDialog(this) != DialogResult.OK)
                 {
                     UIHelper.WarnMessage(this, "Debe seleccionar una caja para poder gestionar o consultar turnos.", "Caja Requerida");
@@ -71,7 +74,11 @@ namespace CompriaxSystem.WinFormsUI
                     pnlOpenShift.Visible = false;
                     pnlActiveShift.Visible = true;
 
-                    lblShiftStatus.Text = $"🟢 TURNO ABIERTO #{_currentShift.Id} ({_currentShift.OpeningDate:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
+                    DateTime localOpening = _currentShift.OpeningDate.Kind == DateTimeKind.Utc
+                        ? _currentShift.OpeningDate.ToLocalTime()
+                        : _currentShift.OpeningDate;
+
+                    lblShiftStatus.Text = $"🟢 TURNO ABIERTO #{_currentShift.Id} ({localOpening:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
                     lblFondoInicialVal.Text = $"Fondo Inicial: {_currentShift.InitialCash:C2}";
                     lblVentasEfectivoVal.Text = $"Ventas en Efectivo: {_currentShift.TotalCashSales:C2}";
 
@@ -90,9 +97,10 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteOpenShiftAction()
         {
-            if (numInitialCash.Value < 0)
+            if (numInitialCash.Value < 0 || numInitialCash.Text.Contains('-'))
             {
-                UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo.", "Monto Inválido");
+                UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo. Ingrese un valor igual o mayor a $ 0,00.", "Monto Inválido");
+                numInitialCash.Select(0, numInitialCash.Text.Length);
                 numInitialCash.Focus();
                 return;
             }
@@ -117,6 +125,7 @@ namespace CompriaxSystem.WinFormsUI
                 : "Ingrese el monto a retirar de la caja:";
 
             using var inputForm = new FormPromptDialog(typeTitle, prompt);
+            
             if (inputForm.ShowDialog(this) == DialogResult.OK)
             {
                 var dto = new CashMovementCreateDto
@@ -157,11 +166,13 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteCloseShiftZAction()
         {
-            if (_currentShift == null) return;
+            if (_currentShift == null) 
+                return;
 
             var summary = await _cashShiftService.GetCurrentShiftSummaryAsync();
 
             using var countDialog = new FormBlindCashCountDialog(summary.ExpectedCashInDrawer);
+            
             if (countDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var closeDto = new CashShiftCloseDto

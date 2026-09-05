@@ -96,13 +96,14 @@
             lblInitialCash.Text = "Fondo Inicial de Cambio en Efectivo ($):";
 
             // numInitialCash
-            numInitialCash.DecimalPlaces = 2;
-            numInitialCash.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            numInitialCash.Location = new Point(20, 84);
-            numInitialCash.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
-            numInitialCash.Name = "numInitialCash";
-            numInitialCash.Size = new Size(300, 39);
-            numInitialCash.TabIndex = 2;
+            this.numInitialCash.DecimalPlaces = 2;
+            this.numInitialCash.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold);
+            this.numInitialCash.Location = new System.Drawing.Point(20, 84);
+            this.numInitialCash.Maximum = new decimal(new int[] { 100000000, 0, 0, 0 });
+            this.numInitialCash.Minimum = new decimal(new int[] { 100000000, 0, 0, -2147483648 });
+            this.numInitialCash.Name = "numInitialCash";
+            this.numInitialCash.Size = new System.Drawing.Size(300, 39);
+            this.numInitialCash.TabIndex = 2;
 
             // btnOpenShift
             btnOpenShift.BackColor = Color.FromArgb(16, 185, 129);
