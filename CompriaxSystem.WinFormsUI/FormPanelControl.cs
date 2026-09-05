@@ -103,7 +103,11 @@ namespace CompriaxSystem.WinFormsUI
 
                     if (activeShift != null)
                     {
-                        lblShiftStatus.Text = $"🖥️ {regName} | 🟢 Turno #{activeShift.Id} ({activeShift.OpeningDate:HH:mm})";
+                        DateTime localOpening = activeShift.OpeningDate.Kind == DateTimeKind.Utc
+                                                ? activeShift.OpeningDate.ToLocalTime()
+                                                : activeShift.OpeningDate;
+                        
+                        lblShiftStatus.Text = $"🖥️ {regName} | 🟢 Turno #{activeShift.Id} ({localOpening:HH:mm})";
                         lblShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
                     }
                     else
