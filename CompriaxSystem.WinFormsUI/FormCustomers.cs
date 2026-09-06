@@ -10,6 +10,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ILookupService _lookupService;
         private readonly IDocumentService _documentService;
         private int _selectedCustomerId = 0;
+        private bool _isFormattingCuit = false;
 
         public FormCustomers(ICustomerService customerService, ILookupService lookupService, IDocumentService documentService)
         {
@@ -23,11 +24,17 @@ namespace CompriaxSystem.WinFormsUI
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-            //this.btnCerrar.Click += (s, e) => this.Close();
+
+            this.txtCuil.TextChanged += OnCuitTextChanged;
+            this.txtDni.KeyPress += OnOnlyNumbersKeyPress;
+            this.dgvCustomers.CellFormatting += DgvCustomers_CellFormatting;
         }
 
         private async Task InitializeFormAsync()
         {
+            txtDni.MaxLength = 8;
+            txtCuil.MaxLength = 13;
+
             using (new WaitCursorHelper(this))
             {
                 var taxConditions = (await _lookupService.GetTaxConditionsAsync()).ToList();
@@ -41,6 +48,55 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
+        private void DgvCustomers_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvCustomers.Rows[e.RowIndex].DataBoundItem is CustomerDto dto)
+            {
+                if (!dto.IsActive)
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                    e.CellStyle.SelectionForeColor = Color.Red;
+                }
+            }
+        }
+
+        private void OnOnlyNumbersKeyPress(object? sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) e.Handled = true;
+        }
+
+        private void OnCuitTextChanged(object? sender, EventArgs e)
+        {
+            if (_isFormattingCuit) 
+                return;
+
+            string raw = new string(txtCuil.Text.Where(char.IsDigit).ToArray());
+            
+            if (raw.Length > 11) 
+                raw = raw.Substring(0, 11);
+
+            string formatted = raw;
+
+            if (raw.Length > 2 && raw.Length <= 10)
+                formatted = raw.Insert(2, "-");
+            else if (raw.Length > 10)
+                formatted = raw.Insert(2, "-").Insert(11, "-");
+
+            _isFormattingCuit = true;
+            int selectionStart = txtCuil.SelectionStart;
+            int oldLength = txtCuil.Text.Length;
+
+            txtCuil.Text = formatted;
+
+            // Ajustar posición del cursor
+            if (txtCuil.Text.Length > oldLength)
+                selectionStart++;
+            
+            txtCuil.SelectionStart = Math.Max(0, Math.Min(selectionStart, txtCuil.Text.Length));
+
+            _isFormattingCuit = false;
+        }
+
         private async Task RefreshGridAsync()
         {
             var data = await _customerService.GetAllActiveAsync();
@@ -51,11 +107,10 @@ namespace CompriaxSystem.WinFormsUI
 
         private void SyncEntityToFields()
         {
-            if (dgvCustomers.CurrentRow == null)
+            if (dgvCustomers.CurrentRow == null) 
                 return;
 
             var dto = (CustomerDto)dgvCustomers.CurrentRow.DataBoundItem;
-
             _selectedCustomerId = dto.Id;
             txtDni.Text = dto.DocumentNumber;
             txtCuil.Text = dto.Cuil ?? string.Empty;
@@ -65,11 +120,11 @@ namespace CompriaxSystem.WinFormsUI
             txtPhone.Text = dto.Phone ?? string.Empty;
             txtAddress.Text = dto.Address ?? string.Empty;
             txtCity.Text = dto.City ?? string.Empty;
+            cboTaxCondition.SelectedValue = dto.TaxConditionId ?? -1;
 
-            cboTaxCondition.SelectedValue = dto.TaxConditionId.HasValue ? dto.TaxConditionId.Value : -1;
-
-            SetButtonState(isEditing: true);
+            SetButtonState(true);
             txtDni.ReadOnly = true;
+            txtCuil.ReadOnly = true;
         }
 
         private void ResetUI()
@@ -77,9 +132,9 @@ namespace CompriaxSystem.WinFormsUI
             _selectedCustomerId = 0;
             UIHelper.CleanControls(groupBox1);
             cboTaxCondition.SelectedIndex = -1;
-
             SetButtonState(isEditing: false);
             txtDni.ReadOnly = false;
+            txtCuil.ReadOnly = false;
         }
 
         private void SetButtonState(bool isEditing)
@@ -94,32 +149,23 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessAction(int id)
         {
-            // Normalización de cadenas vacías a null para campos opcionales
-            string? cuil = string.IsNullOrWhiteSpace(txtCuil.Text) ? null : txtCuil.Text.Trim();
-            string? email = string.IsNullOrWhiteSpace(txtEmail.Text) ? null : txtEmail.Text.Trim();
-            string? phone = string.IsNullOrWhiteSpace(txtPhone.Text) ? null : txtPhone.Text.Trim();
-            string? address = string.IsNullOrWhiteSpace(txtAddress.Text) ? null : txtAddress.Text.Trim();
-            string? city = string.IsNullOrWhiteSpace(txtCity.Text) ? null : txtCity.Text.Trim();
-
-            int? taxConditionId = cboTaxCondition.SelectedValue is int tId && tId > 0 ? tId : null;
-
             var dto = new CustomerDto
             {
                 Id = id,
                 DocumentNumber = txtDni.Text.Trim(),
-                Cuil = cuil,
+                Cuil = txtCuil.Text.Trim(),
                 FirstName = txtName.Text.Trim(),
                 LastName = txtLastName.Text.Trim(),
-                Email = email,
-                Phone = phone,
-                Address = address,
-                City = city,
-                TaxConditionId = taxConditionId,
+                Email = txtEmail.Text.Trim(),
+                Phone = txtPhone.Text.Trim(),
+                Address = txtAddress.Text.Trim(),
+                City = txtCity.Text.Trim(),
+                TaxConditionId = cboTaxCondition.SelectedValue is int tId && tId > 0 ? tId : null,
                 IsActive = true
             };
 
             var result = await _customerService.RegisterCustomerAsync(dto);
-            UIHelper.ShowResult(result, "Gestión de Clientes", async () =>
+            UIHelper.ShowResult(result, "Clientes", async () =>
             {
                 await RefreshGridAsync();
                 ResetUI();
@@ -128,7 +174,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteDeleteAction()
         {
-            if (_selectedCustomerId == 0)
+            if (_selectedCustomerId == 0) 
                 return;
 
             if (UIHelper.ConfirmMessage("¿Desea eliminar a este cliente del sistema?"))
@@ -153,9 +199,7 @@ namespace CompriaxSystem.WinFormsUI
             using (new WaitCursorHelper(this))
             {
                 byte[] pdfBytes = await _documentService.GenerateCustomersReportAsync(customers);
-                string fileName = $"Reporte_Clientes_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-
-                await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Exportar Reporte de Clientes");
+                await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, "Clientes.pdf");
             }
         }
     }

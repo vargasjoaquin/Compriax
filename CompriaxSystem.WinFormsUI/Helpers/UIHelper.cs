@@ -178,7 +178,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             dgv.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(245, 245, 245);
 
             string[] columnsToHide = {
-                "Id", "IsDeleted", "RowVersion", "IsActive", "Status",
+                "Id", "IsDeleted", "RowVersion", "IsActive", "Status", "FullName",
                 "RoleId", "CategoryId", "BrandId", "UnitOfMeasureId", "TaxConditionId",
                 "GenderId", "CivilStatusId", "PositionId", "ProductId", "SupplierId",
                 "CustomerId", "EmployeeId", "SaleId", "PurchaseId", "PromotionId",
