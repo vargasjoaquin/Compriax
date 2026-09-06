@@ -31,9 +31,28 @@ namespace CompriaxSystem.WinFormsUI
             this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.txtSearch.TextChanged += (s, e) => FilterPromotions();
+            this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
         }
 
-        private async Task InitializeFormAsync()
+        private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvPromotions.Columns[e.ColumnIndex].Name == "StatusSummary" && e.Value != null)
+            {
+                string status = e.Value.ToString()!;
+                if (status.Contains("Inactiva") || status.Contains("Vencida"))
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                    e.CellStyle.SelectionForeColor = Color.Red;
+                }
+                else
+                {
+                    e.CellStyle.ForeColor = Color.Green;
+                    e.CellStyle.SelectionForeColor = Color.Lime;
+                }
+            }
+        }
+
+        public async Task InitializeFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
@@ -117,12 +136,14 @@ namespace CompriaxSystem.WinFormsUI
 
         private void SyncEntityToFields()
         {
-            if (dgvPromotions.CurrentRow == null) 
+            if (dgvPromotions.CurrentRow == null)
                 return;
 
             var p = (PromotionDto)dgvPromotions.CurrentRow.DataBoundItem;
             _selectedPromoId = p.Id;
             txtName.Text = p.Name;
+            txtDescription.Text = p.Description; // Descomenta esto cuando agregues el control txtDescription al Designer
+
             cboType.SelectedValue = p.PromotionType;
             cboProduct.SelectedValue = p.ProductId.HasValue ? p.ProductId.Value : 0;
             cboCategory.SelectedValue = p.CategoryId.HasValue ? p.CategoryId.Value : 0;
@@ -179,21 +200,21 @@ namespace CompriaxSystem.WinFormsUI
         {
             if (string.IsNullOrWhiteSpace(txtName.Text))
             {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre descriptivo de la promoción.", "Campo Obligatorio");
+                UIHelper.WarnMessage(this, "El nombre es obligatorio.", "Validación");
                 txtName.Focus();
                 return;
             }
 
-            var promoType = (PromotionType)cboType.SelectedValue!;
+            var promotionType = (PromotionType)cboType.SelectedValue!;
 
-            if (promoType == PromotionType.PercentageOnProduct && (cboProduct.SelectedValue is not int pId || pId <= 0))
+            if (promotionType == PromotionType.PercentageOnProduct && (cboProduct.SelectedValue is not int pId || pId <= 0))
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un producto aplicable para esta promoción.", "Producto Requerido");
                 cboProduct.Focus();
                 return;
             }
 
-            if (promoType == PromotionType.PercentageOnCategory && (cboCategory.SelectedValue is not int cId || cId <= 0))
+            if (promotionType == PromotionType.PercentageOnCategory && (cboCategory.SelectedValue is not int cId || cId <= 0))
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una categoría aplicable para esta promoción.", "Categoría Requerida");
                 cboCategory.Focus();
@@ -204,14 +225,15 @@ namespace CompriaxSystem.WinFormsUI
             {
                 Id = id,
                 Name = txtName.Text.Trim(),
-                PromotionType = promoType,
+                Description = txtName.Text.Trim(),
+                PromotionType = promotionType,
                 ProductId = cboProduct.SelectedValue is int prodId && prodId > 0 ? prodId : null,
                 CategoryId = cboCategory.SelectedValue is int catId && catId > 0 ? catId : null,
-                DiscountPercentage = promoType != PromotionType.BuyXPayY ? numDiscount.Value : null,
-                RequiredQuantity = promoType == PromotionType.BuyXPayY ? (int)numRequired.Value : null,
-                PayQuantity = promoType == PromotionType.BuyXPayY ? (int)numPay.Value : null,
+                DiscountPercentage = promotionType != PromotionType.BuyXPayY ? numDiscount.Value : null,
+                RequiredQuantity = promotionType == PromotionType.BuyXPayY ? (int)numRequired.Value : null,
+                PayQuantity = promotionType == PromotionType.BuyXPayY ? (int)numPay.Value : null,
                 StartDate = dtpStart.Value.Date,
-                EndDate = dtpEnd.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59),
+                EndDate = dtpEnd.Value.Date.AddHours(23).AddMinutes(59),
                 IsActive = true
             };
 
@@ -237,10 +259,8 @@ namespace CompriaxSystem.WinFormsUI
             using (new WaitCursorHelper(this))
             {
                 var result = await _promotionService.ToggleStatusAsync(_selectedPromoId);
-                UIHelper.ShowResult(result, "Promociones", async () =>
-                {
+                UIHelper.ShowResult(result, "Estado", async () => {
                     await RefreshGridAsync();
-                    ResetUI();
                 });
             }
         }
