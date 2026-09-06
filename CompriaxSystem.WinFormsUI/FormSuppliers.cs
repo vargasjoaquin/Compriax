@@ -9,6 +9,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ISupplyChainService _supplyChainService;
         private readonly IDocumentService _documentService;
         private int _selectedSupplierId = 0;
+        private bool _isFormattingCuit = false;
 
         public FormSuppliers(ISupplyChainService supplyChainService, IDocumentService documentService)
         {
@@ -21,7 +22,9 @@ namespace CompriaxSystem.WinFormsUI
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-            //this.btnClose.Click += (s, e) => this.Close();
+
+            this.txtTaxId.TextChanged += OnCuitTextChanged;
+            this.dgvSuppliers.CellFormatting += DgvSuppliers_CellFormatting;
         }
 
         public async Task InitializeFormAsync()
@@ -41,6 +44,49 @@ namespace CompriaxSystem.WinFormsUI
             UIHelper.FormatGrid(dgvSuppliers);
         }
 
+        private void OnCuitTextChanged(object? sender, EventArgs e)
+        {
+            if (_isFormattingCuit) 
+                return;
+
+            string raw = new string(txtTaxId.Text.Where(char.IsDigit).ToArray());
+            
+            if (raw.Length > 11) 
+                raw = raw.Substring(0, 11);
+
+            string formatted = raw;
+            
+            if (raw.Length > 2 && raw.Length <= 10)
+                formatted = raw.Insert(2, "-");
+            else if (raw.Length > 10)
+                formatted = raw.Insert(2, "-").Insert(11, "-");
+
+            _isFormattingCuit = true;
+
+            int selectionStart = txtTaxId.SelectionStart;
+            int oldLength = txtTaxId.Text.Length;
+            
+            txtTaxId.Text = formatted;
+            
+            if (txtTaxId.Text.Length > oldLength)
+                selectionStart++;
+            
+            txtTaxId.SelectionStart = Math.Max(0, Math.Min(selectionStart, txtTaxId.Text.Length));
+            _isFormattingCuit = false;
+        }
+
+        private void DgvSuppliers_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvSuppliers.Rows[e.RowIndex].DataBoundItem is SupplierDto dto)
+            {
+                if (!dto.IsActive)
+                {
+                    e.CellStyle.ForeColor = Color.Red;
+                    e.CellStyle.SelectionForeColor = Color.Red;
+                }
+            }
+        }
+
         private void SyncEntityToFields()
         {
             if (dgvSuppliers.CurrentRow == null)
@@ -57,6 +103,7 @@ namespace CompriaxSystem.WinFormsUI
             txtAddress.Text = dto.Address;
 
             SetButtonState(isEditing: true);
+            txtTaxId.ReadOnly = true;
         }
 
         private async Task ExecuteSaveAction()
@@ -107,6 +154,7 @@ namespace CompriaxSystem.WinFormsUI
             _selectedSupplierId = 0;
             UIHelper.CleanControls(groupBoxData);
             SetButtonState(isEditing: false);
+            txtTaxId.ReadOnly = false;
         }
 
         private void SetButtonState(bool isEditing)
