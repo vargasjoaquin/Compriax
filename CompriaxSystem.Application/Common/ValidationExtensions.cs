@@ -9,7 +9,7 @@ namespace CompriaxSystem.Application.Common
             if (result.IsValid)
                 return OperationResult.Ok();
 
-            var errors = string.Join(", ", result.Errors.Select(e => e.ErrorMessage));
+            var errors = result.Errors.FirstOrDefault()?.ErrorMessage;
             return OperationResult.Failure(errors);
         }
     }

@@ -31,7 +31,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             }
             else
             {
-                MessageBox.Show(result.Message, title, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(result.Message, title, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
