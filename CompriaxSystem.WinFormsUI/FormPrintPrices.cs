@@ -79,34 +79,38 @@ namespace CompriaxSystem.WinFormsUI
                     }
 
                     string productName = _selectedProduct.Name.Trim();
-
-                    if (productName.Length > 32)
-                        productName = productName.Substring(0, 32) + "...";
+                    if (productName.Length > 32) productName = productName.Substring(0, 32) + "...";
 
                     using (Font titleFont = new Font("Segoe UI", 12, FontStyle.Bold))
-
                     using (StringFormat sfCenter = new StringFormat { Alignment = StringAlignment.Center })
                     {
-                        Rectangle titleRect = new Rectangle(10, 10, labelWidth - 20, 25);
+                        Rectangle titleRect = new Rectangle(10, 15, labelWidth - 20, 30);
                         g.DrawString(productName.ToUpper(), titleFont, Brushes.Black, titleRect, sfCenter);
                     }
 
                     int barcodeWidth = 380;
-                    int barcodeHeight = 95;
-
+                    int barcodeHeight = 90;
                     using (Image barcodeImg = _barcodeService.GenerateBarcode(_selectedProduct.Barcode, barcodeWidth, barcodeHeight))
                     {
                         int barcodeX = (labelWidth - barcodeWidth) / 2;
-                        int barcodeY = 40;
+                        int barcodeY = 55;
                         g.DrawImage(barcodeImg, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
                     }
 
-                    using (Font priceFont = new Font("Segoe UI", 22, FontStyle.Bold))
+                    using (Font priceFont = new Font("Segoe UI", 28, FontStyle.Bold))
+                    using (StringFormat sfPrice = new StringFormat { Alignment = StringAlignment.Center })
+                    {
+                        Rectangle priceRect = new Rectangle(10, 160, labelWidth - 20, 50);
+                        string priceText = _selectedProduct.SellPrice.ToString("C2");
+                        g.DrawString(priceText, priceFont, Brushes.DarkBlue, priceRect, sfPrice);
+                    }
 
-                    using (Font tagFont = new Font("Segoe UI", 8, FontStyle.Bold))
-
-                    using (StringFormat sfCenter = new StringFormat { Alignment = StringAlignment.Center }) ;
+                    using (Font tagFont = new Font("Segoe UI", 7, FontStyle.Italic))
+                    {
+                        g.DrawString("Compriax", tagFont, Brushes.Gray, 15, labelHeight - 20);
+                    }
                 }
+
                 ImageHelper.Clear(picBarcodePreview);
                 picBarcodePreview.Image = (Bitmap)_generatedLabel.Clone();
             }
