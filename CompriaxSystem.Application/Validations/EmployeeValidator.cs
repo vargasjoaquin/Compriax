@@ -13,7 +13,8 @@ namespace CompriaxSystem.Application.Validations
 
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty().WithMessage("El DNI es obligatorio.")
-                .MaximumLength(20).WithMessage("El DNI no puede superar los 20 caracteres.");
+                .Length(7, 8).WithMessage("El DNI debe tener entre 7 y 8 dígitos.")
+                .Matches(@"^[0-9]+$").WithMessage("El DNI solo puede contener números.");
 
             RuleFor(x => x.Cuil)
                 .NotEmpty().WithMessage("El CUIL es obligatorio.")

@@ -194,7 +194,6 @@
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(140, 30);
             txtDni.TabIndex = 5;
-            txtDni.TextChanged += txtDni_TextChanged;
             // 
             // lblCuil
             // 
