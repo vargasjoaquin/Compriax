@@ -46,7 +46,6 @@ namespace CompriaxSystem.WinFormsUI
         {
             lblTicketTitle.Image = UIIconHelper.VistaPreviaTicket;
             lblTicketTitle.ImageAlign = ContentAlignment.MiddleLeft;
-            lblTicketTitle.TextImageRelation = TextImageRelation.ImageBeforeText;
 
             btnPrint.Image = UIIconHelper.Imprimir;
             btnPrint.ImageAlign = ContentAlignment.MiddleLeft;

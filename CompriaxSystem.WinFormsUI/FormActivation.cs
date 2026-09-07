@@ -29,7 +29,6 @@ namespace CompriaxSystem.WinFormsUI
         {
             lblTitle.Image = UIIconHelper.ActivacionSupervisor;
             lblTitle.ImageAlign = ContentAlignment.MiddleLeft;
-            lblTitle.TextImageRelation = TextImageRelation.ImageBeforeText;
 
             btnActivate.Image = UIIconHelper.Exito;
             btnActivate.ImageAlign = ContentAlignment.MiddleLeft;
