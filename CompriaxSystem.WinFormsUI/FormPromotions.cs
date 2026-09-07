@@ -26,6 +26,7 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(gbPromo);
+            ApplyIcons();
 
             this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
 
@@ -36,6 +37,25 @@ namespace CompriaxSystem.WinFormsUI
             this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.txtSearch.TextChanged += (s, e) => FilterPromotions();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSave.Image = UIIconHelper.Guardar;
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnEdit.Image = UIIconHelper.Editar;
+            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnToggle.Image = UIIconHelper.GenerarCodigo;
+            btnToggle.ImageAlign = ContentAlignment.MiddleLeft;
+            btnToggle.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDelete.Image = UIIconHelper.Eliminar;
+            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
@@ -132,10 +152,10 @@ namespace CompriaxSystem.WinFormsUI
             numRequired.Enabled = isNxM;
             numPay.Enabled = isNxM;
 
-            if (!isProd) 
+            if (!isProd)
                 cboProduct.SelectedValue = 0;
             
-            if (!isCat) 
+            if (!isCat)
                 cboCategory.SelectedValue = 0;
         }
 
@@ -147,7 +167,9 @@ namespace CompriaxSystem.WinFormsUI
             var p = (PromotionDto)dgvPromotions.CurrentRow.DataBoundItem;
             _selectedPromoId = p.Id;
             txtName.Text = p.Name;
-            txtDescription.Text = p.Description; // Descomenta esto cuando agregues el control txtDescription al Designer
+
+            if (txtDescription != null) 
+                txtDescription.Text = p.Description;
 
             cboType.SelectedValue = p.PromotionType;
             cboProduct.SelectedValue = p.ProductId.HasValue ? p.ProductId.Value : 0;

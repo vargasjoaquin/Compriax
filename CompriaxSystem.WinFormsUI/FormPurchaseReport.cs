@@ -20,10 +20,22 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlFilters);
+            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearch.Click += async (s, e) => await ExecuteSearchAction();
             this.btnExport.Click += (s, e) => ExecuteExportExcelAction();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSearch.Image = UIIconHelper.Buscar;
+            btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSearch.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnExport.Image = UIIconHelper.ExportarExcel;
+            btnExport.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExport.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()

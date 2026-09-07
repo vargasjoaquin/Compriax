@@ -161,7 +161,7 @@
             this.lblShiftStatus.Name = "lblShiftStatus";
             this.lblShiftStatus.Size = new System.Drawing.Size(135, 17);
             this.lblShiftStatus.TabIndex = 4;
-            this.lblShiftStatus.Text = "🟢 Caja 01 - Abierta";
+            this.lblShiftStatus.Text = "Caja 01 - Abierta";
 
             // lblHora
             this.lblHora.Dock = System.Windows.Forms.DockStyle.Right;
@@ -187,7 +187,7 @@
             this.btnLogout.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
             this.btnLogout.Size = new System.Drawing.Size(150, 48);
             this.btnLogout.TabIndex = 6;
-            this.btnLogout.Text = "  CERRAR";
+            this.btnLogout.Text = "CERRAR";
             this.btnLogout.UseVisualStyleBackColor = false;
 
             // ==================== panelContenedor ====================

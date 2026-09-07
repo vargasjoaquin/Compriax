@@ -17,10 +17,26 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlCard);
+            pnlHeader.BackColor = UIThemeHelper.SidebarBackground;
+            ApplyIcons();
+
             this.Load += async (s, e) => await LoadCashRegistersAsync();
             this.cboRegister.SelectedIndexChanged += (s, e) => UpdateRegisterStatusLabel();
             this.btnConfirm.Click += (s, e) => ExecuteConfirm();
             this.btnCancel.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
+        }
+
+        private void ApplyIcons()
+        {
+            lblTitle.Image = UIIconHelper.BloqueoOperativo;
+            lblTitle.ImageAlign = ContentAlignment.MiddleLeft;
+            lblTitle.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnConfirm.Image = UIIconHelper.Exito;
+            btnConfirm.ImageAlign = ContentAlignment.MiddleLeft;
+            btnConfirm.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task LoadCashRegistersAsync()
@@ -55,21 +71,27 @@ namespace CompriaxSystem.WinFormsUI
 
                     if (isMyOwnShift)
                     {
-                        lblStatusInfo.Text = $"🟢 Tu turno sigue abierto (#{reg.CurrentShiftId})";
-                        lblStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
+                        lblStatusInfo.Text = $" Tu turno sigue abierto (#{reg.CurrentShiftId})";
+                        lblStatusInfo.Image = UIIconHelper.EstadoActivo;
+                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        lblStatusInfo.ForeColor = UIThemeHelper.Success;
                         btnConfirm.Enabled = true;
                     }
                     else
                     {
-                        lblStatusInfo.Text = $"⛔ OCUPADA: Turno #{reg.CurrentShiftId} por '{reg.CurrentCashierName}'";
-                        lblStatusInfo.ForeColor = Color.FromArgb(239, 68, 68);
+                        lblStatusInfo.Text = $" OCUPADA: Turno #{reg.CurrentShiftId} por '{reg.CurrentCashierName}'";
+                        lblStatusInfo.Image = UIIconHelper.BloqueoOperativo;
+                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        lblStatusInfo.ForeColor = UIThemeHelper.Danger;
                         btnConfirm.Enabled = false;
                     }
                 }
                 else
                 {
-                    lblStatusInfo.Text = "🟢 Caja disponible (Sin turno abierto)";
-                    lblStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
+                    lblStatusInfo.Text = " Caja disponible (Sin turno abierto)";
+                    lblStatusInfo.Image = UIIconHelper.EstadoDisponible;
+                    lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                    lblStatusInfo.ForeColor = UIThemeHelper.Success;
                     btnConfirm.Enabled = true;
                 }
             }

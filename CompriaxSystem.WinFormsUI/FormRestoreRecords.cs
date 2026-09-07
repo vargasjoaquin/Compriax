@@ -18,6 +18,8 @@ namespace CompriaxSystem.WinFormsUI
             _restoreService = restoreService;
             InitializeComponent();
 
+            ApplyIcons();
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.cboEntityType.SelectedIndexChanged += async (s, e) =>
             {
@@ -27,6 +29,13 @@ namespace CompriaxSystem.WinFormsUI
 
             this.btnRestore.Click += async (s, e) => await ExecuteRestoreAction();
             this.txtSearch.TextChanged += (s, e) => FilterRecords();
+        }
+
+        private void ApplyIcons()
+        {
+            btnRestore.Image = UIIconHelper.RestaurarSeleccion;
+            btnRestore.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRestore.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task InitializeFormAsync()
@@ -46,7 +55,6 @@ namespace CompriaxSystem.WinFormsUI
                 _isInitializing = false;
             }
 
-            // Realizamos la única carga inicial
             await LoadDeletedRecordsAsync();
         }
 

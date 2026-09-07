@@ -3,7 +3,6 @@ using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Enums;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using static CompriaxSystem.WinFormsUI.Helpers.FormBlindCashCountDialog;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -30,6 +29,7 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlOpenShift);
             UIThemeHelper.ApplyCardStyle(pnlActiveShift);
+            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnOpenShift.Click += async (s, e) => await ExecuteOpenShiftAction();
@@ -40,6 +40,29 @@ namespace CompriaxSystem.WinFormsUI
             this.dgvMovements.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvMovements, e);
         }
 
+        private void ApplyIcons()
+        {
+            btnOpenShift.Image = UIIconHelper.Exito;
+            btnOpenShift.ImageAlign = ContentAlignment.MiddleLeft;
+            btnOpenShift.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnCashIn.Image = UIIconHelper.IngresoManual;
+            btnCashIn.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCashIn.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnCashOut.Image = UIIconHelper.RetiroEgreso;
+            btnCashOut.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCashOut.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnPrintX.Image = UIIconHelper.Imprimir;
+            btnPrintX.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPrintX.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnCloseShiftZ.Image = UIIconHelper.BloqueoCierre;
+            btnCloseShiftZ.ImageAlign = ContentAlignment.MiddleLeft;
+            btnCloseShiftZ.TextImageRelation = TextImageRelation.ImageBeforeText;
+        }
+
         public async Task InitializeFormAsync()
         {
             numInitialCash.Minimum = -100000000m;
@@ -47,7 +70,7 @@ namespace CompriaxSystem.WinFormsUI
             if (!_currentUserService.HasRegisterAssigned)
             {
                 var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
-                
+
                 if (selectForm.ShowDialog(this) != DialogResult.OK)
                 {
                     UIHelper.WarnMessage(this, "Debe seleccionar una caja para poder gestionar o consultar turnos.", "Caja Requerida");
@@ -83,7 +106,10 @@ namespace CompriaxSystem.WinFormsUI
                         ? _currentShift.OpeningDate.ToLocalTime()
                         : _currentShift.OpeningDate;
 
-                    lblShiftStatus.Text = $"🟢 TURNO ABIERTO #{_currentShift.Id} ({localOpening:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
+                    lblShiftStatus.Text = $"TURNO ABIERTO #{_currentShift.Id} ({localOpening:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
+                    lblShiftStatus.Image = UIIconHelper.EstadoActivo;
+                    lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
+
                     lblFondoInicialVal.Text = $"Fondo Inicial: {_currentShift.InitialCash:C2}";
                     lblVentasEfectivoVal.Text = $"Ventas en Efectivo: {_currentShift.TotalCashSales:C2}";
 
@@ -104,7 +130,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             if (numInitialCash.Value < 0)
             {
-                UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo. Ingrese un valor igual o mayor a $ 0,00.", "Monto Inválido");
+                UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo.", "Monto Inválido");
                 numInitialCash.Select(0, numInitialCash.Text.Length);
                 numInitialCash.Focus();
                 return;
@@ -129,8 +155,8 @@ namespace CompriaxSystem.WinFormsUI
                 ? "Ingrese el monto a incorporar en la caja:"
                 : "Ingrese el monto a retirar de la caja:";
 
-            using var inputForm = new FormPromptDialog(typeTitle, prompt);
-            
+            using var inputForm = new FormBlindCashCountDialog.FormPromptDialog(typeTitle, prompt);
+
             if (inputForm.ShowDialog(this) == DialogResult.OK)
             {
                 var dto = new CashMovementCreateDto
@@ -171,13 +197,13 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteCloseShiftZAction()
         {
-            if (_currentShift == null) 
+            if (_currentShift == null)
                 return;
 
             var summary = await _cashShiftService.GetCurrentShiftSummaryAsync();
 
             using var countDialog = new FormBlindCashCountDialog(summary.ExpectedCashInDrawer);
-            
+
             if (countDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var closeDto = new CashShiftCloseDto

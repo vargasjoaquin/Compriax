@@ -73,7 +73,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(514, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🔍 AUDITORÍA Y CONSULTA DE COMPROBANTE";
+            lblTitle.Text = "AUDITORÍA Y CONSULTA DE COMPROBANTE";
             // 
             // btnDownloadPdf
             // 
@@ -87,7 +87,7 @@
             btnDownloadPdf.Name = "btnDownloadPdf";
             btnDownloadPdf.Size = new Size(184, 60);
             btnDownloadPdf.TabIndex = 1;
-            btnDownloadPdf.Text = "📄 REIMPRIMIR PDF";
+            btnDownloadPdf.Text = "REIMPRIMIR PDF";
             btnDownloadPdf.UseVisualStyleBackColor = false;
             // 
             // pnlSearch
@@ -132,7 +132,7 @@
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(130, 41);
             btnSearch.TabIndex = 2;
-            btnSearch.Text = "🔍 BUSCAR";
+            btnSearch.Text = "BUSCAR";
             btnSearch.UseVisualStyleBackColor = false;
             // 
             // btnClear

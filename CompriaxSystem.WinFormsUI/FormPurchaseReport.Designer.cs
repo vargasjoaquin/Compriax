@@ -56,7 +56,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(612, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🚚 HISTORIAL Y REPORTE DE COMPRAS A PROVEEDORES";
+            lblTitle.Text = "HISTORIAL Y REPORTE DE COMPRAS A PROVEEDORES";
             // 
             // pnlFilters
             // 
@@ -187,7 +187,7 @@
             btnExport.Name = "btnExport";
             btnExport.Size = new Size(201, 65);
             btnExport.TabIndex = 10;
-            btnExport.Text = "📗 EXPORTAR EXCEL";
+            btnExport.Text = "EXPORTAR EXCEL";
             btnExport.UseVisualStyleBackColor = false;
             // 
             // dgvData

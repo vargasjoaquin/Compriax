@@ -548,25 +548,5 @@ namespace CompriaxSystem.WinFormsUI {
                 return ResourceManager.GetString("Images", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Resources {
-            get {
-                object obj = ResourceManager.GetObject("Resources", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        internal static byte[] Resources_Designer {
-            get {
-                object obj = ResourceManager.GetObject("Resources.Designer", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
     }
 }

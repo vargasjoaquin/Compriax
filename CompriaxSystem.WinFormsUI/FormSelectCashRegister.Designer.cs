@@ -46,7 +46,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(330, 28);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🖥️ SELECCIONAR CAJA DE COBRO";
+            lblTitle.Text = "SELECCIONAR CAJA DE COBRO";
 
             // pnlCard
             pnlCard.BackColor = Color.White;
@@ -84,7 +84,7 @@
             lblStatusInfo.Name = "lblStatusInfo";
             lblStatusInfo.Size = new Size(360, 22);
             lblStatusInfo.TabIndex = 2;
-            lblStatusInfo.Text = "🟢 Caja disponible";
+            lblStatusInfo.Text = "Caja disponible";
 
             // btnConfirm
             btnConfirm.BackColor = Color.FromArgb(16, 185, 129);
@@ -96,7 +96,7 @@
             btnConfirm.Name = "btnConfirm";
             btnConfirm.Size = new Size(360, 44);
             btnConfirm.TabIndex = 3;
-            btnConfirm.Text = "✓ INGRESAR A LA CAJA";
+            btnConfirm.Text = "INGRESAR A LA CAJA";
             btnConfirm.UseVisualStyleBackColor = false;
 
             // btnCancel

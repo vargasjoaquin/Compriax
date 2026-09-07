@@ -50,10 +50,9 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyCardStyle(gbSaleInfo);
             UIThemeHelper.ApplyCardStyle(pnlScannerBar);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+            ApplyIcons();
 
             this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
-
-            // Suscripción al cambio de tipo de documento
             this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
 
             this.Load += async (s, e) => await InitializeFormAsync();
@@ -87,6 +86,31 @@ namespace CompriaxSystem.WinFormsUI
             };
         }
 
+        private void ApplyIcons()
+        {
+            btnSearchProduct.Text = string.Empty;
+            btnSearchProduct.Image = UIIconHelper.Buscar;
+
+            btnSearchSupplier.Text = string.Empty;
+            btnSearchSupplier.Image = UIIconHelper.Buscar;
+
+            btnAddItem.Image = UIIconHelper.IngresoManual;
+            btnAddItem.ImageAlign = ContentAlignment.MiddleLeft;
+            btnAddItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnRemoveItem.Image = UIIconHelper.Eliminar;
+            btnRemoveItem.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRemoveItem.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnRegister.Image = UIIconHelper.Guardar;
+            btnRegister.ImageAlign = ContentAlignment.MiddleLeft;
+            btnRegister.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnToggleCam.Image = UIIconHelper.CamaraEncender;
+            btnToggleCam.ImageAlign = ContentAlignment.MiddleLeft;
+            btnToggleCam.TextImageRelation = TextImageRelation.ImageBeforeText;
+        }
+
         public async Task InitializeFormAsync()
         {
             _isInitializing = true;
@@ -118,11 +142,11 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task UpdateNextInvoiceNumber()
         {
-            if (_isInitializing || _isUpdatingInvoiceNumber) 
+            if (_isInitializing || _isUpdatingInvoiceNumber)
                 return;
 
             _isUpdatingInvoiceNumber = true;
-            
+
             try
             {
                 if (cboDocType.SelectedValue is int id && id >= 0)
@@ -202,7 +226,7 @@ namespace CompriaxSystem.WinFormsUI
                     var dto = new PurchaseCreateDto
                     {
                         SupplierId = supplierId,
-                        DocumentTypeId = (int)cboDocType.SelectedValue,
+                        DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
                         DocumentTypeName = cboDocType.Text,
                         PaymentMethodId = paymentMethodId,
                         PaymentMethodName = paymentMethodName,
@@ -247,18 +271,14 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ProcessScannedBarcodeAsync(string barcode)
         {
             if (string.IsNullOrWhiteSpace(barcode))
-            {
-                UIHelper.WarnMessage(this, "El código de barras ingresado no puede estar vacío.", "Código Requerido");
-                txtProductCode.Focus();
                 return;
-            }
 
             var product = await _productService.GetByBarcodeAsync(barcode);
 
             if (product == null)
             {
                 SystemSounds.Asterisk.Play();
-                UIHelper.WarnMessage(this, $"El código '{barcode}' no corresponde a ningún producto en el catálogo.", "Producto No Encontrado");
+                UIHelper.WarnMessage(this, $"El código '{barcode}' no corresponde a ningún producto.", "No Encontrado");
                 txtProductCode.SelectAll();
                 txtProductCode.Focus();
                 return;
@@ -315,11 +335,7 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ExecuteProductSearchAction()
         {
             if (string.IsNullOrWhiteSpace(txtProductCode.Text))
-            {
-                UIHelper.WarnMessage(this, "Por favor, ingrese o escanee un código de barras para buscar el producto.", "Campo Requerido");
-                txtProductCode.Focus();
                 return;
-            }
 
             using (new WaitCursorHelper(this))
             {
@@ -450,7 +466,8 @@ namespace CompriaxSystem.WinFormsUI
             {
                 _cameraService.StartStreaming(0, OnFrameCaptured);
                 _isCameraActive = true;
-                btnToggleCam.Text = "🛑 APAGAR CÁMARA";
+                btnToggleCam.Text = "APAGAR CÁMARA";
+                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = Color.Firebrick;
             }
             else
@@ -465,14 +482,14 @@ namespace CompriaxSystem.WinFormsUI
             {
                 _cameraService.StopStreaming();
                 _isCameraActive = false;
-
                 if (picWebcam.Image != null)
                 {
                     picWebcam.Image.Dispose();
                     picWebcam.Image = null;
                 }
 
-                btnToggleCam.Text = "📷 ENCENDER CÁMARA";
+                btnToggleCam.Text = "CÁMARA";
+                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = Color.Navy;
             }
         }

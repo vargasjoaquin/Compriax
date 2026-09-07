@@ -63,7 +63,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(525, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "💵 CONTROL Y ARQUEO DE CAJA (CIERRES X / Z)";
+            lblTitle.Text = "CONTROL Y ARQUEO DE CAJA (CIERRES X / Z)";
 
             // pnlOpenShift
             pnlOpenShift.BackColor = Color.White;
@@ -84,7 +84,7 @@
             lblOpenTitle.Name = "lblOpenTitle";
             lblOpenTitle.Size = new Size(387, 25);
             lblOpenTitle.TabIndex = 0;
-            lblOpenTitle.Text = "🚪 APERTURA DE NUEVO TURNO DE CAJA";
+            lblOpenTitle.Text = "APERTURA DE NUEVO TURNO DE CAJA";
 
             // lblInitialCash
             lblInitialCash.AutoSize = true;
@@ -115,7 +115,7 @@
             btnOpenShift.Name = "btnOpenShift";
             btnOpenShift.Size = new Size(260, 44);
             btnOpenShift.TabIndex = 3;
-            btnOpenShift.Text = "✓ ABRIR TURNO DE CAJA";
+            btnOpenShift.Text = "ABRIR TURNO DE CAJA";
             btnOpenShift.UseVisualStyleBackColor = false;
 
             // pnlActiveShift
@@ -143,7 +143,7 @@
             lblShiftStatus.Name = "lblShiftStatus";
             lblShiftStatus.Size = new Size(292, 28);
             lblShiftStatus.TabIndex = 0;
-            lblShiftStatus.Text = "🟢 TURNO DE CAJA ABIERTO";
+            lblShiftStatus.Text = "TURNO DE CAJA ABIERTO";
 
             // lblFondoInicialVal
             lblFondoInicialVal.AutoSize = true;
@@ -201,7 +201,7 @@
             btnCashIn.Name = "btnCashIn";
             btnCashIn.Size = new Size(240, 65);
             btnCashIn.TabIndex = 6;
-            btnCashIn.Text = "➕ INGRESO MANUAL";
+            btnCashIn.Text = "INGRESO MANUAL";
             btnCashIn.UseVisualStyleBackColor = false;
 
             // btnCashOut
@@ -211,7 +211,7 @@
             btnCashOut.Name = "btnCashOut";
             btnCashOut.Size = new Size(240, 69);
             btnCashOut.TabIndex = 7;
-            btnCashOut.Text = "➖ RETIRO / GASTO";
+            btnCashOut.Text = "RETIRO / GASTO";
             btnCashOut.UseVisualStyleBackColor = true;
 
             // btnPrintX
@@ -221,7 +221,7 @@
             btnPrintX.Name = "btnPrintX";
             btnPrintX.Size = new Size(240, 68);
             btnPrintX.TabIndex = 8;
-            btnPrintX.Text = "📄 CIERRE PARCIAL (X)";
+            btnPrintX.Text = "CIERRE PARCIAL (X)";
             btnPrintX.UseVisualStyleBackColor = true;
 
             // btnCloseShiftZ
@@ -234,7 +234,7 @@
             btnCloseShiftZ.Name = "btnCloseShiftZ";
             btnCloseShiftZ.Size = new Size(291, 222);
             btnCloseShiftZ.TabIndex = 9;
-            btnCloseShiftZ.Text = "🔒 CERRAR TURNO\r\nY ARQUEO (Z)";
+            btnCloseShiftZ.Text = "CERRAR TURNO\r\nY ARQUEO (Z)";
             btnCloseShiftZ.UseVisualStyleBackColor = false;
 
             // pnlMovements

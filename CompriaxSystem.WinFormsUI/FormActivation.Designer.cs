@@ -49,7 +49,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(330, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🛡️ ACTIVACIÓN DEL SISTEMA";
+            lblTitle.Text = "ACTIVACIÓN DEL SISTEMA";
 
             // pnlCard
             pnlCard.BackColor = Color.White;
@@ -130,7 +130,7 @@
             btnActivate.Name = "btnActivate";
             btnActivate.Size = new Size(424, 44);
             btnActivate.TabIndex = 6;
-            btnActivate.Text = "✓ ACTIVAR SISTEMA";
+            btnActivate.Text = "ACTIVAR SISTEMA";
             btnActivate.UseVisualStyleBackColor = false;
 
             // btnExit

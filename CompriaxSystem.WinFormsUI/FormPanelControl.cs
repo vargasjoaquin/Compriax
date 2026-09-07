@@ -1,6 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using DocumentFormat.OpenXml.Drawing;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CompriaxSystem.WinFormsUI
@@ -31,6 +30,8 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
+            ApplyIcons();
+
             lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
             HoraFecha.Interval = 1000;
             HoraFecha.Tick -= HoraFecha_Tick;
@@ -49,9 +50,17 @@ namespace CompriaxSystem.WinFormsUI
                 await LoadDashboardAsync();
             };
 
-            //this.Activated += async (s, e) => await RefreshShiftStatusAsync();
-
             LoadUserData();
+        }
+
+        private void ApplyIcons()
+        {
+            pbUserIcon.Image = UIIconHelper.ActivacionSupervisor;
+            pbRoleIcon.Image = UIIconHelper.ActivacionSupervisor;
+
+            btnLogout.Image = UIIconHelper.BloqueoCierre;
+            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
+            btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task SetupAppearanceAsync()
@@ -74,7 +83,7 @@ namespace CompriaxSystem.WinFormsUI
 
                 await RefreshShiftStatusAsync();
             }
-            catch 
+            catch
             {
             }
             finally
@@ -93,7 +102,9 @@ namespace CompriaxSystem.WinFormsUI
 
                 if (isAdmin && ctx == null)
                 {
-                    lblShiftStatus.Text = "🛡️ Modo Supervisor (Vista Global)";
+                    lblShiftStatus.Text = " Modo Supervisor (Vista Global)";
+                    lblShiftStatus.Image = UIIconHelper.ActivacionSupervisor;
+                    lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                     lblShiftStatus.ForeColor = Color.FromArgb(226, 232, 240);
                 }
                 else
@@ -106,13 +117,17 @@ namespace CompriaxSystem.WinFormsUI
                         DateTime localOpening = activeShift.OpeningDate.Kind == DateTimeKind.Utc
                                                 ? activeShift.OpeningDate.ToLocalTime()
                                                 : activeShift.OpeningDate;
-                        
-                        lblShiftStatus.Text = $"🖥️ {regName} | 🟢 Turno #{activeShift.Id} ({localOpening:HH:mm})";
+
+                        lblShiftStatus.Text = $" {regName} | Turno #{activeShift.Id} ({localOpening:HH:mm})";
+                        lblShiftStatus.Image = UIIconHelper.EstadoActivo;
+                        lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                         lblShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
                     }
                     else
                     {
-                        lblShiftStatus.Text = $"🖥️ {regName} | 🔴 Caja Cerrada";
+                        lblShiftStatus.Text = $" {regName} | Caja Cerrada";
+                        lblShiftStatus.Image = UIIconHelper.EstadoInactivo;
+                        lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                         lblShiftStatus.ForeColor = Color.FromArgb(248, 113, 113);
                     }
                 }
@@ -123,7 +138,7 @@ namespace CompriaxSystem.WinFormsUI
         private void LoadUserData()
         {
             var user = _currentUserService.CurrentUser;
-            
+
             if (user == null)
                 return;
 
@@ -144,7 +159,7 @@ namespace CompriaxSystem.WinFormsUI
                 NavMenuItemHelper.DirectAction("Inicio", "Dashboard Principal", Resources._051_dashboard, async () =>
                 {
                     _dashboardForm?.BringToFront();
-                    
+
                     if (_dashboardForm != null)
                         await _dashboardForm.RefreshDashboardAsync();
                 }),
@@ -192,12 +207,12 @@ namespace CompriaxSystem.WinFormsUI
 
             foreach (var item in menuDefinitions)
             {
-                if (item.RequireAdmin && !isAdmin) 
+                if (item.RequireAdmin && !isAdmin)
                     continue;
-                
+
                 var subItemsAuth = item.SubItems.Where(s => !s.RequireAdmin || isAdmin).ToList();
-                
-                if (item.HasSubItems && !subItemsAuth.Any()) 
+
+                if (item.HasSubItems && !subItemsAuth.Any())
                     continue;
 
                 var btn = CreateNavButton(item.Title, item.Icon ?? Resources._051_dashboard);
@@ -227,7 +242,7 @@ namespace CompriaxSystem.WinFormsUI
             var btn = new Button
             {
                 Size = new Size(130, 78),
-                Image = ResizeImage(icon, 36, 36),
+                Image = ResizeImage(icon, 32, 32),
                 ImageAlign = ContentAlignment.TopCenter,
                 Text = title,
                 TextAlign = ContentAlignment.BottomCenter,
@@ -253,17 +268,17 @@ namespace CompriaxSystem.WinFormsUI
                 Renderer = new MenuRendererHelper(),
                 Font = UIThemeHelper.FontBody,
                 ShowImageMargin = true,
-                ImageScalingSize = new Size(24, 24)
+                ImageScalingSize = new Size(22, 22)
             };
 
             foreach (var item in items)
             {
-                if (item.RequireAdmin && !isAdmin) 
+                if (item.RequireAdmin && !isAdmin)
                     continue;
 
                 var menuItem = new ToolStripMenuItem(item.Title)
                 {
-                    Image = item.Icon != null ? ResizeImage(item.Icon, 24, 24) : null,
+                    Image = item.Icon != null ? ResizeImage(item.Icon, 20, 20) : null,
                     Padding = new Padding(4, 6, 4, 6)
                 };
 
@@ -322,7 +337,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async void FormPanelControl_FormClosing(object? sender, FormClosingEventArgs e)
         {
-            if (_isShuttingDown) 
+            if (_isShuttingDown)
                 return;
 
             bool confirm = UIHelper.ConfirmMessage(
@@ -346,7 +361,7 @@ namespace CompriaxSystem.WinFormsUI
                     await _backupService.ExecuteAutomaticBackupAsync();
                 }
             }
-            catch 
+            catch
             {
             }
             finally

@@ -20,17 +20,18 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(groupBox1);
+            ApplyIcons();
 
             txtDni.MaxLength = 8;
             txtCuil.MaxLength = 13;
 
             this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
-            
-            this.txtDni.KeyPress += (s, e) => { 
-                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) 
-                    e.Handled = true; 
+
+            this.txtDni.KeyPress += (s, e) => {
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+                    e.Handled = true;
             };
-            
+
             this.dgvCustomers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvCustomers, e);
 
             this.Load += async (s, e) => await InitializeFormAsync();
@@ -38,6 +39,25 @@ namespace CompriaxSystem.WinFormsUI
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSave.Image = UIIconHelper.Guardar;
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnEdit.Image = UIIconHelper.Editar;
+            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDelete.Image = UIIconHelper.Eliminar;
+            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnExportPdf.Image = UIIconHelper.ExportarPdf;
+            btnExportPdf.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExportPdf.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task InitializeFormAsync()
@@ -55,7 +75,6 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-
         private async Task RefreshGridAsync()
         {
             var data = await _customerService.GetAllActiveAsync();
@@ -66,7 +85,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private void SyncEntityToFields()
         {
-            if (dgvCustomers.CurrentRow == null) 
+            if (dgvCustomers.CurrentRow == null)
                 return;
 
             var dto = (CustomerDto)dgvCustomers.CurrentRow.DataBoundItem;
@@ -89,10 +108,10 @@ namespace CompriaxSystem.WinFormsUI
         private void ResetUI()
         {
             _selectedCustomerId = 0;
-            
+
             UIHelper.CleanControls(groupBox1);
             cboTaxCondition.SelectedIndex = -1;
-            
+
             SetButtonState(isEditing: false);
             txtDni.ReadOnly = false;
             txtCuil.ReadOnly = false;
@@ -135,7 +154,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteDeleteAction()
         {
-            if (_selectedCustomerId == 0) 
+            if (_selectedCustomerId == 0)
                 return;
 
             if (UIHelper.ConfirmMessage("¿Desea eliminar a este cliente del sistema?"))

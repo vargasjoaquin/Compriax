@@ -14,11 +14,24 @@ namespace CompriaxSystem.WinFormsUI
             _registerService = registerService;
             InitializeComponent();
 
+            ApplyIcons();
+
             this.Load += async (s, e) => await RefreshGridAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
             this.btnCancel.Click += (s, e) => ResetUI();
             this.dgvRegisters.CellClick += (s, e) => SyncSelectedRegister();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSave.Image = UIIconHelper.Guardar;
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnToggle.Image = UIIconHelper.EstadoDisponible;
+            btnToggle.ImageAlign = ContentAlignment.MiddleLeft;
+            btnToggle.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task RefreshGridAsync()
@@ -43,6 +56,7 @@ namespace CompriaxSystem.WinFormsUI
             txtDescription.Text = reg.Description ?? string.Empty;
 
             btnSave.Text = "ACTUALIZAR";
+            btnSave.Image = UIIconHelper.Editar;
             btnToggle.Enabled = true;
         }
 
@@ -53,7 +67,8 @@ namespace CompriaxSystem.WinFormsUI
             txtName.Clear();
             txtDescription.Clear();
 
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
+            btnSave.Image = UIIconHelper.Guardar;
             btnToggle.Enabled = false;
             txtName.Focus();
         }

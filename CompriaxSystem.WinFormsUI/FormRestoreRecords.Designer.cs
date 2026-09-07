@@ -52,7 +52,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(504, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "♻️ PAPELERA Y RECUPERACIÓN DE REGISTROS";
+            lblTitle.Text = "PAPELERA Y RECUPERACIÓN DE REGISTROS";
             // 
             // pnlControls
             // 
@@ -129,7 +129,7 @@
             btnRestore.Name = "btnRestore";
             btnRestore.Size = new Size(348, 85);
             btnRestore.TabIndex = 5;
-            btnRestore.Text = "♻️ RESTAURAR SELECCIÓN";
+            btnRestore.Text = "RESTAURAR SELECCIÓN";
             btnRestore.UseVisualStyleBackColor = false;
             // 
             // lblCount

@@ -67,7 +67,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(282, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "👥 GESTIÓN DE CLIENTES";
+            lblTitle.Text = "GESTIÓN DE CLIENTES";
             // 
             // btnExportPdf
             // 
@@ -81,7 +81,7 @@
             btnExportPdf.Name = "btnExportPdf";
             btnExportPdf.Size = new Size(211, 55);
             btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "📄 EXPORTAR PDF";
+            btnExportPdf.Text = "EXPORTAR PDF";
             btnExportPdf.UseVisualStyleBackColor = false;
             // 
             // pnlMain
@@ -320,7 +320,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(286, 66);
             btnSave.TabIndex = 18;
-            btnSave.Text = "💾 GUARDAR CLIENTE";
+            btnSave.Text = "GUARDAR CLIENTE";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // btnEdit

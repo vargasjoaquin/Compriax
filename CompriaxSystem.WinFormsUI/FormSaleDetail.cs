@@ -16,6 +16,8 @@ namespace CompriaxSystem.WinFormsUI
             _documentService = documentService;
             InitializeComponent();
 
+            ApplyIcons();
+
             this.btnSearch.Click += async (s, e) => await ExecuteSearchAction();
             this.btnClear.Click += (s, e) => ResetUI();
             this.btnDownloadPdf.Click += async (s, e) => await ExecuteDownloadPdfAction();
@@ -29,6 +31,17 @@ namespace CompriaxSystem.WinFormsUI
                     await ExecuteSearchAction();
                 }
             };
+        }
+
+        private void ApplyIcons()
+        {
+            btnSearch.Image = UIIconHelper.Buscar;
+            btnSearch.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSearch.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDownloadPdf.Image = UIIconHelper.ExportarPdf;
+            btnDownloadPdf.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDownloadPdf.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async void LoadByNumber(string docNumber)

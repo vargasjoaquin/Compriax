@@ -62,7 +62,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(339, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🚚 GESTIÓN DE PROVEEDORES";
+            lblTitle.Text = "GESTIÓN DE PROVEEDORES";
             // 
             // btnExportPdf
             // 
@@ -76,7 +76,7 @@
             btnExportPdf.Name = "btnExportPdf";
             btnExportPdf.Size = new Size(182, 51);
             btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "📄 EXPORTAR PDF";
+            btnExportPdf.Text = "EXPORTAR PDF";
             btnExportPdf.UseVisualStyleBackColor = false;
             // 
             // groupBoxData
@@ -227,7 +227,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(284, 54);
             btnSave.TabIndex = 12;
-            btnSave.Text = "💾 GUARDAR PROVEEDOR";
+            btnSave.Text = "GUARDAR PROVEEDOR";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // btnEdit

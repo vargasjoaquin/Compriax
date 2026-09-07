@@ -1,7 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using DirectShowLib.DMO;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -23,6 +22,7 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(groupEdit);
+            ApplyIcons();
 
             this.dgvProducts.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvProducts, e);
 
@@ -33,6 +33,25 @@ namespace CompriaxSystem.WinFormsUI
             this.btnPrintStock.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowseImage.Click += (s, e) => HandleImageSelection();
             this.btnClearImage.Click += (s, e) => HandleImageRemoval();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSave.Image = UIIconHelper.Guardar;
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnEdit.Image = UIIconHelper.Editar;
+            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDelete.Image = UIIconHelper.Eliminar;
+            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnPrintStock.Image = UIIconHelper.ExportarPdf;
+            btnPrintStock.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPrintStock.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()
@@ -147,7 +166,7 @@ namespace CompriaxSystem.WinFormsUI
                 UIHelper.WarnMessage(this, "Debe seleccionar un producto de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
-                
+
             var dto = MapFieldsToDto();
             var result = await _productService.UpdateProductAsync(_selectedProductId, dto);
 

@@ -19,11 +19,28 @@ namespace CompriaxSystem.WinFormsUI
             _barcodeService = barcodeService;
             InitializeComponent();
 
+            ApplyIcons();
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.dgvProducts.CellClick += (s, e) => SyncEntityToFields();
             this.btnGenerate.Click += (s, e) => ExecuteGenerateLabelAction();
             this.btnPrint.Click += (s, e) => ExecutePrintAction();
             this.btnDownload.Click += (s, e) => ExecuteDownloadImageAction();
+        }
+
+        private void ApplyIcons()
+        {
+            btnGenerate.Image = UIIconHelper.GenerarCodigo;
+            btnGenerate.ImageAlign = ContentAlignment.MiddleLeft;
+            btnGenerate.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnPrint.Image = UIIconHelper.Imprimir;
+            btnPrint.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPrint.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDownload.Image = UIIconHelper.Guardar;
+            btnDownload.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDownload.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()
@@ -46,7 +63,6 @@ namespace CompriaxSystem.WinFormsUI
                 return;
 
             _selectedProduct = (ProductDto)dgvProducts.CurrentRow.DataBoundItem;
-
             lblSelectedProductName.Text = $"SELECCIONADO: {_selectedProduct.Name} ({_selectedProduct.Barcode})";
         }
 
@@ -125,7 +141,6 @@ namespace CompriaxSystem.WinFormsUI
             }
 
             PrintDocument pd = new PrintDocument();
-
             pd.PrintPage += (s, ev) =>
             {
                 if (_generatedLabel != null && ev.Graphics != null)
@@ -143,7 +158,6 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             using PrintDialog diag = new PrintDialog { Document = pd };
-
             if (diag.ShowDialog() == DialogResult.OK)
                 pd.Print();
         }
@@ -161,7 +175,6 @@ namespace CompriaxSystem.WinFormsUI
             byte[] imageBytes = ms.ToArray();
 
             string defaultFileName = $"Etiqueta_{_selectedProduct?.Barcode ?? "Codigo"}.png";
-
             await FileExportHelper.SaveAndOpenFileAsync(this, imageBytes, defaultFileName, "Imagen PNG (*.png)|*.png|Imagen JPG (*.jpg)|*.jpg", "Guardar Etiqueta de Precio");
         }
 
@@ -183,18 +196,8 @@ namespace CompriaxSystem.WinFormsUI
             _generatedLabel?.Dispose();
             _generatedLabel = null;
 
-            if (picBarcodePreview.Image != null)
-            {
-                picBarcodePreview.Image.Dispose();
-                picBarcodePreview.Image = null;
-            }
-
+            ImageHelper.Clear(picBarcodePreview);
             lblSelectedProductName.Text = "Ningún producto seleccionado";
-        }
-
-        private void btnPrint_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

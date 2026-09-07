@@ -74,7 +74,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(538, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🎁 MOTOR DE PROMOCIONES Y BONIFICACIONES";
+            lblTitle.Text = "MOTOR DE PROMOCIONES Y BONIFICACIONES";
             // 
             // gbPromo
             // 
@@ -311,7 +311,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(240, 94);
             btnSave.TabIndex = 20;
-            btnSave.Text = "💾 GUARDAR PROMOCION";
+            btnSave.Text = "GUARDAR PROMOCION";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // btnEdit
