@@ -20,6 +20,8 @@ namespace CompriaxSystem.Infrastructure.Repositories
         public async Task<IEnumerable<Purchase>> GetHistoryAsync(DateTime start, DateTime end) =>
             await context.Purchases
                 .Include(p => p.Supplier)
+                .Include(p => p.DocumentType)
+                .Include(p => p.User)
                 .Where(p => p.CreatedAt >= start && p.CreatedAt <= end)
                 .ToListAsync();
 
