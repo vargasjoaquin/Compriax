@@ -8,8 +8,8 @@ namespace CompriaxSystem.Application.Validations
         public SupplierValidator()
         {
             RuleFor(x => x.CUIT)
-                .NotEmpty().WithMessage("El CUIT/CUIL del proveedor es obligatorio.")
-                .MaximumLength(20).WithMessage("El CUIT no puede superar los 20 caracteres.");
+                .NotEmpty().WithMessage("El CUIT del proveedor es obligatorio.")
+                .MaximumLength(11).WithMessage("El CUIT no puede superar los 11 caracteres.");
 
             RuleFor(x => x.CompanyName)
                 .NotEmpty().WithMessage("El nombre de la empresa es obligatorio.")

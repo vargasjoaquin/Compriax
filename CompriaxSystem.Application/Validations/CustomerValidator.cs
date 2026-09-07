@@ -10,7 +10,7 @@ namespace CompriaxSystem.Application.Validations
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty().WithMessage("El número de documento (DNI) es obligatorio.")
                 .Length(7, 8).WithMessage("El DNI debe tener entre 7 y 8 dígitos.")
-                .Matches(@"^[a-zA-Z0-9]+$").WithMessage("El documento solo puede contener letras y números.");
+                .Matches(@"^[0-9]+$").WithMessage("El DNI solo puede contener números.");
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("El nombre del cliente es obligatorio.")
@@ -21,7 +21,7 @@ namespace CompriaxSystem.Application.Validations
                 .MaximumLength(50).WithMessage("El apellido no puede superar los 50 caracteres.");
 
             RuleFor(x => x.Cuil)
-                .MaximumLength(20).WithMessage("El CUIL/CUIT no puede superar los 20 caracteres.")
+                .MaximumLength(11).WithMessage("El CUIL no puede superar los 11 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Cuil));
 
             RuleFor(x => x.Email)

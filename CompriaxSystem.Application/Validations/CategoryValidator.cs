@@ -12,7 +12,7 @@ namespace CompriaxSystem.Application.Validations
                  .MaximumLength(50).WithMessage("El nombre de la categoría no puede exceder los 50 caracteres.");
 
             RuleFor(x => x.Description)
-                .MaximumLength(200).WithMessage("La descripción no puede exceder los 200 caracteres.")
+                .MaximumLength(250).WithMessage("La descripción no puede exceder los 250 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Description));
         }
     }

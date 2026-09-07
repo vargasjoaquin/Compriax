@@ -12,8 +12,8 @@ namespace CompriaxSystem.Application.Validations
                 .MaximumLength(100).WithMessage("El nombre no puede superar los 100 caracteres.");
 
             RuleFor(x => x.CUIT)
-                .MaximumLength(20).WithMessage("El CUIT no puede superar los 20 caracteres.")
-                .When(x => !string.IsNullOrWhiteSpace(x.CUIT));
+                .NotEmpty().WithMessage("El CUIT del comercio es obligatorio.")
+                .MaximumLength(11).WithMessage("El CUIT no puede superar los 11 caracteres.");
 
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage("El formato del correo electrónico es inválido.")
@@ -25,8 +25,11 @@ namespace CompriaxSystem.Application.Validations
                 .When(x => !string.IsNullOrWhiteSpace(x.Phone));
 
             RuleFor(x => x.Address)
-                .MaximumLength(150).WithMessage("La dirección no puede superar los 150 caracteres.")
+                .MaximumLength(150).WithMessage("La dirección comercial no puede superar los 150 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Address));
+
+            RuleFor(x => x.PointOfSale)
+                .GreaterThan(0).WithMessage("El número de Punto de Venta debe ser mayor a 0.");
         }
     }
 }
