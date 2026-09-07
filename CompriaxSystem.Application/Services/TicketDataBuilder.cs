@@ -31,37 +31,31 @@ namespace CompriaxSystem.Application.Services
             var (documentLetter, documentTypeCode) = ExtractDocumentLetterAndCode(sale.DocumentTypeName);
 
             byte[]? qrBytes = null;
-
             if (!string.IsNullOrWhiteSpace(sale.AfipQrUrl))
             {
-                try 
+                try
                 { 
-                    qrBytes = afipService.GenerateQrImage(sale.AfipQrUrl, 130, 130); 
-                }
-                catch 
-                { 
-                    qrBytes = null; 
-                }
+                    qrBytes = afipService.GenerateQrImage(sale.AfipQrUrl, 130, 130); } catch { qrBytes = null; }
             }
 
             byte[]? barcodeBytes = null;
-            
+
             if (store?.ShowBarcodeOnTicket ?? true)
             {
                 try
                 {
                     using var bmp = barcodeService.GenerateBarcode(documentNumber, width: 280, height: 50);
                     using var ms = new MemoryStream();
-
+                    
                     bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
                     barcodeBytes = ms.ToArray();
                 }
                 catch 
                 { 
-                    barcodeBytes = null; 
+                    barcodeBytes = null;
                 }
             }
-
+            
             var items = (sale.Items ?? Enumerable.Empty<SaleItemDto>()).Select(i => new TicketItemDataDto
             {
                 Quantity = i.Quantity,
@@ -73,7 +67,7 @@ namespace CompriaxSystem.Application.Services
             }).ToList();
 
             var payments = new List<TicketPaymentData>();
-            
+
             if (!string.IsNullOrWhiteSpace(sale.PaymentMethodName))
             {
                 payments.Add(new TicketPaymentData
@@ -107,8 +101,8 @@ namespace CompriaxSystem.Application.Services
                 ShiftId = null,
                 PosNumber = pointOfSale,
 
-                CustomerName = sale.CustomerName,
-                CustomerDoc = sale.CustomerDoc,
+                CustomerName = string.IsNullOrWhiteSpace(sale.CustomerName) ? "Consumidor Final" : sale.CustomerName,
+                CustomerDoc = string.IsNullOrWhiteSpace(sale.CustomerDoc) ? "S/D" : sale.CustomerDoc,
                 CustomerTaxCondition = "Consumidor Final",
 
                 Items = items,
@@ -139,12 +133,12 @@ namespace CompriaxSystem.Application.Services
 
         private static (string Letter, string Code) ExtractDocumentLetterAndCode(string? documentTypeName)
         {
-            string type = (documentTypeName ?? "").ToUpperInvariant();
-            
-            if (type.Contains("FACTURA A") || type.Contains("TICKET FACTURA A")) 
+            string type = documentTypeName.ToUpperInvariant();
+
+            if (type.Contains("FACTURA A") || type.Contains("TICKET FACTURA A"))
                 return ("A", "COD. 001");
             
-            if (type.Contains("FACTURA B") || type.Contains("TICKET FACTURA B") || type.Contains("TICKET"))
+            if (type.Contains("FACTURA B") || type.Contains("TICKET FACTURA B") || type.Contains("TICKET")) 
                 return ("B", "COD. 006");
             
             if (type.Contains("FACTURA C")) 
