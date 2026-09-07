@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public EmployeeValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.EmployeeCode)
                 .NotEmpty().WithMessage("El legajo del empleado es obligatorio.")
                 .MaximumLength(20).WithMessage("El legajo no puede superar los 20 caracteres.");

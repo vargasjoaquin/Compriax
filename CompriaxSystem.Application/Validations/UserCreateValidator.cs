@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public UserCreateValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.Username)
                 .NotEmpty().WithMessage("El nombre de usuario es obligatorio.")
                 .MinimumLength(4).WithMessage("El nombre de usuario debe tener al menos 4 caracteres.")

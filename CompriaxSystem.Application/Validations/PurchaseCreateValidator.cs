@@ -7,6 +7,7 @@ namespace CompriaxSystem.Application.Validations
     {
         public PurchaseCreateValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
             RuleFor(x => x.SupplierId)
                 .GreaterThan(0).WithMessage("Debe seleccionar un proveedor válido para la orden de compra.");
 

@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public ProductValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.Barcode)
                 .NotEmpty().WithMessage("El código de barras es obligatorio.")
                 .MaximumLength(50).WithMessage("El código de barras no puede superar los 50 caracteres.");

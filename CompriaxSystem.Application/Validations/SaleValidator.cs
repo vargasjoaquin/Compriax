@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public SaleValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.DocumentTypeId)
                 .GreaterThan(0).WithMessage("Debe seleccionar un tipo de comprobante válido para la venta.");
 

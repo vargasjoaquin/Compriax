@@ -8,13 +8,14 @@ namespace CompriaxSystem.Application.Validations
     {
         public PromotionValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("El nombre de la promoción es obligatorio.")
                 .MaximumLength(100).WithMessage("El nombre no puede superar los 100 caracteres.");
 
             RuleFor(x => x.Description)
-                .MaximumLength(250).WithMessage("La descripción no puede superar los 250 caracteres.")
-                .When(x => !string.IsNullOrWhiteSpace(x.Description));
+                .MaximumLength(250).WithMessage("La descripción no puede superar los 250 caracteres.");
 
             RuleFor(x => x.StartDate)
                 .NotNull().WithMessage("La fecha de inicio es obligatoria.");

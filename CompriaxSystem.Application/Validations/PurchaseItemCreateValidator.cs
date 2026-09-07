@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public PurchaseItemCreateValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.ProductId)
                 .GreaterThan(0).WithMessage("Identificador de producto inválido en el detalle de compra.");
 

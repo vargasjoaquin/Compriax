@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public UserProfileUpdateValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.UserId)
                 .GreaterThan(0).WithMessage("Identificador de usuario inválido.");
 
