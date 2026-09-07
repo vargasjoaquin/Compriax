@@ -16,6 +16,7 @@ namespace CompriaxSystem.Application.Validations
                 .MaximumLength(100).WithMessage("El nombre no puede exceder los 100 caracteres.");
 
             RuleFor(x => x.Description)
+                .NotEmpty().WithMessage("La descripción es obligatoria.")
                 .MaximumLength(250).WithMessage("La descripción no puede exceder los 250 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Description));
 
