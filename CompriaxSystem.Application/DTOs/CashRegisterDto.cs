@@ -11,7 +11,7 @@
         public string? CurrentCashierName { get; set; }
         public int? CurrentShiftId { get; set; }
         public string StatusSummary => HasOpenShift
-            ? $"🟢 Turno #{CurrentShiftId} ({CurrentCashierName})"
-            : (IsActive ? "⚪ Disponible" : "🔴 Inactiva");
+            ? $"Turno #{CurrentShiftId} ({CurrentCashierName})"
+            : (IsActive ? "Disponible" : "Inactiva");
     }
 }
