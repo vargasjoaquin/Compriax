@@ -21,7 +21,7 @@ namespace CompriaxSystem.Application.Validations
                 .MaximumLength(50).WithMessage("El apellido no puede superar los 50 caracteres.");
 
             RuleFor(x => x.Cuil)
-                .MaximumLength(11).WithMessage("El CUIL no puede superar los 11 caracteres.")
+                .MaximumLength(13).WithMessage("El CUIL no puede superar los 11 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.Cuil));
 
             RuleFor(x => x.Email)

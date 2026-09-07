@@ -18,7 +18,7 @@ namespace CompriaxSystem.Application.Validations
 
             RuleFor(x => x.Cuil)
                 .NotEmpty().WithMessage("El CUIL es obligatorio.")
-                .MaximumLength(11).WithMessage("El CUIL no puede superar los 11 caracteres.");
+                .MaximumLength(13).WithMessage("El CUIL no puede superar los 11 caracteres.");
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("El nombre es obligatorio.")

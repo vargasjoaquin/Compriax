@@ -13,7 +13,7 @@ namespace CompriaxSystem.Application.Validations
 
             RuleFor(x => x.CUIT)
                 .NotEmpty().WithMessage("El CUIT del comercio es obligatorio.")
-                .MaximumLength(11).WithMessage("El CUIT no puede superar los 11 caracteres.");
+                .MaximumLength(13).WithMessage("El CUIT no puede superar los 11 caracteres.");
 
             RuleFor(x => x.Email)
                 .EmailAddress().WithMessage("El formato del correo electrónico es inválido.")
