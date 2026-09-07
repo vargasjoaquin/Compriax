@@ -51,13 +51,6 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteSaveAction()
         {
-            //if (string.IsNullOrWhiteSpace(txtName.Text))
-            //{
-            //    UIHelper.WarnMessage(this, "El nombre del comercio es obligatorio.", "Campo Requerido");
-            //    txtName.Focus();
-            //    return;
-            //}
-
             var dto = new StoreSettingsDto
             {
                 Name = txtName.Text.Trim(),

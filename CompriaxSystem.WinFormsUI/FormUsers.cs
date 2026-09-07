@@ -138,41 +138,6 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessAction(int id)
         {
-            //if (string.IsNullOrWhiteSpace(txtUsername.Text))
-            //{
-            //    UIHelper.WarnMessage(this, "Debe ingresar el nombre de usuario (Login).", "Campo Obligatorio");
-            //    txtUsername.Focus();
-            //    return;
-            //}
-
-            //if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-            //{
-            //    UIHelper.WarnMessage(this, "Debe ingresar el nombre del usuario.", "Campo Obligatorio");
-            //    txtFirstName.Focus();
-            //    return;
-            //}
-
-            //if (string.IsNullOrWhiteSpace(txtLastName.Text))
-            //{
-            //    UIHelper.WarnMessage(this, "Debe ingresar el apellido del usuario.", "Campo Obligatorio");
-            //    txtLastName.Focus();
-            //    return;
-            //}
-
-            //if (cboRole.SelectedValue is not int roleId || roleId <= 0)
-            //{
-            //    UIHelper.WarnMessage(this, "Debe seleccionar un rol para el usuario.", "Rol Requerido");
-            //    cboRole.Focus();
-            //    return;
-            //}
-
-            //if (id == 0 && string.IsNullOrWhiteSpace(txtPassword.Text))
-            //{
-            //    UIHelper.WarnMessage(this, "Debe ingresar una contraseña para el nuevo usuario.", "Contraseña Requerida");
-            //    txtPassword.Focus();
-            //    return;
-            //}
-
             var dto = new UserCreateDto
             {
                 Id = id,

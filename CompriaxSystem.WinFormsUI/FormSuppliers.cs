@@ -80,7 +80,10 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ExecuteEditAction()
         {
             if (_selectedSupplierId == 0)
+            {
+                UIHelper.WarnMessage(this, "Debe seleccionar un proveedor para editar.", "Selección Requerida");
                 return;
+            }
 
             var dto = MapFieldsToDto(_selectedSupplierId);
             var result = await _supplyChainService.UpsertSupplierAsync(dto);

@@ -102,7 +102,7 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteOpenShiftAction()
         {
-            if (numInitialCash.Value < 0 || numInitialCash.Text.Contains('-'))
+            if (numInitialCash.Value < 0)
             {
                 UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo. Ingrese un valor igual o mayor a $ 0,00.", "Monto Inválido");
                 numInitialCash.Select(0, numInitialCash.Text.Length);

@@ -175,19 +175,6 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            if (cboDocType.SelectedValue is not int docTypeId || docTypeId < 0)
-            {
-                UIHelper.WarnMessage(this, "Por favor, seleccione el Tipo de Comprobante de compra.", "Tipo Comprobante Requerido");
-                cboDocType.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtInvoiceNumber.Text))
-            {
-                UIHelper.WarnMessage(this, "El número de comprobante no se ha generado correctamente.", "N° Comprobante Requerido");
-                return;
-            }
-
             int paymentMethodId = 1;
             string paymentMethodName = "Efectivo";
 
@@ -215,7 +202,7 @@ namespace CompriaxSystem.WinFormsUI
                     var dto = new PurchaseCreateDto
                     {
                         SupplierId = supplierId,
-                        DocumentTypeId = docTypeId,
+                        DocumentTypeId = (int)cboDocType.SelectedValue,
                         DocumentTypeName = cboDocType.Text,
                         PaymentMethodId = paymentMethodId,
                         PaymentMethodName = paymentMethodName,

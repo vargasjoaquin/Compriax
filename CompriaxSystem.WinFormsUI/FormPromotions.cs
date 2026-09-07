@@ -203,34 +203,13 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessAction(int id)
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                UIHelper.WarnMessage(this, "El nombre es obligatorio.", "Validación");
-                txtName.Focus();
-                return;
-            }
-
             var promotionType = (PromotionType)cboType.SelectedValue!;
-
-            if (promotionType == PromotionType.PercentageOnProduct && (cboProduct.SelectedValue is not int pId || pId <= 0))
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar un producto aplicable para esta promoción.", "Producto Requerido");
-                cboProduct.Focus();
-                return;
-            }
-
-            if (promotionType == PromotionType.PercentageOnCategory && (cboCategory.SelectedValue is not int cId || cId <= 0))
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar una categoría aplicable para esta promoción.", "Categoría Requerida");
-                cboCategory.Focus();
-                return;
-            }
 
             var dto = new PromotionDto
             {
                 Id = id,
                 Name = txtName.Text.Trim(),
-                Description = txtName.Text.Trim(),
+                Description = txtDescription?.Text?.Trim(),
                 PromotionType = promotionType,
                 ProductId = cboProduct.SelectedValue is int prodId && prodId > 0 ? prodId : null,
                 CategoryId = cboCategory.SelectedValue is int catId && catId > 0 ? catId : null,
