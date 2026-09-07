@@ -157,5 +157,93 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("Fallo crítico en el registro de compra: " + ex.Message);
             }
         }
+
+        public async Task<string> GetNextPurchaseNumberAsync(int documentTypeId)
+        {
+            var lastNumber = await unitOfWork.Purchases.GetLastDocumentNumberAsync(documentTypeId);
+            var getDocumentTypes = await unitOfWork.GetDocumentTypesAsync();
+            var documentsType = getDocumentTypes.FirstOrDefault(x => x.Id == documentTypeId);
+
+            string prefix = "FAC-X";
+
+            if (documentsType != null)
+            {
+                string name = documentsType.Name.ToUpperInvariant();
+
+                // 1. Facturas y Comprobantes Directos
+                if (name.Contains("CLIENTE CASUAL")) 
+                    prefix = "FAC-CAS";
+                else if (name.Contains("FACTURA A") && !name.Contains("TICKET"))
+                    prefix = "FAC-A";
+                else if (name.Contains("FACTURA B") && !name.Contains("TICKET")) 
+                    prefix = "FAC-B";
+                else if (name.Contains("FACTURA C")) 
+                    prefix = "FAC-C";
+                else if (name.Contains("FACTURA M")) 
+                    prefix = "FAC-M";
+                else if (name.Contains("EXPORTACIÓN") || name.Contains("EXPORTACION"))
+                    prefix = "FAC-E";
+
+                // 2. Tickets
+                else if (name.Contains("TICKET FACTURA A"))
+                    prefix = "TKT-A";
+                else if (name.Contains("TICKET FACTURA B")) 
+                    prefix = "TKT-B";
+                else if (name.Contains("TICKET CONSUMIDOR FINAL")) 
+                    prefix = "TKT-CF";
+
+                // 3. Notas de Débito
+                else if (name.Contains("NOTA DE DÉBITO A") || name.Contains("NOTA DE DEBITO A"))
+                    prefix = "ND-A";
+                else if (name.Contains("NOTA DE DÉBITO B") || name.Contains("NOTA DE DEBITO B")) 
+                    prefix = "ND-B";
+                else if (name.Contains("NOTA DE DÉBITO C") || name.Contains("NOTA DE DEBITO C"))
+                    prefix = "ND-C";
+                else if (name.Contains("NOTA DE DÉBITO M") || name.Contains("NOTA DE DEBITO M"))
+                    prefix = "ND-M";
+
+                // 4. Notas de Crédito
+                else if (name.Contains("NOTA DE CRÉDITO A") || name.Contains("NOTA DE CREDITO A")) 
+                    prefix = "NC-A";
+                else if (name.Contains("NOTA DE CRÉDITO B") || name.Contains("NOTA DE CREDITO B")) 
+                    prefix = "NC-B";
+                else if (name.Contains("NOTA DE CRÉDITO C") || name.Contains("NOTA DE CREDITO C")) 
+                    prefix = "NC-C";
+                else if (name.Contains("NOTA DE CRÉDITO M") || name.Contains("NOTA DE CREDITO M")) 
+                    prefix = "NC-M";
+
+                // 5. Recibos
+                else if (name.Contains("RECIBO A")) 
+                    prefix = "REC-A";
+                else if (name.Contains("RECIBO B"))
+                    prefix = "REC-B";
+                else if (name.Contains("RECIBO C")) 
+                    prefix = "REC-C";
+
+                // 6. Remitos y Presupuestos
+                else if (name.Contains("REMITO R")) 
+                    prefix = "REM-R";
+                else if (name.Contains("REMITO X")) 
+                    prefix = "REM-X";
+                else if (name.Contains("PRESUPUESTO"))
+                    prefix = "PRE";
+                else if (name.Contains("COMPROBANTE X"))
+                    prefix = "CMP-X";
+            }
+
+            long nextValue = 1;
+            
+            if (!string.IsNullOrWhiteSpace(lastNumber))
+            {
+                var match = System.Text.RegularExpressions.Regex.Match(lastNumber, @"\d+$");
+
+                if (match.Success && long.TryParse(match.Value, out long lastValue))
+                {
+                    nextValue = lastValue + 1;
+                }
+            }
+
+            return $"{prefix}-{nextValue:D8}";
+        }
     }
 }

@@ -23,6 +23,10 @@ namespace CompriaxSystem.WinFormsUI
         private string _lastScannedBarcode = string.Empty;
         private DateTime _lastScanTime = DateTime.MinValue;
 
+        // Banderas de control de concurrencia
+        private bool _isInitializing = false;
+        private bool _isUpdatingInvoiceNumber = false;
+
         public FormPurchases(
             ISupplyChainService supplyService,
             IProductService productService,
@@ -48,6 +52,9 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
 
             this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
+
+            // Suscripción al cambio de tipo de documento
+            this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearchSupplier.Click += async (s, e) => await ExecuteSearchSupplierAction();
@@ -82,29 +89,54 @@ namespace CompriaxSystem.WinFormsUI
 
         public async Task InitializeFormAsync()
         {
+            _isInitializing = true;
+            txtInvoiceNumber.ReadOnly = true;
+
             using (new WaitCursorHelper(this))
             {
-                var docTypes = (await _lookupService.GetDocumentTypesAsync()).ToList();
-                cboDocType.DataSource = docTypes;
+                var docTypes = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
+                var paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
+
                 cboDocType.DisplayMember = "Name";
                 cboDocType.ValueMember = "Id";
+                cboDocType.DataSource = docTypes;
 
-                var paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
-                cboPaymentMethod.DataSource = paymentMethods;
                 cboPaymentMethod.DisplayMember = "Name";
                 cboPaymentMethod.ValueMember = "Id";
+                cboPaymentMethod.DataSource = paymentMethods;
 
                 if (paymentMethods.Any())
                 {
                     cboPaymentMethod.SelectedIndex = 0;
                 }
 
-                UIHelper.FormatGrid(dgvCart);
-                ResetUI();
+                _isInitializing = false;
+
+                await ResetUI();
             }
         }
 
-        private void ResetUI()
+        private async Task UpdateNextInvoiceNumber()
+        {
+            if (_isInitializing || _isUpdatingInvoiceNumber) 
+                return;
+
+            _isUpdatingInvoiceNumber = true;
+            
+            try
+            {
+                if (cboDocType.SelectedValue is int id && id >= 0)
+                {
+                    txtInvoiceNumber.Text = await _supplyService.GetNextPurchaseNumberAsync(id);
+                }
+            }
+            finally
+            {
+                _isUpdatingInvoiceNumber = false;
+            }
+        }
+
+        private async Task ResetUI()
         {
             _items.Clear();
             _foundProduct = null;
@@ -115,13 +147,14 @@ namespace CompriaxSystem.WinFormsUI
             ClearProductArea();
 
             txtDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            txtTotalPay.Text = "$ 0.00";
+            txtTotalPay.Text = "$ 0,00";
 
-            if (cboDocType.Items.Count > 0)
+            if (cboDocType.Items.Count > 0 && cboDocType.SelectedIndex == -1)
             {
                 cboDocType.SelectedIndex = 0;
             }
 
+            await UpdateNextInvoiceNumber();
             RefreshGrid();
             txtProductCode.Focus();
         }
@@ -142,7 +175,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            if (cboDocType.SelectedValue is not int docTypeId || docTypeId <= 0)
+            if (cboDocType.SelectedValue is not int docTypeId || docTypeId < 0)
             {
                 UIHelper.WarnMessage(this, "Por favor, seleccione el Tipo de Comprobante de compra.", "Tipo Comprobante Requerido");
                 cboDocType.Focus();
@@ -151,8 +184,7 @@ namespace CompriaxSystem.WinFormsUI
 
             if (string.IsNullOrWhiteSpace(txtInvoiceNumber.Text))
             {
-                UIHelper.WarnMessage(this, "Debe ingresar el número de comprobante entregado por el proveedor.", "N° Comprobante Requerido");
-                txtInvoiceNumber.Focus();
+                UIHelper.WarnMessage(this, "El número de comprobante no se ha generado correctamente.", "N° Comprobante Requerido");
                 return;
             }
 
@@ -206,7 +238,7 @@ namespace CompriaxSystem.WinFormsUI
                         }
                         catch { }
 
-                        ResetUI();
+                        await ResetUI();
                         UIHelper.ShowResult(result, "Compra Registrada");
                     }
                     else
@@ -246,6 +278,10 @@ namespace CompriaxSystem.WinFormsUI
             }
 
             SystemSounds.Beep.Play();
+            _foundProduct = product;
+            txtProductName.Text = product.Name;
+            txtPriceBuy.Text = product.BuyPrice.ToString("N2");
+
             AddProductToPurchaseList(product, product.BuyPrice, 1, isIncremental: true);
             ClearProductArea();
         }
@@ -272,7 +308,7 @@ namespace CompriaxSystem.WinFormsUI
 
             if (existing != null)
             {
-                existing.Quantity = isIncremental ? existing.Quantity + quantity : quantity;
+                existing.Quantity = isIncremental ? (existing.Quantity + quantity) : quantity;
                 existing.BuyPrice = buyPrice;
             }
             else
@@ -371,7 +407,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            AddProductToPurchaseList(_foundProduct, buyPrice, (int)numQuantity.Value, isIncremental: false);
+            AddProductToPurchaseList(_foundProduct, buyPrice, (int)numQuantity.Value, isIncremental: true);
             ClearProductArea();
         }
 

@@ -9,5 +9,6 @@ namespace CompriaxSystem.Application.Interfaces.Services
         Task<OperationResult> UpsertSupplierAsync(SupplierDto dto);
         Task<OperationResult> DeleteSupplierAsync(int id);
         Task<OperationResult> ProcessPurchaseAsync(PurchaseCreateDto dto);
+        Task<string> GetNextPurchaseNumberAsync(int documentTypeId);
     }
 }

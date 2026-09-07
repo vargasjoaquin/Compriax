@@ -49,7 +49,7 @@ namespace CompriaxSystem.WinFormsUI
                 await LoadDashboardAsync();
             };
 
-            this.Activated += async (s, e) => await RefreshShiftStatusAsync();
+            //this.Activated += async (s, e) => await RefreshShiftStatusAsync();
 
             LoadUserData();
         }

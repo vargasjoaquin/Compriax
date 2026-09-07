@@ -23,6 +23,18 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .Where(p => p.CreatedAt >= start && p.CreatedAt <= end)
                 .ToListAsync();
 
+        public async Task<string> GetLastDocumentNumberAsync(int documentTypeId)
+        {
+            var lastNumber = await context.Purchases
+                .AsNoTracking()
+                .Where(p => p.DocumentTypeId == documentTypeId)
+                .OrderByDescending(p => p.Id)
+                .Select(p => p.DocumentNumber)
+                .FirstOrDefaultAsync();
+
+            return lastNumber;
+        }
+
         public async Task<bool> SaveChangesAsync() =>
             await context.SaveChangesAsync() > 0;
     }
