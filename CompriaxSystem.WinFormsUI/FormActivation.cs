@@ -15,7 +15,6 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlCard);
             pnlHeader.BackColor = UIThemeHelper.SidebarBackground;
-            ApplyIcons();
 
             this.btnActivate.Click += async (s, e) => await ExecuteActivationAsync();
             this.btnExit.Click += (s, e) =>
@@ -23,16 +22,6 @@ namespace CompriaxSystem.WinFormsUI
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             };
-        }
-
-        private void ApplyIcons()
-        {
-            lblTitle.Image = UIIconHelper.ActivacionSupervisor;
-            lblTitle.ImageAlign = ContentAlignment.MiddleLeft;
-
-            btnActivate.Image = UIIconHelper.Exito;
-            btnActivate.ImageAlign = ContentAlignment.MiddleLeft;
-            btnActivate.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task ExecuteActivationAsync()
@@ -68,7 +57,6 @@ namespace CompriaxSystem.WinFormsUI
                 else
                 {
                     lblStatusMessage.Text = result.Message;
-                    lblStatusMessage.Image = UIIconHelper.Error;
                     lblStatusMessage.ImageAlign = ContentAlignment.MiddleLeft;
                     lblStatusMessage.ForeColor = UIThemeHelper.Danger;
                     lblStatusMessage.Visible = true;

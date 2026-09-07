@@ -16,23 +16,11 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(groupBoxStore);
-            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnBrowse.Click += (s, e) => ExecuteBrowseLogoAction();
             this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
-        }
-
-        private void ApplyIcons()
-        {
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnBrowse.Image = UIIconHelper.CapturarFoto;
-            btnBrowse.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBrowse.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()

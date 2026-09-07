@@ -15,7 +15,6 @@ namespace CompriaxSystem.WinFormsUI
             this.BackColor = UIThemeHelper.SidebarBackground;
             UIThemeHelper.ApplyCardStyle(pnlCard);
             lblMainTitle.ForeColor = UIThemeHelper.Primary;
-            ApplyIcons();
 
             this.btnSend.Click += async (s, e) => await ExecuteSendRecoveryAsync();
             this.btnCancel.Click += (s, e) => this.Close();
@@ -24,16 +23,6 @@ namespace CompriaxSystem.WinFormsUI
             {
                 if (e.KeyCode == Keys.Enter) await ExecuteSendRecoveryAsync();
             };
-        }
-
-        private void ApplyIcons()
-        {
-            lblHeaderIcon.Text = string.Empty;
-            lblHeaderIcon.Image = UIIconHelper.BloqueoCierre;
-
-            btnSend.Image = UIIconHelper.EnviarMensaje;
-            btnSend.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSend.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task ExecuteSendRecoveryAsync()
@@ -56,7 +45,6 @@ namespace CompriaxSystem.WinFormsUI
                 if (result.Success)
                 {
                     lblResult.Text = result.Message;
-                    lblResult.Image = UIIconHelper.Exito;
                     lblResult.ImageAlign = ContentAlignment.MiddleLeft;
                     lblResult.ForeColor = UIThemeHelper.Success;
                     UIHelper.InfoMessage(this, result.Message, "Recuperación de Contraseña");
@@ -64,7 +52,6 @@ namespace CompriaxSystem.WinFormsUI
                 else
                 {
                     lblResult.Text = result.Message;
-                    lblResult.Image = UIIconHelper.Advertencia;
                     lblResult.ImageAlign = ContentAlignment.MiddleLeft;
                     lblResult.ForeColor = UIThemeHelper.Danger;
                     UIHelper.WarnMessage(this, result.Message, "Cuenta No Encontrada");

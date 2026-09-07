@@ -19,28 +19,11 @@ namespace CompriaxSystem.WinFormsUI
             _barcodeService = barcodeService;
             InitializeComponent();
 
-            ApplyIcons();
-
             this.Load += async (s, e) => await InitializeFormAsync();
             this.dgvProducts.CellClick += (s, e) => SyncEntityToFields();
             this.btnGenerate.Click += (s, e) => ExecuteGenerateLabelAction();
             this.btnPrint.Click += (s, e) => ExecutePrintAction();
             this.btnDownload.Click += (s, e) => ExecuteDownloadImageAction();
-        }
-
-        private void ApplyIcons()
-        {
-            btnGenerate.Image = UIIconHelper.GenerarCodigo;
-            btnGenerate.ImageAlign = ContentAlignment.MiddleLeft;
-            btnGenerate.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnPrint.Image = UIIconHelper.Imprimir;
-            btnPrint.ImageAlign = ContentAlignment.MiddleLeft;
-            btnPrint.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnDownload.Image = UIIconHelper.Guardar;
-            btnDownload.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDownload.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()

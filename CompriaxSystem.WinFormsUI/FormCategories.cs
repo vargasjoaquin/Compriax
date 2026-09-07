@@ -16,7 +16,6 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlCard);
-            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
@@ -24,17 +23,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnCancel.Click += (s, e) => ResetUI();
 
             this.dgvCategories.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvCategories, e);
-        }
-
-        private void ApplyIcons()
-        {
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnDelete.Image = UIIconHelper.Eliminar;
-            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()

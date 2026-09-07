@@ -26,7 +26,6 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(gbPromo);
-            ApplyIcons();
 
             this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
 
@@ -37,25 +36,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.txtSearch.TextChanged += (s, e) => FilterPromotions();
-        }
-
-        private void ApplyIcons()
-        {
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnEdit.Image = UIIconHelper.Editar;
-            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnToggle.Image = UIIconHelper.GenerarCodigo;
-            btnToggle.ImageAlign = ContentAlignment.MiddleLeft;
-            btnToggle.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnDelete.Image = UIIconHelper.Eliminar;
-            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)

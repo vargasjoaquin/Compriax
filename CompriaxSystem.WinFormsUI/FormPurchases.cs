@@ -50,7 +50,6 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyCardStyle(gbSaleInfo);
             UIThemeHelper.ApplyCardStyle(pnlScannerBar);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
-            ApplyIcons();
 
             this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
             this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
@@ -84,31 +83,6 @@ namespace CompriaxSystem.WinFormsUI
                     ExecuteRemoveFromCartAction();
                 }
             };
-        }
-
-        private void ApplyIcons()
-        {
-            btnSearchProduct.Text = string.Empty;
-            btnSearchProduct.Image = UIIconHelper.Buscar;
-
-            btnSearchSupplier.Text = string.Empty;
-            btnSearchSupplier.Image = UIIconHelper.Buscar;
-
-            btnAddItem.Image = UIIconHelper.IngresoManual;
-            btnAddItem.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAddItem.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnRemoveItem.Image = UIIconHelper.Eliminar;
-            btnRemoveItem.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRemoveItem.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnRegister.Image = UIIconHelper.Guardar;
-            btnRegister.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRegister.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnToggleCam.Image = UIIconHelper.CamaraEncender;
-            btnToggleCam.ImageAlign = ContentAlignment.MiddleLeft;
-            btnToggleCam.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()
@@ -467,7 +441,6 @@ namespace CompriaxSystem.WinFormsUI
                 _cameraService.StartStreaming(0, OnFrameCaptured);
                 _isCameraActive = true;
                 btnToggleCam.Text = "APAGAR CÁMARA";
-                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = Color.Firebrick;
             }
             else
@@ -489,7 +462,6 @@ namespace CompriaxSystem.WinFormsUI
                 }
 
                 btnToggleCam.Text = "CÁMARA";
-                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = Color.Navy;
             }
         }

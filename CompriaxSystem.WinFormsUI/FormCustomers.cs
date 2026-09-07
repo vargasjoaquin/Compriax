@@ -20,7 +20,6 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(groupBox1);
-            ApplyIcons();
 
             txtDni.MaxLength = 8;
             txtCuil.MaxLength = 13;
@@ -39,25 +38,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-        }
-
-        private void ApplyIcons()
-        {
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnEdit.Image = UIIconHelper.Editar;
-            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnDelete.Image = UIIconHelper.Eliminar;
-            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnExportPdf.Image = UIIconHelper.ExportarPdf;
-            btnExportPdf.ImageAlign = ContentAlignment.MiddleLeft;
-            btnExportPdf.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task InitializeFormAsync()

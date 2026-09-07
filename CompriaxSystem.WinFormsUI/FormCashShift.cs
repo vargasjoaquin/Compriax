@@ -29,7 +29,6 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlOpenShift);
             UIThemeHelper.ApplyCardStyle(pnlActiveShift);
-            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnOpenShift.Click += async (s, e) => await ExecuteOpenShiftAction();
@@ -38,29 +37,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnPrintX.Click += async (s, e) => await ExecutePrintShiftTicketAction(isZClose: false);
             this.btnCloseShiftZ.Click += async (s, e) => await ExecuteCloseShiftZAction();
             this.dgvMovements.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvMovements, e);
-        }
-
-        private void ApplyIcons()
-        {
-            btnOpenShift.Image = UIIconHelper.Exito;
-            btnOpenShift.ImageAlign = ContentAlignment.MiddleLeft;
-            btnOpenShift.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnCashIn.Image = UIIconHelper.IngresoManual;
-            btnCashIn.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCashIn.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnCashOut.Image = UIIconHelper.RetiroEgreso;
-            btnCashOut.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCashOut.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnPrintX.Image = UIIconHelper.Imprimir;
-            btnPrintX.ImageAlign = ContentAlignment.MiddleLeft;
-            btnPrintX.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnCloseShiftZ.Image = UIIconHelper.BloqueoCierre;
-            btnCloseShiftZ.ImageAlign = ContentAlignment.MiddleLeft;
-            btnCloseShiftZ.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()
@@ -107,7 +83,6 @@ namespace CompriaxSystem.WinFormsUI
                         : _currentShift.OpeningDate;
 
                     lblShiftStatus.Text = $"TURNO ABIERTO #{_currentShift.Id} ({localOpening:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
-                    lblShiftStatus.Image = UIIconHelper.EstadoActivo;
                     lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
 
                     lblFondoInicialVal.Text = $"Fondo Inicial: {_currentShift.InitialCash:C2}";

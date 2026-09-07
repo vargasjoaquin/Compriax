@@ -24,24 +24,12 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlFilters);
-            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearchDates.Click += async (s, e) => await ExecuteSearchAction();
             this.btnExportExcel.Click += (s, e) => ExecuteExportExcelAction();
             this.dgvData.CellDoubleClick += (s, e) => ExecuteOpenDetailAction();
             this.txtSearchValue.TextChanged += (s, e) => ExecuteFilterAction();
-        }
-
-        private void ApplyIcons()
-        {
-            btnSearchDates.Image = UIIconHelper.Buscar;
-            btnSearchDates.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSearchDates.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnExportExcel.Image = UIIconHelper.ExportarExcel;
-            btnExportExcel.ImageAlign = ContentAlignment.MiddleLeft;
-            btnExportExcel.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task InitializeFormAsync()

@@ -15,20 +15,8 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
-            ApplyIcons();
-
             this.Load += (s, e) => LoadProfileData();
             this.btnSave.Click += async (s, e) => await ExecuteSaveProfileAsync();
-        }
-
-        private void ApplyIcons()
-        {
-            lblHeaderTitle.Image = UIIconHelper.ActivacionSupervisor;
-            lblHeaderTitle.ImageAlign = ContentAlignment.MiddleLeft;
-
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private void LoadProfileData()

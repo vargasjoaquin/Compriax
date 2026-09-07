@@ -19,20 +19,12 @@ namespace CompriaxSystem.WinFormsUI
 
             this.BackColor = UIThemeHelper.SidebarBackground;
             UIThemeHelper.ApplyCardStyle(pnlCard);
-            ApplyIcons();
 
             this.btnLogin.Click += async (s, e) => await ExecuteLoginAction();
             this.linkPass.LinkClicked += (s, e) => OpenPasswordRecovery();
             this.txtPass.KeyDown += async (s, e) => { if (e.KeyCode == Keys.Enter) await ExecuteLoginAction(); };
             this.txtUsuario.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) txtPass.Focus(); };
             this.btnClose.Click += (s, e) => System.Windows.Forms.Application.Exit();
-        }
-
-        private void ApplyIcons()
-        {
-            btnLogin.Image = UIIconHelper.BloqueoCierre;
-            btnLogin.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogin.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task ExecuteLoginAction()
@@ -100,7 +92,6 @@ namespace CompriaxSystem.WinFormsUI
         private void ShowError(string msg)
         {
             lblErrorMessage.Text = msg;
-            lblErrorMessage.Image = UIIconHelper.Advertencia;
             lblErrorMessage.ImageAlign = ContentAlignment.MiddleLeft;
             lblErrorMessage.ForeColor = UIThemeHelper.Danger;
             lblErrorMessage.Visible = true;

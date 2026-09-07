@@ -20,7 +20,6 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(gbData);
-            ApplyIcons();
 
             this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
             this.dgvEmployees.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvEmployees, e);
@@ -34,29 +33,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowse.Click += (s, e) => HandlePhotoSelection();
-        }
-
-        private void ApplyIcons()
-        {
-            btnSave.Image = UIIconHelper.Guardar;
-            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
-            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnEdit.Image = UIIconHelper.Editar;
-            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
-            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnDelete.Image = UIIconHelper.Eliminar;
-            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
-            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnExportPdf.Image = UIIconHelper.ExportarPdf;
-            btnExportPdf.ImageAlign = ContentAlignment.MiddleLeft;
-            btnExportPdf.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnBrowse.Image = UIIconHelper.CapturarFoto;
-            btnBrowse.ImageAlign = ContentAlignment.MiddleLeft;
-            btnBrowse.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         private async Task InitializeFormAsync()

@@ -30,8 +30,6 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
-            ApplyIcons();
-
             lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
             HoraFecha.Interval = 1000;
             HoraFecha.Tick -= HoraFecha_Tick;
@@ -52,17 +50,6 @@ namespace CompriaxSystem.WinFormsUI
 
             LoadUserData();
         }
-
-        private void ApplyIcons()
-        {
-            pbUserIcon.Image = UIIconHelper.ActivacionSupervisor;
-            pbRoleIcon.Image = UIIconHelper.ActivacionSupervisor;
-
-            btnLogout.Image = UIIconHelper.BloqueoCierre;
-            btnLogout.ImageAlign = ContentAlignment.MiddleLeft;
-            btnLogout.TextImageRelation = TextImageRelation.ImageBeforeText;
-        }
-
         public async Task SetupAppearanceAsync()
         {
             if (!await _appearanceLock.WaitAsync(0))
@@ -103,7 +90,6 @@ namespace CompriaxSystem.WinFormsUI
                 if (isAdmin && ctx == null)
                 {
                     lblShiftStatus.Text = " Modo Supervisor (Vista Global)";
-                    lblShiftStatus.Image = UIIconHelper.ActivacionSupervisor;
                     lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                     lblShiftStatus.ForeColor = Color.FromArgb(226, 232, 240);
                 }
@@ -119,14 +105,12 @@ namespace CompriaxSystem.WinFormsUI
                                                 : activeShift.OpeningDate;
 
                         lblShiftStatus.Text = $" {regName} | Turno #{activeShift.Id} ({localOpening:HH:mm})";
-                        lblShiftStatus.Image = UIIconHelper.EstadoActivo;
                         lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                         lblShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
                     }
                     else
                     {
                         lblShiftStatus.Text = $" {regName} | Caja Cerrada";
-                        lblShiftStatus.Image = UIIconHelper.EstadoInactivo;
                         lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                         lblShiftStatus.ForeColor = Color.FromArgb(248, 113, 113);
                     }

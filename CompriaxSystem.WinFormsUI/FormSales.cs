@@ -66,7 +66,6 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlBarcodeBar);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
-            ApplyIcons();
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnAdd.Click += async (s, e) => await AddFromInputAsync();
@@ -122,24 +121,6 @@ namespace CompriaxSystem.WinFormsUI
             this.dgvCart.CellDoubleClick += (s, e) => RemoveSelectedItem();
         }
 
-        private void ApplyIcons()
-        {
-            lblScanIcon.Text = string.Empty;
-            lblScanIcon.Image = UIIconHelper.Buscar;
-
-            btnAdd.Image = UIIconHelper.IngresoManual;
-            btnAdd.ImageAlign = ContentAlignment.MiddleLeft;
-            btnAdd.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnRemove.Image = UIIconHelper.Eliminar;
-            btnRemove.ImageAlign = ContentAlignment.MiddleLeft;
-            btnRemove.TextImageRelation = TextImageRelation.ImageBeforeText;
-
-            btnToggleCam.Image = UIIconHelper.CamaraEncender;
-            btnToggleCam.ImageAlign = ContentAlignment.MiddleLeft;
-            btnToggleCam.TextImageRelation = TextImageRelation.ImageBeforeText;
-        }
-
         public async Task InitializeFormAsync()
         {
             var user = _currentUser.CurrentUser;
@@ -169,14 +150,12 @@ namespace CompriaxSystem.WinFormsUI
                         : activeShift.OpeningDate;
 
                     lblShiftBadge.Text = $"TURNO #{activeShift.Id} ACTIVO ({localOpening:HH:mm})";
-                    lblShiftBadge.Image = UIIconHelper.EstadoActivo;
                     lblShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
                     lblShiftBadge.ForeColor = UIThemeHelper.Success;
                 }
                 else
                 {
                     lblShiftBadge.Text = "SIN TURNO DE CAJA";
-                    lblShiftBadge.Image = UIIconHelper.EstadoInactivo;
                     lblShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
                     lblShiftBadge.ForeColor = UIThemeHelper.Danger;
                 }
@@ -409,7 +388,6 @@ namespace CompriaxSystem.WinFormsUI
                 _cameraService.StartStreaming(0, OnFrameCaptured);
                 _isCameraActive = true;
                 btnToggleCam.Text = "APAGAR ESCÁNER";
-                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = UIThemeHelper.Danger;
                 btnToggleCam.ForeColor = Color.White;
             }
@@ -428,7 +406,6 @@ namespace CompriaxSystem.WinFormsUI
                 picWebcam.Image?.Dispose();
                 picWebcam.Image = null;
                 btnToggleCam.Text = "CÁMARA ESCÁNER";
-                btnToggleCam.Image = UIIconHelper.CamaraEncender;
                 btnToggleCam.BackColor = UIThemeHelper.Surface;
                 btnToggleCam.ForeColor = UIThemeHelper.TextMain;
             }
