@@ -103,7 +103,7 @@
             btnPrint.Name = "btnPrint";
             btnPrint.Size = new Size(130, 42);
             btnPrint.TabIndex = 2;
-            btnPrint.Text = "🖨️ IMPRIMIR";
+            btnPrint.Text = "IMPRIMIR";
             btnPrint.UseVisualStyleBackColor = false;
             // 
             // btnWhatsapp
@@ -117,7 +117,7 @@
             btnWhatsapp.Name = "btnWhatsapp";
             btnWhatsapp.Size = new Size(140, 42);
             btnWhatsapp.TabIndex = 3;
-            btnWhatsapp.Text = "📱 WHATSAPP";
+            btnWhatsapp.Text = "WHATSAPP";
             btnWhatsapp.UseVisualStyleBackColor = false;
             // 
             // btnSavePdf
@@ -129,7 +129,7 @@
             btnSavePdf.Name = "btnSavePdf";
             btnSavePdf.Size = new Size(130, 42);
             btnSavePdf.TabIndex = 4;
-            btnSavePdf.Text = "💾 GUARDAR";
+            btnSavePdf.Text = "GUARDAR";
             btnSavePdf.UseVisualStyleBackColor = true;
             // 
             // pdfViewer

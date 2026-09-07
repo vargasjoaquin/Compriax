@@ -33,12 +33,32 @@ namespace CompriaxSystem.WinFormsUI
             _ticketPrinter = ticketPrinter;
 
             InitializeComponent();
+            ApplyIcons();
 
             this.rb80mm.CheckedChanged += async (s, e) => { if (rb80mm.Checked) await RenderTicketAsync(); };
             this.rb58mm.CheckedChanged += async (s, e) => { if (rb58mm.Checked) await RenderTicketAsync(); };
             this.btnSavePdf.Click += async (s, e) => await ExecuteSavePdfAction();
             this.btnPrint.Click += async (s, e) => await ExecutePrintAction();
             this.btnWhatsapp.Click += async (s, e) => await ExecuteSendWhatsappAction();
+        }
+
+        private void ApplyIcons()
+        {
+            lblTicketTitle.Image = UIIconHelper.VistaPreviaTicket;
+            lblTicketTitle.ImageAlign = ContentAlignment.MiddleLeft;
+            lblTicketTitle.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnPrint.Image = UIIconHelper.Imprimir;
+            btnPrint.ImageAlign = ContentAlignment.MiddleLeft;
+            btnPrint.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnWhatsapp.Image = UIIconHelper.EnviarMensaje;
+            btnWhatsapp.ImageAlign = ContentAlignment.MiddleLeft;
+            btnWhatsapp.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnSavePdf.Image = UIIconHelper.Guardar;
+            btnSavePdf.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSavePdf.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         public async Task LoadSaleTicketAsync(
@@ -54,7 +74,7 @@ namespace CompriaxSystem.WinFormsUI
             _customerPhone = customerPhone;
             _customerName = customerName ?? sale.CustomerName;
 
-            this.lblTicketTitle.Text = $"Ticket N.°: {docNumber}";
+            this.lblTicketTitle.Text = $" VISTA PREVIA TICKET N.°: {docNumber}";
             btnWhatsapp.Enabled = !string.IsNullOrWhiteSpace(_customerPhone) && _whatsappService != null && _storageService != null;
 
             await RenderTicketAsync();
@@ -181,7 +201,8 @@ namespace CompriaxSystem.WinFormsUI
                 finally
                 {
                     btnWhatsapp.Enabled = true;
-                    btnWhatsapp.Text = "📱 WHATSAPP";
+                    btnWhatsapp.Text = "WHATSAPP";
+                    btnWhatsapp.Image = UIIconHelper.EnviarMensaje;
                 }
             }
         }

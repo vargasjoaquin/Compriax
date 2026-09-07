@@ -63,7 +63,7 @@
             lblHeaderTitle.Name = "lblHeaderTitle";
             lblHeaderTitle.Size = new Size(290, 30);
             lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "👤 MI PERFIL DE USUARIO";
+            lblHeaderTitle.Text = "MI PERFIL DE USUARIO";
             // 
             // pnlLeftCard
             // 
@@ -289,7 +289,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(506, 48);
             btnSave.TabIndex = 13;
-            btnSave.Text = "💾 GUARDAR CAMBIOS";
+            btnSave.Text = "GUARDAR CAMBIOS";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // FormUserProfile

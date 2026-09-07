@@ -58,7 +58,7 @@
             lblHeaderTitle.Name = "lblHeaderTitle";
             lblHeaderTitle.Size = new Size(503, 30);
             lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "⚙️ AJUSTES DEL COMERCIO Y DATOS FISCALES";
+            lblHeaderTitle.Text = "AJUSTES DEL COMERCIO Y DATOS FISCALES";
             // 
             // groupBoxStore
             // 
@@ -220,7 +220,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(876, 52);
             btnSave.TabIndex = 13;
-            btnSave.Text = "💾 GUARDAR CONFIGURACIÓN";
+            btnSave.Text = "GUARDAR CONFIGURACIÓN";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // FormSettings

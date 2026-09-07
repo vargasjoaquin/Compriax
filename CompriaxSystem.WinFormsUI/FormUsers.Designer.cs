@@ -65,7 +65,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(534, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🔐 ADMINISTRACIÓN DE USUARIOS DEL SISTEMA";
+            lblTitle.Text = "ADMINISTRACIÓN DE USUARIOS DEL SISTEMA";
 
             // btnExportPdf
             btnExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -78,7 +78,7 @@
             btnExportPdf.Name = "btnExportPdf";
             btnExportPdf.Size = new Size(165, 54);
             btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "📄 EXPORTAR PDF";
+            btnExportPdf.Text = "EXPORTAR PDF";
             btnExportPdf.UseVisualStyleBackColor = false;
 
             // groupBoxData
@@ -140,7 +140,7 @@
             btnClearPhoto.Name = "btnClearPhoto";
             btnClearPhoto.Size = new Size(60, 46);
             btnClearPhoto.TabIndex = 2;
-            btnClearPhoto.Text = "✕";
+            btnClearPhoto.Text = "";
             btnClearPhoto.UseVisualStyleBackColor = false;
 
             // lblUsername
@@ -238,7 +238,7 @@
             btnTogglePassword.Name = "btnTogglePassword";
             btnTogglePassword.Size = new Size(43, 30);
             btnTogglePassword.TabIndex = 13;
-            btnTogglePassword.Text = "👁";
+            btnTogglePassword.Text = "";
             btnTogglePassword.UseVisualStyleBackColor = false;
 
             // lblRole
@@ -268,7 +268,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(251, 74);
             btnSave.TabIndex = 16;
-            btnSave.Text = "💾 GUARDAR USUARIO";
+            btnSave.Text = "GUARDAR USUARIO";
             btnSave.UseVisualStyleBackColor = false;
 
             // btnEdit

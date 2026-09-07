@@ -23,6 +23,8 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(groupBoxData);
+            ApplyIcons();
+
             this.dgvUsers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvUsers, e);
 
             this.Load += async (s, e) => await InitializeFormAsync();
@@ -33,6 +35,32 @@ namespace CompriaxSystem.WinFormsUI
             this.btnBrowsePhoto.Click += (s, e) => HandlePhotoSelection();
             this.btnClearPhoto.Click += (s, e) => HandlePhotoRemoval();
             this.btnTogglePassword.Click += (s, e) => TogglePasswordVisibility();
+        }
+
+        private void ApplyIcons()
+        {
+            btnSave.Image = UIIconHelper.Guardar;
+            btnSave.ImageAlign = ContentAlignment.MiddleLeft;
+            btnSave.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnEdit.Image = UIIconHelper.Editar;
+            btnEdit.ImageAlign = ContentAlignment.MiddleLeft;
+            btnEdit.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnDelete.Image = UIIconHelper.BloqueoOperativo;
+            btnDelete.ImageAlign = ContentAlignment.MiddleLeft;
+            btnDelete.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnExportPdf.Image = UIIconHelper.ExportarPdf;
+            btnExportPdf.ImageAlign = ContentAlignment.MiddleLeft;
+            btnExportPdf.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnBrowsePhoto.Image = UIIconHelper.CapturarFoto;
+            btnBrowsePhoto.ImageAlign = ContentAlignment.MiddleLeft;
+            btnBrowsePhoto.TextImageRelation = TextImageRelation.ImageBeforeText;
+
+            btnTogglePassword.Text = string.Empty;
+            btnTogglePassword.Image = UIIconHelper.BloqueoCierre;
         }
 
         public async Task InitializeFormAsync()
@@ -102,7 +130,7 @@ namespace CompriaxSystem.WinFormsUI
 
             _isPasswordVisible = false;
             txtPassword.PasswordChar = '●';
-            btnTogglePassword.Text = "👁";
+            btnTogglePassword.Image = UIIconHelper.BloqueoCierre;
 
             SetButtonState(isEditing: false);
             txtUsername.Focus();
@@ -119,7 +147,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             _isPasswordVisible = !_isPasswordVisible;
             txtPassword.PasswordChar = _isPasswordVisible ? '\0' : '●';
-            btnTogglePassword.Text = _isPasswordVisible ? "🔒" : "👁";
+            btnTogglePassword.Image = _isPasswordVisible ? UIIconHelper.EstadoDisponible : UIIconHelper.BloqueoCierre;
             txtPassword.Focus();
         }
 
