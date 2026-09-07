@@ -74,12 +74,15 @@ namespace CompriaxSystem.Application.Services
                 .Select(s => new SalesReportDto
                 {
                     SaleId = s.Id,
-                    CashRegisterName = s.CashRegister.Name,
+                    CashRegisterName = s.CashRegister != null ? s.CashRegister.Name : "Caja Principal",
                     DocumentNumber = s.DocumentNumber,
-                    DocumentType = s.DocumentType?.Name,
+                    DocumentType = s.DocumentType != null ? s.DocumentType.Name : "N/A",
                     Date = s.CreatedAt,
-                    CustomerName = $"{s.Customer.LastName}, {s.Customer.FirstName}".Trim(),
-                    CashierName = s.User.Username,
+                    CustomerName = s.Customer != null
+                        ? $"{s.Customer.LastName}, {s.Customer.FirstName}".Trim()
+                        : "Consumidor Final",
+                    CashierName = s.User != null ? s.User.Username : "N/A",
+
                     TotalAmount = s.TotalAmount
                 })
                 .ToList();
@@ -133,8 +136,8 @@ namespace CompriaxSystem.Application.Services
                 DocumentTypeId = sale.DocumentTypeId,
                 DocumentTypeName = sale.DocumentType?.Name,
                 Date = sale.CreatedAt,
-                CustomerName = $"{sale.Customer.FirstName} {sale.Customer.LastName}".Trim(),
-                CustomerDoc = sale.Customer?.DocumentNumber,
+                CustomerName = sale.Customer != null ? $"{sale.Customer.FirstName} {sale.Customer.LastName}".Trim() : "Consumidor Final",
+                CustomerDoc = sale.Customer != null ? sale.Customer.DocumentNumber : "S/D",
                 CashierName = sale.User?.Username,
                 PaymentReceived = sale.PaymentReceived,
                 TotalAmount = sale.TotalAmount,
