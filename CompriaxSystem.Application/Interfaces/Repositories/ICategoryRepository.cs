@@ -9,5 +9,7 @@ namespace CompriaxSystem.Application.Interfaces.Repositories
         Task AddAsync(Category category);
         void Update(Category category);
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Category>> GetAllDeletedAsync();
+        Task<Category?> GetDeletedByIdAsync(int id);
     }
 }

@@ -10,6 +10,19 @@ namespace CompriaxSystem.Infrastructure.Repositories
         public async Task<Customer?> GetByIdAsync(int id) =>
             await context.Customers.FirstOrDefaultAsync(c => c.Id == id);
 
+        public async Task<Customer?> GetDeletedByIdAsync(int id) =>
+            await context.Customers
+                .IgnoreQueryFilters()
+                .Include(c => c.TaxCondition)
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted);
+
+        public async Task<IEnumerable<Customer>> GetAllDeletedAsync() =>
+            await context.Customers
+                .IgnoreQueryFilters()
+                .Include(c => c.TaxCondition)
+                .Where(c => c.IsDeleted)
+                .ToListAsync();
+
         public async Task<Customer?> GetByDocumentAsync(string documentNumber) =>
             await context.Customers.FirstOrDefaultAsync(c => c.DocumentNumber == documentNumber);
 

@@ -13,6 +13,17 @@ namespace CompriaxSystem.Infrastructure.Repositories
         public async Task<Category?> GetByIdAsync(int id) =>
             await context.Categories.FirstOrDefaultAsync(c => c.Id == id);
 
+        public async Task<Category?> GetDeletedByIdAsync(int id) =>
+            await context.Categories
+                .IgnoreQueryFilters()
+                .FirstOrDefaultAsync(c => c.Id == id && c.IsDeleted);
+
+        public async Task<IEnumerable<Category>> GetAllDeletedAsync() =>
+            await context.Categories
+                .IgnoreQueryFilters()
+                .Where(c => c.IsDeleted)
+                .ToListAsync();
+
         public async Task AddAsync(Category category) =>
             await context.Categories.AddAsync(category);
 

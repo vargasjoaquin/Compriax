@@ -9,5 +9,7 @@ namespace CompriaxSystem.Application.Interfaces.Repositories
         Task AddAsync(Supplier supplier);
         void Update(Supplier supplier);
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Supplier>> GetAllDeletedAsync();
+        Task<Supplier?> GetDeletedByIdAsync(int id);
     }
 }

@@ -11,5 +11,7 @@ namespace CompriaxSystem.Application.Interfaces.Repositories
         Task AddMovementAsync(StockMovement movement);
         void Update(Product product);
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Product>> GetAllDeletedAsync();
+        Task<Product?> GetDeletedByIdAsync(int id);
     }
 }

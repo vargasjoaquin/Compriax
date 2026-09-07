@@ -10,5 +10,7 @@ namespace CompriaxSystem.Application.Interfaces.Repositories
         Task AddAsync(Customer customer);
         void Update(Customer customer);
         Task<bool> SaveChangesAsync();
+        Task<IEnumerable<Customer>> GetAllDeletedAsync();
+        Task<Customer?> GetDeletedByIdAsync(int id);
     }
 }

@@ -29,6 +29,27 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 
+        public async Task<Product?> GetDeletedByIdAsync(int id)
+        {
+            return await context.Products
+                .IgnoreQueryFilters()
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+                .Include(p => p.UnitOfMeasure)
+                .FirstOrDefaultAsync(p => p.Id == id && p.IsDeleted);
+        }
+
+        public async Task<IEnumerable<Product>> GetAllDeletedAsync()
+        {
+            return await context.Products
+                .IgnoreQueryFilters()
+                .Include(p => p.Category)
+                .Include(p => p.Brand)
+                .Include(p => p.UnitOfMeasure)
+                .Where(p => p.IsDeleted)
+                .ToListAsync();
+        }
+
         public async Task AddAsync(Product product) =>
             await context.Products.AddAsync(product);
 

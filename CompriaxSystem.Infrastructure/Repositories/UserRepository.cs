@@ -14,6 +14,23 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .FirstOrDefaultAsync(u => u.Id == id);
         }
 
+        public async Task<User?> GetDeletedByIdAsync(int id)
+        {
+            return await context.Users
+                .IgnoreQueryFilters()
+                .Include(u => u.Role)
+                .FirstOrDefaultAsync(u => u.Id == id && u.IsDeleted);
+        }
+
+        public async Task<IEnumerable<User>> GetAllDeletedAsync()
+        {
+            return await context.Users
+                .IgnoreQueryFilters()
+                .Include(u => u.Role)
+                .Where(u => u.IsDeleted)
+                .ToListAsync();
+        }
+
         public async Task<User?> GetByUsernameAsync(string username) =>
             await context.Users
                 .Include(u => u.Role)
