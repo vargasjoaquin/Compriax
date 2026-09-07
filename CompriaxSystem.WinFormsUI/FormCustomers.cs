@@ -10,7 +10,6 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ILookupService _lookupService;
         private readonly IDocumentService _documentService;
         private int _selectedCustomerId = 0;
-        private bool _isFormattingCuit = false;
 
         public FormCustomers(ICustomerService customerService, ILookupService lookupService, IDocumentService documentService)
         {
@@ -19,22 +18,30 @@ namespace CompriaxSystem.WinFormsUI
             _documentService = documentService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupBox1);
+
+            txtDni.MaxLength = 8;
+            txtCuil.MaxLength = 13;
+
+            this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
+            
+            this.txtDni.KeyPress += (s, e) => { 
+                if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) 
+                    e.Handled = true; 
+            };
+            
+            this.dgvCustomers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvCustomers, e);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-
-            this.txtCuil.TextChanged += OnCuitTextChanged;
-            this.txtDni.KeyPress += OnOnlyNumbersKeyPress;
-            this.dgvCustomers.CellFormatting += DgvCustomers_CellFormatting;
         }
 
         private async Task InitializeFormAsync()
         {
-            txtDni.MaxLength = 8;
-            txtCuil.MaxLength = 13;
-
             using (new WaitCursorHelper(this))
             {
                 var taxConditions = (await _lookupService.GetTaxConditionsAsync()).ToList();
@@ -48,61 +55,13 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void DgvCustomers_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (dgvCustomers.Rows[e.RowIndex].DataBoundItem is CustomerDto dto)
-            {
-                if (!dto.IsActive)
-                {
-                    e.CellStyle.ForeColor = Color.Red;
-                    e.CellStyle.SelectionForeColor = Color.Red;
-                }
-            }
-        }
-
-        private void OnOnlyNumbersKeyPress(object? sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) e.Handled = true;
-        }
-
-        private void OnCuitTextChanged(object? sender, EventArgs e)
-        {
-            if (_isFormattingCuit) 
-                return;
-
-            string raw = new string(txtCuil.Text.Where(char.IsDigit).ToArray());
-            
-            if (raw.Length > 11) 
-                raw = raw.Substring(0, 11);
-
-            string formatted = raw;
-
-            if (raw.Length > 2 && raw.Length <= 10)
-                formatted = raw.Insert(2, "-");
-            else if (raw.Length > 10)
-                formatted = raw.Insert(2, "-").Insert(11, "-");
-
-            _isFormattingCuit = true;
-            int selectionStart = txtCuil.SelectionStart;
-            int oldLength = txtCuil.Text.Length;
-
-            txtCuil.Text = formatted;
-
-            // Ajustar posición del cursor
-            if (txtCuil.Text.Length > oldLength)
-                selectionStart++;
-            
-            txtCuil.SelectionStart = Math.Max(0, Math.Min(selectionStart, txtCuil.Text.Length));
-
-            _isFormattingCuit = false;
-        }
 
         private async Task RefreshGridAsync()
         {
             var data = await _customerService.GetAllActiveAsync();
             dgvCustomers.DataSource = null;
             dgvCustomers.DataSource = data.ToList();
-            UIHelper.FormatGrid(dgvCustomers);
+            DataGridViewHelper.ApplyStyle(dgvCustomers);
         }
 
         private void SyncEntityToFields()
@@ -113,13 +72,13 @@ namespace CompriaxSystem.WinFormsUI
             var dto = (CustomerDto)dgvCustomers.CurrentRow.DataBoundItem;
             _selectedCustomerId = dto.Id;
             txtDni.Text = dto.DocumentNumber;
-            txtCuil.Text = dto.Cuil ?? string.Empty;
+            txtCuil.Text = dto.Cuil;
             txtName.Text = dto.FirstName;
             txtLastName.Text = dto.LastName;
-            txtEmail.Text = dto.Email ?? string.Empty;
-            txtPhone.Text = dto.Phone ?? string.Empty;
-            txtAddress.Text = dto.Address ?? string.Empty;
-            txtCity.Text = dto.City ?? string.Empty;
+            txtEmail.Text = dto.Email;
+            txtPhone.Text = dto.Phone;
+            txtAddress.Text = dto.Address;
+            txtCity.Text = dto.City;
             cboTaxCondition.SelectedValue = dto.TaxConditionId ?? -1;
 
             SetButtonState(true);
@@ -130,8 +89,10 @@ namespace CompriaxSystem.WinFormsUI
         private void ResetUI()
         {
             _selectedCustomerId = 0;
+            
             UIHelper.CleanControls(groupBox1);
             cboTaxCondition.SelectedIndex = -1;
+            
             SetButtonState(isEditing: false);
             txtDni.ReadOnly = false;
             txtCuil.ReadOnly = false;

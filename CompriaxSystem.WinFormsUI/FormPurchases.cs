@@ -42,8 +42,22 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbSaleInfo);
+            UIThemeHelper.ApplyCardStyle(pnlScannerBar);
+            UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+
+            this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearchSupplier.Click += async (s, e) => await ExecuteSearchSupplierAction();
+            this.btnSearchProduct.Click += async (s, e) => await ExecuteProductSearchAction();
+            this.btnAddItem.Click += (s, e) => ExecuteAddManualItemAction();
+            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
+            this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
+            this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
+            this.btnToggleCam.Click += (s, e) => ToggleCamera();
+            this.FormClosing += (s, e) => StopCamera();
 
             this.txtProductCode.KeyDown += async (s, e) =>
             {
@@ -55,12 +69,6 @@ namespace CompriaxSystem.WinFormsUI
                 }
             };
 
-            this.btnSearchProduct.Click += async (s, e) => await ExecuteProductSearchAction();
-            this.btnAddItem.Click += (s, e) => ExecuteAddManualItemAction();
-            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
-            this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
-            this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
-
             this.dgvCart.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
@@ -70,9 +78,6 @@ namespace CompriaxSystem.WinFormsUI
                     ExecuteRemoveFromCartAction();
                 }
             };
-
-            this.btnToggleCam.Click += (s, e) => ToggleCamera();
-            this.FormClosing += (s, e) => StopCamera();
         }
 
         public async Task InitializeFormAsync()
@@ -402,7 +407,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             dgvCart.DataSource = null;
             dgvCart.DataSource = _items.ToList();
-            UIHelper.FormatGrid(dgvCart);
+            DataGridViewHelper.ApplyStyle(dgvCart);
             txtTotalPay.Text = _items.Sum(x => x.SubTotal).ToString("C2");
         }
 

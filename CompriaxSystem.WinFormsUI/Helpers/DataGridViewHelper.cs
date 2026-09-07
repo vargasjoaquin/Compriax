@@ -7,32 +7,27 @@
             UIHelper.FormatGrid(dgv); 
         }
 
-        public static void ColorRowsByStatus(DataGridView dgv, int rowIndex)
+        public static void ColorRowsByStatus(DataGridView dgv, DataGridViewCellFormattingEventArgs e)
         {
-            if (rowIndex < 0 || rowIndex >= dgv.Rows.Count) 
+            if (e.RowIndex < 0 || e.RowIndex >= dgv.Rows.Count)
                 return;
 
-            var row = dgv.Rows[rowIndex];
-            dynamic dataItem = row.DataBoundItem;
+            var item = dgv.Rows[e.RowIndex].DataBoundItem;
 
-            if (dataItem != null)
+            if (item != null)
             {
-                try
+                var prop = item.GetType().GetProperty("IsActive");
+                
+                if (prop != null)
                 {
-                    bool isActive = dataItem.IsActive;
+                    bool isActive = (bool)prop.GetValue(item, null)!;
                     
                     if (!isActive)
                     {
-                        row.DefaultCellStyle.ForeColor = UIThemeHelper.Danger;
-                        row.DefaultCellStyle.SelectionForeColor = UIThemeHelper.Danger;
-                    }
-                    else
-                    {
-                        row.DefaultCellStyle.ForeColor = UIThemeHelper.TextMain;
-                        row.DefaultCellStyle.SelectionForeColor = Color.White;
+                        e.CellStyle.ForeColor = UIThemeHelper.Danger;
+                        e.CellStyle.SelectionForeColor = UIThemeHelper.Danger;
                     }
                 }
-                catch { /* Si la entidad no tiene IsActive, ignorar */ }
             }
         }
     }

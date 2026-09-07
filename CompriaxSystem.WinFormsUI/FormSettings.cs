@@ -14,9 +14,13 @@ namespace CompriaxSystem.WinFormsUI
             _storeService = storeService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupBoxStore);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnBrowse.Click += (s, e) => ExecuteBrowseLogoAction();
+            this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
         }
 
         public async Task InitializeFormAsync()
@@ -47,12 +51,12 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteSaveAction()
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                UIHelper.WarnMessage(this, "El nombre del comercio es obligatorio.", "Campo Requerido");
-                txtName.Focus();
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtName.Text))
+            //{
+            //    UIHelper.WarnMessage(this, "El nombre del comercio es obligatorio.", "Campo Requerido");
+            //    txtName.Focus();
+            //    return;
+            //}
 
             var dto = new StoreSettingsDto
             {

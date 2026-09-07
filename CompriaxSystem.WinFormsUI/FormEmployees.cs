@@ -10,7 +10,6 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ILookupService _lookupService;
         private int _selectedEmployeeId = 0;
         private byte[]? _imageBuffer = null;
-        private bool _isFormatting = false; // Bandera para evitar recursividad
 
         public FormEmployees(IEmployeeService employeeService, ILookupService lookupService)
         {
@@ -19,23 +18,25 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbData);
+
+            this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
+            this.dgvEmployees.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvEmployees, e);
+
+            txtDni.MaxLength = 8;
+            txtCuil.MaxLength = 13;
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowse.Click += (s, e) => HandlePhotoSelection();
-
-            this.txtDni.KeyPress += OnOnlyNumbersKeyPress;
-            this.txtCuil.TextChanged += OnCuilTextChanged;
-            this.dgvEmployees.CellFormatting += DgvEmployees_CellFormatting;
         }
 
         private async Task InitializeFormAsync()
         {
-            txtDni.MaxLength = 8;
-            txtCuil.MaxLength = 13; 
-
             using (new WaitCursorHelper(this))
             {
                 var positions = (await _lookupService.GetPositionsAsync()).ToList();
@@ -61,64 +62,13 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void OnOnlyNumbersKeyPress(object? sender, KeyPressEventArgs e)
-        {
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar)) 
-                e.Handled = true;
-        }
-
-        private void OnCuilTextChanged(object? sender, EventArgs e)
-        {
-            if (_isFormatting) 
-                return;
-
-            string raw = new string(txtCuil.Text.Where(char.IsDigit).ToArray());
-            
-            if (raw.Length > 11) 
-                raw = raw.Substring(0, 11);
-
-            string formatted = raw;
-            if (raw.Length > 2 && raw.Length <= 10)
-                formatted = raw.Insert(2, "-");
-            else if (raw.Length > 10)
-                formatted = raw.Insert(2, "-").Insert(11, "-");
-
-            _isFormatting = true;
-
-            int cursorPosition = txtCuil.SelectionStart;
-            int originalLength = txtCuil.Text.Length;
-
-            txtCuil.Text = formatted;
-
-            if (txtCuil.Text.Length > originalLength && (cursorPosition == 2 || cursorPosition == 11))
-                cursorPosition++;
-
-            txtCuil.SelectionStart = Math.Max(0, Math.Min(cursorPosition, txtCuil.Text.Length));
-            _isFormatting = false;
-        }
-
-        private void DgvEmployees_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
-        {
-            if (e.RowIndex < 0 || e.RowIndex >= dgvEmployees.Rows.Count) 
-                return;
-
-            if (dgvEmployees.Rows[e.RowIndex].DataBoundItem is EmployeeDto dto)
-            {
-                if (!dto.IsActive)
-                {
-                    e.CellStyle.ForeColor = Color.Red;
-                    e.CellStyle.SelectionForeColor = Color.Red;
-                }
-            }
-        }
-
         private async Task RefreshGridAsync()
         {
             var data = await _employeeService.GetEmployeesAsync();
             dgvEmployees.DataSource = null;
             dgvEmployees.DataSource = data.ToList();
             
-            UIHelper.FormatGrid(dgvEmployees);
+            DataGridViewHelper.ApplyStyle(dgvEmployees);
         }
 
         private void SyncEntityToFields()
@@ -208,9 +158,9 @@ namespace CompriaxSystem.WinFormsUI
                 Email = txtEmail.Text.Trim(),
                 Phone = txtPhone.Text.Trim(),
                 Address = txtAddress.Text.Trim(),
-                PositionId = cboPosition.SelectedValue is int pId && pId > 0 ? pId : null,
-                GenderId = cboGender.SelectedValue is int gId && gId > 0 ? gId : null,
-                CivilStatusId = cboCivilStatus.SelectedValue is int cId && cId > 0 ? cId : null,
+                PositionId = cboPosition.SelectedValue as int? ?? 0,
+                GenderId = cboGender.SelectedValue as int? ?? 0,
+                CivilStatusId = cboCivilStatus.SelectedValue as int? ?? 0,
                 ChildrenCount = (int)numChildren.Value,
                 Photo = _imageBuffer,
                 IsActive = true

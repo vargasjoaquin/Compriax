@@ -28,9 +28,14 @@
         // ==========================================
         // 2. TIPOGRAFÍAS
         // ==========================================
+        public static readonly Font FontDisplayLarge = new("Segoe UI", 24F, FontStyle.Bold);
+        public static readonly Font FontDisplayMedium = new("Segoe UI", 18F, FontStyle.Bold);
         public static readonly Font FontHeader = new("Segoe UI", 13F, FontStyle.Bold);
+        public static readonly Font FontSubHeader = new("Segoe UI", 11F, FontStyle.Bold);
         public static readonly Font FontBodyBold = new("Segoe UI", 9.5F, FontStyle.Bold);
         public static readonly Font FontBody = new("Segoe UI", 9.5F, FontStyle.Regular);
+        public static readonly Font FontSmall = new("Segoe UI", 8.5F, FontStyle.Regular);
+        public static readonly Font FontMonospace = new("Consolas", 10F, FontStyle.Regular);
 
         // ==========================================
         // 3. ATAJOS DE TECLADO CENTRALIZADOS (POS)
@@ -59,6 +64,26 @@
         {
             pnl.BackColor = Surface;
             pnl.BorderStyle = BorderStyle.None;
+        }
+
+        public static void ApplyButtonSuccess(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = Success;
+            btn.ForeColor = Color.White;
+            btn.Font = FontHeader;
+            btn.Cursor = Cursors.Hand;
+        }
+
+        public static void ApplyButtonDanger(Button btn)
+        {
+            btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
+            btn.BackColor = Danger;
+            btn.ForeColor = Color.White;
+            btn.Font = FontBodyBold;
+            btn.Cursor = Cursors.Hand;
         }
     }
 }

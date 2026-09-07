@@ -14,10 +14,15 @@ namespace CompriaxSystem.WinFormsUI
             _catalogService = catalogService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlCard);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnCancel.Click += (s, e) => ResetUI();
+
+            this.dgvCategories.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvCategories, e);
         }
 
         public async Task InitializeFormAsync()
@@ -34,18 +39,11 @@ namespace CompriaxSystem.WinFormsUI
             var categories = await _catalogService.GetActiveCategoriesAsync();
             dgvCategories.DataSource = null;
             dgvCategories.DataSource = categories.ToList();
-            UIHelper.FormatGrid(dgvCategories);
+            DataGridViewHelper.ApplyStyle(dgvCategories);
         }
 
         private async Task ExecuteSaveAction()
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre de la categoría.", "Campo Obligatorio");
-                txtName.Focus();
-                return;
-            }
-
             var dto = new CategoryDto
             {
                 Id = _selectedCategoryId ?? 0,

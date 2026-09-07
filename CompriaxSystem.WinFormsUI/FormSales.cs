@@ -60,6 +60,10 @@ namespace CompriaxSystem.WinFormsUI
             _serviceProvider = serviceProvider;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlBarcodeBar);
+            UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnAdd.Click += async (s, e) => await AddFromInputAsync();
             this.btnRemove.Click += (s, e) => RemoveSelectedItem();
@@ -149,7 +153,7 @@ namespace CompriaxSystem.WinFormsUI
 
                 _paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
 
-                UIHelper.FormatGrid(dgvCart);
+                DataGridViewHelper.ApplyStyle(dgvCart);
                 ResetSaleSession();
             }
         }
@@ -186,7 +190,8 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessScannedBarcodeAsync(string barcode, int quantity)
         {
-            if (string.IsNullOrWhiteSpace(barcode)) return;
+            if (string.IsNullOrWhiteSpace(barcode))
+                return;
 
             var product = await _productService.GetByBarcodeAsync(barcode);
 
@@ -247,7 +252,7 @@ namespace CompriaxSystem.WinFormsUI
 
             dgvCart.DataSource = null;
             dgvCart.DataSource = _currentCalculation.CalculatedItems.ToList();
-            UIHelper.FormatGrid(dgvCart);
+            DataGridViewHelper.ApplyStyle(dgvCart);
 
             lblSubTotal.Text = $"Subtotal: {_currentCalculation.SubTotal:C2}";
             lblDiscount.Text = $"Descuentos: -{_currentCalculation.TotalDiscount:C2}";

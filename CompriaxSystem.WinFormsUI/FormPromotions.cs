@@ -24,6 +24,11 @@ namespace CompriaxSystem.WinFormsUI
             _catalogService = catalogService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbPromo);
+
+            this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.cboType.SelectedIndexChanged += (s, e) => AdjustFieldsByPromotionType();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
@@ -31,7 +36,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.txtSearch.TextChanged += (s, e) => FilterPromotions();
-            this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
         }
 
         private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
@@ -41,12 +45,12 @@ namespace CompriaxSystem.WinFormsUI
                 string status = e.Value.ToString()!;
                 if (status.Contains("Inactiva") || status.Contains("Vencida"))
                 {
-                    e.CellStyle.ForeColor = Color.Red;
-                    e.CellStyle.SelectionForeColor = Color.Red;
+                    e.CellStyle.ForeColor = UIThemeHelper.Danger;
+                    e.CellStyle.SelectionForeColor = UIThemeHelper.Danger;
                 }
                 else
                 {
-                    e.CellStyle.ForeColor = Color.Green;
+                    e.CellStyle.ForeColor = UIThemeHelper.Success;
                     e.CellStyle.SelectionForeColor = Color.Lime;
                 }
             }
@@ -94,6 +98,7 @@ namespace CompriaxSystem.WinFormsUI
             var data = await _promotionService.GetAllPromotionsAsync();
             _promotionsList = data.ToList();
             FilterPromotions();
+            DataGridViewHelper.ApplyStyle(dgvPromotions);
         }
 
         private void FilterPromotions()

@@ -27,12 +27,17 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlOpenShift);
+            UIThemeHelper.ApplyCardStyle(pnlActiveShift);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnOpenShift.Click += async (s, e) => await ExecuteOpenShiftAction();
             this.btnCashIn.Click += async (s, e) => await ExecuteRegisterManualMovementAction(CashMovementType.CashIn);
             this.btnCashOut.Click += async (s, e) => await ExecuteRegisterManualMovementAction(CashMovementType.CashOut);
             this.btnPrintX.Click += async (s, e) => await ExecutePrintShiftTicketAction(isZClose: false);
             this.btnCloseShiftZ.Click += async (s, e) => await ExecuteCloseShiftZAction();
+            this.dgvMovements.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvMovements, e);
         }
 
         public async Task InitializeFormAsync()
@@ -51,7 +56,7 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
 
-            UIHelper.FormatGrid(dgvMovements);
+            DataGridViewHelper.ApplyStyle(dgvMovements);
             await RefreshShiftDataAsync();
         }
 
@@ -90,7 +95,7 @@ namespace CompriaxSystem.WinFormsUI
                     var movements = await _cashShiftService.GetCurrentShiftMovementsAsync();
                     dgvMovements.DataSource = null;
                     dgvMovements.DataSource = movements.ToList();
-                    UIHelper.FormatGrid(dgvMovements);
+                    DataGridViewHelper.ApplyStyle(dgvMovements);
                 }
             }
         }

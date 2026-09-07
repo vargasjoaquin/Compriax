@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
 
@@ -8,15 +9,21 @@ namespace CompriaxSystem.WinFormsUI
     {
         private readonly IUserService _userService;
         private readonly IDocumentService _documentService;
+        private readonly IPasswordHasher _passwordHasher;
         private int _selectedUserId = 0;
         private byte[]? _imageBuffer = null;
         private bool _isPasswordVisible = false;
 
-        public FormUsers(IUserService userService, IDocumentService documentService)
+        public FormUsers(IUserService userService, IDocumentService documentService, IPasswordHasher passwordHasher)
         {
             _userService = userService;
             _documentService = documentService;
+            _passwordHasher = passwordHasher;
             InitializeComponent();
+
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupBoxData);
+            this.dgvUsers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvUsers, e);
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
@@ -47,12 +54,13 @@ namespace CompriaxSystem.WinFormsUI
             var users = await _userService.GetUserListAsync();
             dgvUsers.DataSource = null;
             dgvUsers.DataSource = users.ToList();
-            UIHelper.FormatGrid(dgvUsers);
+            DataGridViewHelper.ApplyStyle(dgvUsers);
         }
 
         private void SyncEntityToFields()
         {
-            if (dgvUsers.CurrentRow == null) return;
+            if (dgvUsers.CurrentRow == null)
+                return;
 
             var u = (UserDto)dgvUsers.CurrentRow.DataBoundItem;
 
@@ -62,7 +70,9 @@ namespace CompriaxSystem.WinFormsUI
             txtLastName.Text = u.LastName;
             txtEmail.Text = u.Email;
             cboRole.SelectedValue = u.RoleId;
-            txtPassword.Clear();
+
+            if (u is UserCreateDto createDto)
+                txtPassword.Text = createDto.Password;
 
             _imageBuffer = u.Photo;
             ImageHelper.Clear(picPhoto);
@@ -128,40 +138,40 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessAction(int id)
         {
-            if (string.IsNullOrWhiteSpace(txtUsername.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre de usuario (Login).", "Campo Obligatorio");
-                txtUsername.Focus();
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtUsername.Text))
+            //{
+            //    UIHelper.WarnMessage(this, "Debe ingresar el nombre de usuario (Login).", "Campo Obligatorio");
+            //    txtUsername.Focus();
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre del usuario.", "Campo Obligatorio");
-                txtFirstName.Focus();
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtFirstName.Text))
+            //{
+            //    UIHelper.WarnMessage(this, "Debe ingresar el nombre del usuario.", "Campo Obligatorio");
+            //    txtFirstName.Focus();
+            //    return;
+            //}
 
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el apellido del usuario.", "Campo Obligatorio");
-                txtLastName.Focus();
-                return;
-            }
+            //if (string.IsNullOrWhiteSpace(txtLastName.Text))
+            //{
+            //    UIHelper.WarnMessage(this, "Debe ingresar el apellido del usuario.", "Campo Obligatorio");
+            //    txtLastName.Focus();
+            //    return;
+            //}
 
-            if (cboRole.SelectedValue is not int roleId || roleId <= 0)
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar un rol para el usuario.", "Rol Requerido");
-                cboRole.Focus();
-                return;
-            }
+            //if (cboRole.SelectedValue is not int roleId || roleId <= 0)
+            //{
+            //    UIHelper.WarnMessage(this, "Debe seleccionar un rol para el usuario.", "Rol Requerido");
+            //    cboRole.Focus();
+            //    return;
+            //}
 
-            if (id == 0 && string.IsNullOrWhiteSpace(txtPassword.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar una contraseña para el nuevo usuario.", "Contraseña Requerida");
-                txtPassword.Focus();
-                return;
-            }
+            //if (id == 0 && string.IsNullOrWhiteSpace(txtPassword.Text))
+            //{
+            //    UIHelper.WarnMessage(this, "Debe ingresar una contraseña para el nuevo usuario.", "Contraseña Requerida");
+            //    txtPassword.Focus();
+            //    return;
+            //}
 
             var dto = new UserCreateDto
             {
@@ -169,8 +179,8 @@ namespace CompriaxSystem.WinFormsUI
                 Username = txtUsername.Text.Trim(),
                 FirstName = txtFirstName.Text.Trim(),
                 LastName = txtLastName.Text.Trim(),
-                Email = string.IsNullOrWhiteSpace(txtEmail.Text) ? string.Empty : txtEmail.Text.Trim(),
-                RoleId = roleId,
+                Email = txtEmail.Text.Trim(),
+                RoleId = (int)(cboRole.SelectedValue),
                 Password = txtPassword.Text,
                 Photo = _imageBuffer,
                 IsActive = true
