@@ -6,6 +6,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
 {
     public static class DbInitializer
     {
+        /// <summary>
+        /// Realiza la siembra inicial de la base de datos (Seed), creando roles, usuario administrador, 
+        /// configuraciones de tienda, métodos de pago y datos de prueba esenciales.
+        /// </summary>
+        /// <param name="context">Contexto de la base de datos de la aplicación.</param>
         public static async Task SeedAsync(ApplicationDbContext context)
         {
             // =========================================================================
