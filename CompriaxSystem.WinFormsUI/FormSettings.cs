@@ -7,7 +7,6 @@ namespace CompriaxSystem.WinFormsUI
     public partial class FormSettings : Form
     {
         private readonly IStoreService _storeService;
-        private byte[]? _logoBytes;
 
         public FormSettings(IStoreService storeService)
         {
@@ -19,7 +18,6 @@ namespace CompriaxSystem.WinFormsUI
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnBrowse.Click += (s, e) => ExecuteBrowseLogoAction();
             this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
         }
 
@@ -34,18 +32,8 @@ namespace CompriaxSystem.WinFormsUI
                 txtPhone.Text = settings.Phone;
                 txtEmail.Text = settings.Email;
 
-                if (settings.Logo != null && settings.Logo.Length > 8)
-                {
-                    try
-                    {
-                        using var ms = new MemoryStream(settings.Logo);
-                        picLogo.Image = new Bitmap(Image.FromStream(ms));
-                    }
-                    catch
-                    {
-                        picLogo.Image = null;
-                    }
-                }
+                picLogo.Image = Resources.logo_compriax;
+                picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
 
@@ -58,7 +46,7 @@ namespace CompriaxSystem.WinFormsUI
                 Address = txtAddress.Text.Trim(),
                 Phone = txtPhone.Text.Trim(),
                 Email = txtEmail.Text.Trim(),
-                Logo = _logoBytes
+                Logo = null
             };
 
             using (new WaitCursorHelper(this))
@@ -79,20 +67,6 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     UIHelper.ShowResult(result, "Configuración del Sistema");
                 }
-            }
-        }
-
-        private void ExecuteBrowseLogoAction()
-        {
-            if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
-            {
-                picLogo.Image?.Dispose();
-                _logoBytes = imageBytes;
-                picLogo.Image = displayImage;
-            }
-            else if (!string.IsNullOrEmpty(errorMessage))
-            {
-                UIHelper.WarnMessage(this, errorMessage, "Validación de Logo");
             }
         }
     }

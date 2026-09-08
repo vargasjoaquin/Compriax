@@ -72,15 +72,6 @@
             this.picLogo.TabIndex = 0;
             this.picLogo.TabStop = false;
 
-            // lblSystemName
-            this.lblSystemName.AutoSize = true;
-            this.lblSystemName.Font = new System.Drawing.Font("Segoe UI", 8.5F, System.Drawing.FontStyle.Bold);
-            this.lblSystemName.Location = new System.Drawing.Point(10, 90);
-            this.lblSystemName.Name = "lblSystemName";
-            this.lblSystemName.Size = new System.Drawing.Size(130, 15);
-            this.lblSystemName.TabIndex = 1;
-            this.lblSystemName.Text = "COMPRIAX SYSTEM";
-
             // flowLayoutButtons
             this.flowLayoutButtons.AutoScroll = true;
             this.flowLayoutButtons.Dock = System.Windows.Forms.DockStyle.Fill;

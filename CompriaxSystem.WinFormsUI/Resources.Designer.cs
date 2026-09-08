@@ -548,5 +548,15 @@ namespace CompriaxSystem.WinFormsUI {
                 return ResourceManager.GetString("Images", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap logo_compriax {
+            get {
+                object obj = ResourceManager.GetObject("logo-compriax", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

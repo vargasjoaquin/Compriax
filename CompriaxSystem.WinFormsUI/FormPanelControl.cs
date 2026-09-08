@@ -57,16 +57,11 @@ namespace CompriaxSystem.WinFormsUI
 
             try
             {
-                var settings = await _storeService.GetStoreProfileAsync();
-                lblSystemName.Text = settings.Name.ToUpper();
-
                 picLogo.Image?.Dispose();
                 picLogo.Image = null;
 
-                if (settings.Logo != null && settings.Logo.Length > 8)
-                {
-                    picLogo.Image = ImageHelper.LoadFromBytes(settings.Logo);
-                }
+                picLogo.Image = Resources.logo_compriax;
+                picLogo.SizeMode = PictureBoxSizeMode.Zoom;
 
                 await RefreshShiftStatusAsync();
             }

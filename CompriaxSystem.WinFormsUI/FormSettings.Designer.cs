@@ -30,9 +30,7 @@
             txtPhone = new TextBox();
             lblEmail = new Label();
             txtEmail = new TextBox();
-            lblLogo = new Label();
             picLogo = new PictureBox();
-            btnBrowse = new Button();
             btnSave = new Button();
             pnlHeader.SuspendLayout();
             groupBoxStore.SuspendLayout();
@@ -73,9 +71,7 @@
             groupBoxStore.Controls.Add(txtPhone);
             groupBoxStore.Controls.Add(lblEmail);
             groupBoxStore.Controls.Add(txtEmail);
-            groupBoxStore.Controls.Add(lblLogo);
             groupBoxStore.Controls.Add(picLogo);
-            groupBoxStore.Controls.Add(btnBrowse);
             groupBoxStore.Controls.Add(btnSave);
             groupBoxStore.Location = new Point(24, 76);
             groupBoxStore.Name = "groupBoxStore";
@@ -177,16 +173,6 @@
             txtEmail.Size = new Size(440, 31);
             txtEmail.TabIndex = 9;
             // 
-            // lblLogo
-            // 
-            lblLogo.AutoSize = true;
-            lblLogo.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblLogo.Location = new Point(540, 20);
-            lblLogo.Name = "lblLogo";
-            lblLogo.Size = new Size(157, 21);
-            lblLogo.TabIndex = 10;
-            lblLogo.Text = "Logo del Comercio:";
-            // 
             // picLogo
             // 
             picLogo.BackColor = Color.FromArgb(248, 250, 252);
@@ -197,17 +183,6 @@
             picLogo.SizeMode = PictureBoxSizeMode.Zoom;
             picLogo.TabIndex = 11;
             picLogo.TabStop = false;
-            // 
-            // btnBrowse
-            // 
-            btnBrowse.FlatStyle = FlatStyle.Flat;
-            btnBrowse.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnBrowse.Location = new Point(540, 302);
-            btnBrowse.Name = "btnBrowse";
-            btnBrowse.Size = new Size(360, 36);
-            btnBrowse.TabIndex = 12;
-            btnBrowse.Text = "EXAMINAR LOGO...";
-            btnBrowse.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
@@ -257,9 +232,7 @@
         private System.Windows.Forms.TextBox txtPhone;
         private System.Windows.Forms.Label lblEmail;
         private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Label lblLogo;
         private System.Windows.Forms.PictureBox picLogo;
-        private System.Windows.Forms.Button btnBrowse;
         private System.Windows.Forms.Button btnSave;
     }
 }
