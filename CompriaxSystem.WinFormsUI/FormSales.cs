@@ -126,14 +126,34 @@ namespace CompriaxSystem.WinFormsUI
             var user = _currentUser.CurrentUser;
             bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
 
-            if (!isAdmin && !_currentUser.HasRegisterAssigned)
+            if (!_currentUser.HasRegisterAssigned)
             {
-                var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
-                if (selectForm.ShowDialog(this) != DialogResult.OK)
+                if (isAdmin)
                 {
-                    UIHelper.WarnMessage(this, "Debe seleccionar una caja para poder operar en la terminal de ventas.", "Caja Requerida");
-                    this.BeginInvoke(new Action(this.Close));
-                    return;
+                    var registerService = _serviceProvider.GetRequiredService<ICashRegisterService>();
+                    var allRegisters = await registerService.GetAllRegistersAsync();
+                    var defaultRegister = allRegisters.FirstOrDefault(r => r.IsActive);
+
+                    if (defaultRegister != null)
+                    {
+                        _currentUser.SetCashRegister(defaultRegister.Id, defaultRegister.Number, defaultRegister.Name);
+                    }
+                    else
+                    {
+                        UIHelper.ErrorMessage(this, "No existen cajas activas en el sistema para procesar ventas.", "Error de Configuración");
+                        this.BeginInvoke(new Action(this.Close));
+                        return;
+                    }
+                }
+                else
+                {
+                    var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
+                    
+                    if (selectForm.ShowDialog(this) != DialogResult.OK)
+                    {
+                        this.BeginInvoke(new Action(this.Close));
+                        return;
+                    }
                 }
             }
 
