@@ -1,0 +1,19 @@
+﻿using CompriaxSystem.Domain.Common;
+
+namespace CompriaxSystem.Domain.Entities
+{
+    public class SaleItem : BaseEntity
+    {
+        public int SaleId { get; set; }
+        public virtual Sale Sale { get; set; } = null!;
+
+        public int ProductId { get; set; }
+        public virtual Product Product { get; set; } = null!;
+
+        public int Quantity { get; set; }
+        public decimal UnitPrice { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public decimal CostPrice { get; set; }
+        public decimal SubTotal { get; set; }
+    }
+}

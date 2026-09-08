@@ -1,0 +1,184 @@
+﻿using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Application.Interfaces.Repositories;
+using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Entities;
+
+namespace CompriaxSystem.Application.Services
+{
+    public class ReportService(IUnitOfWork unitOfWork) : IReportService
+    {
+        /// <summary>
+        /// Genera las métricas consolidadas para el Dashboard, incluyendo ventas, stock crítico y productos más vendidos.
+        /// </summary>
+        /// <returns>DTO con estadísticas generales de gestión.</returns>
+        public async Task<DashboardDto> GetDashboardStatsAsync()
+        {
+            var today = DateTime.Today;
+            var tomorrow = today.AddDays(1);
+            var sevenDaysAgo = today.AddDays(-7);
+
+            var salesToday = (await unitOfWork.Sales.GetHistoryAsync(today, tomorrow)).ToList();
+            var salesWeek = (await unitOfWork.Sales.GetHistoryAsync(sevenDaysAgo, tomorrow)).ToList();
+
+            var products = (await unitOfWork.Products.GetAllWithDetailsAsync()).ToList();
+            int lowStockCount = products.Count(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock);
+
+            var criticalStock = products
+                .Where(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock)
+                .OrderBy(p => p.CurrentStock)
+                .Take(5)
+                .Select(p => new CriticalStockDto
+                {
+                    ProductName = p.Name,
+                    CurrentStock = p.CurrentStock,
+                    MinimumStock = p.MinimumStock
+                })
+                .ToList();
+
+            var topProducts = salesToday
+                .SelectMany(s => s.SaleItems)
+                .GroupBy(i => i.Product != null ? i.Product.Name : $"Producto #{i.ProductId}")
+                .Select(g => new TopProductDto
+                {
+                    ProductName = g.Key,
+                    QuantitySold = g.Sum(x => x.Quantity)
+                })
+                .OrderByDescending(x => x.QuantitySold)
+                .Take(5)
+                .ToList();
+
+            var categorySales = salesToday
+                .SelectMany(s => s.SaleItems)
+                .GroupBy(i => i.Product.Category.Name)
+                .Select(g => new CategorySalesDto
+                {
+                    CategoryName = g.Key,
+                    TotalRevenue = g.Sum(x => x.SubTotal)
+                })
+                .ToList();
+
+            return new DashboardDto
+            {
+                TotalSalesToday = salesToday.Sum(s => s.TotalAmount),
+                TotalSalesWeek = salesWeek.Sum(s => s.TotalAmount),
+                SalesCountToday = salesToday.Count,
+                ProductsLowStockCount = lowStockCount,
+                TopSellingProducts = topProducts,
+                SalesByCategory = categorySales,
+                CriticalStockList = criticalStock
+            };
+        }
+
+        /// <summary>
+        /// Recupera el historial de ventas detallado filtrado por fecha y caja registradora.
+        /// </summary>
+        /// <param name="start">Fecha desde.</param>
+        /// <param name="end">Fecha hasta.</param>
+        /// <param name="cashRegisterId">Id de la caja.</param>
+        /// <returns>Colección de reportes de venta.</returns>
+        public async Task<IEnumerable<SalesReportDto>> GetSalesHistoryAsync(DateTime start, DateTime end, int? cashRegisterId = null)
+        {
+            var sales = await unitOfWork.Sales.GetHistoryAsync(start.Date, end.Date.AddDays(1), cashRegisterId);
+
+            return sales
+                .OrderByDescending(s => s.CreatedAt)
+                .Select(s => new SalesReportDto
+                {
+                    SaleId = s.Id,
+                    CashRegisterName = s.CashRegister != null ? s.CashRegister.Name : "Caja Principal",
+                    DocumentNumber = s.DocumentNumber,
+                    DocumentType = s.DocumentType != null ? s.DocumentType.Name : "N/A",
+                    Date = s.CreatedAt,
+                    CustomerName = s.Customer != null
+                        ? $"{s.Customer.LastName}, {s.Customer.FirstName}".Trim()
+                        : "Consumidor Final",
+                    CashierName = s.User != null ? s.User.Username : "N/A",
+
+                    TotalAmount = s.TotalAmount
+                })
+                .ToList();
+        }
+
+        /// <summary>
+        /// Obtiene los detalles completos de una venta, incluyendo sus ítems, mediante su id.
+        /// </summary>
+        /// <param name="saleId">Id de la venta.</param>
+        /// <returns>DTO con el detalle de la venta o null.</returns>
+        public async Task<SaleDto?> GetSaleDetailsAsync(int saleId)
+        {
+            var sale = await unitOfWork.Sales.GetByIdWithDetailsAsync(saleId);
+            
+            if (sale == null)
+                return null;
+
+            return MapToSaleDto(sale);
+        }
+
+        /// <summary>
+        /// Busca los datos de una venta utilizando su número de comprobante.
+        /// </summary>
+        /// <param name="documentNumber">Número de documento fiscal.</param>
+        /// <returns>DTO de la venta encontrada.</returns>
+        public async Task<SaleDto?> GetSaleByDocumentNumberAsync(string documentNumber)
+        {
+            var sale = await unitOfWork.Sales.GetByDocumentNumberAsync(documentNumber.Trim());
+            
+            if (sale == null) 
+                return null;
+
+            return MapToSaleDto(sale);
+        }
+
+        /// <summary>
+        /// Recupera el historial de compras realizadas a proveedores en un rango de fechas.
+        /// </summary>
+        /// <param name="start">Fecha inicial.</param>
+        /// <param name="end">Fecha final.</param>
+        /// <param name="supplierId">Id del proveedor para filtrar.</param>
+        /// <returns>Colección de reportes de compra.</returns>
+        public async Task<IEnumerable<PurchaseReportDto>> GetPurchaseHistoryAsync(DateTime start, DateTime end, int? supplierId)
+        {
+            var purchases = await unitOfWork.Purchases.GetHistoryAsync(start.Date, end.Date.AddDays(1));
+
+            if (supplierId.HasValue && supplierId.Value > 0)
+                purchases = purchases.Where(p => p.SupplierId == supplierId.Value);
+
+            return purchases.Select(p => new PurchaseReportDto
+            {
+                Date = p.CreatedAt,
+                DocumentType = p.DocumentType?.Name,
+                DocumentNumber = p.DocumentNumber,
+                TotalAmount = p.TotalAmount,
+                CashierName = p.User?.Username,
+                SupplierTaxId = p.Supplier?.CUIT,
+                SupplierName = p.Supplier?.CompanyName
+            }).ToList();
+        }
+
+        private static SaleDto MapToSaleDto(Sale sale)
+        {
+            return new SaleDto
+            {
+                Id = sale.Id,
+                DocumentNumber = sale.DocumentNumber,
+                DocumentTypeId = sale.DocumentTypeId,
+                DocumentTypeName = sale.DocumentType?.Name,
+                Date = sale.CreatedAt,
+                CustomerName = sale.Customer != null ? $"{sale.Customer.FirstName} {sale.Customer.LastName}".Trim() : "Consumidor Final",
+                CustomerDoc = sale.Customer != null ? sale.Customer.DocumentNumber : "S/D",
+                CashierName = sale.User?.Username,
+                PaymentReceived = sale.PaymentReceived,
+                TotalAmount = sale.TotalAmount,
+                Items = (sale.SaleItems).Select(i => new SaleItemDto
+                {
+                    ProductId = i.ProductId,
+                    ProductName = i.Product?.Name ?? $"Producto #{i.ProductId}",
+                    CategoryId = i.Product?.CategoryId,
+                    Quantity = i.Quantity,
+                    UnitPrice = i.UnitPrice,
+                    DiscountAmount = i.DiscountAmount
+                }).ToList()
+            };
+        }
+    }
+}
