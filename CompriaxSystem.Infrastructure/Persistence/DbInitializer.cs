@@ -255,6 +255,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     Address = "Av. Rivadavia 5400, CABA",
                     Phone = "0800-444-7873",
                     Email = "contacto@compriax.com",
+                    Logo = null,
                     TicketFormat = "80mm",
                     TicketFooterMessage = "¡Muchas gracias por su compra! Vuelva pronto.",
                     ShowLogoOnTicket = true,
@@ -262,7 +263,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     AutoPrintTicket = false,
                     PointOfSale = 1,
                     GrossIncomeNumber = "901-234567-1",
-                    ActivityStartDate = new DateTime(2020, 1, 1),
+                    ActivityStartDate = DateTime.Now,
                     TaxConditionId = defaultTaxCondition.Id
                 });
                 await context.SaveChangesAsync();
