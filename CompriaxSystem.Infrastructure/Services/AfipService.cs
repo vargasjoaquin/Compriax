@@ -16,6 +16,11 @@ namespace CompriaxSystem.Infrastructure.Services
     {
         private readonly AfipSettings _settings = options.Value;
 
+        /// <summary>
+        /// Solicita la autorización de un comprobante ante AFIP. Si el modo simulación está activo o no hay certificados, procesa una autorización offline.
+        /// </summary>
+        /// <param name="sale">DTO con la información de la venta a autorizar.</param>
+        /// <returns>Un objeto AfipAuthorizeResultDto con el CAE, vencimiento y estado de la operación.</returns>
         public async Task<AfipAuthorizeResultDto> AuthorizeInvoiceAsync(SaleDto sale)
         {
             var store = await unitOfWork.Store.GetSettingsAsync();
@@ -53,6 +58,15 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera la URL oficial para el código QR de facturación electrónica basándose en la normativa RG 4892 de AFIP.
+        /// </summary>
+        /// <param name="sale">Datos de la venta.</param>
+        /// <param name="emisorCuit">CUIT del comercio emisor.</param>
+        /// <param name="pointOfSale">Número del punto de venta.</param>
+        /// <param name="cae">Código de Autorización Electrónico.</param>
+        /// <param name="caeExpiration">Fecha de vencimiento del CAE.</param>
+        /// <returns>URL codificada en Base64 para el QR fiscal.</returns>
         public string GenerateOfficialQrUrl(SaleDto sale, long emisorCuit, int pointOfSale, string cae, DateTime caeExpiration)
         {
             long documentNumber = 0;
@@ -98,6 +112,13 @@ namespace CompriaxSystem.Infrastructure.Services
             return $"https://www.afip.gob.ar/fe/qr/?p={base64Json}";
         }
 
+        /// <summary>
+        /// Crea una imagen de código QR en formato de arreglo de bytes a partir de una URL dada.
+        /// </summary>
+        /// <param name="qrUrl">URL o contenido a codificar en el QR.</param>
+        /// <param name="width">Ancho de la imagen (píxeles).</param>
+        /// <param name="height">Alto de la imagen (píxeles).</param>
+        /// <returns>Arreglo de bytes que representa la imagen PNG del código QR.</returns>
         public byte[] GenerateQrImage(string qrUrl, int width = 150, int height = 150)
         {
             var writer = new BarcodeWriter
@@ -117,6 +138,13 @@ namespace CompriaxSystem.Infrastructure.Services
             return ms.ToArray();
         }
 
+        /// <summary>
+        /// Realiza el proceso de autorización simulada cuando el servicio fiscal está en modo offline o deshabilitado.
+        /// </summary>
+        /// <param name="sale">Datos de la venta.</param>
+        /// <param name="emisorCuit">CUIT del emisor.</param>
+        /// <param name="pointOfSale">Punto de venta.</param>
+        /// <returns>Resultado de autorización con datos ficticios válidos para impresión.</returns>
         private AfipAuthorizeResultDto ProcessOfflineAuthorization(SaleDto sale, long emisorCuit, int pointOfSale)
         {
             var expiration = DateTime.Today.AddDays(10);
@@ -142,6 +170,11 @@ namespace CompriaxSystem.Infrastructure.Services
             };
         }
 
+        /// <summary>
+        /// Obtiene el código de comprobante oficial de AFIP basado en el nombre del tipo de documento.
+        /// </summary>
+        /// <param name="docTypeName">Nombre del tipo de documento (ej: "Factura A").</param>
+        /// <returns>Código entero representativo para AFIP.</returns>
         private static int GetAfipVoucherCode(string? docTypeName)
         {
             string type = (docTypeName ?? "").ToUpperInvariant();

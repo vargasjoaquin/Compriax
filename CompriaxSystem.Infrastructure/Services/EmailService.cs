@@ -11,6 +11,13 @@ namespace CompriaxSystem.Infrastructure.Services
     {
         private readonly EmailSettings _emailSettings = options.Value;
 
+        /// <summary>
+        /// Envía un correo electrónico asíncronamente. Si el servicio está deshabilitado en configuración, simula el envío en la consola de depuración.
+        /// </summary>
+        /// <param name="to">Dirección de correo del destinatario.</param>
+        /// <param name="subject">Asunto del mensaje.</param>
+        /// <param name="body">Contenido del correo.</param>
+        /// <returns>Una tarea que representa la operación de envío.</returns>
         public async Task SendEmailAsync(string to, string subject, string body)
         {
             if (!_emailSettings.Enabled || string.IsNullOrWhiteSpace(_emailSettings.SmtpHost) || _emailSettings.SmtpPort <= 0 || string.IsNullOrWhiteSpace(_emailSettings.SmtpUsername))

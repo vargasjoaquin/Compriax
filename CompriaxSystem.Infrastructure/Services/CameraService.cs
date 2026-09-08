@@ -16,6 +16,10 @@ namespace CompriaxSystem.Infrastructure.Services
         private Bitmap? _lastFrame;
         private readonly object _syncLock = new();
 
+        /// <summary>
+        /// Obtiene los nombres descriptivos de todos los dispositivos de entrada de video de cámaras disponibles en el sistema.
+        /// </summary>
+        /// <returns>Una colección de nombres de cámaras detectadas.</returns>
         public IEnumerable<string> GetAvailableCameras()
         {
             var deviceNames = new List<string>();
@@ -47,6 +51,11 @@ namespace CompriaxSystem.Infrastructure.Services
             return deviceNames;
         }
 
+        /// <summary>
+        /// Inicia la captura y transmisión de cuadros de video desde una cámara específica.
+        /// </summary>
+        /// <param name="cameraIndex">Índice del dispositivo de cámara a utilizar.</param>
+        /// <param name="onFrameReceived">Acción que se ejecutará cada vez que se reciba un nuevo cuadro (Bitmap).</param>
         public void StartStreaming(int cameraIndex, Action<Bitmap> onFrameReceived)
         {
             _onFrameReceived = onFrameReceived;
@@ -61,6 +70,11 @@ namespace CompriaxSystem.Infrastructure.Services
             _frameTimer.Start();
         }
 
+        /// <summary>
+        /// Método interno encargado de capturar el cuadro actual del dispositivo de video y enviarlo al suscriptor.
+        /// </summary>
+        /// <param name="sender">Origen del evento.</param>
+        /// <param name="e">Argumentos del temporizador.</param>
         private void CaptureFrame(object? sender, ElapsedEventArgs e)
         {
             if (_videoCapture == null || !_videoCapture.IsOpened())
@@ -83,6 +97,9 @@ namespace CompriaxSystem.Infrastructure.Services
             _onFrameReceived?.Invoke((Bitmap)converted.Clone());
         }
 
+        /// <summary>
+        /// Detiene la captura de video y libera los recursos del dispositivo de captura.
+        /// </summary>
         public void StopStreaming()
         {
             _frameTimer?.Stop();
@@ -92,6 +109,10 @@ namespace CompriaxSystem.Infrastructure.Services
             _videoCapture = null;
         }
 
+        /// <summary>
+        /// Obtiene una captura instantánea (foto) del último cuadro procesado por la cámara.
+        /// </summary>
+        /// <returns>Un Bitmap con la imagen capturada o null si no hay transmisión.</returns>
         public Bitmap? TakeSnapshot()
         {
             lock (_syncLock)
@@ -100,6 +121,9 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Libera los recursos de captura y limpia los objetos en memoria.
+        /// </summary>
         public void Dispose()
         {
             StopStreaming();
