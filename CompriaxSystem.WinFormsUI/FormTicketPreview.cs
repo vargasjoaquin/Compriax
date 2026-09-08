@@ -54,7 +54,7 @@ namespace CompriaxSystem.WinFormsUI
             _customerPhone = customerPhone;
             _customerName = customerName ?? sale.CustomerName;
 
-            this.lblTicketTitle.Text = $" VISTA PREVIA TICKET N.°: {docNumber}";
+            this.lblTicketTitle.Text = $"TICKET GENERADO";
             btnWhatsapp.Enabled = !string.IsNullOrWhiteSpace(_customerPhone) && _whatsappService != null && _storageService != null;
 
             await RenderTicketAsync();
