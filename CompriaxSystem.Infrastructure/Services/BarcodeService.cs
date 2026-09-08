@@ -8,6 +8,13 @@ namespace CompriaxSystem.Infrastructure.Services
 {
     public class BarcodeService : IBarcodeService
     {
+        /// <summary>
+        /// Genera una imagen de código de barras (EAN13 o Code128) con etiqueta de texto incluida.
+        /// </summary>
+        /// <param name="data">Información a codificar.</param>
+        /// <param name="width">Ancho de la imagen.</param>
+        /// <param name="height">Alto de la imagen.</param>
+        /// <returns>Objeto Image con el código de barras generado.</returns>
         public Image GenerateBarcode(string data, int width = 380, int height = 95)
         {
             try
@@ -39,6 +46,11 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Analiza una imagen de mapa de bits para intentar decodificar y extraer el valor de un código de barras.
+        /// </summary>
+        /// <param name="image">Imagen que contiene el código de barras.</param>
+        /// <returns>Cadena de texto decodificada o null si la lectura falla.</returns>
         public string? DecodeBarcode(Bitmap image)
         {
             try

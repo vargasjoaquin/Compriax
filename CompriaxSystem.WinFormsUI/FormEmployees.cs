@@ -18,6 +18,15 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbData);
+
+            this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
+            this.dgvEmployees.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvEmployees, e);
+
+            txtDni.MaxLength = 8;
+            txtCuil.MaxLength = 13;
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
@@ -31,21 +40,21 @@ namespace CompriaxSystem.WinFormsUI
             using (new WaitCursorHelper(this))
             {
                 var positions = (await _lookupService.GetPositionsAsync()).ToList();
+                cboPosition.DataSource = positions;
                 cboPosition.DisplayMember = "Name";
                 cboPosition.ValueMember = "Id";
-                cboPosition.DataSource = positions;
                 cboPosition.SelectedIndex = -1;
 
                 var genders = (await _lookupService.GetGendersAsync()).ToList();
+                cboGender.DataSource = genders;
                 cboGender.DisplayMember = "Name";
                 cboGender.ValueMember = "Id";
-                cboGender.DataSource = genders;
                 cboGender.SelectedIndex = -1;
 
                 var civilStatuses = (await _lookupService.GetCivilStatusesAsync()).ToList();
+                cboCivilStatus.DataSource = civilStatuses;
                 cboCivilStatus.DisplayMember = "Name";
                 cboCivilStatus.ValueMember = "Id";
-                cboCivilStatus.DataSource = civilStatuses;
                 cboCivilStatus.SelectedIndex = -1;
 
                 await RefreshGridAsync();
@@ -56,18 +65,17 @@ namespace CompriaxSystem.WinFormsUI
         private async Task RefreshGridAsync()
         {
             var data = await _employeeService.GetEmployeesAsync();
-
             dgvEmployees.DataSource = null;
             dgvEmployees.DataSource = data.ToList();
-
-            UIHelper.FormatGrid(dgvEmployees);
+            
+            DataGridViewHelper.ApplyStyle(dgvEmployees);
         }
 
         private void SyncEntityToFields()
         {
-            if (dgvEmployees.CurrentRow == null)
+            if (dgvEmployees.CurrentRow == null) 
                 return;
-
+            
             var emp = (EmployeeDto)dgvEmployees.CurrentRow.DataBoundItem;
 
             _selectedEmployeeId = emp.Id;
@@ -80,24 +88,20 @@ namespace CompriaxSystem.WinFormsUI
             txtPhone.Text = emp.Phone;
             txtAddress.Text = emp.Address;
 
-            cboPosition.SelectedValue = emp.PositionId.HasValue ? emp.PositionId.Value : -1;
-            cboGender.SelectedValue = emp.GenderId.HasValue ? emp.GenderId.Value : -1;
-            cboCivilStatus.SelectedValue = emp.CivilStatusId.HasValue ? emp.CivilStatusId.Value : -1;
-
+            cboPosition.SelectedValue = emp.PositionId ?? -1;
+            cboGender.SelectedValue = emp.GenderId ?? -1;
+            cboCivilStatus.SelectedValue = emp.CivilStatusId ?? -1;
             numChildren.Value = emp.ChildrenCount;
 
             picPhoto.Image?.Dispose();
-            picPhoto.Image = null;
+            picPhoto.Image = ImageHelper.LoadFromBytes(emp.Photo);
             _imageBuffer = emp.Photo;
 
-            if (emp.Photo != null && emp.Photo.Length > 0)
-            {
-                using var ms = new MemoryStream(emp.Photo);
-                picPhoto.Image = Image.FromStream(ms);
-            }
-
-            SetButtonState(isEditing: true);
+            SetButtonState(true);
+            
             txtCode.ReadOnly = true;
+            txtDni.ReadOnly = true;
+            txtCuil.ReadOnly = true;
         }
 
         private void ResetUI()
@@ -105,18 +109,21 @@ namespace CompriaxSystem.WinFormsUI
             _selectedEmployeeId = 0;
             _imageBuffer = null;
 
+            
             UIHelper.CleanControls(gbData);
-
             cboPosition.SelectedIndex = -1;
             cboGender.SelectedIndex = -1;
             cboCivilStatus.SelectedIndex = -1;
             numChildren.Value = 0;
-
+            
             picPhoto.Image?.Dispose();
             picPhoto.Image = null;
 
-            SetButtonState(isEditing: false);
+            SetButtonState(false);
+            
             txtCode.ReadOnly = false;
+            txtDni.ReadOnly = false;
+            txtCuil.ReadOnly = false;
         }
 
         private void SetButtonState(bool isEditing)
@@ -140,34 +147,6 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ProcessAction(int id)
         {
-            if (string.IsNullOrWhiteSpace(txtCode.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el número de legajo del empleado.", "Campo Obligatorio");
-                txtCode.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtDni.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el número de documento (DNI) del empleado.", "Campo Obligatorio");
-                txtDni.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre del empleado.", "Campo Obligatorio");
-                txtFirstName.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el apellido del empleado.", "Campo Obligatorio");
-                txtLastName.Focus();
-                return;
-            }
-
             var dto = new EmployeeDto
             {
                 Id = id,
@@ -179,9 +158,9 @@ namespace CompriaxSystem.WinFormsUI
                 Email = txtEmail.Text.Trim(),
                 Phone = txtPhone.Text.Trim(),
                 Address = txtAddress.Text.Trim(),
-                PositionId = cboPosition.SelectedValue is int posId && posId > 0 ? posId : null,
-                GenderId = cboGender.SelectedValue is int genId && genId > 0 ? genId : null,
-                CivilStatusId = cboCivilStatus.SelectedValue is int civId && civId > 0 ? civId : null,
+                PositionId = cboPosition.SelectedValue as int? ?? 0,
+                GenderId = cboGender.SelectedValue as int? ?? 0,
+                CivilStatusId = cboCivilStatus.SelectedValue as int? ?? 0,
                 ChildrenCount = (int)numChildren.Value,
                 Photo = _imageBuffer,
                 IsActive = true
@@ -199,13 +178,13 @@ namespace CompriaxSystem.WinFormsUI
         {
             if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
             {
-                ImageHelper.Clear(picPhoto);
+                picPhoto.Image?.Dispose();
                 _imageBuffer = imageBytes;
                 picPhoto.Image = displayImage;
             }
             else if (!string.IsNullOrEmpty(errorMessage))
             {
-                UIHelper.WarnMessage(this, errorMessage, "Validación de Fotografía");
+                UIHelper.WarnMessage(this, errorMessage, "Imagen");
             }
         }
 
@@ -217,13 +196,13 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            if (UIHelper.ConfirmMessage("¿Está seguro de que desea desactivar este registro de personal?", "Confirmar Eliminación"))
+            if (UIHelper.ConfirmMessage("¿Desactivar este registro de personal?"))
             {
                 var result = await _employeeService.DeleteEmployeeAsync(_selectedEmployeeId);
-                UIHelper.ShowResult(result, "Gestión de Personal", async () =>
+                UIHelper.ShowResult(result, "Personal", async () =>
                 {
                     await RefreshGridAsync();
-                    ResetUI();
+                    ResetUI(); 
                 });
             }
         }
@@ -242,11 +221,6 @@ namespace CompriaxSystem.WinFormsUI
                 string fileName = $"Nomina_Empleados_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
                 UIHelper.InfoMessage(this, "Generando reporte de nómina de personal...", "Exportar Personal");
             }
-        }
-
-        private void txtDni_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

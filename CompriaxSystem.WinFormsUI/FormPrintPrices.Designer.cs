@@ -51,7 +51,7 @@
             lblHeader.Name = "lblHeader";
             lblHeader.Size = new Size(723, 30);
             lblHeader.TabIndex = 0;
-            lblHeader.Text = "🏷️ GENERADOR DE ETIQUETAS DE GÓNDOLA Y CÓDIGO DE BARRAS";
+            lblHeader.Text = "GENERADOR DE ETIQUETAS DE GÓNDOLA Y CÓDIGO DE BARRAS";
             // 
             // gbGenerator
             // 
@@ -96,7 +96,7 @@
             btnGenerate.Name = "btnGenerate";
             btnGenerate.Size = new Size(351, 82);
             btnGenerate.TabIndex = 2;
-            btnGenerate.Text = "🔄 GENERAR CODIGO DE BARRAS";
+            btnGenerate.Text = "GENERAR CODIGO DE BARRAS";
             btnGenerate.UseVisualStyleBackColor = false;
             // 
             // btnPrint
@@ -110,9 +110,8 @@
             btnPrint.Name = "btnPrint";
             btnPrint.Size = new Size(351, 95);
             btnPrint.TabIndex = 3;
-            btnPrint.Text = "🖨️ IMPRIMIR CODIGO DE BARRAS";
+            btnPrint.Text = "IMPRIMIR CODIGO DE BARRAS";
             btnPrint.UseVisualStyleBackColor = false;
-            btnPrint.Click += btnPrint_Click;
             // 
             // btnDownload
             // 
@@ -122,7 +121,7 @@
             btnDownload.Name = "btnDownload";
             btnDownload.Size = new Size(351, 82);
             btnDownload.TabIndex = 4;
-            btnDownload.Text = "💾 GUARDAR CODIGO DE BARRAS";
+            btnDownload.Text = "GUARDAR CODIGO DE BARRAS";
             btnDownload.UseVisualStyleBackColor = true;
             // 
             // dgvProducts

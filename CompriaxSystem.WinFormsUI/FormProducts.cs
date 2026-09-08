@@ -1,7 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using DirectShowLib.DMO;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -20,6 +19,11 @@ namespace CompriaxSystem.WinFormsUI
             _catalogService = catalogService;
             _documentService = documentService;
             InitializeComponent();
+
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupEdit);
+
+            this.dgvProducts.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvProducts, e);
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
@@ -54,7 +58,7 @@ namespace CompriaxSystem.WinFormsUI
             var data = await _productService.GetProductListAsync();
             dgvProducts.DataSource = null;
             dgvProducts.DataSource = data.ToList();
-            UIHelper.FormatGrid(dgvProducts);
+            DataGridViewHelper.ApplyStyle(dgvProducts);
         }
 
         private void SyncEntityToFields()
@@ -138,7 +142,10 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ExecuteEditAction()
         {
             if (_selectedProductId == 0)
+            {
+                UIHelper.WarnMessage(this, "Debe seleccionar un producto de la lista para poder editarlo.", "Selección Requerida");
                 return;
+            }
 
             var dto = MapFieldsToDto();
             var result = await _productService.UpdateProductAsync(_selectedProductId, dto);
@@ -188,13 +195,13 @@ namespace CompriaxSystem.WinFormsUI
             {
                 Barcode = txtBarcode.Text.Trim(),
                 Name = txtName.Text.Trim(),
-                Description = string.IsNullOrWhiteSpace(txtDescription.Text) ? null : txtDescription.Text.Trim(),
+                Description = txtDescription.Text.Trim(),
                 BuyPrice = numBuyPrice.Value,
                 SellPrice = numSellPrice.Value,
                 InitialStock = (int)numStock.Value,
                 MinimumStock = 0,
-                CategoryId = cboCategory.SelectedValue is int catId && catId > 0 ? catId : 1,
-                BrandId = cboBrand.SelectedValue is int brandId && brandId > 0 ? brandId : 1,
+                CategoryId = cboCategory.SelectedValue as int? ?? 1,
+                BrandId = cboBrand.SelectedValue as int? ?? 1,
                 UnitOfMeasureId = 1,
                 Image = _imageBuffer
             };

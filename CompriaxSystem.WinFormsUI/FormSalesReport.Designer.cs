@@ -54,7 +54,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(508, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "📊 HISTORIAL GENERAL Y REPORTE DE VENTAS";
+            lblTitle.Text = "HISTORIAL GENERAL Y REPORTE DE VENTAS";
             // 
             // pnlFilters
             // 
@@ -122,7 +122,7 @@
             btnSearchDates.Name = "btnSearchDates";
             btnSearchDates.Size = new Size(105, 34);
             btnSearchDates.TabIndex = 4;
-            btnSearchDates.Text = "🔍 FILTRAR";
+            btnSearchDates.Text = "FILTRAR";
             btnSearchDates.UseVisualStyleBackColor = false;
             // 
             // lblSearch
@@ -164,7 +164,7 @@
             btnExportExcel.Name = "btnExportExcel";
             btnExportExcel.Size = new Size(280, 78);
             btnExportExcel.TabIndex = 8;
-            btnExportExcel.Text = "📗 EXPORTAR EXCEL";
+            btnExportExcel.Text = "EXPORTAR EXCEL";
             btnExportExcel.UseVisualStyleBackColor = false;
             // 
             // dgvData

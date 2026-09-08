@@ -17,6 +17,10 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlCard);
+            pnlHeader.BackColor = UIThemeHelper.SidebarBackground;
+
             this.Load += async (s, e) => await LoadCashRegistersAsync();
             this.cboRegister.SelectedIndexChanged += (s, e) => UpdateRegisterStatusLabel();
             this.btnConfirm.Click += (s, e) => ExecuteConfirm();
@@ -55,21 +59,24 @@ namespace CompriaxSystem.WinFormsUI
 
                     if (isMyOwnShift)
                     {
-                        lblStatusInfo.Text = $"🟢 Tu turno sigue abierto (#{reg.CurrentShiftId})";
-                        lblStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
+                        lblStatusInfo.Text = $" Tu turno sigue abierto (#{reg.CurrentShiftId})";
+                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        lblStatusInfo.ForeColor = UIThemeHelper.Success;
                         btnConfirm.Enabled = true;
                     }
                     else
                     {
-                        lblStatusInfo.Text = $"⛔ OCUPADA: Turno #{reg.CurrentShiftId} por '{reg.CurrentCashierName}'";
-                        lblStatusInfo.ForeColor = Color.FromArgb(239, 68, 68);
+                        lblStatusInfo.Text = $" OCUPADA: Turno #{reg.CurrentShiftId} por '{reg.CurrentCashierName}'";
+                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        lblStatusInfo.ForeColor = UIThemeHelper.Danger;
                         btnConfirm.Enabled = false;
                     }
                 }
                 else
                 {
-                    lblStatusInfo.Text = "🟢 Caja disponible (Sin turno abierto)";
-                    lblStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
+                    lblStatusInfo.Text = " Caja disponible (Sin turno abierto)";
+                    lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                    lblStatusInfo.ForeColor = UIThemeHelper.Success;
                     btnConfirm.Enabled = true;
                 }
             }

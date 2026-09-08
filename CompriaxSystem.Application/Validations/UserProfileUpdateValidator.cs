@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public UserProfileUpdateValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.UserId)
                 .GreaterThan(0).WithMessage("Identificador de usuario inválido.");
 
@@ -21,14 +23,14 @@ namespace CompriaxSystem.Application.Validations
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("El correo electrónico es obligatorio.")
                 .EmailAddress().WithMessage("El formato de correo electrónico no es válido.")
-                .MaximumLength(100).WithMessage("El correo no puede superar los 100 caracteres.");
+                .MaximumLength(100).WithMessage("El correo electrónico no puede superar los 100 caracteres.");
 
             RuleFor(x => x.CurrentPassword)
-                .NotEmpty().WithMessage("Debe ingresar la contraseña actual para poder cambiarla.")
+                .NotEmpty().WithMessage("Debe ingresar su contraseña actual para poder registrar cambios de clave.")
                 .When(x => !string.IsNullOrWhiteSpace(x.NewPassword));
 
             RuleFor(x => x.NewPassword)
-                .MinimumLength(4).WithMessage("La nueva contraseña debe tener al menos 4 caracteres.")
+                .MinimumLength(6).WithMessage("La nueva contraseña debe tener al menos 6 caracteres.")
                 .When(x => !string.IsNullOrWhiteSpace(x.NewPassword));
         }
     }

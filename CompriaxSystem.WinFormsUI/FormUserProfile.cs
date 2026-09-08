@@ -28,10 +28,10 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            lblNameVal.Text = user.FullName;
+            lblNameVal.Text = $"{user.FirstName} {user.LastName}".Trim();
             lblRoleVal.Text = user.RoleName.ToUpper();
             lblUserVal.Text = $"Usuario: {user.Username}";
-            lblEmailVal.Text = string.IsNullOrEmpty(user.Email) ? "Sin correo asignado" : user.Email;
+            lblEmailVal.Text = user.Email;
 
             ImageHelper.Clear(picAvatar);
             if (user.Photo != null && user.Photo.Length > 0)
@@ -39,10 +39,9 @@ namespace CompriaxSystem.WinFormsUI
                 picAvatar.Image = ImageHelper.LoadFromBytes(user.Photo);
             }
 
-            var nameParts = user.FullName.Split(' ', 2);
-            txtEditFirstName.Text = nameParts.Length > 0 ? nameParts[0] : user.FullName;
-            txtEditLastName.Text = nameParts.Length > 1 ? nameParts[1] : "";
-            txtEditEmail.Text = user.Email ?? string.Empty;
+            txtEditFirstName.Text = user.FirstName;
+            txtEditLastName.Text = user.LastName;
+            txtEditEmail.Text = user.Email;
 
             txtEditCurrentPass.Clear();
             txtEditPassword.Clear();
@@ -51,35 +50,6 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task ExecuteSaveProfileAsync()
         {
-            if (string.IsNullOrWhiteSpace(txtEditFirstName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar su nombre.", "Campo Obligatorio");
-                txtEditFirstName.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtEditLastName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar su apellido.", "Campo Obligatorio");
-                txtEditLastName.Focus();
-                return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(txtEditPassword.Text) && txtEditPassword.Text != txtEditConfirmPass.Text)
-            {
-                UIHelper.WarnMessage(this, "La nueva contraseña y su confirmación no coinciden.", "Contraseña Inválida");
-                txtEditConfirmPass.SelectAll();
-                txtEditConfirmPass.Focus();
-                return;
-            }
-
-            if (!string.IsNullOrWhiteSpace(txtEditPassword.Text) && string.IsNullOrWhiteSpace(txtEditCurrentPass.Text))
-            {
-                UIHelper.WarnMessage(this, "Para cambiar la contraseña, debe ingresar su contraseña actual.", "Verificación Requerida");
-                txtEditCurrentPass.Focus();
-                return;
-            }
-
             var dto = new UserProfileUpdateDto
             {
                 UserId = _currentUserService.CurrentUser!.UserId,
@@ -96,7 +66,9 @@ namespace CompriaxSystem.WinFormsUI
 
                 if (result.Success)
                 {
-                    _currentUserService.CurrentUser.FullName = $"{dto.LastName}, {dto.FirstName}";
+                    _currentUserService.CurrentUser.FirstName = dto.FirstName;
+                    _currentUserService.CurrentUser.LastName = dto.LastName;
+                    _currentUserService.CurrentUser.FullName = $"{dto.FirstName} {dto.LastName}".Trim();
                     _currentUserService.CurrentUser.Email = dto.Email;
 
                     UIHelper.ShowResult(result, "Perfil Actualizado");

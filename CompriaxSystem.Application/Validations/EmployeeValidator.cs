@@ -7,17 +7,20 @@ namespace CompriaxSystem.Application.Validations
     {
         public EmployeeValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.EmployeeCode)
-                .NotEmpty().WithMessage("El legajo es obligatorio.")
+                .NotEmpty().WithMessage("El legajo del empleado es obligatorio.")
                 .MaximumLength(20).WithMessage("El legajo no puede superar los 20 caracteres.");
 
             RuleFor(x => x.DocumentNumber)
                 .NotEmpty().WithMessage("El DNI es obligatorio.")
-                .MaximumLength(20).WithMessage("El DNI no puede superar los 20 caracteres.");
+                .Length(7, 8).WithMessage("El DNI debe tener entre 7 y 8 dígitos.")
+                .Matches(@"^[0-9]+$").WithMessage("El DNI solo puede contener números.");
 
             RuleFor(x => x.Cuil)
                 .NotEmpty().WithMessage("El CUIL es obligatorio.")
-                .MaximumLength(25).WithMessage("El CUIL no puede superar los 25 caracteres.");
+                .MaximumLength(13).WithMessage("El CUIL no puede superar los 11 caracteres.");
 
             RuleFor(x => x.FirstName)
                 .NotEmpty().WithMessage("El nombre es obligatorio.")
@@ -29,7 +32,8 @@ namespace CompriaxSystem.Application.Validations
 
             RuleFor(x => x.Email)
                 .NotEmpty().WithMessage("El correo electrónico es obligatorio.")
-                .EmailAddress().WithMessage("El formato del correo electrónico no es válido.");
+                .EmailAddress().WithMessage("El formato del correo electrónico no es válido.")
+                .MaximumLength(100).WithMessage("El correo electrónico no puede superar los 100 caracteres.");
 
             RuleFor(x => x.Phone)
                 .NotEmpty().WithMessage("El teléfono es obligatorio.")
@@ -50,6 +54,9 @@ namespace CompriaxSystem.Application.Validations
             RuleFor(x => x.CivilStatusId)
                 .NotNull().WithMessage("Debe seleccionar un estado civil.")
                 .GreaterThan(0).WithMessage("Debe seleccionar un estado civil válido.");
+
+            RuleFor(x => x.ChildrenCount)
+                .GreaterThanOrEqualTo(0).WithMessage("La cantidad de hijos no puede ser negativa.");
         }
     }
 }

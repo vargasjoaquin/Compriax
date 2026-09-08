@@ -73,7 +73,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(492, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "📦 CATÁLOGO DE PRODUCTOS E INVENTARIO";
+            lblTitle.Text = "CATÁLOGO DE PRODUCTOS E INVENTARIO";
 
             // btnPrintStock
             btnPrintStock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -86,7 +86,7 @@
             btnPrintStock.Name = "btnPrintStock";
             btnPrintStock.Size = new Size(202, 58);
             btnPrintStock.TabIndex = 1;
-            btnPrintStock.Text = "📄 EXPORTAR PDF";
+            btnPrintStock.Text = "EXPORTAR PDF";
             btnPrintStock.UseVisualStyleBackColor = false;
 
             // pnlMain
@@ -326,7 +326,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(257, 70);
             btnSave.TabIndex = 19;
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
             btnSave.UseVisualStyleBackColor = false;
 
             // btnEdit

@@ -19,6 +19,11 @@ namespace CompriaxSystem.Application.Services
             return mapper.Map<IEnumerable<CustomerDto>>(customers);
         }
 
+        /// <summary>
+        /// Registra un nuevo cliente o actualiza un cliente.
+        /// </summary>
+        /// <param name="dto">Datos del cliente.</param>
+        /// <returns>Resultado de la operación de guardado.</returns>
         public async Task<OperationResult> RegisterCustomerAsync(CustomerDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -26,16 +31,20 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
+            string documentNumber = dto.DocumentNumber.Trim();
+
+            var allCustomers = await unitOfWork.Customers.GetAllActiveAsync();
+            bool documentNumberExists = allCustomers.Any(c => c.DocumentNumber.Equals(documentNumber, StringComparison.OrdinalIgnoreCase) && c.Id != dto.Id);
+
+            if (documentNumberExists)
+                return OperationResult.Failure($"El número de documento '{documentNumber}' ya pertenece a otro cliente registrado.");
+
             try
             {
                 if (dto.Id == 0)
                 {
-                    var existing = await unitOfWork.Customers.GetByDocumentAsync(dto.DocumentNumber);
-                    
-                    if (existing != null)
-                        return OperationResult.Failure("Este número de documento ya está registrado.");
-
                     var customer = mapper.Map<Customer>(dto);
+                    customer.DocumentNumber = documentNumber;
                     await unitOfWork.Customers.AddAsync(customer);
                 }
                 else
@@ -46,6 +55,7 @@ namespace CompriaxSystem.Application.Services
                         return OperationResult.Failure("Cliente no encontrado.");
 
                     mapper.Map(dto, customer);
+                    customer.DocumentNumber = documentNumber;
                     unitOfWork.Customers.Update(customer);
                 }
 
@@ -60,6 +70,11 @@ namespace CompriaxSystem.Application.Services
             }
         }
 
+        /// <summary>
+        /// Realiza la eliminación de un cliente.
+        /// </summary>
+        /// <param name="id">ID del cliente a eliminar.</param>
+        /// <returns>Resultado del proceso.</returns>
         public async Task<OperationResult> DeleteCustomerAsync(int id)
         {
             var customer = await unitOfWork.Customers.GetByIdAsync(id);

@@ -53,7 +53,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(491, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🖥️ ADMINISTRACIÓN DE CAJAS / TERMINALES";
+            lblTitle.Text = "🖥ADMINISTRACIÓN DE CAJAS";
 
             // pnlCard
             pnlCard.BackColor = Color.White;
@@ -136,7 +136,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(306, 44);
             btnSave.TabIndex = 6;
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
             btnSave.UseVisualStyleBackColor = false;
 
             // btnToggle

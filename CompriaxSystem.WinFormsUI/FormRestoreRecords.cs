@@ -46,7 +46,6 @@ namespace CompriaxSystem.WinFormsUI
                 _isInitializing = false;
             }
 
-            // Realizamos la única carga inicial
             await LoadDeletedRecordsAsync();
         }
 

@@ -50,7 +50,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(478, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "📁 CATEGORÍAS Y FAMILIAS DE PRODUCTOS";
+            lblTitle.Text = "CATEGORÍAS Y FAMILIAS DE PRODUCTOS";
 
             // pnlCard
             pnlCard.BackColor = Color.White;
@@ -112,7 +112,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(306, 92);
             btnSave.TabIndex = 4;
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
             btnSave.UseVisualStyleBackColor = false;
 
             // btnDelete

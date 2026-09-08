@@ -7,6 +7,8 @@ namespace CompriaxSystem.Application.Validations
     {
         public ProductValidator()
         {
+            RuleLevelCascadeMode = CascadeMode.Stop;
+
             RuleFor(x => x.Barcode)
                 .NotEmpty().WithMessage("El código de barras es obligatorio.")
                 .MaximumLength(50).WithMessage("El código de barras no puede superar los 50 caracteres.");
@@ -16,10 +18,10 @@ namespace CompriaxSystem.Application.Validations
                 .MaximumLength(100).WithMessage("El nombre no puede superar los 100 caracteres.");
 
             RuleFor(x => x.BuyPrice)
-                .GreaterThan(0).WithMessage("El precio de compra debe ser mayor a 0.");
+                .GreaterThan(0).WithMessage("El precio de compra debe ser mayor a $ 0.00.");
 
             RuleFor(x => x.SellPrice)
-                .GreaterThan(0).WithMessage("El precio de venta debe ser mayor a 0.")
+                .GreaterThan(0).WithMessage("El precio de venta debe ser mayor a $ 0.00.")
                 .GreaterThanOrEqualTo(x => x.BuyPrice).WithMessage("El precio de venta debe ser mayor o igual al precio de costo.");
 
             RuleFor(x => x.CurrentStock)

@@ -1,8 +1,7 @@
-﻿using CompriaxSystem.Application.DTOs;
+﻿using Microsoft.Extensions.DependencyInjection;
+using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using Microsoft.Extensions.DependencyInjection;
-using System.Data;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -22,6 +21,9 @@ namespace CompriaxSystem.WinFormsUI
             _excelService = excelService;
             _serviceProvider = serviceProvider;
             InitializeComponent();
+
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(pnlFilters);
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearchDates.Click += async (s, e) => await ExecuteSearchAction();
@@ -43,12 +45,11 @@ namespace CompriaxSystem.WinFormsUI
                 cboSearchBy.DisplayMember = "Name";
                 cboSearchBy.ValueMember = "Id";
 
-                UIHelper.FormatGrid(dgvData);
                 await ExecuteSearchAction();
             }
         }
 
-        private async Task ExecuteSearchAction()
+        public async Task ExecuteSearchAction()
         {
             using (new WaitCursorHelper(this))
             {
@@ -63,20 +64,21 @@ namespace CompriaxSystem.WinFormsUI
             string filterText = txtSearchValue.Text.Trim().ToLower();
             string criteria = cboSearchBy.SelectedValue?.ToString() ?? nameof(SalesReportDto.DocumentNumber);
 
-            var filtered = _fullHistory.Where(x => {
+            var filtered = _fullHistory.Where(x =>
+            {
                 var value = x.GetType().GetProperty(criteria)?.GetValue(x, null)?.ToString()?.ToLower() ?? "";
                 return value.Contains(filterText);
             }).ToList();
 
             dgvData.DataSource = filtered;
-            UIHelper.FormatGrid(dgvData);
+            DataGridViewHelper.ApplyStyle(dgvData);
         }
 
         private async void ExecuteExportExcelAction()
         {
             if (dgvData.Rows.Count == 0 || !_fullHistory.Any())
             {
-                UIHelper.WarnMessage(this, "No hay registros de ventas en el período de fechas seleccionado para exportar a Excel.", "Sin Datos");
+                UIHelper.WarnMessage(this, "No hay registros de ventas para exportar.", "Sin Datos");
                 return;
             }
 
@@ -84,7 +86,6 @@ namespace CompriaxSystem.WinFormsUI
             {
                 byte[] fileBytes = _excelService.ExportToExcel((List<SalesReportDto>)dgvData.DataSource, "Ventas");
                 string fileName = $"Ventas_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
-
                 await FileExportHelper.SaveAndOpenExcelAsync(this, fileBytes, fileName, "Exportar Reporte de Ventas");
             }
         }

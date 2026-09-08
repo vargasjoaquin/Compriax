@@ -1,9 +1,9 @@
-﻿using CompriaxSystem.Application.DTOs;
+﻿using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
+using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Enums;
-using QuestPDF.Infrastructure;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -14,6 +14,11 @@ namespace CompriaxSystem.Application.Services
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
+        /// <summary>
+        /// Genera un documento PDF optimizado para impresoras térmicas basado en una plantilla.
+        /// </summary>
+        /// <param name="data">Datos del ticket a renderizar.</param>
+        /// <returns>Arreglo de bytes del PDF listo para impresión.</returns>
         public byte[] RenderThermalTicketPdf(TicketDataDto data)
         {
             float widthMm = data.PaperSize == ThermalPaperSize.Width58mm ? 58f : 80f;
@@ -91,8 +96,12 @@ namespace CompriaxSystem.Application.Services
                         // ==========================================
                         // 4. DATOS DEL CLIENTE
                         // ==========================================
-                        col.Item().Text($"CLIENTE: {data.CustomerName.ToUpper()}");
-                        col.Item().Text($"DOC/CUIT: {data.CustomerDoc}  ({data.CustomerTaxCondition})");
+                        string clientName = string.IsNullOrWhiteSpace(data.CustomerName) ? "CONSUMIDOR FINAL" : data.CustomerName.ToUpper();
+                        string clientDoc = string.IsNullOrWhiteSpace(data.CustomerDoc) ? "S/D" : data.CustomerDoc;
+                        string clientTax = string.IsNullOrWhiteSpace(data.CustomerTaxCondition) ? "Consumidor Final" : data.CustomerTaxCondition;
+
+                        col.Item().Text($"CLIENTE: {clientName}");
+                        col.Item().Text($"DOC/CUIT: {clientDoc}  ({clientTax})");
 
                         col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
 
@@ -137,7 +146,7 @@ namespace CompriaxSystem.Application.Services
                         col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
-                        // 6. TOTALES Y CARTEL DE AHORRO (ESTILO CARREFOUR)
+                        // 6. TOTALES Y CARTEL DE AHORRO
                         // ==========================================
                         col.Item().Row(r =>
                         {
@@ -145,7 +154,6 @@ namespace CompriaxSystem.Application.Services
                             r.RelativeItem().AlignRight().Text(data.SubTotal.ToString("C2"));
                         });
 
-                        // Destacar el Ahorro si hubo promociones
                         if (data.TotalDiscounts > 0)
                         {
                             col.Item().PaddingVertical(2).Border(0.5f).BorderColor(Colors.Grey.Darken1).Background(Colors.Grey.Lighten4).Padding(2).Row(r =>

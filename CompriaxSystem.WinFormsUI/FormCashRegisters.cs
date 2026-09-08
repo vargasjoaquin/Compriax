@@ -53,20 +53,13 @@ namespace CompriaxSystem.WinFormsUI
             txtName.Clear();
             txtDescription.Clear();
 
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
             btnToggle.Enabled = false;
             txtName.Focus();
         }
 
         private async Task ExecuteSaveAction()
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre descriptivo de la caja.", "Campo Obligatorio");
-                txtName.Focus();
-                return;
-            }
-
             var dto = new CashRegisterDto
             {
                 Id = _selectedRegisterId,

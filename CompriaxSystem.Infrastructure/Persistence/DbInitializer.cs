@@ -6,6 +6,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
 {
     public static class DbInitializer
     {
+        /// <summary>
+        /// Realiza la siembra inicial de la base de datos (Seed), creando roles, usuario administrador, 
+        /// configuraciones de tienda, métodos de pago y datos de prueba esenciales.
+        /// </summary>
+        /// <param name="context">Contexto de la base de datos de la aplicación.</param>
         public static async Task SeedAsync(ApplicationDbContext context)
         {
             // =========================================================================
@@ -96,29 +101,30 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[DocumentTypes] ON;");
 
                     await context.DocumentTypes.AddRangeAsync(
-                        new DocumentType { Id = 1, Name = "Factura A" },
-                        new DocumentType { Id = 2, Name = "Nota de Débito A" },
-                        new DocumentType { Id = 3, Name = "Nota de Crédito A" },
-                        new DocumentType { Id = 4, Name = "Recibo A" },
+                        new DocumentType { Id = 1, Name = "Cliente Casual" },
+                        new DocumentType { Id = 2, Name = "Factura A" },
+                        new DocumentType { Id = 3, Name = "Nota de Débito A" },
+                        new DocumentType { Id = 4, Name = "Nota de Crédito A" },
+                        new DocumentType { Id = 5, Name = "Recibo A" },
                         new DocumentType { Id = 6, Name = "Factura B" },
                         new DocumentType { Id = 7, Name = "Nota de Débito B" },
                         new DocumentType { Id = 8, Name = "Nota de Crédito B" },
                         new DocumentType { Id = 9, Name = "Recibo B" },
-                        new DocumentType { Id = 11, Name = "Factura C" },
-                        new DocumentType { Id = 12, Name = "Nota de Débito C" },
-                        new DocumentType { Id = 13, Name = "Nota de Crédito C" },
-                        new DocumentType { Id = 15, Name = "Recibo C" },
-                        new DocumentType { Id = 19, Name = "Factura de Exportación E" },
-                        new DocumentType { Id = 51, Name = "Factura M" },
-                        new DocumentType { Id = 52, Name = "Nota de Débito M" },
-                        new DocumentType { Id = 53, Name = "Nota de Crédito M" },
-                        new DocumentType { Id = 81, Name = "Ticket Factura A" },
-                        new DocumentType { Id = 82, Name = "Ticket Factura B" },
-                        new DocumentType { Id = 83, Name = "Ticket Consumidor Final" },
-                        new DocumentType { Id = 91, Name = "Remito R (Oficial)" },
-                        new DocumentType { Id = 99, Name = "Remito X (Uso Interno / No Fiscal)" },
-                        new DocumentType { Id = 100, Name = "Presupuesto / Cotización" },
-                        new DocumentType { Id = 101, Name = "Comprobante X (No Fiscal)" }
+                        new DocumentType { Id = 10, Name = "Factura C" },
+                        new DocumentType { Id = 11, Name = "Nota de Débito C" },
+                        new DocumentType { Id = 12, Name = "Nota de Crédito C" },
+                        new DocumentType { Id = 13, Name = "Recibo C" },
+                        new DocumentType { Id = 14, Name = "Factura de Exportación E" },
+                        new DocumentType { Id = 15, Name = "Factura M" },
+                        new DocumentType { Id = 16, Name = "Nota de Débito M" },
+                        new DocumentType { Id = 17, Name = "Nota de Crédito M" },
+                        new DocumentType { Id = 18, Name = "Ticket Factura A" },
+                        new DocumentType { Id = 19, Name = "Ticket Factura B" },
+                        new DocumentType { Id = 20, Name = "Ticket Consumidor Final" },
+                        new DocumentType { Id = 21, Name = "Remito R (Oficial)" },
+                        new DocumentType { Id = 22, Name = "Remito X (Uso Interno / No Fiscal)" },
+                        new DocumentType { Id = 23, Name = "Presupuesto / Cotización" },
+                        new DocumentType { Id = 24, Name = "Comprobante X (No Fiscal)" }
                     );
 
                     await context.SaveChangesAsync();
@@ -249,6 +255,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     Address = "Av. Rivadavia 5400, CABA",
                     Phone = "0800-444-7873",
                     Email = "contacto@compriax.com",
+                    Logo = null,
                     TicketFormat = "80mm",
                     TicketFooterMessage = "¡Muchas gracias por su compra! Vuelva pronto.",
                     ShowLogoOnTicket = true,
@@ -256,7 +263,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     AutoPrintTicket = false,
                     PointOfSale = 1,
                     GrossIncomeNumber = "901-234567-1",
-                    ActivityStartDate = new DateTime(2020, 1, 1),
+                    ActivityStartDate = DateTime.Now,
                     TaxConditionId = defaultTaxCondition.Id
                 });
                 await context.SaveChangesAsync();

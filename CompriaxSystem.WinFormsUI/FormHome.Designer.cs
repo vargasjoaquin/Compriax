@@ -89,7 +89,7 @@ namespace CompriaxSystem.WinFormsUI
             // Top Productos
             this.pnlTopProducts.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlTopProducts.Controls.AddRange(new System.Windows.Forms.Control[] { this.dgvTopProducts, this.lblTopProdTitle });
-            this.lblTopProdTitle.Text = "🔥 Artículos Más Vendidos de Hoy";
+            this.lblTopProdTitle.Text = "Artículos Más Vendidos de Hoy";
             this.lblTopProdTitle.Font = UIThemeHelper.FontHeader;
             this.lblTopProdTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblTopProdTitle.Height = 36;
@@ -98,7 +98,7 @@ namespace CompriaxSystem.WinFormsUI
             // Stock Crítico
             this.pnlCriticalStock.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlCriticalStock.Controls.AddRange(new System.Windows.Forms.Control[] { this.dgvCriticalStock, this.lblCriticalTitle });
-            this.lblCriticalTitle.Text = "🚨 Reposición Inmediata de Stock";
+            this.lblCriticalTitle.Text = "Reposición Inmediata de Stock";
             this.lblCriticalTitle.Font = UIThemeHelper.FontHeader;
             this.lblCriticalTitle.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblCriticalTitle.Height = 36;

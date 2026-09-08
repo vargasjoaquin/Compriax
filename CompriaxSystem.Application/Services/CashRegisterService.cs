@@ -8,6 +8,10 @@ namespace CompriaxSystem.Application.Services
 {
     public class CashRegisterService(IUnitOfWork unitOfWork) : ICashRegisterService
     {
+        /// <summary>
+        /// Obtiene el listado de todas las cajas registradoras indicando si poseen turnos abiertos.
+        /// </summary>
+        /// <returns>Una colección de DTOs con la información de las cajas.</returns>
         public async Task<IEnumerable<CashRegisterDto>> GetAllRegistersAsync()
         {
             var registers = await unitOfWork.CashRegisters.GetAllAsync();
@@ -28,6 +32,11 @@ namespace CompriaxSystem.Application.Services
             }).ToList();
         }
 
+        /// <summary>
+        /// Busca los datos de una caja registradora específica por su id.
+        /// </summary>
+        /// <param name="id">ID de la caja a consultar.</param>
+        /// <returns>Los datos de la caja o null si no se encuentra.</returns>
         public async Task<CashRegisterDto?> GetByIdAsync(int id)
         {
             var cashRegister = await unitOfWork.CashRegisters.GetByIdAsync(id);
@@ -45,6 +54,11 @@ namespace CompriaxSystem.Application.Services
             };
         }
 
+        /// <summary>
+        /// Crea una nueva caja o actualiza una existente.
+        /// </summary>
+        /// <param name="dto">Objeto con los datos de la caja.</param>
+        /// <returns>Resultado de la persistencia de datos.</returns>
         public async Task<OperationResult> UpsertCashRegisterAsync(CashRegisterDto dto)
         {
             if (string.IsNullOrWhiteSpace(dto.Name))
@@ -94,6 +108,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se realizaron cambios.");
         }
 
+        /// <summary>
+        /// Alterna el estado de activación de una caja, impidiendo la desactivación si hay un turno abierto.
+        /// </summary>
+        /// <param name="id">ID de la caja a modificar.</param>
+        /// <returns>Resultado de la operación de cambio de estado.</returns>
         public async Task<OperationResult> ToggleRegisterStatusAsync(int id)
         {
             var register = await unitOfWork.CashRegisters.GetByIdAsync(id);

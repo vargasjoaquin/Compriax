@@ -81,7 +81,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(551, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "📥 INGRESO DE MERCADERÍA / COMPRA DE STOCK";
+            lblTitle.Text = "INGRESO DE MERCADERÍA / COMPRA DE STOCK";
             // 
             // pnlLeftWork
             // 
@@ -154,7 +154,7 @@
             btnSearchProduct.Name = "btnSearchProduct";
             btnSearchProduct.Size = new Size(47, 47);
             btnSearchProduct.TabIndex = 2;
-            btnSearchProduct.Text = "🔍";
+            btnSearchProduct.Text = "";
             btnSearchProduct.UseVisualStyleBackColor = true;
             // 
             // lblProdName
@@ -228,7 +228,7 @@
             btnAddItem.Name = "btnAddItem";
             btnAddItem.Size = new Size(136, 56);
             btnAddItem.TabIndex = 9;
-            btnAddItem.Text = "+ AGREGAR";
+            btnAddItem.Text = "AGREGAR";
             btnAddItem.UseVisualStyleBackColor = false;
             // 
             // btnRemoveItem
@@ -242,7 +242,7 @@
             btnRemoveItem.Name = "btnRemoveItem";
             btnRemoveItem.Size = new Size(141, 56);
             btnRemoveItem.TabIndex = 10;
-            btnRemoveItem.Text = "✕ QUITAR [SUPR]";
+            btnRemoveItem.Text = "QUITAR [SUPR]";
             btnRemoveItem.UseVisualStyleBackColor = false;
             // 
             // gbSaleInfo
@@ -350,7 +350,7 @@
             btnSearchSupplier.Name = "btnSearchSupplier";
             btnSearchSupplier.Size = new Size(76, 43);
             btnSearchSupplier.TabIndex = 8;
-            btnSearchSupplier.Text = "🔍";
+            btnSearchSupplier.Text = "";
             btnSearchSupplier.UseVisualStyleBackColor = true;
             // 
             // lblRazonSocial
@@ -463,7 +463,7 @@
             btnRegister.Name = "btnRegister";
             btnRegister.Size = new Size(328, 60);
             btnRegister.TabIndex = 5;
-            btnRegister.Text = "✓ REGISTRAR COMPRA";
+            btnRegister.Text = "REGISTRAR COMPRA";
             btnRegister.UseVisualStyleBackColor = false;
             // 
             // picWebcam
@@ -485,7 +485,7 @@
             btnToggleCam.Name = "btnToggleCam";
             btnToggleCam.Size = new Size(328, 36);
             btnToggleCam.TabIndex = 7;
-            btnToggleCam.Text = "📷 ENCENDER CÁMARA";
+            btnToggleCam.Text = "ENCENDER CÁMARA";
             btnToggleCam.UseVisualStyleBackColor = true;
             // 
             // FormPurchases

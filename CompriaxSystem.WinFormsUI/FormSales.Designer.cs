@@ -73,7 +73,7 @@
             this.lblPosTitle.Name = "lblPosTitle";
             this.lblPosTitle.Size = new System.Drawing.Size(280, 25);
             this.lblPosTitle.TabIndex = 0;
-            this.lblPosTitle.Text = "🛒 TERMINAL DE VENTAS (POS)";
+            this.lblPosTitle.Text = "TERMINAL DE VENTAS (POS)";
 
             // lblCashierBadge
             this.lblCashierBadge.AutoSize = true;
@@ -94,7 +94,7 @@
             this.lblShiftBadge.Name = "lblShiftBadge";
             this.lblShiftBadge.Size = new System.Drawing.Size(200, 17);
             this.lblShiftBadge.TabIndex = 2;
-            this.lblShiftBadge.Text = "🟢 TURNO DE CAJA ACTIVO";
+            this.lblShiftBadge.Text = "TURNO DE CAJA ACTIVO";
 
             // ==================== pnlLeftWork ====================
             this.pnlLeftWork.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
@@ -127,7 +127,7 @@
             this.lblScanIcon.Name = "lblScanIcon";
             this.lblScanIcon.Size = new System.Drawing.Size(50, 32);
             this.lblScanIcon.TabIndex = 0;
-            this.lblScanIcon.Text = "🔎";
+            this.lblScanIcon.Text = "";
 
             // txtProductCode
             this.txtProductCode.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -171,7 +171,7 @@
             this.btnRemove.Name = "btnRemove";
             this.btnRemove.Size = new System.Drawing.Size(177, 38);
             this.btnRemove.TabIndex = 4;
-            this.btnRemove.Text = "✕ QUITAR [SUPR]";
+            this.btnRemove.Text = "QUITAR [SUPR]";
             this.btnRemove.UseVisualStyleBackColor = false;
 
             // ==================== dgvCart ====================
@@ -200,7 +200,7 @@
             this.lblShortcuts.Name = "lblShortcuts";
             this.lblShortcuts.Size = new System.Drawing.Size(1004, 36);
             this.lblShortcuts.TabIndex = 0;
-            this.lblShortcuts.Text = "⌨ ATAJOS: [F2] Buscar | [F3] Cliente | [F4] Cantidad | [F8] Cobrar | [SUPR] Quitar | [ESC] Cancelar";
+            this.lblShortcuts.Text = "ATAJOS: [F2] Buscar | [F3] Cliente | [F4] Cantidad | [F8] Cobrar | [SUPR] Quitar | [ESC] Cancelar";
             this.lblShortcuts.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 
             // ==================== pnlRightSummary ====================
@@ -307,7 +307,7 @@
             this.btnRegister.Name = "btnRegister";
             this.btnRegister.Size = new System.Drawing.Size(328, 64);
             this.btnRegister.TabIndex = 8;
-            this.btnRegister.Text = "💳 COBRAR (F8)";
+            this.btnRegister.Text = "COBRAR (F8)";
             this.btnRegister.UseVisualStyleBackColor = false;
 
             // picWebcam
@@ -327,7 +327,7 @@
             this.btnToggleCam.Name = "btnToggleCam";
             this.btnToggleCam.Size = new System.Drawing.Size(328, 34);
             this.btnToggleCam.TabIndex = 10;
-            this.btnToggleCam.Text = "📷 CÁMARA ESCÁNER";
+            this.btnToggleCam.Text = "CÁMARA ESCÁNER";
             this.btnToggleCam.UseVisualStyleBackColor = true;
 
             // ==================== Form Properties ====================

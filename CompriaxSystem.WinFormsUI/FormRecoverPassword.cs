@@ -1,6 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
-using DocumentFormat.OpenXml.Drawing;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -12,6 +11,10 @@ namespace CompriaxSystem.WinFormsUI
         {
             _authService = authService;
             InitializeComponent();
+
+            this.BackColor = UIThemeHelper.SidebarBackground;
+            UIThemeHelper.ApplyCardStyle(pnlCard);
+            lblMainTitle.ForeColor = UIThemeHelper.Primary;
 
             this.btnSend.Click += async (s, e) => await ExecuteSendRecoveryAsync();
             this.btnCancel.Click += (s, e) => this.Close();
@@ -41,13 +44,15 @@ namespace CompriaxSystem.WinFormsUI
                 var result = await _authService.SendPasswordResetAsync(identity);
                 if (result.Success)
                 {
-                    lblResult.Text = "✓ " + result.Message;
+                    lblResult.Text = result.Message;
+                    lblResult.ImageAlign = ContentAlignment.MiddleLeft;
                     lblResult.ForeColor = UIThemeHelper.Success;
                     UIHelper.InfoMessage(this, result.Message, "Recuperación de Contraseña");
                 }
                 else
                 {
-                    lblResult.Text = "⚠ " + result.Message;
+                    lblResult.Text = result.Message;
+                    lblResult.ImageAlign = ContentAlignment.MiddleLeft;
                     lblResult.ForeColor = UIThemeHelper.Danger;
                     UIHelper.WarnMessage(this, result.Message, "Cuenta No Encontrada");
                 }

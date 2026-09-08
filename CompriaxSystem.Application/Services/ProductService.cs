@@ -15,18 +15,32 @@ namespace CompriaxSystem.Application.Services
         IMapper mapper,
         IValidator<ProductCreateDto> validator) : IProductService
     {
+        /// <summary>
+        /// Obtiene todos los productos incluyendo sus categorías y marcas.
+        /// </summary>
+        /// <returns>Colección de DTOs de productos.</returns>
         public async Task<IEnumerable<ProductDto>> GetProductListAsync()
         {
             var products = await unitOfWork.Products.GetAllWithDetailsAsync();
             return mapper.Map<IEnumerable<ProductDto>>(products);
         }
 
+        /// <summary>
+        /// Busca un producto por su código de barras.
+        /// </summary>
+        /// <param name="barcode">Código a buscar.</param>
+        /// <returns>DTO del producto o null.</returns>
         public async Task<ProductDto?> GetByBarcodeAsync(string barcode)
         {
             var product = await unitOfWork.Products.GetByBarcodeAsync(barcode);
             return product == null ? null : mapper.Map<ProductDto>(product);
         }
 
+        /// <summary>
+        /// Registra un nuevo producto e inicia su stock.
+        /// </summary>
+        /// <param name="dto">Datos del nuevo producto.</param>
+        /// <returns>Resultado de la creación con el id generado.</returns>
         public async Task<OperationResult> CreateProductAsync(ProductCreateDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -75,6 +89,12 @@ namespace CompriaxSystem.Application.Services
             }
         }
 
+        /// <summary>
+        /// Actualiza un producto.
+        /// </summary>
+        /// <param name="id">Id del producto.</param>
+        /// <param name="dto">Nuevos datos.</param>
+        /// <returns>Resultado de la actualización.</returns>
         public async Task<OperationResult> UpdateProductAsync(int id, ProductCreateDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -100,6 +120,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Sin cambios detectados.");
         }
 
+        /// <summary>
+        /// Elimina un producto.
+        /// </summary>
+        /// <param name="id">Id del producto.</param>
+        /// <returns>Resultado de la eliminación.</returns>
         public async Task<OperationResult> DeleteProductAsync(int id)
         {
             var product = await unitOfWork.Products.GetByIdAsync(id);

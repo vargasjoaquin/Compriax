@@ -19,8 +19,6 @@
 
         public static readonly Color Success = Color.FromArgb(16, 185, 129);
         public static readonly Color SuccessLight = Color.FromArgb(209, 250, 229);
-        public static readonly Color Warning = Color.FromArgb(245, 158, 11);
-        public static readonly Color WarningLight = Color.FromArgb(254, 243, 199);
         public static readonly Color Danger = Color.FromArgb(239, 68, 68);
         public static readonly Color DangerLight = Color.FromArgb(254, 226, 226);
 
@@ -34,8 +32,8 @@
         public static readonly Font FontDisplayMedium = new("Segoe UI", 18F, FontStyle.Bold);
         public static readonly Font FontHeader = new("Segoe UI", 13F, FontStyle.Bold);
         public static readonly Font FontSubHeader = new("Segoe UI", 11F, FontStyle.Bold);
-        public static readonly Font FontBody = new("Segoe UI", 9.5F, FontStyle.Regular);
         public static readonly Font FontBodyBold = new("Segoe UI", 9.5F, FontStyle.Bold);
+        public static readonly Font FontBody = new("Segoe UI", 9.5F, FontStyle.Regular);
         public static readonly Font FontSmall = new("Segoe UI", 8.5F, FontStyle.Regular);
         public static readonly Font FontMonospace = new("Consolas", 10F, FontStyle.Regular);
 
@@ -56,14 +54,16 @@
         // ==========================================
         // 4. ESTILIZADO DE CONTROLES
         // ==========================================
-        public static void ApplyButtonPrimary(Button btn)
+        public static void ApplyFormStyle(Form form)
         {
-            btn.FlatStyle = FlatStyle.Flat;
-            btn.FlatAppearance.BorderSize = 0;
-            btn.BackColor = Primary;
-            btn.ForeColor = Color.White;
-            btn.Font = FontBodyBold;
-            btn.Cursor = Cursors.Hand;
+            form.BackColor = Background;
+            form.Font = FontBody;
+        }
+
+        public static void ApplyCardStyle(Panel pnl)
+        {
+            pnl.BackColor = Surface;
+            pnl.BorderStyle = BorderStyle.None;
         }
 
         public static void ApplyButtonSuccess(Button btn)
@@ -84,25 +84,6 @@
             btn.ForeColor = Color.White;
             btn.Font = FontBodyBold;
             btn.Cursor = Cursors.Hand;
-        }
-
-        public static void ApplyInputStyle(TextBox txt)
-        {
-            txt.BorderStyle = BorderStyle.FixedSingle;
-            txt.Font = new Font("Segoe UI", 10.5F);
-            txt.BackColor = Surface;
-            txt.ForeColor = TextMain;
-        }
-
-        public static void ApplyCardStyle(Panel pnl)
-        {
-            pnl.BackColor = Surface;
-            pnl.BorderStyle = BorderStyle.None;
-            pnl.Paint += (s, e) =>
-            {
-                using var pen = new Pen(Border, 1);
-                e.Graphics.DrawRectangle(pen, 0, 0, pnl.Width - 1, pnl.Height - 1);
-            };
         }
     }
 }

@@ -7,7 +7,7 @@ namespace CompriaxSystem.Application.DTOs
         public int Id { get; set; }
         public int CashShiftId { get; set; }
         public CashMovementType MovementType { get; set; }
-        public string MovementTypeName => MovementType == CashMovementType.CashIn ? "➕ Ingreso Manual" : "➖ Retiro / Egreso";
+        public string MovementTypeName => MovementType == CashMovementType.CashIn ? "Ingreso Manual" : "Retiro / Egreso";
         public decimal Amount { get; set; }
         public string Description { get; set; } = null!;
         public DateTime CreatedAt { get; set; }

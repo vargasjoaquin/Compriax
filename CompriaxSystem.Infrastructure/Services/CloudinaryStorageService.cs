@@ -17,6 +17,12 @@ namespace CompriaxSystem.Infrastructure.Services
             _cloudinary = new Cloudinary(account);
         }
 
+        /// <summary>
+        /// Sube un archivo al almacenamiento en la nube de Cloudinary y devuelve la URL segura de acceso.
+        /// </summary>
+        /// <param name="fileBytes">Contenido del archivo en bytes.</param>
+        /// <param name="fileName">Nombre del archivo a subir.</param>
+        /// <returns>URL pública del archivo almacenado.</returns>
         public async Task<string> UploadFileAsync(byte[] fileBytes, string fileName)
         {
             using (var stream = new MemoryStream(fileBytes))

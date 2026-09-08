@@ -38,15 +38,15 @@ namespace CompriaxSystem.WinFormsUI
                 _recordingService.Start();
                 _recordingService.FrameCaptured += OnFrameCaptured;
                 _isViewingLive = true;
-                btnActivate.Text = "DESACTIVAR";
+                btnActivate.Text = "DESACTIVAR CÁMARA";
                 btnActivate.BackColor = Color.Firebrick;
             }
             else
             {
                 _recordingService.FrameCaptured -= OnFrameCaptured;
                 _isViewingLive = false;
-                btnActivate.Text = "ACTVAR";
-                btnActivate.BackColor = Color.FromArgb(80, 80, 80);
+                btnActivate.Text = "ACTIVAR CÁMARA";
+                btnActivate.BackColor = Color.FromArgb(2, 132, 199);
             }
         }
 
@@ -86,8 +86,13 @@ namespace CompriaxSystem.WinFormsUI
 
         private void UpdateRecordingStatusUI()
         {
-            lblRecordingStatus.Text = _recordingService.IsAutoRecordingEnabled ? "GRABACIÓN AUTOMÁTICA ACTIVA" : "MODO MANUAL";
-            btnToggleAutoRecording.Text = _recordingService.IsAutoRecordingEnabled ? "DESACTIVAR AUTO" : "ACTIVAR AUTO";
+            bool isAuto = _recordingService.IsAutoRecordingEnabled;
+            lblRecordingStatus.Text = isAuto ? "GRABACIÓN AUTOMÁTICA ACTIVA" : "MODO MANUAL";
+            lblRecordingStatus.ImageAlign = ContentAlignment.MiddleLeft;
+
+            btnToggleAutoRecording.Text = isAuto ? "PAUSAR AUTO" : "ACTIVAR AUTO";
+            btnToggleAutoRecording.ImageAlign = ContentAlignment.MiddleLeft;
+            btnToggleAutoRecording.TextImageRelation = TextImageRelation.ImageBeforeText;
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)

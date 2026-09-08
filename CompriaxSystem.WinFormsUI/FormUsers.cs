@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
 
@@ -8,14 +9,22 @@ namespace CompriaxSystem.WinFormsUI
     {
         private readonly IUserService _userService;
         private readonly IDocumentService _documentService;
+        private readonly IPasswordHasher _passwordHasher;
         private int _selectedUserId = 0;
         private byte[]? _imageBuffer = null;
+        private bool _isPasswordVisible = false;
 
-        public FormUsers(IUserService userService, IDocumentService documentService)
+        public FormUsers(IUserService userService, IDocumentService documentService, IPasswordHasher passwordHasher)
         {
             _userService = userService;
             _documentService = documentService;
+            _passwordHasher = passwordHasher;
             InitializeComponent();
+
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupBoxData);
+
+            this.dgvUsers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvUsers, e);
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
@@ -24,6 +33,7 @@ namespace CompriaxSystem.WinFormsUI
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowsePhoto.Click += (s, e) => HandlePhotoSelection();
             this.btnClearPhoto.Click += (s, e) => HandlePhotoRemoval();
+            this.btnTogglePassword.Click += (s, e) => TogglePasswordVisibility();
         }
 
         public async Task InitializeFormAsync()
@@ -36,6 +46,7 @@ namespace CompriaxSystem.WinFormsUI
 
                 await RefreshGridAsync();
                 UIHelper.AttachManagedSelection(this, dgvUsers, SyncEntityToFields, ResetUI);
+                ResetUI();
             }
         }
 
@@ -44,20 +55,25 @@ namespace CompriaxSystem.WinFormsUI
             var users = await _userService.GetUserListAsync();
             dgvUsers.DataSource = null;
             dgvUsers.DataSource = users.ToList();
-            UIHelper.FormatGrid(dgvUsers);
+            DataGridViewHelper.ApplyStyle(dgvUsers);
         }
 
         private void SyncEntityToFields()
         {
-            if (dgvUsers.CurrentRow == null) return;
+            if (dgvUsers.CurrentRow == null)
+                return;
 
             var u = (UserDto)dgvUsers.CurrentRow.DataBoundItem;
+
             _selectedUserId = u.Id;
             txtUsername.Text = u.Username;
             txtFirstName.Text = u.FirstName;
             txtLastName.Text = u.LastName;
             txtEmail.Text = u.Email;
             cboRole.SelectedValue = u.RoleId;
+
+            if (u is UserCreateDto createDto)
+                txtPassword.Text = createDto.Password;
 
             _imageBuffer = u.Photo;
             ImageHelper.Clear(picPhoto);
@@ -68,7 +84,6 @@ namespace CompriaxSystem.WinFormsUI
 
             bool isAdmin = u.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
                            u.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
-
             btnDelete.Enabled = !isAdmin;
             cboRole.Enabled = !isAdmin;
         }
@@ -78,9 +93,19 @@ namespace CompriaxSystem.WinFormsUI
             _selectedUserId = 0;
             _imageBuffer = null;
             ImageHelper.Clear(picPhoto);
+
             UIHelper.CleanControls(groupBoxData);
-            SetButtonState(isEditing: false);
+
+            cboRole.SelectedIndex = -1;
+            cboRole.Enabled = true;
             txtUsername.ReadOnly = false;
+            txtPassword.Clear();
+
+            _isPasswordVisible = false;
+            txtPassword.PasswordChar = '●';
+
+            SetButtonState(isEditing: false);
+            txtUsername.Focus();
         }
 
         private void SetButtonState(bool isEditing)
@@ -88,6 +113,13 @@ namespace CompriaxSystem.WinFormsUI
             btnSave.Enabled = !isEditing;
             btnEdit.Enabled = isEditing;
             btnDelete.Enabled = isEditing;
+        }
+
+        private void TogglePasswordVisibility()
+        {
+            _isPasswordVisible = !_isPasswordVisible;
+            txtPassword.PasswordChar = _isPasswordVisible ? '\0' : '●';
+            txtPassword.Focus();
         }
 
         private async Task ExecuteSaveAction() => await ProcessAction(0);
@@ -99,54 +131,20 @@ namespace CompriaxSystem.WinFormsUI
                 UIHelper.WarnMessage(this, "Debe seleccionar un usuario de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
+
             await ProcessAction(_selectedUserId);
         }
 
         private async Task ProcessAction(int id)
         {
-            if (string.IsNullOrWhiteSpace(txtUsername.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre de usuario (Login).", "Campo Obligatorio");
-                txtUsername.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtFirstName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre del usuario.", "Campo Obligatorio");
-                txtFirstName.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtLastName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el apellido del usuario.", "Campo Obligatorio");
-                txtLastName.Focus();
-                return;
-            }
-
-            if (cboRole.SelectedValue is not int roleId || roleId <= 0)
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar un rol para el usuario.", "Rol Requerido");
-                cboRole.Focus();
-                return;
-            }
-
-            if (id == 0 && string.IsNullOrWhiteSpace(txtPassword.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar una contraseña para el nuevo usuario.", "Contraseña Requerida");
-                txtPassword.Focus();
-                return;
-            }
-
             var dto = new UserCreateDto
             {
                 Id = id,
                 Username = txtUsername.Text.Trim(),
                 FirstName = txtFirstName.Text.Trim(),
                 LastName = txtLastName.Text.Trim(),
-                Email = string.IsNullOrWhiteSpace(txtEmail.Text) ? string.Empty : txtEmail.Text.Trim(),
-                RoleId = roleId,
+                Email = txtEmail.Text.Trim(),
+                RoleId = (int)(cboRole.SelectedValue),
                 Password = txtPassword.Text,
                 Photo = _imageBuffer,
                 IsActive = true

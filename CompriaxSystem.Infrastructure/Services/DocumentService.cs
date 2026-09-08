@@ -27,6 +27,14 @@ namespace CompriaxSystem.Infrastructure.Services
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
+        /// <summary>
+        /// Genera el ticket de venta en formato PDF diseñado específicamente para impresoras térmicas.
+        /// </summary>
+        /// <param name="sale">Datos de la venta.</param>
+        /// <param name="docNumber">Número de comprobante.</param>
+        /// <param name="cashierName">Nombre del cajero operador.</param>
+        /// <param name="paperSize">Tamaño del papel térmico (58mm o 80mm).</param>
+        /// <returns>Arreglo de bytes del PDF generado.</returns>
         public async Task<byte[]> GenerateThermalTicketReceiptAsync(SaleDto sale, string docNumber, string cashierName, ThermalPaperSize paperSize = ThermalPaperSize.Width80mm)
         {
             var ticketData = await _ticketDataBuilder.BuildSaleTicketDataAsync(sale, docNumber, cashierName, paperSize);
@@ -139,6 +147,11 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera un reporte detallado de inventario en formato A4 con indicadores de stock crítico.
+        /// </summary>
+        /// <param name="products">Colección de productos a incluir.</param>
+        /// <returns>Bytes del reporte PDF de inventario.</returns>
         public async Task<byte[]> GenerateInventoryReportAsync(IEnumerable<ProductDto> products)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
@@ -238,6 +251,11 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera un reporte PDF con el listado completo de clientes.
+        /// </summary>
+        /// <param name="customers">Colección de clientes.</param>
+        /// <returns>Bytes del reporte.</returns>
         public async Task<byte[]> GenerateCustomersReportAsync(IEnumerable<CustomerDto> customers)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
@@ -321,6 +339,11 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera un reporte PDF con el listado completo de proveedores.
+        /// </summary>
+        /// <param name="suppliers">Colección de proveedores.</param>
+        /// <returns>Bytes del reporte.</returns>
         public async Task<byte[]> GenerateSuppliersReportAsync(IEnumerable<SupplierDto> suppliers)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
@@ -404,6 +427,11 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera un reporte PDF con el listado de usuarios del sistema.
+        /// </summary>
+        /// <param name="users">Colección de usuarios.</param>
+        /// <returns>Bytes del reporte.</returns>
         public async Task<byte[]> GenerateUsersReportAsync(IEnumerable<UserDto> users)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
@@ -485,11 +513,16 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
-        public async Task<byte[]> GeneratePurchaseReceiptAsync(
-    PurchaseCreateDto purchase,
-    string supplierName,
-    string supplierCuit,
-    string registeredBy)
+        /// <summary>
+        /// Genera el comprobante de ingreso de mercadería tras una compra a proveedor.
+        /// </summary>
+        /// <param name="purchase">Datos de la compra.</param>
+        /// <param name="supplierName">Nombre del proveedor.</param>
+        /// <param name="supplierCuit">CUIT del proveedor.</param>
+        /// <param name="registeredBy">Usuario que registró la compra.</param>
+        /// <returns>Bytes del comprobante de compra.</returns>
+
+        public async Task<byte[]> GeneratePurchaseReceiptAsync(PurchaseCreateDto purchase, string supplierName, string supplierCuit, string registeredBy)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
             decimal subtotal = purchase.Items?.Sum(x => x.SubTotal) ?? 0;
@@ -639,6 +672,12 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Genera un ticket de resumen para el cierre o arqueo de turno de caja.
+        /// </summary>
+        /// <param name="shift">Información consolidada del turno.</param>
+        /// <param name="isZClose">Indica si se trata de un cierre Z (definitivo).</param>
+        /// <returns>Bytes del ticket de arqueo.</returns>
         public async Task<byte[]> GenerateCashShiftTicketAsync(CashShiftSummaryDto shift, bool isZClose = true)
         {
             var store = await _unitOfWork.Store.GetSettingsAsync();
@@ -722,6 +761,13 @@ namespace CompriaxSystem.Infrastructure.Services
             });
         }
 
+        /// <summary>
+        /// Agrega una fila de totalizado (Subtotal, IVA o Total) a la columna de totales de un reporte PDF.
+        /// </summary>
+        /// <param name="col">Descriptor de la columna en QuestPDF.</param>
+        /// <param name="label">Etiqueta de la fila (ej: "SUBTOTAL").</param>
+        /// <param name="val">Monto decimal a mostrar.</param>
+        /// <param name="isBold">Indica si el texto debe estar en negrita.</param>
         private static void AddTotalRow(ColumnDescriptor col, string label, decimal val, bool isBold = false)
         {
             col.Item().BorderBottom(0.5f).BorderColor(Colors.Grey.Lighten2).Row(r =>

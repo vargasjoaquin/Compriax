@@ -78,7 +78,7 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(535, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "👥 GESTIÓN DE PERSONAL Y EMPLEADOS (RRHH)";
+            lblTitle.Text = "GESTIÓN DE PERSONAL Y EMPLEADOS (RRHH)";
             // 
             // btnExportPdf
             // 
@@ -92,7 +92,7 @@
             btnExportPdf.Name = "btnExportPdf";
             btnExportPdf.Size = new Size(196, 61);
             btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "📄 EXPORTAR PDF";
+            btnExportPdf.Text = "EXPORTAR PDF";
             btnExportPdf.UseVisualStyleBackColor = false;
             // 
             // gbData
@@ -194,7 +194,6 @@
             txtDni.Name = "txtDni";
             txtDni.Size = new Size(140, 30);
             txtDni.TabIndex = 5;
-            txtDni.TextChanged += txtDni_TextChanged;
             // 
             // lblCuil
             // 
@@ -397,7 +396,7 @@
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(193, 82);
             btnSave.TabIndex = 26;
-            btnSave.Text = "💾 GUARDAR";
+            btnSave.Text = "GUARDAR";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // btnEdit

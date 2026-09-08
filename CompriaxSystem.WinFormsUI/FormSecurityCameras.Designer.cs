@@ -60,7 +60,7 @@
             this.lblTitle.Name = "lblTitle";
             this.lblTitle.Size = new System.Drawing.Size(445, 25);
             this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "📹 MONITOREO Y CÁMARAS DE SEGURIDAD (CCTV)";
+            this.lblTitle.Text = "MONITOREO Y CÁMARAS DE SEGURIDAD (CCTV)";
 
             // pnlToolbar
             this.pnlToolbar.BackColor = System.Drawing.Color.White;
@@ -104,7 +104,7 @@
             this.btnActivate.Name = "btnActivate";
             this.btnActivate.Size = new System.Drawing.Size(180, 38);
             this.btnActivate.TabIndex = 2;
-            this.btnActivate.Text = "🔴 ACTIVAR CÁMARA";
+            this.btnActivate.Text = "ACTIVAR CÁMARA";
             this.btnActivate.UseVisualStyleBackColor = false;
 
             // btnCapture
@@ -114,7 +114,7 @@
             this.btnCapture.Name = "btnCapture";
             this.btnCapture.Size = new System.Drawing.Size(170, 38);
             this.btnCapture.TabIndex = 3;
-            this.btnCapture.Text = "📸 CAPTURAR FOTO";
+            this.btnCapture.Text = "CAPTURAR FOTO";
             this.btnCapture.UseVisualStyleBackColor = true;
 
             // lblRecordingStatus

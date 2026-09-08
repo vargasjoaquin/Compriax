@@ -14,6 +14,10 @@ namespace CompriaxSystem.Infrastructure.Services
     {
         private readonly DatabaseBackupSettings _settings = options.Value;
 
+        /// <summary>
+        /// Ejecuta el proceso de respaldo automático de la base de datos SQL Server mediante el comando BACKUP DATABASE.
+        /// </summary>
+        /// <returns>Resultado de la operación indicando si fue exitosa y la ubicación del archivo.</returns>
         public async Task<OperationResult> ExecuteAutomaticBackupAsync()
         {
             if (!_settings.Enabled)
@@ -72,6 +76,12 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Elimina los archivos de respaldo antiguos que excedan el límite de días de retención configurado.
+        /// </summary>
+        /// <param name="folder">Ruta de la carpeta de backups.</param>
+        /// <param name="dbName">Nombre de la base de datos.</param>
+        /// <param name="retentionDays">Cantidad de días a conservar.</param>
         private static void CleanOldBackups(string folder, string dbName, int retentionDays)
         {
             try

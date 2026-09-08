@@ -17,6 +17,9 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
+            this.BackColor = UIThemeHelper.SidebarBackground;
+            UIThemeHelper.ApplyCardStyle(pnlCard);
+
             this.btnLogin.Click += async (s, e) => await ExecuteLoginAction();
             this.linkPass.LinkClicked += (s, e) => OpenPasswordRecovery();
             this.txtPass.KeyDown += async (s, e) => { if (e.KeyCode == Keys.Enter) await ExecuteLoginAction(); };
@@ -89,6 +92,8 @@ namespace CompriaxSystem.WinFormsUI
         private void ShowError(string msg)
         {
             lblErrorMessage.Text = msg;
+            lblErrorMessage.ImageAlign = ContentAlignment.MiddleLeft;
+            lblErrorMessage.ForeColor = UIThemeHelper.Danger;
             lblErrorMessage.Visible = true;
         }
     }

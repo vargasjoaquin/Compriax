@@ -15,18 +15,32 @@ namespace CompriaxSystem.Application.Services
         ICurrentUserService currentUser,
         IValidator<PromotionDto> validator) : IPromotionService
     {
+        /// <summary>
+        /// Obtiene todas las promociones.
+        /// </summary>
+        /// <returns>Una colección de DTOs de promociones.</returns>
         public async Task<IEnumerable<PromotionDto>> GetAllPromotionsAsync()
         {
             var promos = await unitOfWork.Promotions.GetAllAsync();
             return mapper.Map<IEnumerable<PromotionDto>>(promos);
         }
 
+        /// <summary>
+        /// Busca una promoción específica por su id.
+        /// </summary>
+        /// <param name="id">Id de la promoción.</param>
+        /// <returns>Los datos de la promoción o null si no existe.</returns>
         public async Task<PromotionDto?> GetByIdAsync(int id)
         {
             var promo = await unitOfWork.Promotions.GetByIdAsync(id);
             return promo == null ? null : mapper.Map<PromotionDto>(promo);
         }
 
+        /// <summary>
+        /// Crea una nueva promoción o actualiza una existente, registrando el usuario que realiza la acción.
+        /// </summary>
+        /// <param name="dto">Datos de la promoción a persistir.</param>
+        /// <returns>Resultado de la operación de guardado.</returns>
         public async Task<OperationResult> UpsertPromotionAsync(PromotionDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -63,6 +77,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se realizaron cambios en la base de datos.");
         }
 
+        /// <summary>
+        /// Realiza la eliminación de una promoción marcándola como borrada.
+        /// </summary>
+        /// <param name="id">Id de la promoción a eliminar.</param>
+        /// <returns>Resultado del proceso de eliminación.</returns>
         public async Task<OperationResult> DeletePromotionAsync(int id)
         {
             var promotion = await unitOfWork.Promotions.GetByIdAsync(id);
@@ -80,6 +99,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al eliminar la promoción.");
         }
 
+        /// <summary>
+        /// Alterna el estado de activación (Habilitado/Deshabilitado) de una promoción.
+        /// </summary>
+        /// <param name="id">Id de la promoción.</param>
+        /// <returns>Resultado del cambio de estado.</returns>
         public async Task<OperationResult> ToggleStatusAsync(int id)
         {
             var promotion = await unitOfWork.Promotions.GetByIdAsync(id);
@@ -98,6 +122,12 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al actualizar el estado.");
         }
 
+        /// <summary>
+        /// Ejecuta el motor de reglas de promociones para calcular descuentos por NxM, porcentaje por producto, categoría o total general.
+        /// </summary>
+        /// <param name="items">Lista de productos a evaluar.</param>
+        /// <param name="date">Fecha de aplicación para validar vigencia y días de la semana.</param>
+        /// <returns>Un objeto con el desglose de descuentos aplicados y los totales calculados.</returns>
         public async Task<SaleCalculationResultDto> CalculateSaleDiscountsAsync(IEnumerable<SaleItemDto> items, DateTime date)
         {
             var itemList = items.Select(x => new SaleItemDto

@@ -2,7 +2,6 @@
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Enums;
 using CompriaxSystem.WinFormsUI.Helpers;
-using System.Data;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -23,8 +22,12 @@ namespace CompriaxSystem.WinFormsUI
             _promotionService = promotionService;
             _productService = productService;
             _catalogService = catalogService;
-
             InitializeComponent();
+
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbPromo);
+
+            this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.cboType.SelectedIndexChanged += (s, e) => AdjustFieldsByPromotionType();
@@ -35,11 +38,28 @@ namespace CompriaxSystem.WinFormsUI
             this.txtSearch.TextChanged += (s, e) => FilterPromotions();
         }
 
-        private async Task InitializeFormAsync()
+        private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (dgvPromotions.Columns[e.ColumnIndex].Name == "StatusSummary" && e.Value != null)
+            {
+                string status = e.Value.ToString()!;
+                if (status.Contains("Inactiva") || status.Contains("Vencida"))
+                {
+                    e.CellStyle.ForeColor = UIThemeHelper.Danger;
+                    e.CellStyle.SelectionForeColor = UIThemeHelper.Danger;
+                }
+                else
+                {
+                    e.CellStyle.ForeColor = UIThemeHelper.Success;
+                    e.CellStyle.SelectionForeColor = Color.Lime;
+                }
+            }
+        }
+
+        public async Task InitializeFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                // Tipos de Promoción
                 cboType.DataSource = Enum.GetValues(typeof(PromotionType))
                     .Cast<PromotionType>()
                     .Select(t => new { Id = t, Name = GetPromoTypeName(t) })
@@ -47,14 +67,12 @@ namespace CompriaxSystem.WinFormsUI
                 cboType.DisplayMember = "Name";
                 cboType.ValueMember = "Id";
 
-                // Productos
                 var products = (await _productService.GetProductListAsync()).ToList();
                 products.Insert(0, new ProductDto { Id = 0, Name = "[ Ninguno / Aplica a otro ]" });
                 cboProduct.DataSource = products;
                 cboProduct.DisplayMember = "Name";
                 cboProduct.ValueMember = "Id";
 
-                // Categorías
                 var categories = (await _catalogService.GetActiveCategoriesAsync()).ToList();
                 categories.Insert(0, new CategoryDto { Id = 0, Name = "[ Ninguna / Aplica a otro ]" });
                 cboCategory.DataSource = categories;
@@ -80,6 +98,7 @@ namespace CompriaxSystem.WinFormsUI
             var data = await _promotionService.GetAllPromotionsAsync();
             _promotionsList = data.ToList();
             FilterPromotions();
+            DataGridViewHelper.ApplyStyle(dgvPromotions);
         }
 
         private void FilterPromotions()
@@ -103,11 +122,21 @@ namespace CompriaxSystem.WinFormsUI
             if (cboType.SelectedValue is not PromotionType selectedType)
                 return;
 
-            cboProduct.Enabled = selectedType == PromotionType.PercentageOnProduct || selectedType == PromotionType.BuyXPayY;
-            cboCategory.Enabled = selectedType == PromotionType.PercentageOnCategory;
-            numDiscount.Enabled = selectedType != PromotionType.BuyXPayY;
-            numRequired.Enabled = selectedType == PromotionType.BuyXPayY;
-            numPay.Enabled = selectedType == PromotionType.BuyXPayY;
+            bool isProd = selectedType == PromotionType.PercentageOnProduct || selectedType == PromotionType.BuyXPayY;
+            bool isCat = selectedType == PromotionType.PercentageOnCategory;
+            bool isNxM = selectedType == PromotionType.BuyXPayY;
+
+            cboProduct.Enabled = isProd;
+            cboCategory.Enabled = isCat;
+            numDiscount.Enabled = !isNxM;
+            numRequired.Enabled = isNxM;
+            numPay.Enabled = isNxM;
+
+            if (!isProd)
+                cboProduct.SelectedValue = 0;
+            
+            if (!isCat)
+                cboCategory.SelectedValue = 0;
         }
 
         private void SyncEntityToFields()
@@ -116,9 +145,12 @@ namespace CompriaxSystem.WinFormsUI
                 return;
 
             var p = (PromotionDto)dgvPromotions.CurrentRow.DataBoundItem;
-
             _selectedPromoId = p.Id;
             txtName.Text = p.Name;
+
+            if (txtDescription != null) 
+                txtDescription.Text = p.Description;
+
             cboType.SelectedValue = p.PromotionType;
             cboProduct.SelectedValue = p.ProductId.HasValue ? p.ProductId.Value : 0;
             cboCategory.SelectedValue = p.CategoryId.HasValue ? p.CategoryId.Value : 0;
@@ -168,47 +200,26 @@ namespace CompriaxSystem.WinFormsUI
                 UIHelper.WarnMessage(this, "Debe seleccionar una promoción de la lista para poder editarla.", "Selección Requerida");
                 return;
             }
-
             await ProcessAction(_selectedPromoId);
         }
 
         private async Task ProcessAction(int id)
         {
-            if (string.IsNullOrWhiteSpace(txtName.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el nombre descriptivo de la promoción.", "Campo Obligatorio");
-                txtName.Focus();
-                return;
-            }
-
-            var promoType = (PromotionType)cboType.SelectedValue!;
-
-            if (promoType == PromotionType.PercentageOnProduct && (cboProduct.SelectedValue is not int pId || pId <= 0))
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar un producto aplicable para esta promoción.", "Producto Requerido");
-                cboProduct.Focus();
-                return;
-            }
-
-            if (promoType == PromotionType.PercentageOnCategory && (cboCategory.SelectedValue is not int cId || cId <= 0))
-            {
-                UIHelper.WarnMessage(this, "Debe seleccionar una categoría aplicable para esta promoción.", "Categoría Requerida");
-                cboCategory.Focus();
-                return;
-            }
+            var promotionType = (PromotionType)cboType.SelectedValue!;
 
             var dto = new PromotionDto
             {
                 Id = id,
                 Name = txtName.Text.Trim(),
-                PromotionType = promoType,
+                Description = txtDescription?.Text?.Trim(),
+                PromotionType = promotionType,
                 ProductId = cboProduct.SelectedValue is int prodId && prodId > 0 ? prodId : null,
                 CategoryId = cboCategory.SelectedValue is int catId && catId > 0 ? catId : null,
-                DiscountPercentage = promoType != PromotionType.BuyXPayY ? numDiscount.Value : null,
-                RequiredQuantity = promoType == PromotionType.BuyXPayY ? (int)numRequired.Value : null,
-                PayQuantity = promoType == PromotionType.BuyXPayY ? (int)numPay.Value : null,
+                DiscountPercentage = promotionType != PromotionType.BuyXPayY ? numDiscount.Value : null,
+                RequiredQuantity = promotionType == PromotionType.BuyXPayY ? (int)numRequired.Value : null,
+                PayQuantity = promotionType == PromotionType.BuyXPayY ? (int)numPay.Value : null,
                 StartDate = dtpStart.Value.Date,
-                EndDate = dtpEnd.Value.Date.AddHours(23).AddMinutes(59).AddSeconds(59),
+                EndDate = dtpEnd.Value.Date.AddHours(23).AddMinutes(59),
                 IsActive = true
             };
 
@@ -234,10 +245,8 @@ namespace CompriaxSystem.WinFormsUI
             using (new WaitCursorHelper(this))
             {
                 var result = await _promotionService.ToggleStatusAsync(_selectedPromoId);
-                UIHelper.ShowResult(result, "Promociones", async () =>
-                {
+                UIHelper.ShowResult(result, "Estado", async () => {
                     await RefreshGridAsync();
-                    ResetUI();
                 });
             }
         }

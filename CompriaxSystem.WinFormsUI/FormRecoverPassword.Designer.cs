@@ -46,7 +46,7 @@
             lblHeaderIcon.Name = "lblHeaderIcon";
             lblHeaderIcon.Size = new Size(392, 45);
             lblHeaderIcon.TabIndex = 0;
-            lblHeaderIcon.Text = "🔐";
+            lblHeaderIcon.Text = "";
             lblHeaderIcon.TextAlign = ContentAlignment.MiddleCenter;
 
             // lblMainTitle

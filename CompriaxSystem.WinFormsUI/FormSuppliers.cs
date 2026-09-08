@@ -16,12 +16,17 @@ namespace CompriaxSystem.WinFormsUI
             _documentService = documentService;
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(groupBoxData);
+
+            this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
+            this.dgvSuppliers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvSuppliers, e);
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
             this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
             this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
             this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-            //this.btnClose.Click += (s, e) => this.Close();
         }
 
         public async Task InitializeFormAsync()
@@ -57,6 +62,7 @@ namespace CompriaxSystem.WinFormsUI
             txtAddress.Text = dto.Address;
 
             SetButtonState(isEditing: true);
+            txtTaxId.ReadOnly = true;
         }
 
         private async Task ExecuteSaveAction()
@@ -107,6 +113,7 @@ namespace CompriaxSystem.WinFormsUI
             _selectedSupplierId = 0;
             UIHelper.CleanControls(groupBoxData);
             SetButtonState(isEditing: false);
+            txtTaxId.ReadOnly = false;
         }
 
         private void SetButtonState(bool isEditing)

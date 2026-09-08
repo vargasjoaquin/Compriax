@@ -51,9 +51,8 @@
             lblTicketTitle.ForeColor = Color.White;
             lblTicketTitle.Location = new Point(3, 26);
             lblTicketTitle.Name = "lblTicketTitle";
-            lblTicketTitle.Size = new Size(272, 30);
+            lblTicketTitle.Size = new Size(0, 30);
             lblTicketTitle.TabIndex = 0;
-            lblTicketTitle.Text = "\U0001f9fe VISTA PREVIA TICKET";
             // 
             // gbPaperSize
             // 
@@ -61,7 +60,7 @@
             gbPaperSize.Controls.Add(rb58mm);
             gbPaperSize.Font = new Font("Segoe UI", 8.5F);
             gbPaperSize.ForeColor = Color.FromArgb(226, 232, 240);
-            gbPaperSize.Location = new Point(300, 12);
+            gbPaperSize.Location = new Point(231, 12);
             gbPaperSize.Name = "gbPaperSize";
             gbPaperSize.Size = new Size(180, 52);
             gbPaperSize.TabIndex = 1;
@@ -99,11 +98,11 @@
             btnPrint.FlatStyle = FlatStyle.Flat;
             btnPrint.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(499, 16);
+            btnPrint.Location = new Point(430, 16);
             btnPrint.Name = "btnPrint";
             btnPrint.Size = new Size(130, 42);
             btnPrint.TabIndex = 2;
-            btnPrint.Text = "🖨️ IMPRIMIR";
+            btnPrint.Text = "IMPRIMIR";
             btnPrint.UseVisualStyleBackColor = false;
             // 
             // btnWhatsapp
@@ -113,11 +112,11 @@
             btnWhatsapp.FlatStyle = FlatStyle.Flat;
             btnWhatsapp.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             btnWhatsapp.ForeColor = Color.White;
-            btnWhatsapp.Location = new Point(653, 16);
+            btnWhatsapp.Location = new Point(584, 16);
             btnWhatsapp.Name = "btnWhatsapp";
             btnWhatsapp.Size = new Size(140, 42);
             btnWhatsapp.TabIndex = 3;
-            btnWhatsapp.Text = "📱 WHATSAPP";
+            btnWhatsapp.Text = "WHATSAPP";
             btnWhatsapp.UseVisualStyleBackColor = false;
             // 
             // btnSavePdf
@@ -125,11 +124,11 @@
             btnSavePdf.FlatStyle = FlatStyle.Flat;
             btnSavePdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnSavePdf.ForeColor = Color.White;
-            btnSavePdf.Location = new Point(819, 16);
+            btnSavePdf.Location = new Point(750, 16);
             btnSavePdf.Name = "btnSavePdf";
             btnSavePdf.Size = new Size(130, 42);
             btnSavePdf.TabIndex = 4;
-            btnSavePdf.Text = "💾 GUARDAR";
+            btnSavePdf.Text = "GUARDAR";
             btnSavePdf.UseVisualStyleBackColor = true;
             // 
             // pdfViewer

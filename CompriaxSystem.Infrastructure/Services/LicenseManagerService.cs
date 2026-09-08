@@ -53,6 +53,10 @@ namespace CompriaxSystem.Infrastructure.Services
             _fallbackLicensePath = Path.Combine(localFolder, "license.dat");
         }
 
+        /// <summary>
+        /// Valida la existencia y autenticidad de la licencia instalada localmente verificando el Hardware ID y la firma digital.
+        /// </summary>
+        /// <returns>Resultado de la operación indicando si la licencia es válida y autorizada para este equipo.</returns>
         public async Task<OperationResult> ValidateInstalledLicenseAsync()
         {
             string? activePath = null;
@@ -106,6 +110,12 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Realiza la activación en línea del sistema mediante el envío del CUIT y la clave al servidor de licencias.
+        /// </summary>
+        /// <param name="cuit">CUIT del titular.</param>
+        /// <param name="licenseKey">Clave de producto a activar.</param>
+        /// <returns>Resultado del proceso de activación y registro local de la licencia.</returns>
         public async Task<OperationResult> ActivateOnlineAsync(string cuit, string licenseKey)
         {
             try
@@ -154,6 +164,11 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Escribe de forma segura el archivo de licencia encriptado, manejando alternativas de rutas si los permisos de sistema están restringidos.
+        /// </summary>
+        /// <param name="data">Datos encriptados de la licencia.</param>
+        /// <returns>Tarea que representa la escritura del archivo.</returns>
         private async Task SafeWriteLicenseFileAsync(byte[] data)
         {
             try
@@ -175,6 +190,10 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Asegura que la carpeta de almacenamiento de licencias tenga los permisos de escritura necesarios para los usuarios del sistema.
+        /// </summary>
+        /// <param name="folderPath">Ruta de la carpeta a configurar.</param>
         private static void EnsureFolderPermissions(string folderPath)
         {
             try
@@ -201,6 +220,13 @@ namespace CompriaxSystem.Infrastructure.Services
             catch { }
         }
 
+        /// <summary>
+        /// Realiza una revalidación asíncrona con el servidor para actualizar el estado de la licencia local.
+        /// </summary>
+        /// <param name="licenseKey">Clave de licencia.</param>
+        /// <param name="cuit">CUIT del titular.</param>
+        /// <param name="hwid">Identificador único de hardware.</param>
+        /// <returns>Tarea de fondo.</returns>
         private async Task RevalidateWithServerAsync(string licenseKey, string cuit, string hwid)
         {
             try
@@ -226,6 +252,11 @@ namespace CompriaxSystem.Infrastructure.Services
             }
         }
 
+        /// <summary>
+        /// Verifica la integridad y firma RSA de un token de licencia.
+        /// </summary>
+        /// <param name="token">Token firmado en formato Base64.</param>
+        /// <returns>Una tupla indicando si la firma es válida y el payload de la licencia.</returns>
         private (bool IsValid, LicenseTokenPayload? Payload) VerifyTokenSignature(string token)
         {
             try

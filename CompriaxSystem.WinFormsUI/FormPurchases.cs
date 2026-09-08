@@ -23,6 +23,10 @@ namespace CompriaxSystem.WinFormsUI
         private string _lastScannedBarcode = string.Empty;
         private DateTime _lastScanTime = DateTime.MinValue;
 
+        // Banderas de control de concurrencia
+        private bool _isInitializing = false;
+        private bool _isUpdatingInvoiceNumber = false;
+
         public FormPurchases(
             ISupplyChainService supplyService,
             IProductService productService,
@@ -42,8 +46,23 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
+            UIThemeHelper.ApplyFormStyle(this);
+            UIThemeHelper.ApplyCardStyle(gbSaleInfo);
+            UIThemeHelper.ApplyCardStyle(pnlScannerBar);
+            UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+
+            this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
+            this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
+
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnSearchSupplier.Click += async (s, e) => await ExecuteSearchSupplierAction();
+            this.btnSearchProduct.Click += async (s, e) => await ExecuteProductSearchAction();
+            this.btnAddItem.Click += (s, e) => ExecuteAddManualItemAction();
+            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
+            this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
+            this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
+            this.btnToggleCam.Click += (s, e) => ToggleCamera();
+            this.FormClosing += (s, e) => StopCamera();
 
             this.txtProductCode.KeyDown += async (s, e) =>
             {
@@ -55,12 +74,6 @@ namespace CompriaxSystem.WinFormsUI
                 }
             };
 
-            this.btnSearchProduct.Click += async (s, e) => await ExecuteProductSearchAction();
-            this.btnAddItem.Click += (s, e) => ExecuteAddManualItemAction();
-            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
-            this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
-            this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
-
             this.dgvCart.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
@@ -70,36 +83,58 @@ namespace CompriaxSystem.WinFormsUI
                     ExecuteRemoveFromCartAction();
                 }
             };
-
-            this.btnToggleCam.Click += (s, e) => ToggleCamera();
-            this.FormClosing += (s, e) => StopCamera();
         }
 
         public async Task InitializeFormAsync()
         {
+            _isInitializing = true;
+            txtInvoiceNumber.ReadOnly = true;
+
             using (new WaitCursorHelper(this))
             {
-                var docTypes = (await _lookupService.GetDocumentTypesAsync()).ToList();
-                cboDocType.DataSource = docTypes;
+                var docTypes = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
+                var paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
+
                 cboDocType.DisplayMember = "Name";
                 cboDocType.ValueMember = "Id";
+                cboDocType.DataSource = docTypes;
 
-                var paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
-                cboPaymentMethod.DataSource = paymentMethods;
                 cboPaymentMethod.DisplayMember = "Name";
                 cboPaymentMethod.ValueMember = "Id";
+                cboPaymentMethod.DataSource = paymentMethods;
 
                 if (paymentMethods.Any())
                 {
                     cboPaymentMethod.SelectedIndex = 0;
                 }
 
-                UIHelper.FormatGrid(dgvCart);
-                ResetUI();
+                _isInitializing = false;
+
+                await ResetUI();
             }
         }
 
-        private void ResetUI()
+        private async Task UpdateNextInvoiceNumber()
+        {
+            if (_isInitializing || _isUpdatingInvoiceNumber)
+                return;
+
+            _isUpdatingInvoiceNumber = true;
+
+            try
+            {
+                if (cboDocType.SelectedValue is int id && id >= 0)
+                {
+                    txtInvoiceNumber.Text = await _supplyService.GetNextPurchaseNumberAsync(id);
+                }
+            }
+            finally
+            {
+                _isUpdatingInvoiceNumber = false;
+            }
+        }
+
+        private async Task ResetUI()
         {
             _items.Clear();
             _foundProduct = null;
@@ -110,13 +145,14 @@ namespace CompriaxSystem.WinFormsUI
             ClearProductArea();
 
             txtDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            txtTotalPay.Text = "$ 0.00";
+            txtTotalPay.Text = "$ 0,00";
 
-            if (cboDocType.Items.Count > 0)
+            if (cboDocType.Items.Count > 0 && cboDocType.SelectedIndex == -1)
             {
                 cboDocType.SelectedIndex = 0;
             }
 
+            await UpdateNextInvoiceNumber();
             RefreshGrid();
             txtProductCode.Focus();
         }
@@ -134,20 +170,6 @@ namespace CompriaxSystem.WinFormsUI
             {
                 UIHelper.WarnMessage(this, "Debe buscar y seleccionar el proveedor mediante su CUIT.", "Proveedor Requerido");
                 txtSupplierDoc.Focus();
-                return;
-            }
-
-            if (cboDocType.SelectedValue is not int docTypeId || docTypeId <= 0)
-            {
-                UIHelper.WarnMessage(this, "Por favor, seleccione el Tipo de Comprobante de compra.", "Tipo Comprobante Requerido");
-                cboDocType.Focus();
-                return;
-            }
-
-            if (string.IsNullOrWhiteSpace(txtInvoiceNumber.Text))
-            {
-                UIHelper.WarnMessage(this, "Debe ingresar el número de comprobante entregado por el proveedor.", "N° Comprobante Requerido");
-                txtInvoiceNumber.Focus();
                 return;
             }
 
@@ -178,7 +200,7 @@ namespace CompriaxSystem.WinFormsUI
                     var dto = new PurchaseCreateDto
                     {
                         SupplierId = supplierId,
-                        DocumentTypeId = docTypeId,
+                        DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
                         DocumentTypeName = cboDocType.Text,
                         PaymentMethodId = paymentMethodId,
                         PaymentMethodName = paymentMethodName,
@@ -201,7 +223,7 @@ namespace CompriaxSystem.WinFormsUI
                         }
                         catch { }
 
-                        ResetUI();
+                        await ResetUI();
                         UIHelper.ShowResult(result, "Compra Registrada");
                     }
                     else
@@ -223,24 +245,24 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ProcessScannedBarcodeAsync(string barcode)
         {
             if (string.IsNullOrWhiteSpace(barcode))
-            {
-                UIHelper.WarnMessage(this, "El código de barras ingresado no puede estar vacío.", "Código Requerido");
-                txtProductCode.Focus();
                 return;
-            }
 
             var product = await _productService.GetByBarcodeAsync(barcode);
 
             if (product == null)
             {
                 SystemSounds.Asterisk.Play();
-                UIHelper.WarnMessage(this, $"El código '{barcode}' no corresponde a ningún producto en el catálogo.", "Producto No Encontrado");
+                UIHelper.WarnMessage(this, $"El código '{barcode}' no corresponde a ningún producto.", "No Encontrado");
                 txtProductCode.SelectAll();
                 txtProductCode.Focus();
                 return;
             }
 
             SystemSounds.Beep.Play();
+            _foundProduct = product;
+            txtProductName.Text = product.Name;
+            txtPriceBuy.Text = product.BuyPrice.ToString("N2");
+
             AddProductToPurchaseList(product, product.BuyPrice, 1, isIncremental: true);
             ClearProductArea();
         }
@@ -267,7 +289,7 @@ namespace CompriaxSystem.WinFormsUI
 
             if (existing != null)
             {
-                existing.Quantity = isIncremental ? existing.Quantity + quantity : quantity;
+                existing.Quantity = isIncremental ? (existing.Quantity + quantity) : quantity;
                 existing.BuyPrice = buyPrice;
             }
             else
@@ -287,11 +309,7 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ExecuteProductSearchAction()
         {
             if (string.IsNullOrWhiteSpace(txtProductCode.Text))
-            {
-                UIHelper.WarnMessage(this, "Por favor, ingrese o escanee un código de barras para buscar el producto.", "Campo Requerido");
-                txtProductCode.Focus();
                 return;
-            }
 
             using (new WaitCursorHelper(this))
             {
@@ -366,7 +384,7 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            AddProductToPurchaseList(_foundProduct, buyPrice, (int)numQuantity.Value, isIncremental: false);
+            AddProductToPurchaseList(_foundProduct, buyPrice, (int)numQuantity.Value, isIncremental: true);
             ClearProductArea();
         }
 
@@ -402,7 +420,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             dgvCart.DataSource = null;
             dgvCart.DataSource = _items.ToList();
-            UIHelper.FormatGrid(dgvCart);
+            DataGridViewHelper.ApplyStyle(dgvCart);
             txtTotalPay.Text = _items.Sum(x => x.SubTotal).ToString("C2");
         }
 
@@ -422,7 +440,7 @@ namespace CompriaxSystem.WinFormsUI
             {
                 _cameraService.StartStreaming(0, OnFrameCaptured);
                 _isCameraActive = true;
-                btnToggleCam.Text = "🛑 APAGAR CÁMARA";
+                btnToggleCam.Text = "APAGAR CÁMARA";
                 btnToggleCam.BackColor = Color.Firebrick;
             }
             else
@@ -437,14 +455,13 @@ namespace CompriaxSystem.WinFormsUI
             {
                 _cameraService.StopStreaming();
                 _isCameraActive = false;
-
                 if (picWebcam.Image != null)
                 {
                     picWebcam.Image.Dispose();
                     picWebcam.Image = null;
                 }
 
-                btnToggleCam.Text = "📷 ENCENDER CÁMARA";
+                btnToggleCam.Text = "CÁMARA";
                 btnToggleCam.BackColor = Color.Navy;
             }
         }

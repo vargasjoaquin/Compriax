@@ -22,6 +22,8 @@
             gbPromo = new Panel();
             lblName = new Label();
             txtName = new TextBox();
+            lblDescription = new Label();
+            txtDescription = new TextBox();
             lblType = new Label();
             cboType = new ComboBox();
             lblProduct = new Label();
@@ -72,13 +74,15 @@
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(538, 30);
             lblTitle.TabIndex = 0;
-            lblTitle.Text = "🎁 MOTOR DE PROMOCIONES Y BONIFICACIONES";
+            lblTitle.Text = "MOTOR DE PROMOCIONES Y BONIFICACIONES";
             // 
             // gbPromo
             // 
             gbPromo.BackColor = Color.White;
             gbPromo.Controls.Add(lblName);
             gbPromo.Controls.Add(txtName);
+            gbPromo.Controls.Add(lblDescription);
+            gbPromo.Controls.Add(txtDescription);
             gbPromo.Controls.Add(lblType);
             gbPromo.Controls.Add(cboType);
             gbPromo.Controls.Add(lblProduct);
@@ -108,86 +112,105 @@
             // 
             lblName.AutoSize = true;
             lblName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblName.Location = new Point(29, 12);
+            lblName.Location = new Point(16, 12);
             lblName.Name = "lblName";
             lblName.Size = new Size(165, 21);
             lblName.TabIndex = 0;
-            lblName.Text = "Nombre Promocion:";
+            lblName.Text = "Nombre Promoción:";
             // 
             // txtName
             // 
             txtName.BorderStyle = BorderStyle.FixedSingle;
             txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(29, 36);
+            txtName.Location = new Point(16, 37);
             txtName.Name = "txtName";
-            txtName.Size = new Size(300, 30);
+            txtName.Size = new Size(212, 30);
             txtName.TabIndex = 1;
+            // 
+            // lblDescription
+            // 
+            lblDescription.AutoSize = true;
+            lblDescription.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            lblDescription.Location = new Point(245, 12);
+            lblDescription.Name = "lblDescription";
+            lblDescription.Size = new Size(104, 21);
+            lblDescription.TabIndex = 2;
+            lblDescription.Text = "Descripción:";
+            // 
+            // txtDescription
+            // 
+            txtDescription.BorderStyle = BorderStyle.FixedSingle;
+            txtDescription.Font = new Font("Segoe UI", 10F);
+            txtDescription.Location = new Point(245, 37);
+            txtDescription.Name = "txtDescription";
+            txtDescription.Size = new Size(213, 30);
+            txtDescription.TabIndex = 3;
             // 
             // lblType
             // 
             lblType.AutoSize = true;
             lblType.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblType.Location = new Point(385, 12);
+            lblType.Location = new Point(479, 12);
             lblType.Name = "lblType";
-            lblType.Size = new Size(118, 21);
-            lblType.TabIndex = 2;
-            lblType.Text = "Tipo de Regla:";
+            lblType.Size = new Size(159, 21);
+            lblType.TabIndex = 4;
+            lblType.Text = "Tipo de Promoción:";
             // 
             // cboType
             // 
             cboType.DropDownStyle = ComboBoxStyle.DropDownList;
             cboType.Font = new Font("Segoe UI", 10F);
-            cboType.Location = new Point(385, 36);
+            cboType.Location = new Point(479, 36);
             cboType.Name = "cboType";
-            cboType.Size = new Size(297, 31);
-            cboType.TabIndex = 3;
+            cboType.Size = new Size(216, 31);
+            cboType.TabIndex = 5;
             // 
             // lblProduct
             // 
             lblProduct.AutoSize = true;
             lblProduct.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblProduct.Location = new Point(29, 88);
+            lblProduct.Location = new Point(16, 88);
             lblProduct.Name = "lblProduct";
             lblProduct.Size = new Size(160, 21);
-            lblProduct.TabIndex = 4;
+            lblProduct.TabIndex = 6;
             lblProduct.Text = "Producto Aplicable:";
             // 
             // cboProduct
             // 
             cboProduct.DropDownStyle = ComboBoxStyle.DropDownList;
             cboProduct.Font = new Font("Segoe UI", 10F);
-            cboProduct.Location = new Point(29, 112);
+            cboProduct.Location = new Point(16, 112);
             cboProduct.Name = "cboProduct";
-            cboProduct.Size = new Size(300, 31);
-            cboProduct.TabIndex = 5;
+            cboProduct.Size = new Size(330, 31);
+            cboProduct.TabIndex = 7;
             // 
             // lblCategory
             // 
             lblCategory.AutoSize = true;
             lblCategory.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCategory.Location = new Point(385, 88);
+            lblCategory.Location = new Point(365, 88);
             lblCategory.Name = "lblCategory";
             lblCategory.Size = new Size(164, 21);
-            lblCategory.TabIndex = 6;
+            lblCategory.TabIndex = 8;
             lblCategory.Text = "Categoría Aplicable:";
             // 
             // cboCategory
             // 
             cboCategory.DropDownStyle = ComboBoxStyle.DropDownList;
             cboCategory.Font = new Font("Segoe UI", 10F);
-            cboCategory.Location = new Point(385, 112);
+            cboCategory.Location = new Point(365, 112);
             cboCategory.Name = "cboCategory";
-            cboCategory.Size = new Size(297, 31);
-            cboCategory.TabIndex = 7;
+            cboCategory.Size = new Size(330, 31);
+            cboCategory.TabIndex = 9;
             // 
             // lblDiscount
             // 
             lblDiscount.AutoSize = true;
             lblDiscount.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDiscount.Location = new Point(13, 161);
+            lblDiscount.Location = new Point(16, 161);
             lblDiscount.Name = "lblDiscount";
             lblDiscount.Size = new Size(113, 21);
-            lblDiscount.TabIndex = 8;
+            lblDiscount.TabIndex = 10;
             lblDiscount.Text = "% Descuento:";
             // 
             // numDiscount
@@ -197,85 +220,85 @@
             numDiscount.Location = new Point(16, 185);
             numDiscount.Name = "numDiscount";
             numDiscount.Size = new Size(110, 30);
-            numDiscount.TabIndex = 9;
+            numDiscount.TabIndex = 11;
             // 
             // lblNxM
             // 
             lblNxM.AutoSize = true;
             lblNxM.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblNxM.Location = new Point(158, 161);
+            lblNxM.Location = new Point(145, 161);
             lblNxM.Name = "lblNxM";
             lblNxM.Size = new Size(83, 21);
-            lblNxM.TabIndex = 10;
+            lblNxM.TabIndex = 12;
             lblNxM.Text = "Lleva (N):";
             // 
             // numRequired
             // 
             numRequired.Font = new Font("Segoe UI", 10F);
-            numRequired.Location = new Point(158, 185);
+            numRequired.Location = new Point(145, 185);
             numRequired.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numRequired.Name = "numRequired";
             numRequired.Size = new Size(85, 30);
-            numRequired.TabIndex = 11;
+            numRequired.TabIndex = 13;
             numRequired.Value = new decimal(new int[] { 2, 0, 0, 0 });
             // 
             // lblPay
             // 
             lblPay.AutoSize = true;
             lblPay.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblPay.Location = new Point(279, 161);
+            lblPay.Location = new Point(245, 161);
             lblPay.Name = "lblPay";
             lblPay.Size = new Size(83, 21);
-            lblPay.TabIndex = 12;
+            lblPay.TabIndex = 14;
             lblPay.Text = "Paga (M):";
             // 
             // numPay
             // 
             numPay.Font = new Font("Segoe UI", 10F);
-            numPay.Location = new Point(279, 185);
+            numPay.Location = new Point(245, 185);
             numPay.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numPay.Name = "numPay";
             numPay.Size = new Size(85, 30);
-            numPay.TabIndex = 13;
+            numPay.TabIndex = 15;
             numPay.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // lblStart
             // 
             lblStart.AutoSize = true;
             lblStart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblStart.Location = new Point(402, 161);
+            lblStart.Location = new Point(350, 161);
             lblStart.Name = "lblStart";
             lblStart.Size = new Size(61, 21);
-            lblStart.TabIndex = 14;
+            lblStart.TabIndex = 16;
             lblStart.Text = "Desde:";
             // 
             // dtpStart
             // 
             dtpStart.Font = new Font("Segoe UI", 10F);
             dtpStart.Format = DateTimePickerFormat.Short;
-            dtpStart.Location = new Point(402, 185);
+            dtpStart.Location = new Point(350, 185);
             dtpStart.Name = "dtpStart";
             dtpStart.Size = new Size(130, 30);
-            dtpStart.TabIndex = 15;
+            dtpStart.TabIndex = 17;
             // 
             // lblEnd
             // 
             lblEnd.AutoSize = true;
             lblEnd.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEnd.Location = new Point(555, 161);
+            lblEnd.Location = new Point(500, 161);
             lblEnd.Name = "lblEnd";
             lblEnd.Size = new Size(57, 21);
-            lblEnd.TabIndex = 16;
+            lblEnd.TabIndex = 18;
             lblEnd.Text = "Hasta:";
             // 
             // dtpEnd
             // 
             dtpEnd.Font = new Font("Segoe UI", 10F);
             dtpEnd.Format = DateTimePickerFormat.Short;
-            dtpEnd.Location = new Point(555, 185);
+            dtpEnd.Location = new Point(500, 185);
             dtpEnd.Name = "dtpEnd";
             dtpEnd.Size = new Size(135, 30);
-            dtpEnd.TabIndex = 17;
+            dtpEnd.TabIndex = 19;
             // 
             // btnSave
             // 
@@ -287,8 +310,8 @@
             btnSave.Location = new Point(711, 12);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(240, 94);
-            btnSave.TabIndex = 18;
-            btnSave.Text = "💾 GUARDAR PROMOCION";
+            btnSave.TabIndex = 20;
+            btnSave.Text = "GUARDAR PROMOCION";
             btnSave.UseVisualStyleBackColor = false;
             // 
             // btnEdit
@@ -298,7 +321,7 @@
             btnEdit.Location = new Point(957, 12);
             btnEdit.Name = "btnEdit";
             btnEdit.Size = new Size(243, 94);
-            btnEdit.TabIndex = 19;
+            btnEdit.TabIndex = 21;
             btnEdit.Text = "EDITAR PROMOCION";
             btnEdit.UseVisualStyleBackColor = true;
             // 
@@ -312,7 +335,7 @@
             btnToggle.Location = new Point(711, 112);
             btnToggle.Name = "btnToggle";
             btnToggle.Size = new Size(240, 103);
-            btnToggle.TabIndex = 20;
+            btnToggle.TabIndex = 22;
             btnToggle.Text = "ACTIVAR / PAUSAR PROMOCION";
             btnToggle.UseVisualStyleBackColor = false;
             // 
@@ -326,7 +349,7 @@
             btnDelete.Location = new Point(957, 112);
             btnDelete.Name = "btnDelete";
             btnDelete.Size = new Size(243, 103);
-            btnDelete.TabIndex = 21;
+            btnDelete.TabIndex = 23;
             btnDelete.Text = "ELIMINAR PROMOCION";
             btnDelete.UseVisualStyleBackColor = false;
             // 
@@ -393,6 +416,8 @@
         private System.Windows.Forms.Panel gbPromo;
         private System.Windows.Forms.Label lblName;
         private System.Windows.Forms.TextBox txtName;
+        private System.Windows.Forms.Label lblDescription;
+        private System.Windows.Forms.TextBox txtDescription;
         private System.Windows.Forms.Label lblType;
         private System.Windows.Forms.ComboBox cboType;
         private System.Windows.Forms.Label lblProduct;
