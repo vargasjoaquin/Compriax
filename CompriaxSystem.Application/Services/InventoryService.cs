@@ -8,6 +8,13 @@ namespace CompriaxSystem.Application.Services
 {
     public class InventoryService(IUnitOfWork unitOfWork, ICurrentUserService currentUser) : IInventoryService
     {
+        /// <summary>
+        /// Ajusta el stock de un producto y registra el movimiento de inventario dentro de una transacción.
+        /// </summary>
+        /// <param name="productId">ID del producto a ajustar.</param>
+        /// <param name="amount">Cantidad a sumar o restar.</param>
+        /// <param name="reason">Motivo o comentario del ajuste.</param>
+        /// <returns>Resultado del ajuste de stock.</returns>
         public async Task<OperationResult> AdjustStockAsync(int productId, int amount, string reason)
         {
             var product = await unitOfWork.Products.GetByIdAsync(productId);

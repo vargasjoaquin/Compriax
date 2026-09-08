@@ -13,6 +13,13 @@ namespace CompriaxSystem.Application.Services
         IEmailService emailService,
         IMapper mapper) : IAuthService
     {
+
+        /// <summary>
+        /// Autentica a un usuario en el sistema verificando sus credenciales y estado de cuenta.
+        /// </summary>
+        /// <param name="username">Nombre de usuario ingresado.</param>
+        /// <param name="password">Contraseña en texto plano.</param>
+        /// <returns>Un objeto OperationResult con los datos de la sesión o el mensaje de error.</returns>
         public async Task<OperationResult> LoginAsync(string username, string password)
         {
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
@@ -70,6 +77,11 @@ namespace CompriaxSystem.Application.Services
             return OperationResult.Ok($"¡Bienvenido/a, {user.FirstName}!");
         }
 
+        /// <summary>
+        /// Inicia el proceso de recuperación de cuenta, genera una clave temporal y la envía por correo.
+        /// </summary>
+        /// <param name="identity">Nombre de usuario o correo electrónico registrado.</param>
+        /// <returns>Resultado de la operación indicando el éxito del envío o generación.</returns>
         public async Task<OperationResult> SendPasswordResetAsync(string identity)
         {
             if (string.IsNullOrWhiteSpace(identity))
@@ -127,6 +139,9 @@ namespace CompriaxSystem.Application.Services
             return OperationResult.Ok($"¡Contraseña temporal generada con éxito! Se ha enviado a tu correo registrado: {maskedEmail}. Inicia sesión con la clave recibida y cámbiala desde 'Mi Perfil'.");
         }
 
+        /// <summary>
+        /// Finaliza la sesión del usuario actual limpiando el contexto operativo.
+        /// </summary>
         public void Logout()
         {
             currentUserService.CurrentUser = null;

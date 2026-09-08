@@ -9,6 +9,11 @@ namespace CompriaxSystem.Application.Services
         IUnitOfWork unitOfWork,
         ICurrentUserService currentUserService) : IRestoreService
     {
+        /// <summary>
+        /// Obtiene una lista unificada de elementos eliminados lógicamente según el tipo de entidad solicitado.
+        /// </summary>
+        /// <param name="entityType">Nombre de la entidad (ej: PRODUCTOS, CLIENTES).</param>
+        /// <returns>Colección de ítems listos para ser restaurados.</returns>
         public async Task<IEnumerable<DeletedItemDto>> GetDeletedEntitiesAsync(string entityType)
         {
             return entityType.ToUpperInvariant() switch
@@ -89,6 +94,12 @@ namespace CompriaxSystem.Application.Services
             };
         }
 
+        /// <summary>
+        /// Restablece un registro previamente eliminado a su estado activo original.
+        /// </summary>
+        /// <param name="entityType">Tipo de entidad.</param>
+        /// <param name="id">ID único del registro.</param>
+        /// <returns>Resultado de la restauración.</returns>
         public async Task<OperationResult> RestoreEntityAsync(string entityType, int id)
         {
             string currentUsername = currentUserService.CurrentUser!.Username;

@@ -5,6 +5,12 @@ namespace CompriaxSystem.Application.Services
 {
     public class WhatsappService : IWhatsappService
     {
+        /// <summary>
+        /// Abre la API de WhatsApp con un mensaje predefinido que contiene el link de descarga del comprobante.
+        /// </summary>
+        /// <param name="phoneNumber">Teléfono del cliente.</param>
+        /// <param name="customerName">Nombre del cliente.</param>
+        /// <param name="downloadUrl">URL de descarga del PDF.</param>
         public async Task SendInvoiceLinkAsync(string phoneNumber, string customerName, string downloadUrl)
         {
             if (string.IsNullOrWhiteSpace(phoneNumber))

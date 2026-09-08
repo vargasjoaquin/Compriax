@@ -17,12 +17,21 @@ namespace CompriaxSystem.Application.Services
         IValidator<SupplierDto> supplierValidator,
         IValidator<PurchaseCreateDto> purchaseValidator) : ISupplyChainService
     {
+        /// <summary>
+        /// Obtiene todos los proveedores.
+        /// </summary>
+        /// <returns>Colección de DTOs de proveedores.</returns>
         public async Task<IEnumerable<SupplierDto>> GetSuppliersAsync()
         {
             var suppliers = await unitOfWork.Suppliers.GetAllAsync();
             return mapper.Map<IEnumerable<SupplierDto>>(suppliers);
         }
 
+        /// <summary>
+        /// Crea un nuevo proveedor o actualiza los datos de uno existente, validando la unicidad del CUIT.
+        /// </summary>
+        /// <param name="dto">Datos del proveedor.</param>
+        /// <returns>Resultado de la persistencia de datos.</returns>
         public async Task<OperationResult> UpsertSupplierAsync(SupplierDto dto)
         {
             var validation = await supplierValidator.ValidateAsync(dto);
@@ -61,6 +70,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se realizaron cambios en la base de datos.");
         }
 
+        /// <summary>
+        /// Realiza la eliminacion de un proveedor.
+        /// </summary>
+        /// <param name="id">Id del proveedor.</param>
+        /// <returns>Resultado de la eliminación.</returns>
         public async Task<OperationResult> DeleteSupplierAsync(int id)
         {
             var supplier = await unitOfWork.Suppliers.GetByIdAsync(id);
@@ -82,6 +96,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al procesar la eliminación.");
         }
 
+        /// <summary>
+        /// Registra una compra de mercadería, actualiza los precios de costo y aumenta el stock de los productos.
+        /// </summary>
+        /// <param name="dto">Datos de la compra y sus ítems.</param>
+        /// <returns>Resultado de la transacción de compra e ingreso de stock.</returns>
         public async Task<OperationResult> ProcessPurchaseAsync(PurchaseCreateDto dto)
         {
             var validation = await purchaseValidator.ValidateAsync(dto);
@@ -158,6 +177,11 @@ namespace CompriaxSystem.Application.Services
             }
         }
 
+        /// <summary>
+        /// Genera el próximo número de comprobante de compra basándose en el prefijo correspondiente al tipo de documento.
+        /// </summary>
+        /// <param name="documentTypeId">Id del tipo de documento fiscal.</param>
+        /// <returns>Una cadena con el formato de prefijo y número correlativo.</returns>
         public async Task<string> GetNextPurchaseNumberAsync(int documentTypeId)
         {
             var lastNumber = await unitOfWork.Purchases.GetLastDocumentNumberAsync(documentTypeId);

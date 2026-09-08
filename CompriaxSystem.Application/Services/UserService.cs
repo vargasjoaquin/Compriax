@@ -16,17 +16,30 @@ namespace CompriaxSystem.Application.Services
         IValidator<UserCreateDto> userValidator,
         IValidator<UserProfileUpdateDto> profileValidator) : IUserService
     {
+        /// <summary>
+        /// Obtiene todos los usuariosa.
+        /// </summary>
+        /// <returns>Colección de DTOs de usuarios.</returns>
         public async Task<IEnumerable<UserDto>> GetUserListAsync()
         {
             var users = await unitOfWork.Users.GetAllAsync();
             return mapper.Map<IEnumerable<UserDto>>(users);
         }
 
+        /// <summary>
+        /// Recupera los roles de usuario disponibles para asignar permisos.
+        /// </summary>
+        /// <returns>Colección de roles.</returns>
         public async Task<IEnumerable<Role>> GetRolesAsync()
         {
             return await unitOfWork.Roles.GetAllAsync();
         }
 
+        /// <summary>
+        /// Crea o actualiza un usuario, gestionando el hasheo de contraseñas y protegiendo el rol de Administrador principal.
+        /// </summary>
+        /// <param name="dto">Datos del usuario.</param>
+        /// <returns>Resultado del proceso de guardado.</returns>
         public async Task<OperationResult> UpsertUserAsync(UserCreateDto dto)
         {
             var validation = await userValidator.ValidateAsync(dto);
@@ -102,6 +115,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se detectaron cambios para guardar.");
         }
 
+        /// <summary>
+        /// Realiza la eliminación de un usuario, impidiendo borrar cuentas de administradores protegidos.
+        /// </summary>
+        /// <param name="id">Id del usuario.</param>
+        /// <returns>Resultado de la eliminación.</returns>
         public async Task<OperationResult> DeleteUserAsync(int id)
         {
             var user = await unitOfWork.Users.GetByIdAsync(id);
@@ -124,6 +142,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error en el proceso de eliminación.");
         }
 
+        /// <summary>
+        /// Permite a un usuario actualizar sus datos personales y cambiar su contraseña previa verificación de la actual.
+        /// </summary>
+        /// <param name="dto">Datos del perfil a actualizar.</param>
+        /// <returns>Resultado de la actualización.</returns>
         public async Task<OperationResult> UpdateProfileAsync(UserProfileUpdateDto dto)
         {
             var validation = await profileValidator.ValidateAsync(dto);
@@ -164,6 +187,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se realizaron cambios.");
         }
 
+        /// <summary>
+        /// Alterna el estado de activación de una cuenta de usuario (Habilitar/Deshabilitar).
+        /// </summary>
+        /// <param name="id">Id del usuario.</param>
+        /// <returns>Resultado del cambio de estado.</returns>
         public async Task<OperationResult> ToggleUserStatusAsync(int id)
         {
             var user = await unitOfWork.Users.GetByIdAsync(id);

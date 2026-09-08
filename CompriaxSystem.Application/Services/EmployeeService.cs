@@ -5,7 +5,6 @@ using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Entities;
 using FluentValidation;
-using static System.Runtime.CompilerServices.RuntimeHelpers;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -14,18 +13,32 @@ namespace CompriaxSystem.Application.Services
         IMapper mapper,
         IValidator<EmployeeDto> validator) : IEmployeeService
     {
+        /// <summary>
+        /// Obtiene todos los empleados.
+        /// </summary>
+        /// <returns>Colección de DTOs de empleados.</returns>
         public async Task<IEnumerable<EmployeeDto>> GetEmployeesAsync()
         {
             var employees = await unitOfWork.Employees.GetAllAsync();
             return mapper.Map<IEnumerable<EmployeeDto>>(employees);
         }
 
+        /// <summary>
+        /// Obtiene un empleado por su id.
+        /// </summary>
+        /// <param name="id">Id del empleado.</param>
+        /// <returns>Datos del empleado o null.</returns>
         public async Task<EmployeeDto?> GetByIdAsync(int id)
         {
             var employee = await unitOfWork.Employees.GetByIdAsync(id);
             return employee == null ? null : mapper.Map<EmployeeDto>(employee);
         }
 
+        /// <summary>
+        /// Crea o actualiza un empleado validando legajo y DNI.
+        /// </summary>
+        /// <param name="dto">DTO con los datos del empleado.</param>
+        /// <returns>Resultado de la operación de persistencia.</returns>
         public async Task<OperationResult> UpsertEmployeeAsync(EmployeeDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -83,6 +96,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("No se detectaron cambios en la base de datos.");
         }
 
+        /// <summary>
+        /// Desactiva y elimina a un empleado.
+        /// </summary>
+        /// <param name="id">Id del empleado.</param>
+        /// <returns>Resultado de la baja.</returns>
         public async Task<OperationResult> DeleteEmployeeAsync(int id)
         {
             var employee = await unitOfWork.Employees.GetByIdAsync(id);

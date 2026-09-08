@@ -11,6 +11,14 @@ namespace CompriaxSystem.Application.Services
         IBarcodeService barcodeService,
         IAfipService afipService) : ITicketDataBuilder
     {
+        /// <summary>
+        /// Construye el modelo de datos completo para un ticket físico, consolidando datos del comercio, cliente, impuestos y códigos QR/Barras.
+        /// </summary>
+        /// <param name="sale">Datos de la venta procesada.</param>
+        /// <param name="documentNumber">Número de comprobante generado.</param>
+        /// <param name="cashierName">Nombre del operador de caja.</param>
+        /// <param name="paperSize">Tamaño de papel para la configuración de estilos.</param>
+        /// <returns>Un objeto TicketDataDto listo para ser renderizado en PDF o impresión térmica.</returns>
         public async Task<TicketDataDto> BuildSaleTicketDataAsync(
             SaleDto sale,
             string documentNumber,

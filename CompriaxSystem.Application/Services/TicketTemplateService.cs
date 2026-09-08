@@ -14,6 +14,11 @@ namespace CompriaxSystem.Application.Services
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
+        /// <summary>
+        /// Genera un documento PDF optimizado para impresoras térmicas basado en una plantilla.
+        /// </summary>
+        /// <param name="data">Datos del ticket a renderizar.</param>
+        /// <returns>Arreglo de bytes del PDF listo para impresión.</returns>
         public byte[] RenderThermalTicketPdf(TicketDataDto data)
         {
             float widthMm = data.PaperSize == ThermalPaperSize.Width58mm ? 58f : 80f;

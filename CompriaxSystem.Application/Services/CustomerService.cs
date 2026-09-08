@@ -19,6 +19,11 @@ namespace CompriaxSystem.Application.Services
             return mapper.Map<IEnumerable<CustomerDto>>(customers);
         }
 
+        /// <summary>
+        /// Registra un nuevo cliente o actualiza un cliente.
+        /// </summary>
+        /// <param name="dto">Datos del cliente.</param>
+        /// <returns>Resultado de la operación de guardado.</returns>
         public async Task<OperationResult> RegisterCustomerAsync(CustomerDto dto)
         {
             var validation = await validator.ValidateAsync(dto);
@@ -65,6 +70,11 @@ namespace CompriaxSystem.Application.Services
             }
         }
 
+        /// <summary>
+        /// Realiza la eliminación de un cliente.
+        /// </summary>
+        /// <param name="id">ID del cliente a eliminar.</param>
+        /// <returns>Resultado del proceso.</returns>
         public async Task<OperationResult> DeleteCustomerAsync(int id)
         {
             var customer = await unitOfWork.Customers.GetByIdAsync(id);

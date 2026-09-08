@@ -11,6 +11,11 @@ namespace CompriaxSystem.Application.Services
         IUnitOfWork unitOfWork,
         ICurrentUserService currentUser) : ICashShiftService
     {
+
+        /// <summary>
+        /// Recupera el turno activo correspondiente a la caja configurada en el contexto actual.
+        /// </summary>
+        /// <returns>Datos del turno abierto o null.</returns>
         public async Task<CashShiftDto?> GetCurrentActiveShiftAsync()
         {
             int registerId = currentUser.OperationalContext!.CashRegisterId;
@@ -22,6 +27,11 @@ namespace CompriaxSystem.Application.Services
             return await BuildShiftDtoAsync(shift);
         }
 
+        /// <summary>
+        /// Registra la apertura de un turno de caja validando que no exista ya un turno abierto en la terminal.
+        /// </summary>
+        /// <param name="dto">Datos de apertura y saldo inicial.</param>
+        /// <returns>Resultado del proceso de apertura.</returns>
         public async Task<OperationResult> OpenShiftAsync(CashShiftOpenDto dto)
         {
             if (dto.InitialCash < 0)
@@ -55,6 +65,11 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al registrar la apertura de caja.");
         }
 
+        /// <summary>
+        /// Registra un ingreso o egreso manual de efectivo en el turno de caja vigente.
+        /// </summary>
+        /// <param name="dto">Datos del movimiento de efectivo.</param>
+        /// <returns>Resultado del registro del movimiento.</returns>
         public async Task<OperationResult> RegisterMovementAsync(CashMovementCreateDto dto)
         {
             if (dto.Amount <= 0)
@@ -90,6 +105,10 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al registrar el movimiento.");
         }
 
+        /// <summary>
+        /// Calcula y consolida los totales de ventas y movimientos del turno activo para el arqueo.
+        /// </summary>
+        /// <returns>Un resumen detallado con el estado financiero actual de la caja.</returns>
         public async Task<CashShiftSummaryDto> GetCurrentShiftSummaryAsync()
         {
             int registerId = currentUser.OperationalContext?.CashRegisterId ?? 1;
@@ -128,6 +147,11 @@ namespace CompriaxSystem.Application.Services
             };
         }
 
+        /// <summary>
+        /// Cierra el turno de caja, calcula diferencias entre saldo esperado y real, y persiste el balance final.
+        /// </summary>
+        /// <param name="dto">Datos de cierre y efectivo contado.</param>
+        /// <returns>Resultado del cierre del turno.</returns>
         public async Task<OperationResult> CloseShiftAsync(CashShiftCloseDto dto)
         {
             if (dto.RealCash < 0)
@@ -183,6 +207,13 @@ namespace CompriaxSystem.Application.Services
                 : OperationResult.Failure("Error al persistir el cierre de caja.");
         }
 
+        /// <summary>
+        /// Obtiene el historial de turnos de caja cerrados entre dos fechas.
+        /// </summary>
+        /// <param name="start">Fecha de inicio.</param>
+        /// <param name="end">Fecha de fin.</param>
+        /// <returns>Colección de turnos históricos.</returns>
+        public async Task<IEnumerable<CashShiftDto>>
         public async Task<IEnumerable<CashShiftDto>> GetShiftHistoryAsync(DateTime start, DateTime end)
         {
             var shifts = await unitOfWork.CashShifts.GetHistoryAsync(start, end);
@@ -194,6 +225,10 @@ namespace CompriaxSystem.Application.Services
             return result;
         }
 
+        /// <summary>
+        /// Lista todos los movimientos de caja realizados en el turno actualmente abierto.
+        /// </summary>
+        /// <returns>Colección de movimientos (ingresos/egresos).</returns>
         public async Task<IEnumerable<CashMovementDto>> GetCurrentShiftMovementsAsync()
         {
             int registerId = currentUser.OperationalContext!.CashRegisterId;

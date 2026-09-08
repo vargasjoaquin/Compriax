@@ -1,12 +1,11 @@
 ﻿using AutoMapper;
-using FluentValidation;
 using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
-using CompriaxSystem.Domain.Common;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
+using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -17,6 +16,12 @@ namespace CompriaxSystem.Application.Services
         IValidator<SaleDto> saleValidator,
         IAfipService afipService) : ISaleService
     {
+
+        /// <summary>
+        /// Procesa una venta completa: valida stock, autoriza ante AFIP, impacta inventario y registra la transacción en el turno de caja.
+        /// </summary>
+        /// <param name="saleDto">Datos de la venta a realizar.</param>
+        /// <returns>Resultado de la operación con el número de comprobante y estado fiscal.</returns>
         public async Task<OperationResult> ProcessSaleAsync(SaleDto saleDto)
         {
             var validation = await saleValidator.ValidateAsync(saleDto);
@@ -146,6 +151,12 @@ namespace CompriaxSystem.Application.Services
             }
         }
 
+        /// <summary>
+        /// Verifica la disponibilidad física de un producto en el inventario antes de permitir su venta.
+        /// </summary>
+        /// <param name="productId">Id del producto.</param>
+        /// <param name="requestedQuantity">Cantidad que se desea vender.</param>
+        /// <returns>Resultado indicando si hay stock suficiente o si el producto está inactivo.</returns>
         public async Task<OperationResult> ValidateStockAsync(int productId, int requestedQuantity)
         {
             var product = await unitOfWork.Products.GetByIdAsync(productId);
