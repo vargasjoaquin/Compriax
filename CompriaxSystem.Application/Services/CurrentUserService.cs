@@ -9,6 +9,16 @@ namespace CompriaxSystem.Application.Services
         public OperationalContextDto? OperationalContext { get; set; }
 
         /// <summary>
+        /// Indica si hay un usuario con sesión activa.
+        /// </summary>
+        public bool IsAuthenticated => CurrentUser != null;
+
+        /// <summary>
+        /// Indica si el usuario ya ha seleccionado una caja para operar.
+        /// </summary>
+        public bool HasRegisterAssigned => OperationalContext != null && OperationalContext.CashRegisterId > 0;
+
+        /// <summary>
         /// Establece la caja registradora en la que el usuario operará durante la sesión.
         /// </summary>
         /// <param name="registerId">ID de la caja.</param>

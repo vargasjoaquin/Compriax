@@ -213,7 +213,6 @@ namespace CompriaxSystem.Application.Services
         /// <param name="start">Fecha de inicio.</param>
         /// <param name="end">Fecha de fin.</param>
         /// <returns>Colección de turnos históricos.</returns>
-        public async Task<IEnumerable<CashShiftDto>>
         public async Task<IEnumerable<CashShiftDto>> GetShiftHistoryAsync(DateTime start, DateTime end)
         {
             var shifts = await unitOfWork.CashShifts.GetHistoryAsync(start, end);
