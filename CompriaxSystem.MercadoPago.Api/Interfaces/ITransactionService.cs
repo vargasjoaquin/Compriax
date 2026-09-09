@@ -9,7 +9,7 @@ namespace CompriaxSystem.MercadoPago.Api.Interfaces
         Task<MercadoPagoTransaction> InitializeTransactionAsync(int saleId, decimal amount, string idempotencyKey);
 
         // Obtiene una transacción por su clave de idempotencia.
-        Task<MercadoPagoTransaction> GetByIpempotencyKeyAsync(string idempotencyKey);
+        Task<MercadoPagoTransaction?> GetByIpempotencyKeyAsync(string idempotencyKey);
 
         // Actualiza el estado tras recibir una notifiación o realizar una consulta.
         Task UpdateTransactionStatusAsync(string orderId, MercadoPagoPaymentStatus status, string? externalPaymentId = null);
