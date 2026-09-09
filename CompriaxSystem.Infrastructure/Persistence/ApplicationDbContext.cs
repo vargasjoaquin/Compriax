@@ -52,6 +52,10 @@ namespace CompriaxSystem.Infrastructure.Persistence
         public DbSet<Position> Positions => Set<Position>();
         public DbSet<DocumentType> DocumentTypes => Set<DocumentType>();
 
+        // 7. Transacciones de pagos mediante Mercado Pago (QR)
+        public DbSet<MercadoPagoTransaction> MercadoPagoTransactions => Set<MercadoPagoTransaction>();
+        public DbSet<MercadoPagoPaymentStatues> MercadoPagoPaymentStatuses => Set<MercadoPagoPaymentStatues>();
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -526,7 +530,38 @@ namespace CompriaxSystem.Infrastructure.Persistence
             });
 
             // =========================================================================
-            // 9. FILTROS GLOBALES DE BORRADO LÓGICO (Soft Delete)
+            // 9. TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
+            // =========================================================================
+
+            modelBuilder.Entity<MercadoPagoPaymentStatues>(entity =>
+            {
+                entity.ToTable("MercadoPagoPaymentStatuses");
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Name).IsRequired().HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<MercadoPagoTransaction>(entity =>
+            {
+                entity.ToTable("MercadoPagoTransactions");
+                entity.HasKey(t => t.Id);
+
+                entity.Property(t => t.Amount).HasPrecision(18, 2);
+                entity.Property(t => t.IdempotencyKey).IsRequired().HasMaxLength(100);
+                entity.HasIndex(t => t.IdempotencyKey).IsUnique();
+
+                entity.HasOne(t => t.Sale)
+                      .WithMany()
+                      .HasForeignKey(t => t.SaleId)
+                      .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(t => t.Status)
+                      .WithMany()
+                      .HasForeignKey(t => t.StatusId)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            // =========================================================================
+            // 10. FILTROS GLOBALES DE BORRADO LÓGICO (Soft Delete)
             // =========================================================================
             foreach (var entityType in modelBuilder.Model.GetEntityTypes())
             {
