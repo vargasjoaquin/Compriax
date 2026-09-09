@@ -3,9 +3,9 @@ using CompriaxSystem.MercadoPago.Api.Interfaces;
 using CompriaxSystem.MercadoPago.Api.Requests;
 using CompriaxSystem.MercadoPago.Api.Responses;
 using MercadoPago.Config;
-using MercadoPago.Client.Qr;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Text.Json;
 
 namespace CompriaxSystem.MercadoPago.Api.Services
@@ -24,30 +24,57 @@ namespace CompriaxSystem.MercadoPago.Api.Services
         }
         public async Task<PaymentResponse> CreateOrderAsync(CreatePaymentRequest request, string idempotencyKey)
         {
-            var qrClient = new QrClient();
+            var httpClient = _httpClientFactory.CreateClient();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.AccessToken);
 
-            var requestOptions = new MercadoPago.Http.RequestOptions
+            httpClient.DefaultRequestHeaders.Add("X-Idempotency-Key", idempotencyKey);
+
+            // Payload oficial requerido por la Instore Orders API
+            var payload = new
             {
-                CustomHeaders = new Dictionary<string, string> { { "X-Idempotency-Key", idempotencyKey } }
+                external_reference = request.SaleId.ToString(),
+                title = request.Description,
+                description = request.Description,
+                total_amount = request.Amount,
+                items = new[]
+                {
+                    new
+                    {
+                        title = request.Description,
+                        unit_price = request.Amount,
+                        quantity = 1,
+                        unit_measure = "unit",
+                        total_amount = request.Amount
+                    }
+                }
             };
 
-            var orderRequest = new QrRequest
-            {
-                ExternalReference = request.SaleId.ToString(),
-                Title = request.Description,
-                TotalAmount = request.Amount,
-                ExternalId = $"COMPRIAX_{request.SaleId}"
-            };
+            var jsonPayload = JsonSerializer.Serialize(payload);
+            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
 
-            var order = await qrClient.CreateAsync(orderRequest, requestOptions);
+            // URL oficial para la creación de órdenes QR
+            string url = $"https://api.mercadopago.com/instore/orders/qr/seller/collectors/{_settings.CollectorId}/pos/{_settings.PosId}/qrs";
+
+            var response = await httpClient.PostAsync(url, content);
+            var responseBody = await response.Content.ReadAsStringAsync();
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception($"Error de Mercado Pago ({response.StatusCode}): {responseBody}");
+            }
+
+            using var jsonDocument = JsonDocument.Parse(responseBody);
+
+            string qrData = jsonDocument.RootElement.GetProperty("qr_data").GetString() ?? string.Empty;
+            string inStoreOrderId = jsonDocument.RootElement.GetProperty("in_store_order_id").GetString() ?? idempotencyKey;
 
             return new PaymentResponse
             {
                 TransactionId = 0,
-                OrderId = order.ExternalId ?? idempotencyKey,
-                QrData = order.QrData,
+                OrderId = inStoreOrderId,
+                QrData = qrData,
                 Status = "Pending",
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow
             };
         }
         public async Task<string> GetOrderStatusAsync(string orderId)
