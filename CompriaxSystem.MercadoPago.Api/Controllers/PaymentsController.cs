@@ -1,8 +1,11 @@
 ﻿using CompriaxSystem.Domain.Enums;
+using CompriaxSystem.MercadoPago.Api.Configuration;
 using CompriaxSystem.MercadoPago.Api.Interfaces;
 using CompriaxSystem.MercadoPago.Api.Requests;
 using CompriaxSystem.MercadoPago.Api.Responses;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using System.Net.Http.Headers;
 
 namespace CompriaxSystem.MercadoPago.Api.Controllers
 {
@@ -12,12 +15,17 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
     {
         private readonly IMercadoPagoService _mercadoPagoService;
         private readonly ITransactionService _transactionService;
+        private readonly IHttpClientFactory _httpClientFactory;
+        private readonly MercadoPagoSettings _settings;
         private readonly ILogger<PaymentsController> _logger;
 
-        public PaymentsController(IMercadoPagoService mercadoPagoService, ITransactionService transactionService, ILogger<PaymentsController> logger)
+        public PaymentsController(IMercadoPagoService mercadoPagoService, ITransactionService transactionService, ILogger<PaymentsController> logger, IHttpClientFactory httpClientFactory,
+        IOptions<MercadoPagoSettings> options)
         {
             _mercadoPagoService = mercadoPagoService;
             _transactionService = transactionService;
+            _httpClientFactory = httpClientFactory;
+            _settings = options.Value;
             _logger = logger;
         }
 
@@ -69,7 +77,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Fallo al crear el pago para el id de la venta: {request.SaleId}");
-                return BadRequest(new { message = "Ha ocurrido un error al procesar la solicitud con el proveedor de pagos." });
+                return BadRequest(new { message = $"Ha ocurrido un error al procesar la solicitud con el proveedor de pagos: {ex.Message}." });
             }
         }
 
@@ -118,7 +126,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
             catch (Exception ex)
             {
                 _logger.LogError(ex, $"Error al consultar estado de la orden {orderId}");
-                return BadRequest(new { message = "Error de comunicación al consultar el estado." });
+                return BadRequest(new { message = $"Error de comunicación al consultar el estado: {ex.Message}" });
             }
         }
 
@@ -145,7 +153,27 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
             {
                 _logger.LogError(ex, $"Ha ocurrido un error al cancelar la orden {orderId}");
 
-                return BadRequest(new { message = "Error interno al intentar cancelar la orden."});
+                return BadRequest(new { message = $"Error interno al intentar cancelar la orden: {ex.Message}"});
+            }
+        }
+        
+        [HttpGet("pos-list")]
+        public async Task<IActionResult> GetPosList()
+        {
+            try
+            {
+                var _httpClient = _httpClientFactory.CreateClient();
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.AccessToken);
+
+                var response = await _httpClient.GetAsync("https://api.mercadopago.com/pos");
+                var content = await response.Content.ReadAsStringAsync();
+
+                return Content(content, "application/json");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error al consultar la lista de cajas en Mercado Pago.");
+                return BadRequest(new { message = $"Error al consultar las cajas en Mercado Pago: {ex.Message}"});
             }
         }
     }
