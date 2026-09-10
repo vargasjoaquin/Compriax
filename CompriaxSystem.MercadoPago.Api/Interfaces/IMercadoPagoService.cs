@@ -9,7 +9,7 @@ namespace CompriaxSystem.MercadoPago.Api.Interfaces
         Task<PaymentResponse> CreateOrderAsync(CreatePaymentRequest request, string idempotencyKey);
 
         // Consulta el estado actual de la orden en Mercado Pago.
-        Task<string> GetOrderStatusAsync(string orderId);
+        Task<string> GetOrderStatusAsync(string identifier);
 
         // Cancela una orden perdiente.
         Task<bool> CancelOrderAsync(string orderId);

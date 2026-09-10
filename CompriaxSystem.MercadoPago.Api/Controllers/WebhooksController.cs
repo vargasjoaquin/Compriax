@@ -54,7 +54,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
                 var internalStatus = MapMercadoPagoStatusToInternal(realStatus);
 
                 // 8. Actualizamos el estado de la transacción en nuestra base de datos.
-                await _transactionService.UpdateTransactionStatusAsync(orderId, internalStatus);
+                await _transactionService.UpdateTransactionStatusAsync(identifier: orderId, status: internalStatus);
 
                 _logger.LogInformation($"Orden {orderId} actualizada al estado: {internalStatus}");
 

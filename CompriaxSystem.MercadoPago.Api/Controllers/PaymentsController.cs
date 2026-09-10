@@ -48,7 +48,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
                     {
                         TransactionId = existingTransaction.Id,
                         OrderId = existingTransaction.OrderId ?? string.Empty,
-                        QrData = "PREVIAMENTE_GENERADO",
+                        QrData = existingTransaction.ExternalPaymentId ?? "PREVIAMENTE_GENERADO",
                         Status = existingTransaction.Status.Name,
                         CreatedAt = existingTransaction.CreatedAt
                     });
@@ -62,7 +62,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
                 response.TransactionId = transaction.Id;
 
                 // 5. Actualizamos la transaccion con el id real que nos dio Mercado Pago.
-                await _transactionService.UpdateTransactionStatusAsync(response.OrderId, MercadoPagoPaymentStatus.Pending);
+                await _transactionService.UpdateTransactionStatusAsync(identifier: idempotencyKey, orderId: response.OrderId, externalReference: request.SaleId.ToString());
 
                 return Ok(response);
             }
