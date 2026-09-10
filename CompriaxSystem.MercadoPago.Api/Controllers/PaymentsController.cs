@@ -39,7 +39,7 @@ namespace CompriaxSystem.MercadoPago.Api.Controllers
                     return BadRequest(new { message = "La venta especifica ya cuenta con un pago aprobado en Mercado Pado" });
 
                 // 2. Ya existe esta misma peticion exacta?
-                var existingTransaction = await _transactionService.GetByIpempotencyKeyAsync(idempotencyKey);
+                var existingTransaction = await _transactionService.GetByIdempotencyKeyAsync(idempotencyKey);
 
                 if (existingTransaction != null)
                 {
