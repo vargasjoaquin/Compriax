@@ -1,3 +1,5 @@
+using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Application.Services;
 using CompriaxSystem.Infrastructure.Persistence;
 using CompriaxSystem.MercadoPago.Api.Configuration;
 using CompriaxSystem.MercadoPago.Api.Interfaces;
@@ -22,6 +24,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // Add services to the container.
 builder.Services.AddScoped<IMercadoPagoService, MercadoPagoService>();
 builder.Services.AddScoped<ITransactionService, TransactionService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -42,5 +45,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
 
 app.Run();
