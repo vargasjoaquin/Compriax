@@ -3,6 +3,7 @@ using CompriaxSystem.MercadoPago.Api.Interfaces;
 using CompriaxSystem.MercadoPago.Api.Requests;
 using CompriaxSystem.MercadoPago.Api.Responses;
 using Microsoft.Extensions.Options;
+using System.Globalization;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
@@ -20,156 +21,261 @@ namespace CompriaxSystem.MercadoPago.Api.Services
             _httpClientFactory = httpClientFactory;
         }
 
-        public async Task<PaymentResponse> CreateOrderAsync(CreatePaymentRequest request, string idempotencyKey)
+        public async Task<PaymentResponse> CreateOrderAsync(CreatePaymentRequest paymentRequest, string idempotencyKey)
         {
-            // 1. Crear un HttpClient para realizar la comunicación con la API de Mercado Pago.
+            // 1. Crear el cliente HTTP que se utilizará para comunicarnos con la API de Mercado Pago.
             var httpClient = _httpClientFactory.CreateClient();
 
-            // 2. Configurar el Access Token que permitirá autenticar las solicitudes contra Mercado Pago.
+            // 2. Configurar el Access Token para autenticar las solicitudes realizadas contra Mercado Pago.
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.AccessToken);
 
-            // 3. Agregar la clave de idempotencia para evitar la creación de operaciones duplicadas.
+            // 3. Agregar la clave de idempotencia para evitar la creación de órdenes duplicadas.
             httpClient.DefaultRequestHeaders.Add("X-Idempotency-Key", idempotencyKey);
 
-            // 4. Construir el cuerpo de la solicitud con la información necesaria para crear la orden/preferencia de pago.
-            var payload = new
+            // 4. Obtener el identificador externo del punto de venta configurado para la integración con Mercado Pago.
+            string pointOfSaleId = _settings.PointOfSaleId;
+
+            // 5. Verificar que el punto de venta exista y que tenga configurado correctamente su id externo.
+            await EnsurePointOfSaleHasIdAsync(httpClient, pointOfSaleId);
+
+            // 6. Formatear el monto utilizando dos decimales y la cultura invariante para garantizar el formato numérico esperado por la API.
+            string formattedAmount = paymentRequest.Amount.ToString("F2", CultureInfo.InvariantCulture);
+
+            // 7. Construir la solicitud de creación de la orden QR con los datos requeridos por Mercado Pago.
+            var orderRequest = new
             {
-                external_reference = request.SaleId.ToString(),
-                items = new[]
+                type = "qr",
+                external_reference = idempotencyKey,
+                total_amount = formattedAmount,
+                description = paymentRequest.Description,
+                config = new
                 {
-                    new
+                    qr = new
                     {
-                        id = request.SaleId.ToString(),
-                        title = request.Description,
-                        description = request.Description,
-                        unit_price = request.Amount,
-                        quantity = 1,
-                        currency_id = "ARS"
+                        mode = "dynamic",
+                        external_pos_id = pointOfSaleId
                     }
+                },
+                transactions = new
+                {
+                    payments = new[]
+                    {
+                new
+                {
+                    amount = formattedAmount
+                }
+            }
                 }
             };
 
-            // 5. Convertir el objeto de la solicitud a formato JSON.
-            var jsonPayload = JsonSerializer.Serialize(payload);
+            // 8. Convertir la solicitud de la orden a formato JSON.
+            var serializedOrderRequest = JsonSerializer.Serialize(orderRequest);
 
-            // 6. Crear el contenido HTTP indicando que la información será enviada utilizando el formato JSON.
-            var content = new StringContent(jsonPayload, Encoding.UTF8, "application/json");
+            // 9. Crear el contenido HTTP utilizando JSON
+            // y codificación UTF-8.
+            var orderRequestContent = new StringContent(serializedOrderRequest, Encoding.UTF8, "application/json");
 
-            // 7. Definir la URL del endpoint de Mercado Pago utilizado para crear la preferencia de pago.
-            string mercadoPagoPreferenceUrl = "https://api.mercadopago.com/checkout/preferences";
+            // 10. Definir la URL del endpoint de Orders API utilizado para crear la orden de Mercado Pago.
+            string ordersApiUrl =
+                "https://api.mercadopago.com/v1/orders";
 
-            // 8. Enviar la solicitud POST a Mercado Pago.
-            var response = await httpClient.PostAsync(mercadoPagoPreferenceUrl, content);
+            // 11. Enviar la solicitud POST para crear la orden de pago mediante QR.
+            var createOrderResponse =  await httpClient.PostAsync(ordersApiUrl, orderRequestContent);
 
-            // 9. Leer el contenido de la respuesta para poder procesar la información devuelta por Mercado Pago.
-            var responseBody = await response.Content.ReadAsStringAsync();
+            // 12. Leer el contenido de la respuesta devuelta por Mercado Pago.
+            var responseContent = await createOrderResponse.Content.ReadAsStringAsync();
 
-            // 10. Si Mercado Pago devuelve un código HTTP de error, detenemos el proceso y notificamos el problema.
-            if (!response.IsSuccessStatusCode)
+            // 13. Verificar si Mercado Pago respondió correctamente. si ocurrió un error, lanzamos una excepción con
+            // la información devuelta por la API.
+            if (!createOrderResponse.IsSuccessStatusCode)
             {
-                throw new Exception($"Error de Mercado Pago ({response.StatusCode}): {responseBody}");
+                throw new Exception($"Error de Mercado Pago ({createOrderResponse.StatusCode}): {responseContent}");
             }
 
-            // 11. Parsear la respuesta JSON recibida desde Mercado Pago.
-            using var jsonDocument = JsonDocument.Parse(responseBody);
+            // 14. Parsear la respuesta JSON recibida.
+            using var responseDocument = JsonDocument.Parse(responseContent);
 
-            // 12. Obtener el identificador de la preferencia creada. Si no existe, utilizamos la clave de idempotencia como respaldo.
-            string preferenceId = jsonDocument.RootElement.GetProperty("id").GetString() ?? idempotencyKey;
+            // 15. Obtener el identificador de la orden creada. Si Mercado Pago no devuelve un ID, utilizamos
+            // la clave de idempotencia como respaldo.
+            string orderId = responseDocument.RootElement.GetProperty("id").GetString() ?? idempotencyKey;
 
-            // 13. Determinar qué propiedad contiene la URL de inicio, dependiendo de si estamos trabajando con el entorno de prueba // o con el entorno productivo.
-            string pointProperty = _settings.AccessToken.StartsWith("TEST-", StringComparison.OrdinalIgnoreCase) ? "sandbox_init_point" : "init_point";
+            // 16. Inicializar el contenido del QR. Se completará si Mercado Pago devuelve
+            // la propiedad correspondiente.
+            string qrData = string.Empty;
 
-            // 14. Obtener la URL que permitirá iniciar el proceso de pago.
-            string initPoint = jsonDocument.RootElement.GetProperty(pointProperty).GetString() ?? string.Empty;
+            // 17. Intentar obtener los datos del QR desde la respuesta de Mercado Pago.
+            if (responseDocument.RootElement.TryGetProperty("type_response", out var typeResponseProperty) && typeResponseProperty.TryGetProperty("qr_data", out var qrDataProperty))
+            {
+                // 18. Guardar la información del QR queposteriormente podrá utilizar la aplicación.
+                qrData = qrDataProperty.GetString() ?? string.Empty;
+            }
 
-            // 15. Construir la respuesta que será utilizada por el sistema.
+            // 19. Construir la respuesta que será devuelta a las capas superiores del sistema.
             return new PaymentResponse
             {
                 TransactionId = 0,
-                OrderId = preferenceId,
-                QrData = initPoint,
+                OrderId = orderId,
+                QrData = qrData,
                 Status = "Pending",
                 CreatedAt = DateTime.UtcNow
             };
         }
 
-        public async Task<string> GetOrderStatusAsync(string identifier)
+
+        public async Task<string> GetOrderStatusAsync(string orderId)
         {
-            // 1. Validar que se haya recibido un identificador válido.
-            if (string.IsNullOrWhiteSpace(identifier))
+            // 1. Validar que se haya recibido un identificador de orden válido.
+            if (string.IsNullOrWhiteSpace(orderId))
                 return "unknown";
 
             try
             {
-                // 2. Crear el cliente HTTP para comunicarnos con la API de Mercado Pago.
+                // 2. Crear el cliente HTTP para consultar el estado de la orden en Mercado Pago.
                 var httpClient = _httpClientFactory.CreateClient();
 
-                // 3. Configurar el Access Token para autenticar las solicitudes contra Mercado Pago.
+                // 3. Configurar el Access Token para autenticar la consulta contra Mercado Pago.
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.AccessToken);
 
-                // 4. Intentamos determinar si el identificador recibido corresponde directamente a un ID numérico de pago de Mercado Pago.
-                if (long.TryParse(identifier, out _))
+                // 4. Consultar directamente la orden utilizando su identificador en la Orders API.
+                var orderResponse = await httpClient.GetAsync($"https://api.mercadopago.com/v1/orders/{orderId}");
+
+                // 5. Verificar si Mercado Pago respondió correctamente.
+                if (orderResponse.IsSuccessStatusCode)
                 {
-                    // 5. Consultar directamente el pago utilizando su id.
-                    var paymentResponse = await httpClient.GetAsync($"https://api.mercadopago.com/v1/payments/{identifier}");
+                    // 6. Leer el contenido JSON de la respuesta.
+                    var responseContent = await orderResponse.Content.ReadAsStringAsync();
 
-                    // 6. Si Mercado Pago responde correctamente, procesamos la información del pago.
-                    if (paymentResponse.IsSuccessStatusCode)
+                    // 7. Parsear la respuesta JSON.
+                    using var responseDocument =  JsonDocument.Parse(responseContent);
+
+                    // 8. Buscar la propiedad que contiene el estado actual de la orden.
+                    if (responseDocument.RootElement.TryGetProperty("status",  out var statusProperty))
                     {
-                        // 7. Leer el contenido JSON de la respuesta.
-                        var paymentContent = await paymentResponse.Content.ReadAsStringAsync();
+                        // 9. Obtener el estado.
+                        string orderStatus = statusProperty.GetString()?.ToLowerInvariant() ?? "created";
 
-                        // 8. Parsear la respuesta JSON.
-                        using var paymentDocument = JsonDocument.Parse(paymentContent);
-
-                        // 9. Buscar el estado actual del pago.
-                        if (paymentDocument.RootElement.TryGetProperty("status", out var statusElement))
+                        // 10. Convertir los estados de Mercado Pago a los estados utilizados por el sistema.
+                        switch (orderStatus)
                         {
-                            // 10. Devolver el estado informado por Mercado Pago.
-                            return statusElement.GetString() ?? "unknown";
+                            // 11. Estados que indican que el pago fue procesado o aprobado correctamente.
+                            case "processed":
+                            case "paid":
+                            case "approved":
+                                return "approved";
+
+                            // 12. Estados que indican que la orden fue cancelada.
+                            case "canceled":
+                            case "cancelled":
+                                return "cancelled";
+
+                            // 13. Estado que indica que la orden ya no puede utilizarse porque expiró.
+                            case "expired":
+                                return "expired";
+
+                            // 14. Una orden recién creada todavía se considera pendiente.
+                            case "created":
+                                return "pending";
+
+                            // 15. Si recibimos un estado que no está
+                            // contemplado específicamente, devolvemos
+                            // el estado original.
+                            default:
+                                return orderStatus;
                         }
                     }
                 }
 
-                // 11. Si el identificador no corresponde a un ID de pago o no se pudo encontrar directamente, buscamos mediante la referencia externa asociada al pago.
-                var searchResponse = await httpClient.GetAsync($"https://api.mercadopago.com/v1/payments/search?external_reference={identifier}");
-
-                // 12. Verificar si Mercado Pago respondió correctamente a la búsqueda por referencia externa.
-                if (searchResponse.IsSuccessStatusCode)
-                {
-                    // 13. Leer el contenido JSON de la búsqueda.
-                    var searchContent = await searchResponse.Content.ReadAsStringAsync();
-
-                    // 14. Parsear la respuesta JSON.
-                    using var jsonDocument = JsonDocument.Parse(searchContent);
-
-                    // 15. Verificar que la respuesta contenga resultados y que exista al menos un pago encontrado.
-                    if (jsonDocument.RootElement.TryGetProperty("results", out var results) && results.GetArrayLength() > 0)
-                    {
-                        // 16. Obtener el primer pago encontrado.
-                        var firstResult = results[0];
-
-                        // 17. Buscar el estado del pago dentro del resultado.
-                        if (firstResult.TryGetProperty("status", out var statusElement))
-                        {
-                            // 18. Devolver el estado informado por Mercado Pago.
-                            return statusElement.GetString() ?? "unknown";
-                        }
-                    }
-                }
-                // 19. Si no encontramos información sobre el pago, // lo consideramos pendiente.
+                // 16. Si no fue posible obtener el estado de la orden, la consideramos pendiente.
                 return "pending";
             }
             catch
             {
-                // 20. Si ocurre un error durante la comunicación // con Mercado Pago, devolvemos "error" para que // la capa superior pueda manejarlo.
+                // 17. Si ocurre un error durante la comunicación con Mercado Pago, devolvemos "error" para que
+                // la capa superior pueda manejarlo.
                 return "error";
             }
         }
 
+
         public async Task<bool> CancelOrderAsync(string orderId)
         {
-            return await Task.FromResult(true);
+            // 1. Validar que se haya recibido un identificador de orden válido.
+            if (string.IsNullOrWhiteSpace(orderId))
+                return false;
+
+            try
+            {
+                // 2. Crear el cliente HTTP para realizar la solicitud de cancelación.
+                var httpClient = _httpClientFactory.CreateClient();
+
+                // 3. Configurar el Access Token para autenticar la solicitud contra Mercado Pago.
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _settings.AccessToken);
+
+                // 4. Enviar la solicitud de cancelación utilizando el identificador de la orden.
+                var cancelOrderResponse = await httpClient.PostAsync($"https://api.mercadopago.com/v1/orders/{orderId}/cancel", null);
+
+                // 5. Devolver true si Mercado Pago confirmó correctamente la cancelación de la orden.
+                return cancelOrderResponse.IsSuccessStatusCode;
+            }
+            catch
+            {
+                // 6. Si ocurre un error durante la comunicación con Mercado Pago, informamos que la cancelación falló.
+                return false;
+            }
+        }
+
+
+        private async Task EnsurePointOfSaleHasIdAsync(HttpClient httpClient, string externalPointOfSaleId)
+        {
+            try
+            {
+                // 1. Consultar los puntos de venta configurados actualmente en Mercado Pago.
+                var pointOfSaleResponse = await httpClient.GetAsync("https://api.mercadopago.com/pos");
+
+                // 2. Continuar solamente si Mercado Pago respondió correctamente.
+                if (pointOfSaleResponse.IsSuccessStatusCode)
+                {
+                    // 3. Leer el contenido de la respuesta.
+                    var responseContent =  await pointOfSaleResponse.Content.ReadAsStringAsync();
+
+                    // 4. Parsear la respuesta JSON.
+                    using var responseDocument = JsonDocument.Parse(responseContent);
+
+                    // 5. Verificar que existan puntos de venta y que la respuesta contenga al menos uno.
+                    if (responseDocument.RootElement.TryGetProperty("results", out var pointOfSaleResults) && pointOfSaleResults.GetArrayLength() > 0)
+                    {
+                        // 6. Obtener el primer punto de venta encontrado en Mercado Pago.
+                        var pointOfSale = pointOfSaleResults[0];
+
+                        // 7. Obtener el identificador interno del punto de venta proporcionado por Mercado Pago.
+                        long pointOfSaleId = pointOfSale.GetProperty("id").GetInt64();
+
+                        // 8. Verificar si el punto de venta ya tiene configurado el identificador externo esperado.
+                        bool hasMatchingExternalId = pointOfSale.TryGetProperty("external_id", out var externalIdProperty) && externalIdProperty.GetString() ==  externalPointOfSaleId;
+
+                        // 9. Si el identificador externo no coincide, preparamos una solicitud para actualizarlo.
+                        if (!hasMatchingExternalId)
+                        {
+                            var updateRequest = new
+                            {
+                                external_id = externalPointOfSaleId
+                            };
+
+                            // 10. Convertir la solicitud de actualización a formato JSON.
+                            var updateRequestContent = new StringContent(JsonSerializer.Serialize(updateRequest), Encoding.UTF8, "application/json");
+
+                            // 11. Actualizar el punto de venta en Mercado Pago utilizando su id interno.
+                            await httpClient.PutAsync($"https://api.mercadopago.com/pos/{pointOfSaleId}", updateRequestContent);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // 12. Si ocurre un error durante la validación o actualización
+                // del punto de venta, lo ignoramos para permitir que el flujo
+                // de creación de la orden continúe.
+            }
         }
     }
 }
