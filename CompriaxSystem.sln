@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.SetupActivat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.WinFormsUI", "CompriaxSystem.WinFormsUI\CompriaxSystem.WinFormsUI.csproj", "{B0884ADD-061A-4325-AA28-BADA8E7A92B6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompriaxSystem.MercadoPago.Api", "CompriaxSystem.MercadoPago.Api\CompriaxSystem.MercadoPago.Api.csproj", "{A7E1842D-0DAC-4943-9BCC-6C9C96188BF6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B0884ADD-061A-4325-AA28-BADA8E7A92B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0884ADD-061A-4325-AA28-BADA8E7A92B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0884ADD-061A-4325-AA28-BADA8E7A92B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A7E1842D-0DAC-4943-9BCC-6C9C96188BF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A7E1842D-0DAC-4943-9BCC-6C9C96188BF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A7E1842D-0DAC-4943-9BCC-6C9C96188BF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A7E1842D-0DAC-4943-9BCC-6C9C96188BF6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
