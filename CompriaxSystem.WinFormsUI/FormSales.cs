@@ -1,9 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using CompriaxSystem.Application.DTOs;
+﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System.Media;
+using System.Text.Json;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -334,6 +335,7 @@ namespace CompriaxSystem.WinFormsUI
             txtProductCode.Focus();
         }
 
+
         private async Task ExecuteCheckoutAsync()
         {
             if (!_cart.Any())
@@ -343,60 +345,167 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using var payDialog = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
-            if (payDialog.ShowDialog(this) != DialogResult.OK)
+            using var paymentDialog = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
+
+            if (paymentDialog.ShowDialog(this) != DialogResult.OK)
             {
                 txtProductCode.Focus();
                 return;
             }
 
+            string customerName = _selectedCustomer != null
+                                    ? $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}".Trim()
+                                    : "Consumidor Final";
+
+            string customerDocument = _selectedCustomer?.DocumentNumber;
+
+            var saleDto = new SaleDto
+            {
+                DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
+                DocumentTypeName = cboDocType.Text,
+                PaymentMethodId = paymentDialog.SelectedPaymentMethodId,
+                PaymentMethodName = paymentDialog.SelectedPaymentMethodName,
+                CustomerId = _selectedCustomer?.Id,
+                CustomerDoc = customerDocument,
+                CustomerName = customerName,
+                CashierName = _currentUser.CurrentUser!.FullName,
+                SubTotal = _currentCalculation.SubTotal,
+                DiscountAmount = _currentCalculation.TotalDiscount,
+                TotalAmount = _currentCalculation.FinalTotal,
+                PaymentReceived = paymentDialog.AmountPaid,
+                Items = _currentCalculation.CalculatedItems,
+                AppliedDiscounts = _currentCalculation.Discounts,
+                Date = DateTime.Now
+            };
+
+            bool isMercadoPagoQrPayment = paymentDialog.SelectedPaymentMethodName.Contains( "Mercado Pago", StringComparison.OrdinalIgnoreCase) ||
+                                          paymentDialog.SelectedPaymentMethodName.Contains(
+                                          "QR",
+                                          StringComparison.OrdinalIgnoreCase);
+
+            if (isMercadoPagoQrPayment)
+            {
+                bool shouldGenerateQr = UIHelper.ConfirmMessage("¿QUIERES GENERAR EL CÓDIGO QR?", "Mercado Pago QR");
+
+                if (shouldGenerateQr)
+                {
+                    using (new WaitCursorHelper(this))
+                    {
+                        try
+                        {
+                            var saleResult = await _saleService.ProcessSaleAsync(saleDto);
+
+                            if (!saleResult.Success || !saleResult.EntityId.HasValue)
+                            {
+                                UIHelper.ErrorMessage(this, $"No se pudo inicializar la venta:\n{saleResult.Message}", "Error de Venta");
+                                return;
+                            }
+
+                            int saleId = saleResult.EntityId.Value;
+
+                            var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
+
+                            var httpClient = httpClientFactory.CreateClient();
+
+                            string idempotencyKey =  Guid.NewGuid().ToString();
+
+                            var paymentRequest = new
+                            {
+                                saleId = saleId,
+                                amount = _currentCalculation.FinalTotal,
+                                description = $"Venta POS #{saleId}"
+                            };
+
+                            var paymentRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7133/api/mercadopago/payments")
+                                {
+                                    Content = new StringContent(JsonSerializer.Serialize(paymentRequest),System.Text.Encoding.UTF8, "application/json")
+                                };
+
+                            paymentRequestMessage.Headers.Add("X-Idempotency-Key", idempotencyKey);
+
+                            var paymentApiResponse = await httpClient.SendAsync(paymentRequestMessage);
+
+                            if (!paymentApiResponse.IsSuccessStatusCode)
+                            {
+                                var errorResponseContent = await paymentApiResponse.Content.ReadAsStringAsync();
+
+                                UIHelper.ErrorMessage(this, $"Detalle de error devuelto por la API:\n{errorResponseContent}", "Error de Integración");
+                                return;
+                            }
+
+                            var responseContent = await paymentApiResponse.Content.ReadAsStringAsync();
+
+                            using var responseDocument = JsonDocument.Parse(responseContent);
+
+                            string orderId = responseDocument.RootElement.GetProperty("orderId").GetString() ?? string.Empty;
+
+                            string qrData = responseDocument.RootElement.GetProperty("qrData").GetString() ?? string.Empty;
+
+                            var barcodeService = _serviceProvider.GetRequiredService<IBarcodeService>();
+
+                            var qrHttpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
+
+                            using var qrPaymentForm = new FormMercadoPagoQrPayment(barcodeService, qrHttpClientFactory, orderId, _currentCalculation.FinalTotal, qrData);
+
+                            if (qrPaymentForm.ShowDialog(this) != DialogResult.OK || !qrPaymentForm.IsPaymentApproved)
+                            {
+                                UIHelper.WarnMessage(this, "Operación de Mercado Pago no completada. Venta no finalizada.", "Aviso");
+                                return;
+                            }
+
+                            string documentNumber = saleDto.DocumentNumber ?? "00000001";
+
+                            var ticketPreviewForm =  new FormTicketPreview(_documentService, _whatsappService, _storageService);
+
+                            _ = ticketPreviewForm.LoadSaleTicketAsync(
+                                saleDto,
+                                documentNumber,
+                                saleDto.CashierName,
+                                _selectedCustomer?.Phone,
+                                _selectedCustomer?.FirstName);
+
+                            ticketPreviewForm.Show();
+
+                            ResetSaleSession();
+                            return;
+                        }
+                        catch (Exception ex)
+                        {
+                            UIHelper.ErrorMessage(this, $"Error al procesar el pago QR: {ex.Message}", "Fallo de Integración");
+                            return;
+                        }
+                    }
+                }
+                else
+                {
+                    // Si el cajero seleccionó "NO", continúa como cobro manual
+                    // sin llamar a Mercado Pago ni esperar webhook.
+                }
+            }
+
             using (new WaitCursorHelper(this))
             {
-                string customerName = _selectedCustomer != null
-                    ? $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}".Trim()
-                    : "Consumidor Final";
+                var saleResult = await _saleService.ProcessSaleAsync(saleDto);
 
-                string customerDoc = _selectedCustomer?.DocumentNumber;
-
-                var saleDto = new SaleDto
+                if (saleResult.Success)
                 {
-                    DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
-                    DocumentTypeName = cboDocType.Text,
-                    PaymentMethodId = payDialog.SelectedPaymentMethodId,
-                    PaymentMethodName = payDialog.SelectedPaymentMethodName,
-                    CustomerId = _selectedCustomer?.Id,
-                    CustomerDoc = customerDoc,
-                    CustomerName = customerName,
-                    CashierName = _currentUser.CurrentUser!.FullName,
-                    SubTotal = _currentCalculation.SubTotal,
-                    DiscountAmount = _currentCalculation.TotalDiscount,
-                    TotalAmount = _currentCalculation.FinalTotal,
-                    PaymentReceived = payDialog.AmountPaid,
-                    Items = _currentCalculation.CalculatedItems,
-                    AppliedDiscounts = _currentCalculation.Discounts,
-                    Date = DateTime.Now
-                };
+                    string documentNumber = saleDto.DocumentNumber ?? "00000001";
 
-                var result = await _saleService.ProcessSaleAsync(saleDto);
+                    var ticketPreviewForm = new FormTicketPreview(_documentService, _whatsappService, _storageService);
 
-                if (result.Success)
-                {
-                    string docNo = result.Message.Contains(':')
-                        ? result.Message.Split(':').Last().Trim()
-                        : "00000001";
+                    _ = ticketPreviewForm.LoadSaleTicketAsync(
+                        saleDto,
+                        documentNumber,
+                        saleDto.CashierName,
+                        _selectedCustomer?.Phone,
+                        _selectedCustomer?.FirstName);
 
-                    saleDto.DocumentNumber = docNo;
-
-                    var ticketViewer = new FormTicketPreview(_documentService, _whatsappService, _storageService);
-                    _ = ticketViewer.LoadSaleTicketAsync(
-                        saleDto, docNo, saleDto.CashierName, _selectedCustomer?.Phone, _selectedCustomer?.FirstName);
-                    ticketViewer.Show();
-
+                    ticketPreviewForm.Show();
                     ResetSaleSession();
                 }
                 else
                 {
-                    UIHelper.ShowResult(result, "Error en Venta");
+                    UIHelper.ShowResult(saleResult, "Error en Venta");
                 }
             }
         }
