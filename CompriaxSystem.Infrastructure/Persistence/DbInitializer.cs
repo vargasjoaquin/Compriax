@@ -387,6 +387,21 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 await context.SaveChangesAsync();
             }
+
+            // =========================================================================
+            // 14.TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
+            // =========================================================================
+            if (!await context.MercadoPagoPaymentStatuses.AnyAsync())
+            {
+                await context.MercadoPagoPaymentStatuses.AddRangeAsync(
+                    new MercadoPagoPaymentStatues { Id = 1, Name = "Pending" },
+                    new MercadoPagoPaymentStatues { Id = 2, Name = "Approved" },
+                    new MercadoPagoPaymentStatues { Id = 3, Name = "Rejected" },
+                    new MercadoPagoPaymentStatues { Id = 4, Name = "Cancelled" },
+                    new MercadoPagoPaymentStatues { Id = 5, Name = "Expired" }
+                );
+                await context.SaveChangesAsync();
+            }
         }
     }
 }
