@@ -39,5 +39,12 @@ namespace CompriaxSystem.Application.Interfaces.Services
         /// <param name="id">ID del producto.</param>
         /// <returns>Resultado de la eliminación.</returns>
         Task<OperationResult> DeleteProductAsync(int id);
+
+        /// <summary>
+        /// Realiza una busqueda rapida de productos por nombre, codigo de barras y descripcion.
+        /// </summary>
+        /// <param name="searchTerm">Termino de busqueda ingreso por el usuario.</param>
+        /// <returns>Collecion de productos que coinciden con el criterio de busqueda.</returns>
+        Task<IEnumerable<ProductDto>> SearchProductsAsync(string searchTerm);
     }
 }
