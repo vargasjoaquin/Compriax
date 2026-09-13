@@ -195,6 +195,7 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddTransient<FormCashRegisters>();
                     services.AddTransient<FormMercadoPagoQrPayment>();
                     services.AddTransient<FormPriceCheck>();
+                    services.AddTransient<FormProductLabels>();
                 });
     }
 }
