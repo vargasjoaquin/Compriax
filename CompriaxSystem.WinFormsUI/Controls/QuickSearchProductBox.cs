@@ -22,6 +22,9 @@ namespace CompriaxSystem.WinFormsUI.Controls
         public event EventHandler<ProductDto>? ProductSelected;
 
         [Category("Appearance")]
+        [Description("Texto de marcador de posición mostrado cuando la caja está vacía.")]
+        [DefaultValue("")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
         public string PlaceholderText
         {
             get => _txtInput.PlaceholderText;

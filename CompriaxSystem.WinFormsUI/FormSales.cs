@@ -95,6 +95,11 @@ namespace CompriaxSystem.WinFormsUI
                         numQuantity.Select(0, numQuantity.Text.Length);
                         break;
 
+                    case UIThemeHelper.Shortcuts.CheckPrice:
+                        var priceCheckForm = _serviceProvider.GetRequiredService<FormPriceCheck>();
+                        priceCheckForm.ShowDialog(this);
+                        break;
+
                     case UIThemeHelper.Shortcuts.Checkout:
                         await ExecuteCheckoutAsync();
                         break;

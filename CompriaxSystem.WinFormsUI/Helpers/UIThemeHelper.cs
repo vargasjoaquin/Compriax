@@ -46,6 +46,7 @@
             public const Keys SelectCustomer = Keys.F3;
             public const Keys ChangeQuantity = Keys.F4;
             public const Keys OpenPromotions = Keys.F5;
+            public const Keys CheckPrice = Keys.F6;
             public const Keys Checkout = Keys.F8;
             public const Keys DeleteItem = Keys.Delete;
             public const Keys ClearOrCancel = Keys.Escape;
