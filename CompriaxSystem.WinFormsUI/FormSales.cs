@@ -32,6 +32,7 @@ namespace CompriaxSystem.WinFormsUI
         private bool _isCameraActive = false;
         private string _lastScannedBarcode = string.Empty;
         private DateTime _lastScanTime = DateTime.MinValue;
+        private bool _isInitializing = false;
 
         public FormSales(
             ISaleService saleService,
@@ -66,15 +67,28 @@ namespace CompriaxSystem.WinFormsUI
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(pnlBarcodeBar);
+            UIThemeHelper.ApplyCardStyle(pnlVoucherCard);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
 
             this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnAdd.Click += async (s, e) => await AddFromInputAsync();
             this.btnRemove.Click += (s, e) => RemoveSelectedItem();
             this.btnSelectCustomer.Click += async (s, e) => await PromptSelectCustomerAsync();
             this.btnRegister.Click += async (s, e) => await ExecuteCheckoutAsync();
             this.btnToggleCam.Click += (s, e) => ToggleCamera();
             this.FormClosing += (s, e) => StopCamera();
+
+            // Sincronización dinámica de comprobante y correlativo
+            this.cboDocType.SelectedIndexChanged += async (s, e) =>
+            {
+                if (!_isInitializing)
+                    await UpdateVoucherContextAsync();
+            };
+
+            // Conexión del buscador rápido predictivo
+            this.quickSearchBox.ProductSelected += async (s, product) =>
+            {
+                await ProcessScannedBarcodeAsync(product.Barcode, (int)numQuantity.Value);
+            };
 
             // Atajos de Teclado Globales en POS
             this.KeyDown += async (s, e) =>
@@ -82,8 +96,7 @@ namespace CompriaxSystem.WinFormsUI
                 switch (e.KeyCode)
                 {
                     case UIThemeHelper.Shortcuts.SearchProduct:
-                        txtProductCode.Focus();
-                        txtProductCode.SelectAll();
+                        quickSearchBox.FocusInput();
                         break;
 
                     case UIThemeHelper.Shortcuts.SelectCustomer:
@@ -114,21 +127,12 @@ namespace CompriaxSystem.WinFormsUI
                 }
             };
 
-            this.txtProductCode.KeyDown += async (s, e) =>
-            {
-                if (e.KeyCode == Keys.Enter)
-                {
-                    e.SuppressKeyPress = true;
-                    e.Handled = true;
-                    await ProcessScannedBarcodeAsync(txtProductCode.Text.Trim(), (int)numQuantity.Value);
-                }
-            };
-
             this.dgvCart.CellDoubleClick += (s, e) => RemoveSelectedItem();
         }
 
         public async Task InitializeFormAsync()
         {
+            _isInitializing = true;
             var user = _currentUser.CurrentUser;
             bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
 
@@ -146,7 +150,7 @@ namespace CompriaxSystem.WinFormsUI
                     }
                     else
                     {
-                        UIHelper.ErrorMessage(this, "No existen cajas activas en el sistema para procesar ventas.", "Error de Configuración");
+                        UIHelper.ErrorMessage(this, "No existen cajas activas en el sistema para procesar ventas.", "Configuración");
                         this.BeginInvoke(new Action(this.Close));
                         return;
                     }
@@ -154,7 +158,7 @@ namespace CompriaxSystem.WinFormsUI
                 else
                 {
                     var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
-                    
+
                     if (selectForm.ShowDialog(this) != DialogResult.OK)
                     {
                         this.BeginInvoke(new Action(this.Close));
@@ -196,8 +200,55 @@ namespace CompriaxSystem.WinFormsUI
 
                 _paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
 
+                // Cargar catálogo en memoria para búsqueda predictiva instantánea
+                var catalog = await _productService.GetProductListAsync();
+                quickSearchBox.SetProductsSource(catalog);
+
                 DataGridViewHelper.ApplyStyle(dgvCart);
+                _isInitializing = false;
+
+                await UpdateVoucherContextAsync();
                 ResetSaleSession();
+            }
+        }
+
+        private async Task UpdateVoucherContextAsync()
+        {
+            if (cboDocType.SelectedItem is not DocumentType documentType)
+                return;
+
+            string typeName = documentType.Name.ToUpperInvariant();
+
+            string letter = "B";
+
+            if (typeName.Contains("FACTURA A") || typeName.Contains("TICKET FACTURA A"))
+                letter = "A";
+            else if (typeName.Contains("FACTURA C") || typeName.Contains("TICKET FACTURA C"))
+                letter = "C";
+            else if (typeName.Contains("REMITO")) 
+                letter = "R";
+            else if (typeName.Contains("PRESUPUESTO") || typeName.Contains("COMPROBANTE X"))
+                letter = "X";
+
+            lblVoucherLetter.Text = letter;
+
+            int documentId = documentType.Id;
+            int posNumber = _currentUser.OperationalContext?.CashRegisterNumber ?? 1;
+            string nextNumber = await _saleService.GetNextDocumentNumberAsync(documentId);
+           
+            lblVoucherNumber.Text = $"P.V.: {posNumber:D4}  -  N.°: {nextNumber}";
+
+            if (_selectedCustomer != null)
+            {
+                lblClientNameVal.Text = $"{_selectedCustomer.LastName}, {_selectedCustomer.FirstName}".Trim();
+                lblClientDocVal.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
+                lblClientTaxVal.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
+            }
+            else
+            {
+                lblClientNameVal.Text = "CONSUMIDOR FINAL";
+                lblClientDocVal.Text = "DOC: S/D";
+                lblClientTaxVal.Text = "IVA: Consumidor Final";
             }
         }
 
@@ -205,30 +256,16 @@ namespace CompriaxSystem.WinFormsUI
         {
             _cart.Clear();
             _selectedCustomer = null;
-            lblCustomerInfo.Text = "Cliente: Consumidor Final";
             ResetInputBar();
+            _ = UpdateVoucherContextAsync();
             RefreshCartUI();
         }
 
         private void ResetInputBar()
         {
-            txtProductCode.Clear();
+            quickSearchBox.Clear();
             numQuantity.Value = 1;
-            txtProductCode.Focus();
-        }
-
-        private async Task AddFromInputAsync()
-        {
-            string code = txtProductCode.Text.Trim();
-            int qty = (int)numQuantity.Value;
-
-            if (string.IsNullOrWhiteSpace(code))
-            {
-                txtProductCode.Focus();
-                return;
-            }
-
-            await ProcessScannedBarcodeAsync(code, qty);
+            quickSearchBox.FocusInput();
         }
 
         private async Task ProcessScannedBarcodeAsync(string barcode, int quantity)
@@ -242,8 +279,7 @@ namespace CompriaxSystem.WinFormsUI
             {
                 SystemSounds.Asterisk.Play();
                 UIHelper.WarnMessage(this, $"No se encontró ningún producto con código: '{barcode}'", "Artículo No Registrado");
-                txtProductCode.SelectAll();
-                txtProductCode.Focus();
+                ResetInputBar();
                 return;
             }
 
@@ -330,37 +366,36 @@ namespace CompriaxSystem.WinFormsUI
                 if (found != null)
                 {
                     _selectedCustomer = found;
-                    lblCustomerInfo.Text = $"Cliente: {found.FirstName} {found.LastName} (DNI: {found.DocumentNumber})";
+                    await UpdateVoucherContextAsync();
                 }
                 else
                 {
                     UIHelper.WarnMessage(this, $"No se encontró ningún cliente activo con el DNI '{queryDni}'.", "Búsqueda de Cliente");
                 }
             }
-            txtProductCode.Focus();
+            quickSearchBox.FocusInput();
         }
-
 
         private async Task ExecuteCheckoutAsync()
         {
             if (!_cart.Any())
             {
-                UIHelper.WarnMessage(this, "El carrito de ventas está vacío. Escanee al menos un producto.", "Carrito Vacío");
-                txtProductCode.Focus();
+                UIHelper.WarnMessage(this, "El carrito de ventas está vacío. Ingrese al menos un producto.", "Carrito Vacío");
+                quickSearchBox.FocusInput();
                 return;
             }
 
             using var paymentDialog = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
-
+            
             if (paymentDialog.ShowDialog(this) != DialogResult.OK)
             {
-                txtProductCode.Focus();
+                quickSearchBox.FocusInput();
                 return;
             }
 
             string customerName = _selectedCustomer != null
-                                    ? $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}".Trim()
-                                    : "Consumidor Final";
+                ? $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}".Trim()
+                : "Consumidor Final";
 
             string customerDocument = _selectedCustomer?.DocumentNumber;
 
@@ -383,10 +418,8 @@ namespace CompriaxSystem.WinFormsUI
                 Date = DateTime.Now
             };
 
-            bool isMercadoPagoQrPayment = paymentDialog.SelectedPaymentMethodName.Contains( "Mercado Pago", StringComparison.OrdinalIgnoreCase) ||
-                                          paymentDialog.SelectedPaymentMethodName.Contains(
-                                          "QR",
-                                          StringComparison.OrdinalIgnoreCase);
+            bool isMercadoPagoQrPayment = paymentDialog.SelectedPaymentMethodName.Contains("Mercado Pago", StringComparison.OrdinalIgnoreCase) ||
+                                   paymentDialog.SelectedPaymentMethodName.Contains("QR", StringComparison.OrdinalIgnoreCase);
 
             if (isMercadoPagoQrPayment)
             {
@@ -408,11 +441,9 @@ namespace CompriaxSystem.WinFormsUI
 
                             int saleId = saleResult.EntityId.Value;
 
-                            var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
-
-                            var httpClient = httpClientFactory.CreateClient();
-
-                            string idempotencyKey =  Guid.NewGuid().ToString();
+                            var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient();
+                            
+                            string idempotencyKey = Guid.NewGuid().ToString();
 
                             var paymentRequest = new
                             {
@@ -422,19 +453,18 @@ namespace CompriaxSystem.WinFormsUI
                             };
 
                             var paymentRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7133/api/mercadopago/payments")
-                                {
-                                    Content = new StringContent(JsonSerializer.Serialize(paymentRequest),System.Text.Encoding.UTF8, "application/json")
-                                };
+                            {
+                                Content = new StringContent(JsonSerializer.Serialize(paymentRequest), System.Text.Encoding.UTF8, "application/json")
+                            };
 
                             paymentRequestMessage.Headers.Add("X-Idempotency-Key", idempotencyKey);
 
-                            var paymentApiResponse = await httpClient.SendAsync(paymentRequestMessage);
+                            var paymentApiResponse = await httpClientFactory.SendAsync(paymentRequestMessage);
 
                             if (!paymentApiResponse.IsSuccessStatusCode)
                             {
                                 var errorResponseContent = await paymentApiResponse.Content.ReadAsStringAsync();
-
-                                UIHelper.ErrorMessage(this, $"Detalle de error devuelto por la API:\n{errorResponseContent}", "Error de Integración");
+                                UIHelper.ErrorMessage(this, $"Detalle de error devuelto por la API:\n{errorResponseContent}", "Error");
                                 return;
                             }
 
@@ -461,7 +491,7 @@ namespace CompriaxSystem.WinFormsUI
                             string documentNumber = saleDto.DocumentNumber ?? "00000001";
 
                             var ticketPreviewForm =  new FormTicketPreview(_documentService, _whatsappService, _storageService);
-
+                            
                             _ = ticketPreviewForm.LoadSaleTicketAsync(
                                 saleDto,
                                 documentNumber,
@@ -480,11 +510,6 @@ namespace CompriaxSystem.WinFormsUI
                             return;
                         }
                     }
-                }
-                else
-                {
-                    // Si el cajero seleccionó "NO", continúa como cobro manual
-                    // sin llamar a Mercado Pago ni esperar webhook.
                 }
             }
 
@@ -572,7 +597,7 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     this.Invoke(new Action(async () =>
                     {
-                        await ProcessScannedBarcodeAsync(decodedText, 1);
+                        await ProcessScannedBarcodeAsync(decodedText, (int)numQuantity.Value);
                     }));
                 }
             }
