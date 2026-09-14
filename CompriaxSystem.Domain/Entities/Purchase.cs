@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Constants;
 
 namespace CompriaxSystem.Domain.Entities
 {
@@ -21,7 +22,7 @@ namespace CompriaxSystem.Domain.Entities
         public decimal SubTotal { get; set; }
         public decimal TaxAmount { get; set; }
         public decimal TotalAmount { get; set; }
-        public string Status { get; set; } = "Completada";
+        public string Status { get; set; } = PurchaseStatuses.COMPLETED;
         public string? Remarks { get; set; }
 
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;

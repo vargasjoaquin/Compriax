@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Enums;
 
 namespace CompriaxSystem.Domain.Entities
 {
@@ -11,7 +12,7 @@ namespace CompriaxSystem.Domain.Entities
         public string? Email { get; set; }
         public byte[]? Logo { get; set; }
 
-        public string TicketFormat { get; set; } = "80mm";
+        public string TicketFormat { get; set; } = ((int)ThermalPaperSize.Width80mm).ToString() + "mm";
         public string? TicketFooterMessage { get; set; }
         public bool ShowLogoOnTicket { get; set; } = true;
         public bool ShowBarcodeOnTicket { get; set; } = true;

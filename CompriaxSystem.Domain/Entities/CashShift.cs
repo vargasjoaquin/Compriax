@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Constants;
 
 namespace CompriaxSystem.Domain.Entities
 {
@@ -27,7 +28,7 @@ namespace CompriaxSystem.Domain.Entities
         public decimal TotalManualCashIn { get; set; }
         public decimal TotalManualCashOut { get; set; }
 
-        public string? Status { get; set; }
+        public string? Status { get; set; } = CashShiftStatuses.OPEN;
         public string? ClosingNotes { get; set; }
 
         public virtual ICollection<CashMovement> CashMovements { get; set; } = new List<CashMovement>();
