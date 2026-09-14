@@ -214,28 +214,32 @@ namespace CompriaxSystem.WinFormsUI
 
         private async Task UpdateVoucherContextAsync()
         {
-            if (cboDocType.SelectedItem is not DocumentType documentType)
+            if (cboDocType.SelectedItem is not DocumentType docType)
                 return;
 
-            string typeName = documentType.Name.ToUpperInvariant();
-
+            string typeName = docType.Name.ToUpperInvariant();
             string letter = "B";
-
-            if (typeName.Contains("FACTURA A") || typeName.Contains("TICKET FACTURA A"))
+            if (typeName.Contains("FACTURA A") || typeName.Contains("NOTA DE DÉBITO A") || typeName.Contains("NOTA DE CRÉDITO A") || typeName.Contains("RECIBO A") || typeName.Contains("TICKET FACTURA A"))
                 letter = "A";
-            else if (typeName.Contains("FACTURA C") || typeName.Contains("TICKET FACTURA C"))
+            else if (typeName.Contains("FACTURA C") || typeName.Contains("NOTA DE DÉBITO C") || typeName.Contains("NOTA DE CRÉDITO C") || typeName.Contains("RECIBO C"))
                 letter = "C";
-            else if (typeName.Contains("REMITO")) 
+            else if (typeName.Contains("FACTURA M") || typeName.Contains("NOTA DE DÉBITO M") || typeName.Contains("NOTA DE CRÉDITO M"))
+                letter = "M";
+            else if (typeName.Contains("EXPORTACIÓN") || typeName.Contains("EXPORTACION"))
+                letter = "E";
+            else if (typeName.Contains("REMITO R"))
                 letter = "R";
-            else if (typeName.Contains("PRESUPUESTO") || typeName.Contains("COMPROBANTE X"))
+            else if (typeName.Contains("REMITO X") || typeName.Contains("PRESUPUESTO") || typeName.Contains("COMPROBANTE X"))
                 letter = "X";
 
             lblVoucherLetter.Text = letter;
 
-            int documentId = documentType.Id;
+            int docId = docType.Id;
+            
             int posNumber = _currentUser.OperationalContext?.CashRegisterNumber ?? 1;
-            string nextNumber = await _saleService.GetNextDocumentNumberAsync(documentId);
-           
+
+            string nextNumber = await _saleService.GetNextDocumentNumberAsync(docId);
+
             lblVoucherNumber.Text = $"P.V.: {posNumber:D4}  -  N.°: {nextNumber}";
 
             if (_selectedCustomer != null)
@@ -243,12 +247,26 @@ namespace CompriaxSystem.WinFormsUI
                 lblClientNameVal.Text = $"{_selectedCustomer.LastName}, {_selectedCustomer.FirstName}".Trim();
                 lblClientDocVal.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
                 lblClientTaxVal.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
+
+                if (letter == "A" && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
+                {
+                    lblClientTaxVal.Text += "  [Requiere Resp. Inscripto]";
+                    lblClientTaxVal.ForeColor = UIThemeHelper.Danger;
+                }
+                else
+                {
+                    lblClientTaxVal.ForeColor = Color.FromArgb(100, 116, 139);
+                }
             }
             else
             {
                 lblClientNameVal.Text = "CONSUMIDOR FINAL";
                 lblClientDocVal.Text = "DOC: S/D";
                 lblClientTaxVal.Text = "IVA: Consumidor Final";
+                lblClientTaxVal.ForeColor = letter == "A" ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
+
+                if (letter == "A")
+                    lblClientTaxVal.Text = "IVA: Consumidor Final [Requiere Cliente Resp. Inscripto]";
             }
         }
 
