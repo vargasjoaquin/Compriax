@@ -9,10 +9,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
     public class QuickSearchProductBox : UserControl
     {
         private readonly TextBox _txtInput;
-        private readonly Label _lblGhost;
-        private readonly ToolStripDropDown _popupDropDown;
         private readonly ListBox _lstMatches;
-        private readonly ToolStripControlHost _popupHost;
 
         private List<ProductDto> _productsSource = new();
         private List<ProductDto> _filteredMatches = new();
@@ -38,77 +35,95 @@ namespace CompriaxSystem.WinFormsUI.Controls
             Height = 42;
             BackColor = Color.White;
 
+            // 1. Campo de texto principal
             _txtInput = new TextBox
             {
                 BorderStyle = BorderStyle.None,
-                Font = new Font("Segoe UI", 11F),
+                Font = new Font("Segoe UI", 11F, FontStyle.Bold),
                 Location = new Point(12, 10),
-                Width = Width - 24,
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                BackColor = Color.White
-            };
-
-            _lblGhost = new Label
-            {
-                AutoSize = false,
-                Font = _txtInput.Font,
-                Location = new Point(12, 10),
-                Height = 22,
                 Width = Width - 24,
                 Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
                 BackColor = Color.White,
-                ForeColor = Color.LightGray,
-                Visible = false
+                ForeColor = Color.FromArgb(15, 23, 42),
+                PlaceholderText = "Buscar por nombre, código de barras o descripción [F2]..."
             };
 
-            Controls.Add(_lblGhost);
             Controls.Add(_txtInput);
 
-            _popupDropDown = new ToolStripDropDown
-            {
-                AutoSize = false,
-                Padding = Padding.Empty,
-                Margin = Padding.Empty,
-                BackColor = Color.White,
-                DropShadowEnabled = true
-            };
-
+            // 2. Lista de resultados integrada
             _lstMatches = new ListBox
             {
-                BorderStyle = BorderStyle.None,
+                BorderStyle = BorderStyle.FixedSingle,
                 DrawMode = DrawMode.OwnerDrawFixed,
                 IntegralHeight = false,
+                ItemHeight = 46,
                 Font = new Font("Segoe UI", 10F),
                 BackColor = Color.White,
                 ForeColor = Color.Black,
-                SelectionMode = SelectionMode.One
+                SelectionMode = SelectionMode.One,
+                Cursor = Cursors.Hand,
+                Visible = false
             };
 
             _lstMatches.DrawItem += OnListBoxDrawItem;
-            _lstMatches.MouseClick += (sender, eventArgs) => ConfirmSelectionFromList();
-
-            _popupHost = new ToolStripControlHost(_lstMatches)
+            _lstMatches.MouseDown += (sender, e) =>
             {
-                AutoSize = false,
-                Padding = Padding.Empty,
-                Margin = Padding.Empty
+                int index = _lstMatches.IndexFromPoint(e.Location);
+                if (index >= 0 && index < _filteredMatches.Count)
+                {
+                    _lstMatches.SelectedIndex = index;
+                    ConfirmSelectionFromList();
+                }
             };
-
-            _popupDropDown.Items.Add(_popupHost);
 
             _txtInput.TextChanged += OnInputTextChanged;
             _txtInput.KeyDown += OnInputKeyDown;
+            _txtInput.LostFocus += (sender, eventArgs) =>
+            {
+                if (!_lstMatches.Focused)
+                {
+                    HidePopup();
+                }
+            };
 
             Resize += (sender, eventArgs) =>
             {
                 _txtInput.Width = Width - 24;
-                _lblGhost.Width = Width - 24;
+                if (_lstMatches.Visible)
+                {
+                    RepositionPopup();
+                }
             };
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            base.OnParentChanged(e);
+            AttachListToParentForm();
+        }
+
+        private void AttachListToParentForm()
+        {
+            var parentForm = this.FindForm();
+            if (parentForm != null && !_lstMatches.IsDisposed)
+            {
+                if (!parentForm.Controls.Contains(_lstMatches))
+                {
+                    parentForm.Controls.Add(_lstMatches);
+                }
+
+                parentForm.LocationChanged += (s, ev) => HidePopup();
+                parentForm.Resize += (s, ev) => HidePopup();
+                parentForm.Deactivate += (s, ev) => HidePopup();
+            }
         }
 
         public void SetProductsSource(IEnumerable<ProductDto> products)
         {
-            _productsSource = products.Where(product => product.IsActive).ToList();
+            // Solo productos activos y con stock disponible mayor a 0
+            _productsSource = products
+                .Where(product => product.IsActive && product.CurrentStock > 0)
+                .ToList();
         }
 
         public void FocusInput()
@@ -122,8 +137,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
             _isInternalUpdating = true;
 
             _txtInput.Clear();
-            _lblGhost.Text = string.Empty;
-            _lblGhost.Visible = false;
+            _filteredMatches.Clear();
             _topSuggestion = null;
 
             _isInternalUpdating = false;
@@ -137,8 +151,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-            using var borderPen = new Pen(Color.LightGray);
-
+            using var borderPen = new Pen(_txtInput.Focused ? Color.FromArgb(2, 132, 199) : Color.LightGray, 1.5f);
             var borderRectangle = new Rectangle(0, 0, Width - 1, Height - 1);
 
             e.Graphics.DrawRectangle(borderPen, borderRectangle);
@@ -151,55 +164,36 @@ namespace CompriaxSystem.WinFormsUI.Controls
                 return;
             }
 
-            string searchQuery = _txtInput.Text.Trim();
+            string searchQuery = _txtInput.Text;
 
             if (string.IsNullOrWhiteSpace(searchQuery))
             {
                 _filteredMatches.Clear();
                 _topSuggestion = null;
-
-                _lblGhost.Text = string.Empty;
-                _lblGhost.Visible = false;
-
                 HidePopup();
-
                 return;
             }
 
-            string normalizedQuery = NormalizeString(searchQuery);
+            string normalizedQuery = NormalizeString(searchQuery.Trim());
 
+            // Filtrado estricto: solo productos con stock > 0
             _filteredMatches = _productsSource
                 .Where(product =>
-                    NormalizeString(product.Name).Contains(normalizedQuery) ||
-                    NormalizeString(product.Barcode).Contains(normalizedQuery) ||
-                    (!string.IsNullOrEmpty(product.Description) && NormalizeString(product.Description).Contains(normalizedQuery)))
+                    product.CurrentStock > 0 &&
+                    (NormalizeString(product.Name).Contains(normalizedQuery) ||
+                     NormalizeString(product.Barcode).Contains(normalizedQuery) ||
+                     (!string.IsNullOrEmpty(product.Description) && NormalizeString(product.Description).Contains(normalizedQuery))))
                 .Take(8)
                 .ToList();
 
             if (_filteredMatches.Any())
             {
                 _topSuggestion = _filteredMatches.First();
-
-                if (_topSuggestion.Name.StartsWith(searchQuery, StringComparison.OrdinalIgnoreCase))
-                {
-                    _lblGhost.Text = searchQuery + _topSuggestion.Name.Substring(searchQuery.Length);
-                    _lblGhost.Visible = true;
-                }
-                else
-                {
-                    _lblGhost.Text = string.Empty;
-                    _lblGhost.Visible = false;
-                }
-
                 ShowPopupMatches();
             }
             else
             {
                 _topSuggestion = null;
-
-                _lblGhost.Text = string.Empty;
-                _lblGhost.Visible = false;
-
                 HidePopup();
             }
         }
@@ -208,14 +202,19 @@ namespace CompriaxSystem.WinFormsUI.Controls
         {
             if (e.KeyCode == Keys.Down)
             {
-                if (_filteredMatches.Any())
+                if (_lstMatches.Visible && _lstMatches.Items.Count > 0)
                 {
-                    ShowPopupMatches();
-
-                    if (_lstMatches.SelectedIndex < _lstMatches.Items.Count - 1)
+                    int nextIndex = _lstMatches.SelectedIndex + 1;
+                    if (nextIndex < _lstMatches.Items.Count)
                     {
-                        _lstMatches.SelectedIndex++;
+                        _lstMatches.SelectedIndex = nextIndex;
                     }
+                    else
+                    {
+                        _lstMatches.SelectedIndex = 0;
+                    }
+
+                    _lstMatches.Invalidate();
                 }
 
                 e.Handled = true;
@@ -223,55 +222,70 @@ namespace CompriaxSystem.WinFormsUI.Controls
             }
             else if (e.KeyCode == Keys.Up)
             {
-                if (_filteredMatches.Any())
+                if (_lstMatches.Visible && _lstMatches.Items.Count > 0)
                 {
-                    ShowPopupMatches();
-
-                    if (_lstMatches.SelectedIndex > 0)
+                    int prevIndex = _lstMatches.SelectedIndex - 1;
+                    if (prevIndex >= 0)
                     {
-                        _lstMatches.SelectedIndex--;
+                        _lstMatches.SelectedIndex = prevIndex;
                     }
+                    else
+                    {
+                        _lstMatches.SelectedIndex = _lstMatches.Items.Count - 1;
+                    }
+
+                    _lstMatches.Invalidate();
                 }
 
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
+            else if (e.KeyCode == Keys.Tab)
+            {
+                if (_lstMatches.Visible && _lstMatches.SelectedIndex >= 0 && _lstMatches.SelectedIndex < _filteredMatches.Count)
+                {
+                    var selected = _filteredMatches[_lstMatches.SelectedIndex];
+                    _isInternalUpdating = true;
+                    _txtInput.Text = selected.Name;
+                    _txtInput.SelectionStart = _txtInput.Text.Length;
+                    _isInternalUpdating = false;
+                    e.Handled = true;
+                }
+            }
             else if (e.KeyCode == Keys.Enter)
             {
-                if (_popupDropDown.Visible && _lstMatches.SelectedIndex >= 0)
-                {
-                    ConfirmSelectionFromList();
+                e.Handled = true;
+                e.SuppressKeyPress = true;
 
-                    e.Handled = true;
-                    e.SuppressKeyPress = true;
+                string rawQuery = _txtInput.Text.Trim();
 
-                    return;
-                }
-
-                var matchingProductByBarcode = _productsSource.FirstOrDefault(product => product.Barcode.Equals(_txtInput.Text.Trim(), StringComparison.OrdinalIgnoreCase));
+                // 1. Coincidencia exacta de código de barras
+                var matchingProductByBarcode = _productsSource.FirstOrDefault(product =>
+                    product.CurrentStock > 0 &&
+                    product.Barcode.Equals(rawQuery, StringComparison.OrdinalIgnoreCase));
 
                 if (matchingProductByBarcode != null)
                 {
                     SelectProduct(matchingProductByBarcode);
-
-                    e.Handled = true;
-                    e.SuppressKeyPress = true;
-
                     return;
                 }
 
-                if (_topSuggestion != null)
+                // 2. Selección de la lista resaltada
+                if (_lstMatches.Visible && _lstMatches.SelectedIndex >= 0 && _lstMatches.SelectedIndex < _filteredMatches.Count)
+                {
+                    SelectProduct(_filteredMatches[_lstMatches.SelectedIndex]);
+                    return;
+                }
+
+                // 3. Primera sugerencia disponible con stock
+                if (_topSuggestion != null && _topSuggestion.CurrentStock > 0)
                 {
                     SelectProduct(_topSuggestion);
-
-                    e.Handled = true;
-                    e.SuppressKeyPress = true;
                 }
             }
             else if (e.KeyCode == Keys.Escape)
             {
-                HidePopup();
-
+                Clear();
                 e.Handled = true;
                 e.SuppressKeyPress = true;
             }
@@ -279,12 +293,19 @@ namespace CompriaxSystem.WinFormsUI.Controls
 
         private void ShowPopupMatches()
         {
-            if (!_filteredMatches.Any())
+            var parentForm = this.FindForm();
+            if (parentForm == null || !_filteredMatches.Any())
             {
                 HidePopup();
                 return;
             }
 
+            if (!parentForm.Controls.Contains(_lstMatches))
+            {
+                parentForm.Controls.Add(_lstMatches);
+            }
+
+            _lstMatches.BeginUpdate();
             _lstMatches.Items.Clear();
 
             foreach (var product in _filteredMatches)
@@ -292,50 +313,54 @@ namespace CompriaxSystem.WinFormsUI.Controls
                 _lstMatches.Items.Add(product);
             }
 
-            _lstMatches.Height = Math.Min(_filteredMatches.Count * 46 + 4, 280);
-            _lstMatches.Width = Width;
+            _lstMatches.SelectedIndex = 0;
+            _lstMatches.EndUpdate();
 
-            _popupHost.Size = new Size(Width, _lstMatches.Height);
+            RepositionPopup();
 
-            if (!_popupDropDown.Visible)
-            {
-                _popupDropDown.Show(this, new Point(0, Height));
-            }
+            _lstMatches.BringToFront();
+            _lstMatches.Visible = true;
+        }
+
+        private void RepositionPopup()
+        {
+            var parentForm = this.FindForm();
+            if (parentForm == null) return;
+
+            Point screenPoint = this.PointToScreen(new Point(0, Height + 2));
+            Point formPoint = parentForm.PointToClient(screenPoint);
+
+            int popupHeight = Math.Min(_filteredMatches.Count * 46 + 2, 280);
+            _lstMatches.Location = formPoint;
+            _lstMatches.Size = new Size(Width, popupHeight);
         }
 
         private void HidePopup()
         {
-            if (_popupDropDown.Visible)
+            if (_lstMatches.Visible)
             {
-                _popupDropDown.Close();
+                _lstMatches.Visible = false;
             }
         }
 
         private void ConfirmSelectionFromList()
         {
-            if (_lstMatches.SelectedItem is ProductDto selectedProduct)
+            if (_lstMatches.SelectedIndex >= 0 && _lstMatches.SelectedIndex < _filteredMatches.Count)
             {
-                SelectProduct(selectedProduct);
+                SelectProduct(_filteredMatches[_lstMatches.SelectedIndex]);
             }
         }
 
         private void SelectProduct(ProductDto product)
         {
-            ProductSelected?.Invoke(this, product);
-
-            _isInternalUpdating = true;
-
-            _txtInput.Text = product.Name;
-            _txtInput.SelectionStart = _txtInput.Text.Length;
-
-            _lblGhost.Text = string.Empty;
-            _lblGhost.Visible = false;
-
-            _isInternalUpdating = false;
-
-            _topSuggestion = null;
+            if (product.CurrentStock <= 0)
+            {
+                return;
+            }
 
             HidePopup();
+            Clear();
+            ProductSelected?.Invoke(this, product);
         }
 
         private void OnListBoxDrawItem(object? sender, DrawItemEventArgs e)
@@ -346,40 +371,33 @@ namespace CompriaxSystem.WinFormsUI.Controls
             }
 
             var product = _filteredMatches[e.Index];
-
             bool isItemSelected = (e.State & DrawItemState.Selected) == DrawItemState.Selected;
 
-            using var backgroundBrush = new SolidBrush(isItemSelected ? SystemColors.Highlight : Color.White);
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+            using var backgroundBrush = new SolidBrush(isItemSelected ? Color.FromArgb(224, 242, 254) : Color.White);
             e.Graphics.FillRectangle(backgroundBrush, e.Bounds);
 
-            using var separatorPen = new Pen(Color.Gainsboro);
+            using var separatorPen = new Pen(Color.FromArgb(241, 245, 249));
+            e.Graphics.DrawLine(separatorPen, e.Bounds.Left + 8, e.Bounds.Bottom - 1, e.Bounds.Right - 8, e.Bounds.Bottom - 1);
 
-            e.Graphics.DrawLine(separatorPen, e.Bounds.Left, e.Bounds.Bottom - 1, e.Bounds.Right, e.Bounds.Bottom - 1);
-
+            // 1. Nombre del producto
             using var productNameFont = new Font("Segoe UI", 10F, FontStyle.Bold);
+            using var productNameBrush = new SolidBrush(isItemSelected ? Color.FromArgb(3, 105, 161) : Color.FromArgb(15, 23, 42));
+            e.Graphics.DrawString(product.Name, productNameFont, productNameBrush, e.Bounds.Left + 10, e.Bounds.Top + 4);
 
-            using var productNameBrush = new SolidBrush(isItemSelected ? SystemColors.HighlightText : Color.Black);
-
-            e.Graphics.DrawString(product.Name, productNameFont, productNameBrush, e.Bounds.Left + 10, e.Bounds.Top + 5);
-
+            // 2. Precio alineado a la derecha
             string priceText = product.SellPrice.ToString("C2");
-
-            using var priceFont = new Font("Segoe UI", 10F, FontStyle.Bold);
-
-            using var priceBrush = new SolidBrush(isItemSelected ? SystemColors.HighlightText : Color.DarkGreen);
-
+            using var priceFont = new Font("Segoe UI", 10.5F, FontStyle.Bold);
+            using var priceBrush = new SolidBrush(isItemSelected ? Color.FromArgb(3, 105, 161) : Color.FromArgb(2, 132, 199));
             SizeF priceTextSize = e.Graphics.MeasureString(priceText, priceFont);
+            e.Graphics.DrawString(priceText, priceFont, priceBrush, e.Bounds.Right - priceTextSize.Width - 10, e.Bounds.Top + 4);
 
-            e.Graphics.DrawString(priceText, priceFont, priceBrush, e.Bounds.Right - priceTextSize.Width - 10, e.Bounds.Top + 5);
-
-            string detailsText = !string.IsNullOrEmpty(product.Barcode) ? product.Barcode : product.Description ?? string.Empty;
-
+            // 3. Código de barras • Categoría • Stock
+            string detailsText = $"{product.Barcode}  •  {(string.IsNullOrEmpty(product.CategoryName) ? "General" : product.CategoryName)}  •  Stock: {product.CurrentStock}";
             using var detailsFont = new Font("Segoe UI", 8.5F);
-
-            using var detailsBrush = new SolidBrush(isItemSelected ? SystemColors.HighlightText : Color.Gray);
-
-            e.Graphics.DrawString(detailsText, detailsFont, detailsBrush, e.Bounds.Left + 10, e.Bounds.Top + 25);
+            using var detailsBrush = new SolidBrush(Color.FromArgb(100, 116, 139));
+            e.Graphics.DrawString(detailsText, detailsFont, detailsBrush, e.Bounds.Left + 10, e.Bounds.Top + 24);
         }
 
         private static string NormalizeString(string text)
@@ -390,7 +408,6 @@ namespace CompriaxSystem.WinFormsUI.Controls
             }
 
             string normalizedText = text.Normalize(NormalizationForm.FormD);
-
             var stringBuilder = new StringBuilder();
 
             foreach (char character in normalizedText)
@@ -402,6 +419,18 @@ namespace CompriaxSystem.WinFormsUI.Controls
             }
 
             return stringBuilder.ToString().ToLowerInvariant();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                if (_lstMatches != null && !_lstMatches.IsDisposed)
+                {
+                    _lstMatches.Dispose();
+                }
+            }
+            base.Dispose(disposing);
         }
     }
 }

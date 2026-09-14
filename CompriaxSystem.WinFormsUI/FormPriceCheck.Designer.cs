@@ -58,7 +58,7 @@
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
             pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(840, 68);
+            pnlHeader.Size = new Size(892, 68);
             pnlHeader.TabIndex = 0;
             // 
             // lblHeaderTitle
@@ -68,9 +68,9 @@
             lblHeaderTitle.ForeColor = Color.White;
             lblHeaderTitle.Location = new Point(20, 12);
             lblHeaderTitle.Name = "lblHeaderTitle";
-            lblHeaderTitle.Size = new Size(395, 30);
+            lblHeaderTitle.Size = new Size(342, 30);
             lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "CONSULTA RÁPIDA DE PRECIOS [F6]";
+            lblHeaderTitle.Text = "CONSULTA RÁPIDA DE PRECIOS";
             // 
             // lblHeaderSubtitle
             // 
@@ -79,7 +79,7 @@
             lblHeaderSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
             lblHeaderSubtitle.Location = new Point(22, 40);
             lblHeaderSubtitle.Name = "lblHeaderSubtitle";
-            lblHeaderSubtitle.Size = new Size(420, 20);
+            lblHeaderSubtitle.Size = new Size(428, 20);
             lblHeaderSubtitle.TabIndex = 1;
             lblHeaderSubtitle.Text = "Escanee un código de barras o comience a escribir para buscar.";
             // 
@@ -92,7 +92,7 @@
             pnlSearchCard.Location = new Point(20, 80);
             pnlSearchCard.Name = "pnlSearchCard";
             pnlSearchCard.Padding = new Padding(16);
-            pnlSearchCard.Size = new Size(800, 80);
+            pnlSearchCard.Size = new Size(858, 113);
             pnlSearchCard.TabIndex = 1;
             // 
             // lblSearchPrompt
@@ -101,7 +101,7 @@
             lblSearchPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             lblSearchPrompt.Location = new Point(16, 8);
             lblSearchPrompt.Name = "lblSearchPrompt";
-            lblSearchPrompt.Size = new Size(130, 21);
+            lblSearchPrompt.Size = new Size(129, 21);
             lblSearchPrompt.TabIndex = 0;
             lblSearchPrompt.Text = "Buscar Artículo:";
             // 
@@ -113,7 +113,7 @@
             quickSearchBox.Name = "quickSearchBox";
             quickSearchBox.Padding = new Padding(8, 6, 8, 6);
             quickSearchBox.PlaceholderText = "Escriba nombre o pase el lector de código de barras...";
-            quickSearchBox.Size = new Size(650, 38);
+            quickSearchBox.Size = new Size(650, 54);
             quickSearchBox.TabIndex = 1;
             // 
             // btnClear
@@ -122,7 +122,7 @@
             btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             btnClear.Location = new Point(676, 32);
             btnClear.Name = "btnClear";
-            btnClear.Size = new Size(108, 38);
+            btnClear.Size = new Size(146, 54);
             btnClear.TabIndex = 2;
             btnClear.Text = "LIMPIAR";
             btnClear.UseVisualStyleBackColor = true;
@@ -130,15 +130,19 @@
             // pnlDetailsCard
             // 
             pnlDetailsCard.BackColor = Color.White;
+            pnlDetailsCard.Controls.Add(lblCategoryTitle);
+            pnlDetailsCard.Controls.Add(lblBrandTitle);
+            pnlDetailsCard.Controls.Add(lblStockTitle);
+            pnlDetailsCard.Controls.Add(lblBarcodeTitle);
             pnlDetailsCard.Controls.Add(picProduct);
             pnlDetailsCard.Controls.Add(lblProductName);
             pnlDetailsCard.Controls.Add(lblPriceTitle);
             pnlDetailsCard.Controls.Add(lblPrice);
             pnlDetailsCard.Controls.Add(pnlInfoGrid);
-            pnlDetailsCard.Location = new Point(20, 172);
+            pnlDetailsCard.Location = new Point(20, 199);
             pnlDetailsCard.Name = "pnlDetailsCard";
             pnlDetailsCard.Padding = new Padding(20);
-            pnlDetailsCard.Size = new Size(800, 320);
+            pnlDetailsCard.Size = new Size(858, 490);
             pnlDetailsCard.TabIndex = 2;
             // 
             // picProduct
@@ -147,7 +151,7 @@
             picProduct.BorderStyle = BorderStyle.FixedSingle;
             picProduct.Location = new Point(20, 20);
             picProduct.Name = "picProduct";
-            picProduct.Size = new Size(170, 170);
+            picProduct.Size = new Size(186, 195);
             picProduct.SizeMode = PictureBoxSizeMode.Zoom;
             picProduct.TabIndex = 0;
             picProduct.TabStop = false;
@@ -157,7 +161,7 @@
             lblProductName.AutoEllipsis = true;
             lblProductName.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
             lblProductName.ForeColor = Color.FromArgb(15, 23, 42);
-            lblProductName.Location = new Point(206, 16);
+            lblProductName.Location = new Point(210, 20);
             lblProductName.Name = "lblProductName";
             lblProductName.Size = new Size(574, 38);
             lblProductName.TabIndex = 1;
@@ -168,9 +172,9 @@
             lblPriceTitle.AutoSize = true;
             lblPriceTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
             lblPriceTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblPriceTitle.Location = new Point(208, 56);
+            lblPriceTitle.Location = new Point(213, 67);
             lblPriceTitle.Name = "lblPriceTitle";
-            lblPriceTitle.Size = new Size(157, 23);
+            lblPriceTitle.Size = new Size(160, 23);
             lblPriceTitle.TabIndex = 2;
             lblPriceTitle.Text = "PRECIO DE VENTA:";
             // 
@@ -179,9 +183,9 @@
             lblPrice.AutoSize = true;
             lblPrice.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
             lblPrice.ForeColor = Color.FromArgb(2, 132, 199);
-            lblPrice.Location = new Point(202, 76);
+            lblPrice.Location = new Point(212, 105);
             lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(160, 62);
+            lblPrice.Size = new Size(161, 62);
             lblPrice.TabIndex = 3;
             lblPrice.Text = "$ 0,00";
             // 
@@ -192,22 +196,18 @@
             pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
             pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlInfoGrid.Controls.Add(lblBarcodeTitle, 0, 0);
-            pnlInfoGrid.Controls.Add(lblBarcodeVal, 0, 1);
-            pnlInfoGrid.Controls.Add(lblCategoryTitle, 1, 0);
             pnlInfoGrid.Controls.Add(lblCategoryVal, 1, 1);
-            pnlInfoGrid.Controls.Add(lblBrandTitle, 2, 0);
             pnlInfoGrid.Controls.Add(lblBrandVal, 2, 1);
-            pnlInfoGrid.Controls.Add(lblStockTitle, 3, 0);
             pnlInfoGrid.Controls.Add(lblStockVal, 3, 1);
             pnlInfoGrid.Controls.Add(lblStockBadge, 3, 2);
-            pnlInfoGrid.Location = new Point(20, 206);
+            pnlInfoGrid.Controls.Add(lblBarcodeVal, 0, 1);
+            pnlInfoGrid.Location = new Point(23, 278);
             pnlInfoGrid.Name = "pnlInfoGrid";
             pnlInfoGrid.RowCount = 3;
             pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 24F));
             pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
             pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
-            pnlInfoGrid.Size = new Size(760, 94);
+            pnlInfoGrid.Size = new Size(818, 187);
             pnlInfoGrid.TabIndex = 4;
             // 
             // lblBarcodeTitle
@@ -215,9 +215,9 @@
             lblBarcodeTitle.AutoSize = true;
             lblBarcodeTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblBarcodeTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblBarcodeTitle.Location = new Point(3, 0);
+            lblBarcodeTitle.Location = new Point(23, 255);
             lblBarcodeTitle.Name = "lblBarcodeTitle";
-            lblBarcodeTitle.Size = new Size(130, 20);
+            lblBarcodeTitle.Size = new Size(132, 20);
             lblBarcodeTitle.TabIndex = 0;
             lblBarcodeTitle.Text = "Código de Barras:";
             // 
@@ -236,7 +236,7 @@
             lblCategoryTitle.AutoSize = true;
             lblCategoryTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblCategoryTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblCategoryTitle.Location = new Point(193, 0);
+            lblCategoryTitle.Location = new Point(230, 255);
             lblCategoryTitle.Name = "lblCategoryTitle";
             lblCategoryTitle.Size = new Size(80, 20);
             lblCategoryTitle.TabIndex = 2;
@@ -246,7 +246,7 @@
             // 
             lblCategoryVal.AutoEllipsis = true;
             lblCategoryVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblCategoryVal.Location = new Point(193, 24);
+            lblCategoryVal.Location = new Point(207, 24);
             lblCategoryVal.Name = "lblCategoryVal";
             lblCategoryVal.Size = new Size(184, 25);
             lblCategoryVal.TabIndex = 3;
@@ -257,7 +257,7 @@
             lblBrandTitle.AutoSize = true;
             lblBrandTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblBrandTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblBrandTitle.Location = new Point(383, 0);
+            lblBrandTitle.Location = new Point(434, 255);
             lblBrandTitle.Name = "lblBrandTitle";
             lblBrandTitle.Size = new Size(56, 20);
             lblBrandTitle.TabIndex = 4;
@@ -267,7 +267,7 @@
             // 
             lblBrandVal.AutoEllipsis = true;
             lblBrandVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblBrandVal.Location = new Point(383, 24);
+            lblBrandVal.Location = new Point(411, 24);
             lblBrandVal.Name = "lblBrandVal";
             lblBrandVal.Size = new Size(184, 25);
             lblBrandVal.TabIndex = 5;
@@ -278,7 +278,7 @@
             lblStockTitle.AutoSize = true;
             lblStockTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblStockTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblStockTitle.Location = new Point(573, 0);
+            lblStockTitle.Location = new Point(638, 255);
             lblStockTitle.Name = "lblStockTitle";
             lblStockTitle.Size = new Size(100, 20);
             lblStockTitle.TabIndex = 6;
@@ -289,7 +289,7 @@
             lblStockVal.AutoEllipsis = true;
             lblStockVal.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblStockVal.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStockVal.Location = new Point(573, 24);
+            lblStockVal.Location = new Point(615, 24);
             lblStockVal.Name = "lblStockVal";
             lblStockVal.Size = new Size(184, 25);
             lblStockVal.TabIndex = 7;
@@ -300,7 +300,7 @@
             lblStockBadge.AutoSize = true;
             lblStockBadge.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
             lblStockBadge.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStockBadge.Location = new Point(573, 54);
+            lblStockBadge.Location = new Point(615, 54);
             lblStockBadge.Name = "lblStockBadge";
             lblStockBadge.Size = new Size(0, 20);
             lblStockBadge.TabIndex = 8;
@@ -311,10 +311,10 @@
             pnlFooter.Controls.Add(lblHelp);
             pnlFooter.Controls.Add(btnClose);
             pnlFooter.Dock = DockStyle.Bottom;
-            pnlFooter.Location = new Point(0, 508);
+            pnlFooter.Location = new Point(0, 695);
             pnlFooter.Name = "pnlFooter";
             pnlFooter.Padding = new Padding(20, 10, 20, 10);
-            pnlFooter.Size = new Size(840, 52);
+            pnlFooter.Size = new Size(892, 52);
             pnlFooter.TabIndex = 3;
             // 
             // lblHelp
@@ -324,7 +324,7 @@
             lblHelp.ForeColor = Color.FromArgb(100, 116, 139);
             lblHelp.Location = new Point(20, 16);
             lblHelp.Name = "lblHelp";
-            lblHelp.Size = new Size(393, 20);
+            lblHelp.Size = new Size(391, 20);
             lblHelp.TabIndex = 0;
             lblHelp.Text = "Atajos: [F2/F6] Buscar  |  [ESC] Cerrar  |  Pistola lectora";
             // 
@@ -333,7 +333,7 @@
             btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             btnClose.FlatStyle = FlatStyle.Flat;
             btnClose.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClose.Location = new Point(712, 10);
+            btnClose.Location = new Point(764, 10);
             btnClose.Name = "btnClose";
             btnClose.Size = new Size(108, 32);
             btnClose.TabIndex = 1;
@@ -345,7 +345,7 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
-            ClientSize = new Size(840, 560);
+            ClientSize = new Size(892, 747);
             Controls.Add(pnlFooter);
             Controls.Add(pnlDetailsCard);
             Controls.Add(pnlSearchCard);
