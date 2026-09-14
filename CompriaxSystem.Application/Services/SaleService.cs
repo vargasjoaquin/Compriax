@@ -173,6 +173,12 @@ namespace CompriaxSystem.Application.Services
             return OperationResult.Ok();
         }
 
+        public async Task<string> GetNextDocumentNumberAsync(int documentTypeId)
+        {
+            var lastNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(documentTypeId);
+            return GenerateNextNumber(lastNumber);
+        }
+
         private static string GenerateNextNumber(string? lastNumber)
         {
             if (!string.IsNullOrWhiteSpace(lastNumber) && long.TryParse(lastNumber, out long lastId))

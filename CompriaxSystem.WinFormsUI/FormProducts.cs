@@ -1,6 +1,7 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.WinFormsUI.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -9,15 +10,17 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IProductService _productService;
         private readonly ICatalogService _catalogService;
         private readonly IDocumentService _documentService;
+        private readonly IServiceProvider _serviceProvider;
 
         private int _selectedProductId = 0;
         private byte[]? _imageBuffer = null;
 
-        public FormProducts(IProductService productService, ICatalogService catalogService, IDocumentService documentService)
+        public FormProducts(IProductService productService, ICatalogService catalogService, IDocumentService documentService, IServiceProvider serviceProvider)
         {
             _productService = productService;
             _catalogService = catalogService;
             _documentService = documentService;
+            _serviceProvider = serviceProvider;
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
@@ -32,6 +35,7 @@ namespace CompriaxSystem.WinFormsUI
             this.btnPrintStock.Click += async (s, e) => await ExecuteExportPdfAction();
             this.btnBrowseImage.Click += (s, e) => HandleImageSelection();
             this.btnClearImage.Click += (s, e) => HandleImageRemoval();
+            this.btnGenerateLabel.Click += (s, e) => ExecuteOpenLabelDesigner();
         }
 
         public async Task InitializeFormAsync()
@@ -187,6 +191,19 @@ namespace CompriaxSystem.WinFormsUI
                 string fileName = $"Reporte_Stock_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
                 await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Exportar Reporte de Stock");
             }
+        }
+
+        private void ExecuteOpenLabelDesigner()
+        {
+            if (dgvProducts.CurrentRow?.DataBoundItem is not ProductDto selectedProduct)
+            {
+                UIHelper.WarnMessage(this, "Debe seleccionar un producto de la tabla para generar su etiqueta.", "Selección Requerida");
+                return;
+            }
+
+            var labelForm = _serviceProvider.GetRequiredService<FormProductLabels>();
+            labelForm.PreloadProduct(selectedProduct, 1);
+            labelForm.ShowDialog(this);
         }
 
         private ProductCreateDto MapFieldsToDto()

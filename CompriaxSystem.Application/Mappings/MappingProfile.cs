@@ -253,6 +253,29 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
+
+            // ==========================================
+            // 12. ETIQUETAS DE PRODUCTOS (PRODUCT LABELS)
+            // ==========================================
+            CreateMap<Product, ProductLabelDto>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.LabelDescription, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.SellPrice))
+                .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty))
+                .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand != null ? src.Brand.Name : string.Empty))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(_ => 1))
+                .ForMember(dest => dest.StoreName, opt => opt.Ignore())
+                .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(_ => DateTime.Now));
+
+            CreateMap<ProductDto, ProductLabelDto>()
+                .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.LabelDescription, opt => opt.MapFrom(src => src.Name))
+                .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.SellPrice))
+                .ForMember(dest => dest.Quantity, opt => opt.MapFrom(_ => 1))
+                .ForMember(dest => dest.StoreName, opt => opt.Ignore())
+                .ForMember(dest => dest.GeneratedAt, opt => opt.MapFrom(_ => DateTime.Now));
         }
     }
 }
