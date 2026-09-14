@@ -68,6 +68,8 @@ namespace CompriaxSystem.Application.Services
                         // ==========================================
                         // 3. RECUADRO DE COMPROBANTE FISCAL
                         // ==========================================
+                        bool isNonFiscal = data.DocumentLetter == "X" || data.DocumentTypeCode.Contains("NO FISCAL");
+
                         col.Item().Row(r =>
                         {
                             // Cuadrado de la Letra
@@ -78,20 +80,17 @@ namespace CompriaxSystem.Application.Services
 
                             r.RelativeItem().Column(c =>
                             {
-                                c.Item().Text($"{data.DocumentTypeName} ({data.DocumentTypeCode})").Bold();
+                                c.Item().Text($"{data.DocumentTypeName.ToUpper()} ({data.DocumentTypeCode})").Bold();
                                 c.Item().Text($"P.V.: {data.PointOfSale:D4}  NRO: {data.DocumentNumber}").Bold();
                                 c.Item().Text($"FECHA: {data.Date:dd/MM/yyyy}  HORA: {data.Date:HH:mm:ss}");
                             });
                         });
 
-                        col.Item().PaddingTop(2).Row(r =>
+                        if (isNonFiscal)
                         {
-                            r.RelativeItem().Text($"CAJERO: {data.CashierName}").FontSize(baseFontSize - 0.5f);
-                            if (data.PosNumber.HasValue)
-                                r.RelativeItem().AlignRight().Text($"CAJA: #{data.PosNumber:D2}").FontSize(baseFontSize - 0.5f);
-                        });
-
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                            col.Item().PaddingTop(3).Border(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter()
+                                .Text("--- DOCUMENTO NO VÁLIDO COMO FACTURA ---").FontSize(baseFontSize - 1.5f).Bold();
+                        }
 
                         // ==========================================
                         // 4. DATOS DEL CLIENTE

@@ -144,5 +144,24 @@ namespace CompriaxSystem.Application.Services
                 ? OperationResult.Ok($"Producto '{product.Name}' retirado correctamente.")
                 : OperationResult.Failure("No se detectaron cambios en la base de datos.");
         }
+
+        public async Task<IEnumerable<ProductDto>> SearchProductsAsync(string searchTerm)
+        {
+            if (string.IsNullOrWhiteSpace(searchTerm))
+                return Enumerable.Empty<ProductDto>();
+
+            var cleanTerm = searchTerm.Trim();
+            var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
+
+            var matches = allProducts.Where(p =>
+                !p.IsDeleted && p.IsActive &&
+                (p.Name.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase) ||
+                 p.Barcode.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase) ||
+                 (p.Description != null && p.Description.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase)) ||
+                 (p.Brand != null && p.Brand.Name.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase))))
+                .Take(15);
+
+            return mapper.Map<IEnumerable<ProductDto>>(matches);
+        }
     }
 }

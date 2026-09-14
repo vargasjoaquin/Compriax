@@ -19,5 +19,12 @@ namespace CompriaxSystem.Application.Interfaces.Services
         /// <param name="requestQuantity">Cantidad solicitada.</param>
         /// <returns>Resultado indicando disponibilidad de stock.</returns>
         Task<OperationResult> ValidateStockAsync(int productId, int requestQuantity);
+
+        /// <summary>
+        /// Obtiene el próximo número de comprobante correlativo que se emitirá para un tipo de documento.
+        /// </summary>
+        /// <param name="documentTypeId">ID del tipo de documento fiscal o interno.</param>
+        /// <returns>Próximo número correlativo formateado a 8 dígitos.</returns>
+        Task<string> GetNextDocumentNumberAsync(int documentTypeId);
     }
 }

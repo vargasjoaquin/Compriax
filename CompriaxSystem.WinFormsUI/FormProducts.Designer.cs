@@ -19,6 +19,7 @@
         {
             pnlHeader = new Panel();
             lblTitle = new Label();
+            btnGenerateLabel = new Button();
             btnPrintStock = new Button();
             pnlMain = new Panel();
             dgvProducts = new DataGridView();
@@ -58,6 +59,7 @@
             // pnlHeader
             pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
             pnlHeader.Controls.Add(lblTitle);
+            pnlHeader.Controls.Add(btnGenerateLabel);
             pnlHeader.Controls.Add(btnPrintStock);
             pnlHeader.Dock = DockStyle.Top;
             pnlHeader.Location = new Point(0, 0);
@@ -74,6 +76,20 @@
             lblTitle.Size = new Size(492, 30);
             lblTitle.TabIndex = 0;
             lblTitle.Text = "CATÁLOGO DE PRODUCTOS E INVENTARIO";
+
+            // btnGenerateLabel
+            btnGenerateLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            btnGenerateLabel.BackColor = Color.FromArgb(16, 185, 129);
+            btnGenerateLabel.FlatAppearance.BorderSize = 0;
+            btnGenerateLabel.FlatStyle = FlatStyle.Flat;
+            btnGenerateLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            btnGenerateLabel.ForeColor = Color.White;
+            btnGenerateLabel.Location = new Point(818, 10);
+            btnGenerateLabel.Name = "btnGenerateLabel";
+            btnGenerateLabel.Size = new Size(200, 54);
+            btnGenerateLabel.TabIndex = 1;
+            btnGenerateLabel.Text = "IMPRIMIR ETIQUETA";
+            btnGenerateLabel.UseVisualStyleBackColor = false;
 
             // btnPrintStock
             btnPrintStock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
@@ -379,6 +395,7 @@
 
         private System.Windows.Forms.Panel pnlHeader;
         private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Button btnGenerateLabel;
         private System.Windows.Forms.Button btnPrintStock;
         private System.Windows.Forms.Panel pnlMain;
         private System.Windows.Forms.Panel groupEdit;

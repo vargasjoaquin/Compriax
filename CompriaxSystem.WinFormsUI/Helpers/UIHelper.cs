@@ -58,6 +58,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             { "StockStatus", "Estado Stock" },
             { "UnitOfMeasureName", "Unidad de Medida" },
             { "InitialStock", "Stock Inicial" },
+            { "LabelDescription", "Descripción en Etiqueta" },
 
             // 3. Personas (Clientes, Proveedores, Empleados)
             { "DocumentNumber", "N.° Documento / DNI" },
@@ -105,6 +106,8 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             { "TotalRevenue", "Recaudación Total" },
             { "SupplierName", "Proveedor" },
             { "SupplierTaxId", "CUIT Proveedor" },
+            { "Price", "Precio Unitario" },
+            { "FormattedPrice", "Precio" },
 
             // 5. Control de Caja, Turnos y Arqueos (X/Z)
             { "UserName", "Cajero / Responsable" },
@@ -128,6 +131,8 @@ namespace CompriaxSystem.WinFormsUI.Helpers
             { "Amount", "Importe" },
             { "CreatedAt", "Fecha de Registro" },
             { "Remarks", "Observaciones / Detalle" },
+            { "StoreName", "Comercio / Emisor" },
+            { "GeneratedAt", "Fecha de Emisión" },
 
             // 6. Seguridad y Usuarios
             { "Username", "Usuario (Login)" },
@@ -209,7 +214,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
                 "Difference", "TotalCashSales", "TotalDebitSales", "TotalCreditSales",
                 "TotalTransferSales", "TotalQrSales", "TotalManualCashIn",
                 "TotalManualCashOut", "CurrentSystemCash", "TotalTurnover", "Amount",
-                "ExpectedCashInDrawer", "TotalSalesAmount"
+                "ExpectedCashInDrawer", "TotalSalesAmount", "Price"
             };
 
             foreach (var col in moneyCols)

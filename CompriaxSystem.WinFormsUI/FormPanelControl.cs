@@ -151,12 +151,12 @@ namespace CompriaxSystem.WinFormsUI
                     NavMenuItemHelper.Direct("Promociones y Descuentos", "Reglas 2x1 y % OFF", Resources._071_promociones_y_descuentos, typeof(FormPromotions), requireAdmin: true),
                 }),
 
-                NavMenuItemHelper.Group("Inventario ▾", "Catálogo, Precios y Stock", Resources._053_gestion_de_productos, new List<NavMenuItemHelper>
-                {
+               NavMenuItemHelper.Group("Inventario ▾", "Catálogo, Precios y Stock", Resources._053_gestion_de_productos, new List<NavMenuItemHelper>
+               {
                     NavMenuItemHelper.Direct("Catálogo de Productos", "Gestión de Artículos", Resources._053_gestion_de_productos, typeof(FormProducts)),
                     NavMenuItemHelper.Direct("Categorías", "Familias de Productos", Resources._064_gestion_de_categorias, typeof(FormCategories), requireAdmin: true),
-                    NavMenuItemHelper.Direct("Etiquetas de Precio", "Impresión con Código de Barras", Resources._061_codigo_de_barras, typeof(FormPrintPrices))
-                }),
+                    NavMenuItemHelper.Direct("Etiquetas de Precio", "Generador de Etiquetas de Góndola", Resources._061_codigo_de_barras, typeof(FormProductLabels))
+               }),
 
                 NavMenuItemHelper.Group("Caja & Turnos ▾", "Arqueo y Cierres X/Z", Resources._072_caja_y_turnos, new List<NavMenuItemHelper>
                 {
