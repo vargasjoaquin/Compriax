@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -134,7 +135,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             _isInitializing = true;
             var user = _currentUser.CurrentUser;
-            bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+            bool isAdmin = user != null && user.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
 
             if (!_currentUser.HasRegisterAssigned)
             {
@@ -218,19 +219,21 @@ namespace CompriaxSystem.WinFormsUI
                 return;
 
             string typeName = docType.Name.ToUpperInvariant();
-            string letter = "B";
+
+            string letter = VoucherLetterCodes.LETTER_B;
+
             if (typeName.Contains("FACTURA A") || typeName.Contains("NOTA DE DÉBITO A") || typeName.Contains("NOTA DE CRÉDITO A") || typeName.Contains("RECIBO A") || typeName.Contains("TICKET FACTURA A"))
-                letter = "A";
+                letter = VoucherLetterCodes.LETTER_A;
             else if (typeName.Contains("FACTURA C") || typeName.Contains("NOTA DE DÉBITO C") || typeName.Contains("NOTA DE CRÉDITO C") || typeName.Contains("RECIBO C"))
-                letter = "C";
+                letter = VoucherLetterCodes.LETTER_C;
             else if (typeName.Contains("FACTURA M") || typeName.Contains("NOTA DE DÉBITO M") || typeName.Contains("NOTA DE CRÉDITO M"))
-                letter = "M";
+                letter = VoucherLetterCodes.LETTER_M;
             else if (typeName.Contains("EXPORTACIÓN") || typeName.Contains("EXPORTACION"))
-                letter = "E";
+                letter = VoucherLetterCodes.LETTER_E;
             else if (typeName.Contains("REMITO R"))
-                letter = "R";
+                letter = VoucherLetterCodes.LETTER_R;
             else if (typeName.Contains("REMITO X") || typeName.Contains("PRESUPUESTO") || typeName.Contains("COMPROBANTE X"))
-                letter = "X";
+                letter = VoucherLetterCodes.LETTER_X;
 
             lblVoucherLetter.Text = letter;
 
@@ -248,7 +251,7 @@ namespace CompriaxSystem.WinFormsUI
                 lblClientDocVal.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
                 lblClientTaxVal.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
 
-                if (letter == "A" && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
+                if (letter == VoucherLetterCodes.LETTER_A && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
                 {
                     lblClientTaxVal.Text += "  [Requiere Resp. Inscripto]";
                     lblClientTaxVal.ForeColor = UIThemeHelper.Danger;
@@ -260,13 +263,13 @@ namespace CompriaxSystem.WinFormsUI
             }
             else
             {
-                lblClientNameVal.Text = "CONSUMIDOR FINAL";
-                lblClientDocVal.Text = "DOC: S/D";
-                lblClientTaxVal.Text = "IVA: Consumidor Final";
-                lblClientTaxVal.ForeColor = letter == "A" ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
+                lblClientNameVal.Text = TaxConstants.DEFAULT_TAX_CONDITION_NAME.ToUpper();
+                lblClientDocVal.Text = $"DOC: {TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER}";
+                lblClientTaxVal.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME}";
+                lblClientTaxVal.ForeColor = letter == VoucherLetterCodes.LETTER_A ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
 
-                if (letter == "A")
-                    lblClientTaxVal.Text = "IVA: Consumidor Final [Requiere Cliente Resp. Inscripto]";
+                if (letter == VoucherLetterCodes.LETTER_A)
+                    lblClientTaxVal.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME} [Requiere Cliente Resp. Inscripto]";
             }
         }
 

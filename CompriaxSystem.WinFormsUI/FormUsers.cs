@@ -1,6 +1,7 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 
 namespace CompriaxSystem.WinFormsUI
@@ -82,8 +83,8 @@ namespace CompriaxSystem.WinFormsUI
             SetButtonState(isEditing: true);
             txtUsername.ReadOnly = true;
 
-            bool isAdmin = u.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
-                           u.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+            bool isAdmin = u.Username.Equals(RoleConstants.DEFAULT_ADMIN_USERNAME, StringComparison.OrdinalIgnoreCase) ||
+                           u.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
             btnDelete.Enabled = !isAdmin;
             cboRole.Enabled = !isAdmin;
         }

@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -79,12 +80,12 @@ namespace CompriaxSystem.WinFormsUI
             try
             {
                 var user = _currentUserService.CurrentUser;
-                bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+                bool isAdmin = user != null && user.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
                 var ctx = _currentUserService.OperationalContext;
 
                 if (isAdmin && ctx == null)
                 {
-                    lblShiftStatus.Text = " Modo Supervisor (Vista Global)";
+                    lblShiftStatus.Text = " Modo Supervisor";
                     lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
                     lblShiftStatus.ForeColor = Color.FromArgb(226, 232, 240);
                 }
@@ -124,7 +125,7 @@ namespace CompriaxSystem.WinFormsUI
             lblSessionUser.Text = user.FullName.ToUpper();
             lblRoleName.Text = $"[{user.RoleName.ToUpper()}]";
 
-            bool isAdmin = user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+            bool isAdmin = user.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
             BuildNavigationMenu(isAdmin);
         }
 

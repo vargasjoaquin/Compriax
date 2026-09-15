@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 
 namespace CompriaxSystem.WinFormsUI
@@ -72,7 +73,7 @@ namespace CompriaxSystem.WinFormsUI
             txtUser.Text = _currentSale.CashierName;
             txtClientDoc.Text = _currentSale.CustomerDoc;
 
-            if (!string.IsNullOrWhiteSpace(_currentSale.CustomerName) && _currentSale.CustomerName != "Consumidor Final")
+            if (!string.IsNullOrWhiteSpace(_currentSale.CustomerName) && _currentSale.CustomerName != TaxConstants.DEFAULT_TAX_CONDITION_NAME)
             {
                 var parts = _currentSale.CustomerName.Split(' ', 2);
                 txtClientName.Text = parts.Length > 0 ? parts[0] : _currentSale.CustomerName;
