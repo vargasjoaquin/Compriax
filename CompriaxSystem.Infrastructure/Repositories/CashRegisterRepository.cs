@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompriaxSystem.Application.Interfaces.Repositories;
+﻿using CompriaxSystem.Application.Interfaces.Repositories;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompriaxSystem.Infrastructure.Repositories
 {
@@ -52,7 +53,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
         public async Task<bool> HasOpenShiftAsync(int cashRegisterId)
         {
             return await context.CashShifts
-                .AnyAsync(cs => cs.CashRegisterId == cashRegisterId && cs.Status == "Abierta");
+                .AnyAsync(cs => cs.CashRegisterId == cashRegisterId && cs.Status == CashShiftStatuses.OPEN);
         }
 
         /// <summary>

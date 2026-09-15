@@ -2,6 +2,7 @@
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 
 namespace CompriaxSystem.Application.Services
@@ -17,7 +18,7 @@ namespace CompriaxSystem.Application.Services
             var registers = await unitOfWork.CashRegisters.GetAllAsync();
 
             return registers.Select(cr => {
-                var openShift = cr.CashShifts.FirstOrDefault(cs => cs.Status == "Abierta");
+                var openShift = cr.CashShifts.FirstOrDefault(cs => cs.Status == CashShiftStatuses.OPEN;
                 return new CashRegisterDto
                 {
                     Id = cr.Id,

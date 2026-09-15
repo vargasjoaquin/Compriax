@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 
 namespace CompriaxSystem.Application.Mappings
@@ -8,9 +9,7 @@ namespace CompriaxSystem.Application.Mappings
     {
         public MappingProfile()
         {
-            // ==========================================
             // 1. USUARIOS Y PERFIL
-            // ==========================================
             CreateMap<User, UserDto>()
                 .ForMember(dest => dest.RoleName, opt => opt.MapFrom(src => src.Role != null ? src.Role.Name : string.Empty));
 
@@ -55,9 +54,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 2. CATEGORÍAS
-            // ==========================================
             CreateMap<Category, CategoryDto>().ReverseMap()
                 .ForMember(dest => dest.Products, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
@@ -67,9 +64,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 3. CLIENTES
-            // ==========================================
             CreateMap<Customer, CustomerDto>()
                 .ForMember(dest => dest.TaxConditionName, opt => opt.MapFrom(src => src.TaxCondition != null ? src.TaxCondition.Name : string.Empty))
                 .ReverseMap()
@@ -81,9 +76,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 4. PROVEEDORES
-            // ==========================================
             CreateMap<Supplier, SupplierDto>().ReverseMap()
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedBy, opt => opt.Ignore())
@@ -92,9 +85,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 5. EMPLEADOS
-            // ==========================================
             CreateMap<Employee, EmployeeDto>()
                 .ForMember(dest => dest.PositionName, opt => opt.MapFrom(src => src.Position != null ? src.Position.Name : string.Empty))
                 .ForMember(dest => dest.GenderName, opt => opt.MapFrom(src => src.Gender != null ? src.Gender.Name : string.Empty))
@@ -110,9 +101,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 6. PRODUCTOS
-            // ==========================================
             CreateMap<Product, ProductDto>()
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty))
                 .ForMember(dest => dest.BrandName, opt => opt.MapFrom(src => src.Brand != null ? src.Brand.Name : string.Empty))
@@ -141,14 +130,12 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 7. VENTAS (SALES)
-            // ==========================================
             CreateMap<Sale, SaleDto>()
                 .ForMember(dest => dest.DocumentTypeName, opt => opt.MapFrom(src => src.DocumentType != null ? src.DocumentType.Name : "N/A"))
-                .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : "Efectivo"))
-                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Customer != null ? $"{src.Customer.LastName}, {src.Customer.FirstName}".Trim() : "Consumidor Final"))
-                .ForMember(dest => dest.CustomerDoc, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.DocumentNumber : "S/D"))
+                .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : PaymentMethodConstants.CASH))
+                .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Customer != null ? $"{src.Customer.LastName}, {src.Customer.FirstName}".Trim() : TaxConstants.DEFAULT_TAX_CONDITION_NAME))
+                .ForMember(dest => dest.CustomerDoc, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.DocumentNumber : TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER))
                 .ForMember(dest => dest.CashierName, opt => opt.MapFrom(src => src.User != null ? src.User.Username : "N/A"))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.CreatedAt))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.SaleItems))
@@ -176,12 +163,10 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 8. COMPRAS (PURCHASES)
-            // ==========================================
             CreateMap<Purchase, PurchaseCreateDto>()
                 .ForMember(dest => dest.DocumentTypeName, opt => opt.MapFrom(src => src.DocumentType != null ? src.DocumentType.Name : string.Empty))
-                .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : "Efectivo"))
+                .ForMember(dest => dest.PaymentMethodName, opt => opt.MapFrom(src => src.PaymentMethod != null ? src.PaymentMethod.Name : PaymentMethodConstants.CASH))
                 .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.PurchaseItems));
 
             CreateMap<PurchaseCreateDto, Purchase>()
@@ -204,16 +189,12 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.Product, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 9. AJUSTES DEL COMERCIO (STORE SETTINGS)
-            // ==========================================
             CreateMap<StoreSettings, StoreSettingsDto>().ReverseMap()
                 .ForMember(dest => dest.TaxCondition, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 10. PROMOCIONES Y DESCUENTOS
-            // ==========================================
             CreateMap<Promotion, PromotionDto>()
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
                 .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : null))
@@ -227,11 +208,9 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.IsDeleted, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 11. TURNOS Y MOVIMIENTOS DE CAJA
-            // ==========================================
             CreateMap<CashShift, CashShiftDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? $"{src.User.LastName}, {src.User.FirstName}".Trim() : "Cajero"))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? $"{src.User.LastName}, {src.User.FirstName}".Trim() : RoleConstants.CASHIER))
                 .ReverseMap()
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .ForMember(dest => dest.Sales, opt => opt.Ignore())
@@ -239,7 +218,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
             CreateMap<CashMovement, CashMovementDto>()
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.Username : "Cajero"))
+                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.User != null ? src.User.Username : RoleConstants.CASHIER))
                 .ReverseMap()
                 .ForMember(dest => dest.User, opt => opt.Ignore())
                 .ForMember(dest => dest.CashShift, opt => opt.Ignore())
@@ -254,9 +233,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // ==========================================
             // 12. ETIQUETAS DE PRODUCTOS (PRODUCT LABELS)
-            // ==========================================
             CreateMap<Product, ProductLabelDto>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))

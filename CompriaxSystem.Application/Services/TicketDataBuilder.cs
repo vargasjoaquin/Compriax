@@ -1,6 +1,7 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Enums;
 using static CompriaxSystem.Application.DTOs.TicketPaymentDataDto;
 
@@ -109,9 +110,9 @@ namespace CompriaxSystem.Application.Services
                 ShiftId = null,
                 PosNumber = pointOfSale,
 
-                CustomerName = string.IsNullOrWhiteSpace(sale.CustomerName) ? "Consumidor Final" : sale.CustomerName,
-                CustomerDoc = string.IsNullOrWhiteSpace(sale.CustomerDoc) ? "S/D" : sale.CustomerDoc,
-                CustomerTaxCondition = "Consumidor Final",
+                CustomerName = string.IsNullOrWhiteSpace(sale.CustomerName) ? TaxConstants.DEFAULT_TAX_CONDITION_NAME : sale.CustomerName,
+                CustomerDoc = string.IsNullOrWhiteSpace(sale.CustomerDoc) ? TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER : sale.CustomerDoc,
+                CustomerTaxCondition = TaxConstants.DEFAULT_TAX_CONDITION_NAME,
 
                 Items = items,
                 SubTotal = subtotal,
@@ -142,83 +143,77 @@ namespace CompriaxSystem.Application.Services
         private static (string Letter, string Code) ExtractDocumentLetterAndCode(string? documentTypeName)
         {
             if (string.IsNullOrWhiteSpace(documentTypeName))
-                return ("B", "COD. 006");
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_FACTURA_B);
 
             string type = documentTypeName.ToUpperInvariant();
 
-            // 1. COMPROBANTES CLASE 'A' (Responsable Inscripto a Responsable Inscripto)
-            if (type.Contains("FACTURA A") && !type.Contains("TICKET")) 
-                return ("A", "COD. 001");
-            
-            if (type.Contains("NOTA DE DÉBITO A") || type.Contains("NOTA DE DEBITO A")) 
-                return ("A", "COD. 002");
-            
+            if (type.Contains("FACTURA A") && !type.Contains("TICKET"))
+                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeFacturaA);
+
+            if (type.Contains("NOTA DE DÉBITO A") || type.Contains("NOTA DE DEBITO A"))
+                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeNotaDebitoA);
+
             if (type.Contains("NOTA DE CRÉDITO A") || type.Contains("NOTA DE CREDITO A"))
-                return ("A", "COD. 003");
-            
+                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeNotaCreditoA);
+
             if (type.Contains("RECIBO A"))
-                return ("A", "COD. 004");
-            
-            if (type.Contains("TICKET FACTURA A")) 
-                return ("A", "COD. 081");
+                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeReciboA);
 
-            // 2. COMPROBANTES CLASE 'B' (A Consumidor Final / Exento)
+            if (type.Contains("TICKET FACTURA A"))
+                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeTicketFacturaA);
+
             if (type.Contains("FACTURA B") && !type.Contains("TICKET"))
-                return ("B", "COD. 006");
-            
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeFacturaB);
+
             if (type.Contains("NOTA DE DÉBITO B") || type.Contains("NOTA DE DEBITO B"))
-                return ("B", "COD. 007");
-            
-            if (type.Contains("NOTA DE CRÉDITO B") || type.Contains("NOTA DE CREDITO B")) 
-                return ("B", "COD. 008");
-            
-            if (type.Contains("RECIBO B")) 
-                return ("B", "COD. 009");
-            
-            if (type.Contains("TICKET FACTURA B")) 
-                return ("B", "COD. 082");
-            
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeNotaDebitoB);
+
+            if (type.Contains("NOTA DE CRÉDITO B") || type.Contains("NOTA DE CREDITO B"))
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeNotaCreditoB);
+
+            if (type.Contains("RECIBO B"))
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeReciboB);
+
+            if (type.Contains("TICKET FACTURA B"))
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeTicketFacturaB);
+
             if (type.Contains("TICKET CONSUMIDOR FINAL") || type.Contains("CLIENTE CASUAL") || type.Contains("TICKET"))
-                return ("B", "COD. 083");
+                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeTicketConsumidorFinal);
 
-            // 3. COMPROBANTES CLASE 'C' (Monotributo)
-            if (type.Contains("FACTURA C") && !type.Contains("TICKET")) 
-                return ("C", "COD. 011");
-            
-            if (type.Contains("NOTA DE DÉBITO C") || type.Contains("NOTA DE DEBITO C")) 
-                return ("C", "COD. 012");
-            
+            if (type.Contains("FACTURA C") && !type.Contains("TICKET"))
+                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeFacturaC);
+
+            if (type.Contains("NOTA DE DÉBITO C") || type.Contains("NOTA DE DEBITO C"))
+                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeNotaDebitoC);
+
             if (type.Contains("NOTA DE CRÉDITO C") || type.Contains("NOTA DE CREDITO C"))
-                return ("C", "COD. 013");
-            
+                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeNotaCreditoC);
+
             if (type.Contains("RECIBO C"))
-                return ("C", "COD. 015");
+                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeReciboC);
 
-            // 4. COMPROBANTES CLASE 'M' Y 'E'
-            if (type.Contains("FACTURA M")) 
-                return ("M", "COD. 051");
-            
+            if (type.Contains("FACTURA M"))
+                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeFacturaM);
+
             if (type.Contains("NOTA DE DÉBITO M") || type.Contains("NOTA DE DEBITO M"))
-                return ("M", "COD. 052");
-            
-            if (type.Contains("NOTA DE CRÉDITO M") || type.Contains("NOTA DE CREDITO M")) 
-                return ("M", "COD. 053");
-            
+                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeNotaDebitoM);
+
+            if (type.Contains("NOTA DE CRÉDITO M") || type.Contains("NOTA DE CREDITO M"))
+                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeNotaCreditoM);
+
             if (type.Contains("EXPORTACIÓN") || type.Contains("EXPORTACION"))
-                return ("E", "COD. 019");
+                return (VoucherLetterCodes.LetterE, VoucherLetterCodes.CodeExportacionE);
 
-            // 5. REMITOS OFICIALES 'R'
-            if (type.Contains("REMITO R")) 
-                return ("R", "COD. 091");
+            if (type.Contains("REMITO R"))
+                return (VoucherLetterCodes.LetterR, VoucherLetterCodes.CodeRemitoR);
 
-            // 6. COMPROBANTES NO FISCALES CLASE 'X' (Remito X, Presupuestos, Comprobante X)
-            if (type.Contains("REMITO X")) 
-                return ("X", "REMITO X (NO FISCAL)");
-            
-            if (type.Contains("PRESUPUESTO")) 
-                return ("X", "PRESUPUESTO (NO FISCAL)");
+            if (type.Contains("REMITO X"))
+                return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalRemitoX);
 
-            return ("X", "COMPROBANTE X (NO FISCAL)");
+            if (type.Contains("PRESUPUESTO"))
+                return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalPresupuesto);
+
+            return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalComprobanteX);
         }
     }
 }

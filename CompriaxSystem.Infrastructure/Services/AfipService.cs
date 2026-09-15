@@ -1,8 +1,9 @@
-﻿using Microsoft.Extensions.Options;
-using CompriaxSystem.Application.Configuration;
+﻿using CompriaxSystem.Application.Configuration;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
+using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
 using ZXing;
@@ -166,7 +167,7 @@ namespace CompriaxSystem.Infrastructure.Services
                 PointOfSale = pointOfSale,
                 InvoiceNumber = invoiceNum,
                 QrUrl = qrUrl,
-                FiscalStatus = _settings.Enabled ? "Aprobado" : "Comprobante Fiscal Digital"
+                FiscalStatus = _settings.Enabled ? FiscalStatuses.APPROVED : FiscalStatuses.DIGITAL_VOUCHER
             };
         }
 

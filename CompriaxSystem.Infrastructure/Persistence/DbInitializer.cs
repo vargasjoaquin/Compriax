@@ -1,4 +1,5 @@
-﻿using CompriaxSystem.Domain.Entities;
+﻿using CompriaxSystem.Domain.Constants;
+using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,38 +17,38 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 1. ROLES DEL SISTEMA
             // =========================================================================
-            Role? adminRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == "Administrador");
+            Role? administratorRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == RoleConstants.ADMINISTRATOR);
             
-            if (adminRole == null)
+            if (administratorRole == null)
             {
-                adminRole = new Role { Name = "Administrador" };
-                var cashierRole = new Role { Name = "Cajero" };
+                administratorRole = new Role { Name = RoleConstants.ADMINISTRATOR };
+                var cashierRole = new Role { Name = RoleConstants.CASHIER };
 
-                await context.Roles.AddRangeAsync(adminRole, cashierRole);
+                await context.Roles.AddRangeAsync(administratorRole, cashierRole);
                 await context.SaveChangesAsync();
             }
 
             // =========================================================================
             // 2. USUARIO ADMINISTRADOR
             // =========================================================================
-            User? adminUser = await context.Users.FirstOrDefaultAsync(u => u.Username == "admin");
+            User? administratorUser = await context.Users.FirstOrDefaultAsync(u => u.Username == RoleConstants.DEFAULT_ADMIN_USERNAME);
             
-            if (adminUser == null)
+            if (administratorUser == null)
             {
-                adminUser = new User
+                administratorUser = new User
                 {
                     Username = "admin",
                     Password = BCrypt.Net.BCrypt.HashPassword("admin123"),
                     FirstName = "Administrador",
                     LastName = "Principal",
                     Email = "admin@supermarket.com",
-                    RoleId = adminRole.Id,
+                    RoleId = administratorUser.Id,
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false
                 };
 
-                await context.Users.AddAsync(adminUser);
+                await context.Users.AddAsync(administratorUser);
                 await context.SaveChangesAsync();
             }
 
@@ -75,17 +76,17 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 4. MÉTODOS DE PAGO
             // =========================================================================
-            PaymentMethod? defaultPayment = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == "Efectivo");
+            PaymentMethod? defaultPayment = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == PaymentMethodConstants.CASH);
             
             if (defaultPayment == null)
             {
-                defaultPayment = new PaymentMethod { Name = "Efectivo", IsActive = true };
+                defaultPayment = new PaymentMethod { Name = PaymentMethodConstants.CASH, IsActive = true };
                 await context.PaymentMethods.AddRangeAsync(
                     defaultPayment,
-                    new PaymentMethod { Name = "Tarjeta de Débito", IsActive = true },
-                    new PaymentMethod { Name = "Tarjeta de Crédito", IsActive = true },
-                    new PaymentMethod { Name = "Transferencia Bancaria", IsActive = true },
-                    new PaymentMethod { Name = "Mercado Pago / QR", IsActive = true }
+                    new PaymentMethod { Name = PaymentMethodConstants.DEBIT_CARD, IsActive = true },
+                    new PaymentMethod { Name = PaymentMethodConstants.CREDIT_CARD, IsActive = true },
+                    new PaymentMethod { Name = PaymentMethodConstants.BANK_TRANSFER, IsActive = true },
+                    new PaymentMethod { Name = PaymentMethodConstants.MERCADO_PAGO_QR, IsActive = true }
                 );
                 await context.SaveChangesAsync();
             }
@@ -290,7 +291,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     MinimumStock = 10,
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,
-                    CreatedBy = "admin"
+                    CreatedBy = RoleConstants.DEFAULT_ADMIN_USERNAME
                 };
 
                 await context.Products.AddAsync(sampleProduct);
@@ -299,11 +300,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 await context.StockMovements.AddAsync(new StockMovement
                 {
                     ProductId = sampleProduct.Id,
-                    UserId = adminUser.Id,
+                    UserId = administratorUser.Id,
                     Quantity = 50,
                     MovementType = MovementType.Initial,
                     Remarks = "Alta inicial de catálogo (Stock de muestra)",
-                    CreatedBy = "admin",
+                    CreatedBy = RoleConstants.DEFAULT_ADMIN_USERNAME,
                     CreatedAt = DateTime.UtcNow.AddHours(-2)
                 });
                 await context.SaveChangesAsync();
@@ -316,7 +317,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             {
                 var sampleShift = new CashShift
                 {
-                    UserId = adminUser.Id,
+                    UserId = administratorUser.Id,
                     CashRegisterId = defaultRegister.Id,
                     OpeningDate = DateTime.UtcNow.AddHours(-1),
                     ClosingDate = DateTime.UtcNow.AddMinutes(-5),
@@ -331,7 +332,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     ExpectedCash = 11850.00m,
                     RealCash = 11850.00m,
                     Difference = 0,
-                    Status = "Cerrada",
+                    Status = CashShiftStatuses.CLOSED,
                     ClosingNotes = "Turno inicial de verificación (Caja Cuadrada)"
                 };
 
@@ -343,7 +344,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 var sampleSale = new Sale
                 {
-                    UserId = adminUser.Id,
+                    UserId = administratorUser.Id,
                     CustomerId = null,
                     CashRegisterId = defaultRegister.Id,
                     CashShiftId = sampleShift.Id,
@@ -356,7 +357,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     PaymentChange = 150.00m,
                     PaymentMethodId = defaultPayment.Id,
                     PointOfSale = 1,
-                    FiscalStatus = "Comprobante Fiscal Digital",
+                    FiscalStatus = FiscalStatuses.DIGITAL_VOUCHER,
                     CreatedAt = DateTime.UtcNow.AddMinutes(-30),
                     SaleItems = new List<SaleItem>
                     {
@@ -377,11 +378,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 await context.StockMovements.AddAsync(new StockMovement
                 {
                     ProductId = sampleProduct.Id,
-                    UserId = adminUser.Id,
+                    UserId = administratorUser.Id,
                     Quantity = -1,
                     MovementType = MovementType.Sale,
                     Remarks = "Venta Nro: 00000001 [Caja #1]",
-                    CreatedBy = "admin",
+                    CreatedBy = RoleConstants.DEFAULT_ADMIN_USERNAME,
                     CreatedAt = DateTime.UtcNow.AddMinutes(-30)
                 });
 

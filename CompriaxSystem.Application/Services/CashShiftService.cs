@@ -2,6 +2,7 @@
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 
@@ -51,7 +52,7 @@ namespace CompriaxSystem.Application.Services
                 CashRegisterId = registerId,
                 OpeningDate = DateTime.UtcNow,
                 InitialCash = dto.InitialCash,
-                Status = "Abierta"
+                Status = CashShiftStatuses.OPEN
             };
 
             await unitOfWork.CashShifts.AddAsync(newShift);
@@ -189,7 +190,7 @@ namespace CompriaxSystem.Application.Services
             shift.TotalQrSales = qrSales;
             shift.TotalManualCashIn = manualIn;
             shift.TotalManualCashOut = manualOut;
-            shift.Status = "Cerrada";
+            shift.Status = CashShiftStatuses.CLOSED;
             shift.ClosingNotes = dto.ClosingNotes?.Trim();
 
             unitOfWork.CashShifts.Update(shift);
@@ -256,6 +257,8 @@ namespace CompriaxSystem.Application.Services
             var sales = fullShift.Sales ?? new List<Sale>();
             var movements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id)).ToList();
 
+            bool isClosed = shift.Status == CashShiftStatuses.CLOSED;
+
             return new CashShiftDto
             {
                 Id = shift.Id,
@@ -267,13 +270,13 @@ namespace CompriaxSystem.Application.Services
                 RealCash = shift.RealCash,
                 ExpectedCash = shift.ExpectedCash,
                 Difference = shift.Difference,
-                TotalCashSales = shift.Status == "Cerrada" ? shift.TotalCashSales : sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount),
-                TotalDebitSales = shift.Status == "Cerrada" ? shift.TotalDebitSales : sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount),
-                TotalCreditSales = shift.Status == "Cerrada" ? shift.TotalCreditSales : sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount),
-                TotalTransferSales = shift.Status == "Cerrada" ? shift.TotalTransferSales : sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount),
-                TotalQrSales = shift.Status == "Cerrada" ? shift.TotalQrSales : sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount),
-                TotalManualCashIn = shift.Status == "Cerrada" ? shift.TotalManualCashIn : movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount),
-                TotalManualCashOut = shift.Status == "Cerrada" ? shift.TotalManualCashOut : movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount),
+                TotalCashSales = isClosed ? shift.TotalCashSales : sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount),
+                TotalDebitSales = isClosed ? shift.TotalDebitSales : sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount),
+                TotalCreditSales = isClosed ? shift.TotalCreditSales : sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount),
+                TotalTransferSales = isClosed ? shift.TotalTransferSales : sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount),
+                TotalQrSales = isClosed ? shift.TotalQrSales : sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount),
+                TotalManualCashIn = isClosed ? shift.TotalManualCashIn : movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount),
+                TotalManualCashOut = isClosed ? shift.TotalManualCashOut : movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount),
                 Status = shift.Status,
                 ClosingNotes = shift.ClosingNotes
             };

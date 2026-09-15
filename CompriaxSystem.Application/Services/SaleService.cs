@@ -3,6 +3,7 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 using FluentValidation;
@@ -85,7 +86,7 @@ namespace CompriaxSystem.Application.Services
                 }
                 else
                 {
-                    sale.FiscalStatus = "No Fiscal";
+                    sale.FiscalStatus = FiscalStatuses.NON_FISCAL;
                 }
 
                 sale.DocumentType = null!;

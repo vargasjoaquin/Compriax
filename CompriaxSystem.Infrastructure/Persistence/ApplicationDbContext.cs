@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompriaxSystem.Application.Interfaces.Services;
+﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CompriaxSystem.Infrastructure.Persistence
@@ -435,7 +436,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 entity.HasIndex(cs => cs.CashRegisterId)
                       .IsUnique()
-                      .HasFilter("[Status] = 'Abierta'")
+                      .HasFilter($"[Status] = '{CashShiftStatuses.OPEN}'")
                       .HasDatabaseName("UQ_CashShifts_SingleActiveShiftPerRegister");
 
                 entity.Property(cs => cs.InitialCash).HasPrecision(18, 2);
@@ -532,7 +533,6 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 9. TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
             // =========================================================================
-
             modelBuilder.Entity<MercadoPagoPaymentStatues>(entity =>
             {
                 entity.ToTable("MercadoPagoPaymentStatuses");

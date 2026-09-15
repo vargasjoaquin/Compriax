@@ -3,9 +3,9 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
-using DocumentFormat.OpenXml.Drawing;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
@@ -109,7 +109,7 @@ namespace CompriaxSystem.Application.Services
                 return validation.ToResult();
 
             int currentUserId = currentUser.CurrentUser!.UserId;
-            string currentUsername = !string.IsNullOrWhiteSpace(currentUser.CurrentUser?.Username) ? currentUser.CurrentUser.Username : "admin";
+            string currentUsername = !string.IsNullOrWhiteSpace(currentUser.CurrentUser?.Username) ? currentUser.CurrentUser.Username : RoleConstants.DEFAULT_ADMIN_USERNAME;
 
             await unitOfWork.BeginTransactionAsync();
             try
@@ -124,7 +124,7 @@ namespace CompriaxSystem.Application.Services
                 purchase.TotalAmount = dto.Items.Sum(x => x.Quantity * x.BuyPrice);
                 purchase.SubTotal = purchase.TotalAmount;
                 purchase.TaxAmount = 0;
-                purchase.Status = "Completada";
+                purchase.Status = PurchaseStatuses.COMPLETED;
                 purchase.CreatedAt = DateTime.UtcNow;
 
                 purchase.DocumentType = null!;
