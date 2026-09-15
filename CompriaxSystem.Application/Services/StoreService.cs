@@ -16,7 +16,6 @@ namespace CompriaxSystem.Application.Services
         public async Task<StoreSettingsDto> GetStoreProfileAsync()
         {
             var settings = await unitOfWork.Store.GetSettingsAsync();
-
             return mapper.Map<StoreSettingsDto>(settings);
         }
 

@@ -46,25 +46,25 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            string employeeCode = dto.EmployeeCode.Trim();
-            string documentNumber = dto.DocumentNumber.Trim();
+            string normalizedEmployeeCode = dto.EmployeeCode.Trim(); 
+            string normalizedDocumentNumber = dto.DocumentNumber.Trim();
 
             var allEmployees = await unitOfWork.Employees.GetAllAsync();
 
-            bool employeeCodeExists = allEmployees.Any(e => e.EmployeeCode.Equals(employeeCode, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
-            bool documentNumberExists = allEmployees.Any(e => e.DocumentNumber.Equals(documentNumber, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
+            bool employeeCodeExists = allEmployees.Any(e => e.EmployeeCode.Equals(normalizedEmployeeCode, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
+            bool documentNumberExists = allEmployees.Any(e => e.DocumentNumber.Equals(normalizedDocumentNumber, StringComparison.OrdinalIgnoreCase) && e.Id != dto.Id);
 
             if (employeeCodeExists)
-                return OperationResult.Failure($"El legajo '{employeeCode}' ya pertenece a otro empleado registrado.");
+                return OperationResult.Failure($"El legajo '{normalizedEmployeeCode}' ya pertenece a otro empleado registrado.");
 
             if (documentNumberExists)
-                return OperationResult.Failure($"El número de DNI '{documentNumber}' ya está registrado para otro empleado.");
+                return OperationResult.Failure($"El número de DNI '{normalizedDocumentNumber}' ya está registrado para otro empleado.");
             
             if (dto.Id == 0)
             {
                 var employee = mapper.Map<Employee>(dto);
-                employee.EmployeeCode = employeeCode;
-                employee.DocumentNumber = documentNumber;
+                employee.EmployeeCode = normalizedEmployeeCode;
+                employee.DocumentNumber = normalizedDocumentNumber;
                 employee.Position = null!;
                 employee.Gender = null!;
                 employee.CivilStatus = null!;
@@ -81,8 +81,8 @@ namespace CompriaxSystem.Application.Services
                     return OperationResult.Failure("Empleado no encontrado.");
 
                 mapper.Map(dto, employee);
-                employee.EmployeeCode = employeeCode;
-                employee.DocumentNumber = documentNumber;
+                employee.EmployeeCode = normalizedEmployeeCode;
+                employee.DocumentNumber = normalizedDocumentNumber;
                 employee.Position = null!;
                 employee.Gender = null!;
                 employee.CivilStatus = null!;
@@ -90,8 +90,9 @@ namespace CompriaxSystem.Application.Services
                 unitOfWork.Employees.Update(employee);
             }
 
-            var result = await unitOfWork.CompleteAsync();
-            return result
+            var operationSucceeded = await unitOfWork.CompleteAsync();
+            
+            return operationSucceeded
                 ? OperationResult.Ok("Registro de personal procesado con éxito.")
                 : OperationResult.Failure("No se detectaron cambios en la base de datos.");
         }
@@ -112,9 +113,10 @@ namespace CompriaxSystem.Application.Services
             employee.IsDeleted = true;
 
             unitOfWork.Employees.Update(employee);
-            var result = await unitOfWork.CompleteAsync();
+           
+            var operationSucceeded = await unitOfWork.CompleteAsync();
 
-            return result
+            return operationSucceeded
                 ? OperationResult.Ok("Empleado desactivado correctamente.")
                 : OperationResult.Failure("Error al procesar la eliminación.");
         }

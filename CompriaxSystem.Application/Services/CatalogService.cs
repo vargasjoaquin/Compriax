@@ -8,11 +8,7 @@ using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CatalogService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser,
-        IMapper mapper,
-        IValidator<CategoryDto> categoryValidator) : ICatalogService
+    public class CatalogService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IMapper mapper, IValidator<CategoryDto> categoryValidator) : ICatalogService
     {
         /// <summary>
         /// Obtiene todas las categorías activas.
@@ -20,8 +16,8 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Una colección de DTOs de categorías activas.</returns>
         public async Task<IEnumerable<CategoryDto>> GetActiveCategoriesAsync()
         {
-            var categories = await unitOfWork.Categories.GetAllAsync();
-            return mapper.Map<IEnumerable<CategoryDto>>(categories);
+            var activeCategories = await unitOfWork.Categories.GetAllAsync();
+            return mapper.Map<IEnumerable<CategoryDto>>(activeCategories);
         }
 
         /// <summary>
@@ -87,8 +83,9 @@ namespace CompriaxSystem.Application.Services
             if (category == null)
                 return OperationResult.Failure("Categoría no encontrada.");
 
-            var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
-            bool hasActiveProducts = allProducts.Any(p => p.CategoryId == id && !p.IsDeleted);
+            var products = await unitOfWork.Products.GetAllWithDetailsAsync();
+            
+            bool hasActiveProducts = products.Any(p => p.CategoryId == id && !p.IsDeleted);
 
             if (hasActiveProducts)
                 return OperationResult.Failure("No se puede eliminar la categoría porque tiene productos activos vinculados. Reasigne o elimine los productos primero.");
@@ -108,26 +105,36 @@ namespace CompriaxSystem.Application.Services
         /// Obtiene el listado de marcas registradas.
         /// </summary>
         /// <returns>Colección de entidades de marca.</returns>
-        public async Task<IEnumerable<Brand>> GetBrandsAsync() => await unitOfWork.Brands.GetAllAsync();
-
-        /// <summary>
-        /// Registra una nueva marca en el sistema.
-        /// </summary>
-        /// <param name="name">Nombre de la marca.</param>
-        /// <returns>Resultado de la creación.</returns>
-        public async Task<Brand?> GetBrandByIdAsync(int id) => await unitOfWork.Brands.GetByIdAsync(id);
-
-        /// <summary>
-        /// Registra una nueva marca en el sistema.
-        /// </summary>
-        /// <param name="name">Nombre de la marca.</param>
-        /// <returns>Resultado de la creación.</returns>
-        public async Task<OperationResult> CreateBrandAsync(string name)
+        public async Task<IEnumerable<Brand>> GetBrandsAsync()
         {
-            if (string.IsNullOrWhiteSpace(name))
+           return await unitOfWork.Brands.GetAllAsync();
+        }
+
+        /// <summary>
+        /// Registra una nueva marca en el sistema.
+        /// </summary>
+        /// <param name="name">Nombre de la marca.</param>
+        /// <returns>Resultado de la creación.</returns>
+        public async Task<Brand?> GetBrandByIdAsync(int id)
+        {
+           return await unitOfWork.Brands.GetByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Registra una nueva marca en el sistema.
+        /// </summary>
+        /// <param name="name">Nombre de la marca.</param>
+        /// <returns>Resultado de la creación.</returns>
+        public async Task<OperationResult> CreateBrandAsync(string brandName)
+        {
+            if (string.IsNullOrWhiteSpace(brandName))
                 return OperationResult.Failure("El nombre de la marca es obligatorio y no puede estar vacío.");
 
-            var brand = new Brand { Name = name.Trim() };
+            var brand = new Brand 
+            { 
+                Name = brandName.Trim() 
+            };
+            
             await unitOfWork.Brands.AddAsync(brand);
 
             return await unitOfWork.CompleteAsync()
@@ -141,9 +148,9 @@ namespace CompriaxSystem.Application.Services
         /// <param name="id">Id de la marca.</param>
         /// <param name="name">Nombre de la marca.</param>
         /// <returns>Resultado de la actualización.</returns>
-        public async Task<OperationResult> UpdateBrandAsync(int id, string name)
+        public async Task<OperationResult> UpdateBrandAsync(int id, string brandName)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(brandName))
                 return OperationResult.Failure("El nombre de la marca es obligatorio y no puede estar vacío.");
 
             var brand = await unitOfWork.Brands.GetByIdAsync(id);
@@ -151,7 +158,7 @@ namespace CompriaxSystem.Application.Services
             if (brand == null)
                 return OperationResult.Failure("La marca que intenta actualizar no fue encontrada.");
 
-            brand.Name = name.Trim();
+            brand.Name = brandName.Trim();
             unitOfWork.Brands.Update(brand);
 
             return await unitOfWork.CompleteAsync()
@@ -171,8 +178,9 @@ namespace CompriaxSystem.Application.Services
             if (brand == null)
                 return OperationResult.Failure("Marca no encontrada.");
 
-            var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
-            bool hasActiveProducts = allProducts.Any(p => p.BrandId == id && !p.IsDeleted);
+            var products = await unitOfWork.Products.GetAllWithDetailsAsync();
+            
+            bool hasActiveProducts = products.Any(p => p.BrandId == id && !p.IsDeleted);
 
             if (hasActiveProducts)
                 return OperationResult.Failure("No se puede eliminar la marca porque tiene productos activos vinculados.");

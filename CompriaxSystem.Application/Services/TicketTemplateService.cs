@@ -17,97 +17,97 @@ namespace CompriaxSystem.Application.Services
         /// <summary>
         /// Genera un documento PDF optimizado para impresoras térmicas basado en una plantilla.
         /// </summary>
-        /// <param name="data">Datos del ticket a renderizar.</param>
+        /// <param name="ticketData">Datos del ticket a renderizar.</param>
         /// <returns>Arreglo de bytes del PDF listo para impresión.</returns>
-        public byte[] RenderThermalTicketPdf(TicketDataDto data)
+        public byte[] RenderThermalTicketPdf(TicketDataDto ticketData)
         {
-            float widthMm = data.PaperSize == ThermalPaperSize.Width58mm ? 58f : 80f;
-            float baseFontSize = data.PaperSize == ThermalPaperSize.Width58mm ? 7.2f : 8.5f;
+            float paperWidthMillimetres = ticketData.PaperSize == ThermalPaperSize.Width58mm ? 58f : 80f;
+            float baseFontSize = ticketData.PaperSize == ThermalPaperSize.Width58mm ? 7.2f : 8.5f;
 
             return Document.Create(container =>
             {
                 container.Page(page =>
                 {
-                    page.ContinuousSize(widthMm, Unit.Millimetre);
+                    page.ContinuousSize(paperWidthMillimetres, Unit.Millimetre);
                     page.Margin(2.5f, Unit.Millimetre);
                     page.DefaultTextStyle(x => x.FontSize(baseFontSize).FontFamily(Fonts.Consolas));
 
-                    page.Content().Column(col =>
+                    page.Content().Column(column =>
                     {
                         // ==========================================
                         // 1. LOGO COMERCIAL
                         // ==========================================
-                        if (data.ShowLogo && data.LogoBytes != null && data.LogoBytes.Length > 0)
+                        if (ticketData.ShowLogo && ticketData.LogoBytes != null && ticketData.LogoBytes.Length > 0)
                         {
-                            col.Item().AlignCenter().MaxHeight(38).MaxWidth(110).Image(data.LogoBytes);
-                            col.Item().PaddingBottom(2);
+                            column.Item().AlignCenter().MaxHeight(38).MaxWidth(110).Image(ticketData.LogoBytes);
+                            column.Item().PaddingBottom(2);
                         }
 
                         // ==========================================
                         // 2. ENCABEZADO DEL COMERCIO
                         // ==========================================
-                        col.Item().AlignCenter().Text(data.StoreName.ToUpper()).FontSize(baseFontSize + 3.5f).ExtraBold();
+                        column.Item().AlignCenter().Text(ticketData.StoreName.ToUpper()).FontSize(baseFontSize + 3.5f).ExtraBold();
 
-                        if (!string.IsNullOrWhiteSpace(data.Cuit))
-                            col.Item().AlignCenter().Text($"CUIT: {data.Cuit}").FontSize(baseFontSize - 0.5f);
+                        if (!string.IsNullOrWhiteSpace(ticketData.Cuit))
+                            column.Item().AlignCenter().Text($"CUIT: {ticketData.Cuit}").FontSize(baseFontSize - 0.5f);
 
-                        if (!string.IsNullOrWhiteSpace(data.TaxConditionName))
-                            col.Item().AlignCenter().Text(data.TaxConditionName).FontSize(baseFontSize - 1f);
+                        if (!string.IsNullOrWhiteSpace(ticketData.TaxConditionName))
+                            column.Item().AlignCenter().Text(ticketData.TaxConditionName).FontSize(baseFontSize - 1f);
 
-                        if (!string.IsNullOrWhiteSpace(data.GrossIncomeNumber))
-                            col.Item().AlignCenter().Text($"Ing. Brutos: {data.GrossIncomeNumber}").FontSize(baseFontSize - 1f);
+                        if (!string.IsNullOrWhiteSpace(ticketData.GrossIncomeNumber))
+                            column.Item().AlignCenter().Text($"Ing. Brutos: {ticketData.GrossIncomeNumber}").FontSize(baseFontSize - 1f);
 
-                        if (!string.IsNullOrWhiteSpace(data.Address))
-                            col.Item().AlignCenter().Text(data.Address).FontSize(baseFontSize - 0.5f);
+                        if (!string.IsNullOrWhiteSpace(ticketData.Address))
+                            column.Item().AlignCenter().Text(ticketData.Address).FontSize(baseFontSize - 0.5f);
 
-                        if (!string.IsNullOrWhiteSpace(data.Phone))
-                            col.Item().AlignCenter().Text($"Tel: {data.Phone}").FontSize(baseFontSize - 0.5f);
+                        if (!string.IsNullOrWhiteSpace(ticketData.Phone))
+                            column.Item().AlignCenter().Text($"Tel: {ticketData.Phone}").FontSize(baseFontSize - 0.5f);
 
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                        column.Item().PaddingVertical(2).Text(DottedLine(ticketData.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
                         // 3. RECUADRO DE COMPROBANTE FISCAL
                         // ==========================================
-                        bool isNonFiscal = data.DocumentLetter == "X" || data.DocumentTypeCode.Contains("NO FISCAL");
+                        bool isNonFiscalDocument = ticketData.DocumentLetter == "X" || ticketData.DocumentTypeCode.Contains("NO FISCAL");
 
-                        col.Item().Row(r =>
+                        column.Item().Row(row =>
                         {
                             // Cuadrado de la Letra
-                            r.ConstantItem(28).Height(28).Border(1).BorderColor(Colors.Black).AlignCenter().AlignMiddle()
-                                .Text(data.DocumentLetter).FontSize(16).ExtraBold();
+                            row.ConstantItem(28).Height(28).Border(1).BorderColor(Colors.Black).AlignCenter().AlignMiddle()
+                                .Text(ticketData.DocumentLetter).FontSize(16).ExtraBold();
 
-                            r.ConstantItem(6); // Espaciador
+                            row.ConstantItem(6); // Espaciador
 
-                            r.RelativeItem().Column(c =>
+                            row.RelativeItem().Column(documentColumn =>
                             {
-                                c.Item().Text($"{data.DocumentTypeName.ToUpper()} ({data.DocumentTypeCode})").Bold();
-                                c.Item().Text($"P.V.: {data.PointOfSale:D4}  NRO: {data.DocumentNumber}").Bold();
-                                c.Item().Text($"FECHA: {data.Date:dd/MM/yyyy}  HORA: {data.Date:HH:mm:ss}");
+                                documentColumn.Item().Text($"{ticketData.DocumentTypeName.ToUpper()} ({ticketData.DocumentTypeCode})").Bold();
+                                documentColumn.Item().Text($"P.V.: {ticketData.PointOfSale:D4}  NRO: {ticketData.DocumentNumber}").Bold();
+                                documentColumn.Item().Text($"FECHA: {ticketData.Date:dd/MM/yyyy}  HORA: {ticketData.Date:HH:mm:ss}");
                             });
                         });
 
-                        if (isNonFiscal)
+                        if (isNonFiscalDocument)
                         {
-                            col.Item().PaddingTop(3).Border(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter()
+                            column.Item().PaddingTop(3).Border(0.5f).BorderColor(Colors.Black).Padding(2).AlignCenter()
                                 .Text("--- DOCUMENTO NO VÁLIDO COMO FACTURA ---").FontSize(baseFontSize - 1.5f).Bold();
                         }
 
                         // ==========================================
                         // 4. DATOS DEL CLIENTE
                         // ==========================================
-                        string clientName = string.IsNullOrWhiteSpace(data.CustomerName) ? "CONSUMIDOR FINAL" : data.CustomerName.ToUpper();
-                        string clientDoc = string.IsNullOrWhiteSpace(data.CustomerDoc) ? "S/D" : data.CustomerDoc;
-                        string clientTax = string.IsNullOrWhiteSpace(data.CustomerTaxCondition) ? "Consumidor Final" : data.CustomerTaxCondition;
+                        string clientName = string.IsNullOrWhiteSpace(ticketData.CustomerName) ? "CONSUMIDOR FINAL" : ticketData.CustomerName.ToUpper();
+                        string customerDocument = string.IsNullOrWhiteSpace(ticketData.CustomerDoc) ? "S/D" : ticketData.CustomerDoc;
+                        string customerTaxCondition = string.IsNullOrWhiteSpace(ticketData.CustomerTaxCondition) ? "Consumidor Final" : ticketData.CustomerTaxCondition;
 
-                        col.Item().Text($"CLIENTE: {clientName}");
-                        col.Item().Text($"DOC/CUIT: {clientDoc}  ({clientTax})");
+                        column.Item().Text($"CLIENTE: {clientName}");
+                        column.Item().Text($"DOC/CUIT: {customerDocument}  ({customerTaxCondition})");
 
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                        column.Item().PaddingVertical(2).Text(DottedLine(ticketData.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
                         // 5. DETALLE DE ARTÍCULOS (Multilínea)
                         // ==========================================
-                        col.Item().Table(table =>
+                        column.Item().Table(table =>
                         {
                             table.ColumnsDefinition(columns =>
                             {
@@ -122,137 +122,144 @@ namespace CompriaxSystem.Application.Services
                                 h.Cell().Element(HeaderStyle).Text("DESCRIPCIÓN");
                                 h.Cell().Element(HeaderStyle).AlignRight().Text("TOTAL");
 
-                                static IContainer HeaderStyle(IContainer c) =>
-                                    c.BorderBottom(0.5f).BorderColor(Colors.Black).PaddingBottom(2).DefaultTextStyle(x => x.Bold());
+                                static IContainer HeaderStyle(IContainer documentColumn) =>
+                                    documentColumn.BorderBottom(0.5f).BorderColor(Colors.Black).PaddingBottom(2).DefaultTextStyle(x => x.Bold());
                             });
 
-                            foreach (var item in data.Items)
+                            foreach (var ticketItem in ticketData.Items)
                             {
-                                table.Cell().PaddingVertical(1).Text(item.Quantity.ToString());
-                                table.Cell().PaddingVertical(1).Text(item.Description);
-                                table.Cell().PaddingVertical(1).AlignRight().Text((item.Quantity * item.UnitPrice).ToString("C2"));
+                                table.Cell().PaddingVertical(1).Text(ticketItem.Quantity.ToString());
+                                table.Cell().PaddingVertical(1).Text(ticketItem.Description);
+                                table.Cell().PaddingVertical(1).AlignRight().Text((ticketItem.Quantity * ticketItem.UnitPrice).ToString("C2"));
 
                                 // Si tiene descuento o promoción bonificada
-                                if (item.DiscountAmount > 0)
+                                if (ticketItem.DiscountAmount > 0)
                                 {
                                     table.Cell().Text(string.Empty);
-                                    table.Cell().Text(item.PromotionTag ?? " * Ahorro Promo").FontSize(baseFontSize - 1.5f).Italic();
-                                    table.Cell().AlignRight().Text($"-{item.DiscountAmount:C2}").FontSize(baseFontSize - 1.5f);
+                                    table.Cell().Text(ticketItem.PromotionTag ?? " * Ahorro Promo").FontSize(baseFontSize - 1.5f).Italic();
+                                    table.Cell().AlignRight().Text($"-{ticketItem.DiscountAmount:C2}").FontSize(baseFontSize - 1.5f);
                                 }
                             }
                         });
 
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                        column.Item().PaddingVertical(2).Text(DottedLine(ticketData.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
                         // 6. TOTALES Y CARTEL DE AHORRO
                         // ==========================================
-                        col.Item().Row(r =>
+                        column.Item().Row(row =>
                         {
-                            r.RelativeItem().Text("SUBTOTAL:");
-                            r.RelativeItem().AlignRight().Text(data.SubTotal.ToString("C2"));
+                            row.RelativeItem().Text("SUBTOTAL:");
+                            row.RelativeItem().AlignRight().Text(ticketData.SubTotal.ToString("C2"));
                         });
 
-                        if (data.TotalDiscounts > 0)
+                        if (ticketData.TotalDiscounts > 0)
                         {
-                            col.Item().PaddingVertical(2).Border(0.5f).BorderColor(Colors.Grey.Darken1).Background(Colors.Grey.Lighten4).Padding(2).Row(r =>
+                            column.Item().PaddingVertical(2).Border(0.5f).BorderColor(Colors.Grey.Darken1).Background(Colors.Grey.Lighten4).Padding(2).Row(row =>
                             {
-                                r.RelativeItem().Text("★ USTED AHORRÓ HOY:").Bold();
-                                r.RelativeItem().AlignRight().Text($"-{data.TotalDiscounts:C2}").Bold();
+                                row.RelativeItem().Text("★ USTED AHORRÓ HOY:").Bold();
+                                row.RelativeItem().AlignRight().Text($"-{ticketData.TotalDiscounts:C2}").Bold();
                             });
                         }
 
-                        col.Item().PaddingTop(2).Row(r =>
+                        column.Item().PaddingTop(2).Row(row =>
                         {
-                            r.RelativeItem().Text("TOTAL A PAGAR:").FontSize(baseFontSize + 2.5f).ExtraBold();
-                            r.RelativeItem().AlignRight().Text(data.FinalTotal.ToString("C2")).FontSize(baseFontSize + 2.5f).ExtraBold();
+                            row.RelativeItem().Text("TOTAL A PAGAR:").FontSize(baseFontSize + 2.5f).ExtraBold();
+                            row.RelativeItem().AlignRight().Text(ticketData.FinalTotal.ToString("C2")).FontSize(baseFontSize + 2.5f).ExtraBold();
                         });
 
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                        column.Item().PaddingVertical(2).Text(DottedLine(ticketData.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
                         // 7. MEDIOS DE PAGO UTILIZADOS
                         // ==========================================
-                        col.Item().Text("MEDIOS DE PAGO:").Bold().FontSize(baseFontSize - 0.5f);
-                        foreach (var pay in data.Payments)
+                        column.Item().Text("MEDIOS DE PAGO:").Bold().FontSize(baseFontSize - 0.5f);
+                        
+                        foreach (var payment in ticketData.Payments)
                         {
-                            col.Item().Row(r =>
+                            column.Item().Row(row =>
                             {
-                                r.RelativeItem().Text($" • {pay.PaymentMethodName}");
-                                r.RelativeItem().AlignRight().Text(pay.Amount.ToString("C2"));
+                                row.RelativeItem().Text($" • {payment.PaymentMethodName}");
+                                row.RelativeItem().AlignRight().Text(payment.Amount.ToString("C2"));
                             });
                         }
 
-                        if (data.PaymentReceived > 0)
+                        if (ticketData.PaymentReceived > 0)
                         {
-                            col.Item().Row(r =>
+                            column.Item().Row(row =>
                             {
-                                r.RelativeItem().Text("PAGO RECIBIDO:");
-                                r.RelativeItem().AlignRight().Text(data.PaymentReceived.ToString("C2"));
+                                row.RelativeItem().Text("PAGO RECIBIDO:");
+                                row.RelativeItem().AlignRight().Text(ticketData.PaymentReceived.ToString("C2"));
                             });
-                            col.Item().Row(r =>
+                            column.Item().Row(row =>
                             {
-                                r.RelativeItem().Text("SU VUELTO:");
-                                r.RelativeItem().AlignRight().Text(data.PaymentChange.ToString("C2")).Bold();
+                                row.RelativeItem().Text("SU VUELTO:");
+                                row.RelativeItem().AlignRight().Text(ticketData.PaymentChange.ToString("C2")).Bold();
                             });
                         }
 
                         // ==========================================
                         // 8. DISCRIMINACIÓN DE IMPUESTOS (IVA)
                         // ==========================================
-                        col.Item().PaddingTop(2).Row(r =>
+                        column.Item().PaddingTop(2).Row(row =>
                         {
-                            r.RelativeItem().Text($"IVA Discriminado ({data.TaxRate:0.#}%):").FontSize(baseFontSize - 1f);
-                            r.RelativeItem().AlignRight().Text(data.TaxAmount.ToString("C2")).FontSize(baseFontSize - 1f);
+                            row.RelativeItem().Text($"IVA Discriminado ({ticketData.TaxRate:0.#}%):").FontSize(baseFontSize - 1f);
+                            row.RelativeItem().AlignRight().Text(ticketData.TaxAmount.ToString("C2")).FontSize(baseFontSize - 1f);
                         });
 
-                        col.Item().PaddingVertical(2).Text(DottedLine(data.PaperSize)).FontColor(Colors.Grey.Darken1);
+                        column.Item().PaddingVertical(2).Text(DottedLine(ticketData.PaperSize)).FontColor(Colors.Grey.Darken1);
 
                         // ==========================================
                         // 9. INFORMACIÓN FISCAL OFICIAL (CAE / QR AFIP-ARCA)
                         // ==========================================
-                        if (!string.IsNullOrWhiteSpace(data.Cae))
+                        if (!string.IsNullOrWhiteSpace(ticketData.Cae))
                         {
-                            col.Item().Row(r =>
+                            column.Item().Row(row =>
                             {
-                                r.RelativeItem().Text($"CAE: {data.Cae}").Bold();
-                                r.RelativeItem().AlignRight().Text($"VTO: {data.CaeExpirationDate:dd/MM/yyyy}").Bold();
+                                row.RelativeItem().Text($"CAE: {ticketData.Cae}").Bold();
+                                row.RelativeItem().AlignRight().Text($"VTO: {ticketData.CaeExpirationDate:dd/MM/yyyy}").Bold();
                             });
                         }
 
-                        if (data.FiscalQrImageBytes != null)
+                        if (ticketData.FiscalQrImageBytes != null)
                         {
-                            float qrSize = data.PaperSize == ThermalPaperSize.Width58mm ? 65f : 80f;
-                            col.Item().PaddingTop(3).AlignCenter().MaxHeight(qrSize).MaxWidth(qrSize).Image(data.FiscalQrImageBytes);
-                            col.Item().AlignCenter().Text("Comprobante Autorizado por AFIP / ARCA").FontSize(baseFontSize - 1.5f).Bold();
+                            float fiscalQrImageSize = ticketData.PaperSize == ThermalPaperSize.Width58mm ? 65f : 80f;
+                            
+                            column.Item().PaddingTop(3).AlignCenter().MaxHeight(fiscalQrImageSize).MaxWidth(fiscalQrImageSize).Image(ticketData.FiscalQrImageBytes);
+                            column.Item().AlignCenter().Text("Comprobante Autorizado por AFIP / ARCA").FontSize(baseFontSize - 1.5f).Bold();
                         }
 
                         // ==========================================
                         // 10. CÓDIGO DE BARRAS INTERNO Y PIE
                         // ==========================================
-                        if (data.ShowBarcode && data.InternalBarcodeBytes != null)
+                        if (ticketData.ShowBarcode && ticketData.InternalBarcodeBytes != null)
                         {
-                            col.Item().PaddingTop(3).AlignCenter().MaxHeight(25).MaxWidth(130).Image(data.InternalBarcodeBytes);
-                            col.Item().AlignCenter().Text(data.DocumentNumber).FontSize(baseFontSize - 1.5f);
+                            column.Item().PaddingTop(3).AlignCenter().MaxHeight(25).MaxWidth(130).Image(ticketData.InternalBarcodeBytes);
+                            column.Item().AlignCenter().Text(ticketData.DocumentNumber).FontSize(baseFontSize - 1.5f);
                         }
 
-                        col.Item().PaddingTop(3).AlignCenter().Text("¡GRACIAS POR SU COMPRA!").FontSize(baseFontSize).Bold();
+                        column.Item().PaddingTop(3).AlignCenter().Text("¡GRACIAS POR SU COMPRA!").FontSize(baseFontSize).Bold();
 
-                        if (!string.IsNullOrWhiteSpace(data.FooterMessage))
+                        if (!string.IsNullOrWhiteSpace(ticketData.FooterMessage))
                         {
-                            col.Item().AlignCenter().Text(data.FooterMessage).FontSize(baseFontSize - 1.5f).Italic();
+                            column.Item().AlignCenter().Text(ticketData.FooterMessage).FontSize(baseFontSize - 1.5f).Italic();
                         }
 
                         // Separador de corte físico de papel
-                        col.Item().PaddingTop(4).AlignCenter().Text(". . . . . . . . . . . . . . . . . . . . .").FontColor(Colors.Grey.Lighten1);
+                        column.Item().PaddingTop(4).AlignCenter().Text(". . . . . . . . . . . . . . . . . . . . .").FontColor(Colors.Grey.Lighten1);
                     });
                 });
             }).GeneratePdf();
         }
 
-        private static string DottedLine(ThermalPaperSize size)
+        /// <summary>
+        /// Genera una línea punteada adaptada al ancho del papel térmico.
+        /// </summary>
+        /// <param name="paperSize">Tamaño del papel térmico utilizado para el ticket.</param>
+        /// <returns>Cadena de caracteres que representa una línea punteada.</returns>
+        private static string DottedLine(ThermalPaperSize paperSize)
         {
-            return size == ThermalPaperSize.Width58mm
+            return paperSize == ThermalPaperSize.Width58mm
                 ? "- - - - - - - - - - - - - - - -"
                 : "- - - - - - - - - - - - - - - - - - - - - - - -";
         }

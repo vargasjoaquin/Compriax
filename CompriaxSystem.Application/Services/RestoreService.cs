@@ -107,7 +107,9 @@ namespace CompriaxSystem.Application.Services
             switch (entityType.ToUpperInvariant())
             {
                 case "PRODUCTOS":
+                    
                     var product = await unitOfWork.Products.GetDeletedByIdAsync(id);
+                    
                     if (product == null)
                         return OperationResult.Failure("Producto no encontrado en la papelera.");
 
@@ -119,7 +121,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "CLIENTES":
+                    
                     var customer = await unitOfWork.Customers.GetDeletedByIdAsync(id);
+                    
                     if (customer == null)
                         return OperationResult.Failure("Cliente no encontrado en la papelera.");
 
@@ -131,7 +135,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "PROVEEDORES":
+                    
                     var supplier = await unitOfWork.Suppliers.GetDeletedByIdAsync(id);
+                    
                     if (supplier == null)
                         return OperationResult.Failure("Proveedor no encontrado en la papelera.");
 
@@ -143,7 +149,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "USUARIOS":
+                    
                     var user = await unitOfWork.Users.GetDeletedByIdAsync(id);
+                    
                     if (user == null)
                         return OperationResult.Failure("Usuario no encontrado en la papelera.");
 
@@ -155,7 +163,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "EMPLEADOS":
+                    
                     var employee = await unitOfWork.Employees.GetDeletedByIdAsync(id);
+                    
                     if (employee == null)
                         return OperationResult.Failure("Empleado no encontrado en la papelera.");
 
@@ -167,7 +177,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "CATEGORÍAS":
+                    
                     var category = await unitOfWork.Categories.GetDeletedByIdAsync(id);
+                    
                     if (category == null)
                         return OperationResult.Failure("Categoría no encontrada en la papelera.");
 

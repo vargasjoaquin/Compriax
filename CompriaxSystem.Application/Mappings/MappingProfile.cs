@@ -233,7 +233,7 @@ namespace CompriaxSystem.Application.Mappings
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
                 .ForMember(dest => dest.RowVersion, opt => opt.Ignore());
 
-            // 12. ETIQUETAS DE PRODUCTOS (PRODUCT LABELS)
+            // 12. ETIQUETAS DE PRODUCTOS
             CreateMap<Product, ProductLabelDto>()
                 .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))

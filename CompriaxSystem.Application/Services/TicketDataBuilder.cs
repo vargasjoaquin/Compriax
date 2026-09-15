@@ -7,10 +7,7 @@ using static CompriaxSystem.Application.DTOs.TicketPaymentDataDto;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class TicketDataBuilder(
-        IUnitOfWork unitOfWork,
-        IBarcodeService barcodeService,
-        IAfipService afipService) : ITicketDataBuilder
+    public class TicketDataBuilder( IUnitOfWork unitOfWork, IBarcodeService barcodeService, IAfipService afipService) : ITicketDataBuilder
     {
         /// <summary>
         /// Construye el modelo de datos completo para un ticket físico, consolidando datos del comercio, cliente, impuestos y códigos QR/Barras.
@@ -20,52 +17,54 @@ namespace CompriaxSystem.Application.Services
         /// <param name="cashierName">Nombre del operador de caja.</param>
         /// <param name="paperSize">Tamaño de papel para la configuración de estilos.</param>
         /// <returns>Un objeto TicketDataDto listo para ser renderizado en PDF o impresión térmica.</returns>
-        public async Task<TicketDataDto> BuildSaleTicketDataAsync(
-            SaleDto sale,
-            string documentNumber,
-            string cashierName,
-            ThermalPaperSize paperSize = ThermalPaperSize.Width80mm)
+        public async Task<TicketDataDto> BuildSaleTicketDataAsync(SaleDto sale, string documentNumber, string cashierName, ThermalPaperSize paperSize = ThermalPaperSize.Width80mm)
         {
-            var store = await unitOfWork.Store.GetSettingsAsync();
+            var storeSettings = await unitOfWork.Store.GetSettingsAsync();
 
-            decimal subtotal = sale.SubTotal > 0 ? sale.SubTotal : sale.Items.Sum(x => x.Quantity * x.UnitPrice);
-            decimal discount = sale.DiscountAmount;
-            decimal totalFinal = sale.TotalAmount > 0 ? sale.TotalAmount : Math.Max(0, subtotal - discount);
+            decimal saleSubtotal = sale.SubTotal > 0 ? sale.SubTotal : sale.Items.Sum(x => x.Quantity * x.UnitPrice);
+            decimal totalDiscountAmount = sale.DiscountAmount;
+            decimal finalTotalAmount = sale.TotalAmount > 0 ? sale.TotalAmount : Math.Max(0, saleSubtotal - totalDiscountAmount);
 
-            decimal taxRate = 21.00m;
-            decimal netTaxable = Math.Round(totalFinal / (1 + (taxRate / 100m)), 2);
-            decimal taxAmount = totalFinal - netTaxable;
+            decimal taxRatePercentage = 21.00m;
+            decimal netTaxableAmount = Math.Round(finalTotalAmount / (1 + (taxRatePercentage / 100m)), 2);
+            decimal taxAmount = finalTotalAmount - netTaxableAmount;
 
-            int pointOfSale = sale.PointOfSale > 0 ? sale.PointOfSale : (store?.PointOfSale > 0 ? store.PointOfSale : 1);
+            int pointOfSaleNumber = sale.PointOfSale > 0 ? sale.PointOfSale : (storeSettings?.PointOfSale > 0 ? storeSettings.PointOfSale : 1);
             var (documentLetter, documentTypeCode) = ExtractDocumentLetterAndCode(sale.DocumentTypeName);
 
-            byte[]? qrBytes = null;
+            byte[]? fiscalQrImageBytes = null;
+
             if (!string.IsNullOrWhiteSpace(sale.AfipQrUrl))
             {
                 try
-                { 
-                    qrBytes = afipService.GenerateQrImage(sale.AfipQrUrl, 130, 130); } catch { qrBytes = null; }
+                {
+                    fiscalQrImageBytes = afipService.GenerateQrImage(sale.AfipQrUrl, 130, 130); 
+                } 
+                catch 
+                {
+                    fiscalQrImageBytes = null; 
+                }
             }
 
-            byte[]? barcodeBytes = null;
+            byte[]? internalBarcodeImageBytes = null;
 
-            if (store?.ShowBarcodeOnTicket ?? true)
+            if (storeSettings?.ShowBarcodeOnTicket ?? true)
             {
                 try
                 {
-                    using var bmp = barcodeService.GenerateBarcode(documentNumber, width: 280, height: 50);
-                    using var ms = new MemoryStream();
+                    using var barcodeBitmap = barcodeService.GenerateBarcode(documentNumber, width: 280, height: 50);
+                    using var barcodeMemoryStream = new MemoryStream();
                     
-                    bmp.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-                    barcodeBytes = ms.ToArray();
+                    barcodeBitmap.Save(barcodeMemoryStream, System.Drawing.Imaging.ImageFormat.Png);
+                    internalBarcodeImageBytes = barcodeMemoryStream.ToArray();
                 }
                 catch 
                 { 
-                    barcodeBytes = null;
+                    internalBarcodeImageBytes = null;
                 }
             }
             
-            var items = (sale.Items ?? Enumerable.Empty<SaleItemDto>()).Select(i => new TicketItemDataDto
+            var ticketItems = (sale.Items ?? Enumerable.Empty<SaleItemDto>()).Select(i => new TicketItemDataDto
             {
                 Quantity = i.Quantity,
                 Description = i.ProductName,
@@ -75,67 +74,67 @@ namespace CompriaxSystem.Application.Services
                 PromotionTag = i.DiscountAmount > 0 ? "* Bonificación Promo" : null
             }).ToList();
 
-            var payments = new List<TicketPaymentData>();
+            var ticketPayments = new List<TicketPaymentData>();
 
             if (!string.IsNullOrWhiteSpace(sale.PaymentMethodName))
             {
-                payments.Add(new TicketPaymentData
+                ticketPayments.Add(new TicketPaymentData
                 {
                     PaymentMethodName = sale.PaymentMethodName,
-                    Amount = totalFinal
+                    Amount = finalTotalAmount
                 });
             }
 
             return new TicketDataDto
             {
-                StoreName = store?.Name,
-                LegalName = store?.Name,
-                Cuit = store?.CUIT,
-                Address = store?.Address,
-                Phone = store?.Phone,
-                Email = store?.Email,
-                TaxConditionName = store?.TaxCondition?.Name,
-                GrossIncomeNumber = store?.GrossIncomeNumber,
-                ActivityStartDate = store?.ActivityStartDate,
-                LogoBytes = store?.Logo,
+                StoreName = storeSettings?.Name,
+                LegalName = storeSettings?.Name,
+                Cuit = storeSettings?.CUIT,
+                Address = storeSettings?.Address,
+                Phone = storeSettings?.Phone,
+                Email = storeSettings?.Email,
+                TaxConditionName = storeSettings?.TaxCondition?.Name,
+                GrossIncomeNumber = storeSettings?.GrossIncomeNumber,
+                ActivityStartDate = storeSettings?.ActivityStartDate,
+                LogoBytes = storeSettings?.Logo,
 
                 DocumentTypeName = sale.DocumentTypeName!,
                 DocumentLetter = documentLetter,
                 DocumentTypeCode = documentTypeCode,
-                PointOfSale = pointOfSale,
+                PointOfSale = pointOfSaleNumber,
                 DocumentNumber = documentNumber,
                 Date = sale.Date,
 
                 CashierName = cashierName,
                 ShiftId = null,
-                PosNumber = pointOfSale,
+                PosNumber = pointOfSaleNumber,
 
                 CustomerName = string.IsNullOrWhiteSpace(sale.CustomerName) ? TaxConstants.DEFAULT_TAX_CONDITION_NAME : sale.CustomerName,
                 CustomerDoc = string.IsNullOrWhiteSpace(sale.CustomerDoc) ? TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER : sale.CustomerDoc,
                 CustomerTaxCondition = TaxConstants.DEFAULT_TAX_CONDITION_NAME,
 
-                Items = items,
-                SubTotal = subtotal,
-                TotalDiscounts = discount,
-                FinalTotal = totalFinal,
+                Items = ticketItems,
+                SubTotal = saleSubtotal,
+                TotalDiscounts = totalDiscountAmount,
+                FinalTotal = finalTotalAmount,
 
-                Payments = payments,
+                Payments = ticketPayments,
                 PaymentReceived = sale.PaymentReceived,
                 PaymentChange = sale.PaymentChange,
 
-                TaxRate = taxRate,
+                TaxRate = taxRatePercentage,
                 TaxAmount = taxAmount,
-                NetTaxableAmount = netTaxable,
+                NetTaxableAmount = netTaxableAmount,
 
                 Cae = sale.Cae,
                 CaeExpirationDate = sale.CaeExpirationDate,
                 AfipQrUrl = sale.AfipQrUrl,
-                FiscalQrImageBytes = qrBytes,
-                InternalBarcodeBytes = barcodeBytes,
+                FiscalQrImageBytes = fiscalQrImageBytes,
+                InternalBarcodeBytes = internalBarcodeImageBytes,
 
-                FooterMessage = store?.TicketFooterMessage,
-                ShowLogo = store?.ShowLogoOnTicket ?? true,
-                ShowBarcode = store?.ShowBarcodeOnTicket ?? true,
+                FooterMessage = storeSettings?.TicketFooterMessage,
+                ShowLogo = storeSettings?.ShowLogoOnTicket ?? true,
+                ShowBarcode = storeSettings?.ShowBarcodeOnTicket ?? true,
                 PaperSize = paperSize
             };
         }
@@ -148,72 +147,79 @@ namespace CompriaxSystem.Application.Services
             string type = documentTypeName.ToUpperInvariant();
 
             if (type.Contains("FACTURA A") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeFacturaA);
+                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_FACTURA_A);
 
             if (type.Contains("NOTA DE DÉBITO A") || type.Contains("NOTA DE DEBITO A"))
-                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeNotaDebitoA);
+                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_NOTA_DEBITO_A);
 
             if (type.Contains("NOTA DE CRÉDITO A") || type.Contains("NOTA DE CREDITO A"))
-                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeNotaCreditoA);
+                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_NOTA_CREDITO_A);
 
             if (type.Contains("RECIBO A"))
-                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeReciboA);
+                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_RECIBO_A);
 
             if (type.Contains("TICKET FACTURA A"))
-                return (VoucherLetterCodes.LetterA, VoucherLetterCodes.CodeTicketFacturaA);
+                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_TICKET_FACUTURA_A);
 
+            //
             if (type.Contains("FACTURA B") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeFacturaB);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_FACTURA_B);
 
             if (type.Contains("NOTA DE DÉBITO B") || type.Contains("NOTA DE DEBITO B"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeNotaDebitoB);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_NOTA_DEBITO_B);
 
             if (type.Contains("NOTA DE CRÉDITO B") || type.Contains("NOTA DE CREDITO B"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeNotaCreditoB);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_NOTA_CREDITO_B);
 
             if (type.Contains("RECIBO B"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeReciboB);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_RECIBO_B);
 
             if (type.Contains("TICKET FACTURA B"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeTicketFacturaB);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_TICKET_FACTURA_B);
 
             if (type.Contains("TICKET CONSUMIDOR FINAL") || type.Contains("CLIENTE CASUAL") || type.Contains("TICKET"))
-                return (VoucherLetterCodes.LetterB, VoucherLetterCodes.CodeTicketConsumidorFinal);
+                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_TICKET_CONSUMIDOR_FINAL);
 
+            //
             if (type.Contains("FACTURA C") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeFacturaC);
+                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_FACTURA_C);
 
             if (type.Contains("NOTA DE DÉBITO C") || type.Contains("NOTA DE DEBITO C"))
-                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeNotaDebitoC);
+                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_NOTA_DEBITO_C);
 
             if (type.Contains("NOTA DE CRÉDITO C") || type.Contains("NOTA DE CREDITO C"))
-                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeNotaCreditoC);
+                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_NOTA_CREDITO_C);
 
             if (type.Contains("RECIBO C"))
-                return (VoucherLetterCodes.LetterC, VoucherLetterCodes.CodeReciboC);
+                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_RECIBO_C);
 
+            //
             if (type.Contains("FACTURA M"))
-                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeFacturaM);
+                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_FACTURA_M);
 
             if (type.Contains("NOTA DE DÉBITO M") || type.Contains("NOTA DE DEBITO M"))
-                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeNotaDebitoM);
+                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_NOTA_DEBITO_M);
 
             if (type.Contains("NOTA DE CRÉDITO M") || type.Contains("NOTA DE CREDITO M"))
-                return (VoucherLetterCodes.LetterM, VoucherLetterCodes.CodeNotaCreditoM);
+                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_NOTA_CREDITO_M);
 
+            //
             if (type.Contains("EXPORTACIÓN") || type.Contains("EXPORTACION"))
-                return (VoucherLetterCodes.LetterE, VoucherLetterCodes.CodeExportacionE);
+                return (VoucherLetterCodes.LETTER_E, VoucherLetterCodes.CODE_EXPORTACION_E);
 
+            //
             if (type.Contains("REMITO R"))
-                return (VoucherLetterCodes.LetterR, VoucherLetterCodes.CodeRemitoR);
+                return (VoucherLetterCodes.LETTER_R, VoucherLetterCodes.CODE_REMITO_R);
 
+            //
             if (type.Contains("REMITO X"))
-                return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalRemitoX);
+                return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_REMITO_X);
 
+            //
             if (type.Contains("PRESUPUESTO"))
-                return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalPresupuesto);
+                return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_PRESUPUESTO);
 
-            return (VoucherLetterCodes.LetterX, VoucherLetterCodes.NonFiscalComprobanteX);
+            return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_COMPROBANTE_X);
         }
     }
 }

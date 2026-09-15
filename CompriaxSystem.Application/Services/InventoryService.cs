@@ -23,6 +23,7 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("Producto no encontrado.");
 
             await unitOfWork.BeginTransactionAsync();
+            
             try
             {
                 product.CurrentStock += amount;
@@ -39,11 +40,13 @@ namespace CompriaxSystem.Application.Services
 
                 await unitOfWork.CompleteAsync();
                 await unitOfWork.CommitAsync();
+                
                 return OperationResult.Ok("Inventario ajustado correctamente.");
             }
             catch
             {
                 await unitOfWork.RollbackAsync();
+                
                 return OperationResult.Failure("Error al procesar el ajuste de inventario.");
             }
         }

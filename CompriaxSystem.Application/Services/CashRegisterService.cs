@@ -15,20 +15,22 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Una colección de DTOs con la información de las cajas.</returns>
         public async Task<IEnumerable<CashRegisterDto>> GetAllRegistersAsync()
         {
-            var registers = await unitOfWork.CashRegisters.GetAllAsync();
+            var cashRegisters = await unitOfWork.CashRegisters.GetAllAsync();
 
-            return registers.Select(cr => {
-                var openShift = cr.CashShifts.FirstOrDefault(cs => cs.Status == CashShiftStatuses.OPEN;
+            return cashRegisters.Select(cashRegister => 
+            {
+                var openCashShift = cashRegister.CashShifts.FirstOrDefault(cs => cs.Status == CashShiftStatuses.OPEN);
+
                 return new CashRegisterDto
                 {
-                    Id = cr.Id,
-                    Number = cr.Number,
-                    Name = cr.Name,
-                    Description = cr.Description,
-                    IsActive = cr.IsActive,
-                    HasOpenShift = openShift != null,
-                    CurrentShiftId = openShift?.Id,
-                    CurrentCashierName = openShift?.User?.Username
+                    Id = cashRegister.Id,
+                    Number = cashRegister.Number,
+                    Name = cashRegister.Name,
+                    Description = cashRegister.Description,
+                    IsActive = cashRegister.IsActive,
+                    HasOpenShift = openCashShift != null,
+                    CurrentShiftId = openCashShift?.Id,
+                    CurrentCashierName = openCashShift?.User?.Username
                 };
             }).ToList();
         }
@@ -70,12 +72,12 @@ namespace CompriaxSystem.Application.Services
 
             if (dto.Id == 0)
             {
-                var existing = await unitOfWork.CashRegisters.GetByNumberAsync(dto.Number);
+                var existingCashRegister = await unitOfWork.CashRegisters.GetByNumberAsync(dto.Number);
                 
-                if (existing != null)
+                if (existingCashRegister != null)
                     return OperationResult.Failure($"Ya existe una caja registrada con el Número {dto.Number}.");
 
-                var register = new CashRegister
+                var cashRegister = new CashRegister
                 {
                     Number = dto.Number,
                     Name = dto.Name.Trim(),
@@ -83,25 +85,25 @@ namespace CompriaxSystem.Application.Services
                     IsActive = true
                 };
 
-                await unitOfWork.CashRegisters.AddAsync(register);
+                await unitOfWork.CashRegisters.AddAsync(cashRegister);
             }
             else
             {
-                var register = await unitOfWork.CashRegisters.GetByIdAsync(dto.Id);
+                var cashRegister = await unitOfWork.CashRegisters.GetByIdAsync(dto.Id);
                 
-                if (register == null)
+                if (cashRegister == null)
                     return OperationResult.Failure("Caja no encontrada.");
 
-                var existing = await unitOfWork.CashRegisters.GetByNumberAsync(dto.Number);
+                var existingCashRegister = await unitOfWork.CashRegisters.GetByNumberAsync(dto.Number);
                 
-                if (existing != null && existing.Id != dto.Id)
+                if (existingCashRegister != null && existingCashRegister.Id != dto.Id)
                     return OperationResult.Failure($"El Número {dto.Number} ya pertenece a otra caja.");
 
-                register.Number = dto.Number;
-                register.Name = dto.Name.Trim();
-                register.Description = dto.Description?.Trim();
+                cashRegister.Number = dto.Number;
+                cashRegister.Name = dto.Name.Trim();
+                cashRegister.Description = dto.Description?.Trim();
 
-                unitOfWork.CashRegisters.Update(register);
+                unitOfWork.CashRegisters.Update(cashRegister);
             }
 
             return await unitOfWork.CompleteAsync()
@@ -116,21 +118,21 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado de la operación de cambio de estado.</returns>
         public async Task<OperationResult> ToggleRegisterStatusAsync(int id)
         {
-            var register = await unitOfWork.CashRegisters.GetByIdAsync(id);
+            var cashRegister = await unitOfWork.CashRegisters.GetByIdAsync(id);
             
-            if (register == null)
+            if (cashRegister == null)
                 return OperationResult.Failure("Caja no encontrada.");
 
-            bool hasOpenShift = await unitOfWork.CashRegisters.HasOpenShiftAsync(id);
+            bool hasOpenCashShift = await unitOfWork.CashRegisters.HasOpenShiftAsync(id);
             
-            if (hasOpenShift && register.IsActive)
+            if (hasOpenCashShift && cashRegister.IsActive)
                 return OperationResult.Failure("No se puede desactivar una caja que tiene un turno abierto actualmente. Cierre el turno primero.");
 
-            register.IsActive = !register.IsActive;
-            unitOfWork.CashRegisters.Update(register);
+            cashRegister.IsActive = !cashRegister.IsActive;
+            unitOfWork.CashRegisters.Update(cashRegister);
 
             return await unitOfWork.CompleteAsync()
-                ? OperationResult.Ok($"Caja {(register.IsActive ? "activada" : "desactivada")} correctamente.")
+                ? OperationResult.Ok($"Caja {(cashRegister.IsActive ? "activada" : "desactivada")} correctamente.")
                 : OperationResult.Failure("Error al cambiar el estado.");
         }
     }

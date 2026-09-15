@@ -9,21 +9,22 @@ namespace CompriaxSystem.Application.Services
         /// Exporta una colección de datos genéricos a un archivo Excel (.xlsx) con formato de tabla.
         /// </summary>
         /// <typeparam name="T">Tipo de los datos a exportar.</typeparam>
-        /// <param name="data">Colección de elementos.</param>
-        /// <param name="sheetName">Nombre de la hoja de cálculo.</param>
+        /// <param name="dataToExport">Colección de elementos.</param>
+        /// <param name="worksheetName">Nombre de la hoja de cálculo.</param>
         /// <returns>Arreglo de bytes del archivo generado.</returns>
-        public byte[] ExportToExcel<T>(IEnumerable<T> data, string sheetName)
+        public byte[] ExportToExcel<T>(IEnumerable<T> dataToExport, string worksheetName)
         {
-            using var workbook = new XLWorkbook();
-            var worksheet = workbook.Worksheets.Add(sheetName);
+            using var excelWorkbook = new XLWorkbook();
+            var excelWorksheet = excelWorkbook.Worksheets.Add(worksheetName);
 
-            var table = worksheet.Cell(1, 1).InsertTable(data);
-            table.Theme = XLTableTheme.TableStyleMedium9;
-            worksheet.Columns().AdjustToContents();
+            var excelTable = excelWorksheet.Cell(1, 1).InsertTable(dataToExport);
+            excelTable.Theme = XLTableTheme.TableStyleMedium9;
+            excelWorksheet.Columns().AdjustToContents();
 
-            using var stream = new MemoryStream();
-            workbook.SaveAs(stream);
-            return stream.ToArray();
+            using var memoryStream = new MemoryStream();
+            excelWorkbook.SaveAs(memoryStream);
+            
+            return memoryStream.ToArray();
         }
     }
 }
