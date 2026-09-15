@@ -145,6 +145,7 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddSingleton<ITicketTemplateService, TicketTemplateService>();
                     services.AddSingleton<ITicketPrinter, TicketPrinter>();
                     services.AddScoped<IAfipService, AfipService>();
+                    services.AddScoped<IMercadoPagoQrClient, MercadoPagoQrClient>();
 
                     // 5. Servicios de Aplicación (Casos de Uso)
                     services.AddSingleton<ICurrentUserService, CurrentUserService>();

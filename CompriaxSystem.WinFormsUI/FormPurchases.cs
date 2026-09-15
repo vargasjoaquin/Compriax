@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
 using System.Media;
@@ -15,13 +16,10 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IBarcodeService _barcodeService;
         private readonly IDocumentService _documentService;
         private readonly ICurrentUserService _currentUser;
+        private readonly CameraScannerController _cameraController;
 
         private List<PurchaseItemCreateDto> _items = new();
         private ProductDto? _foundProduct;
-
-        private bool _isCameraActive = false;
-        private string _lastScannedBarcode = string.Empty;
-        private DateTime _lastScanTime = DateTime.MinValue;
 
         // Banderas de control de concurrencia
         private bool _isInitializing = false;
@@ -50,6 +48,13 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyCardStyle(gbSaleInfo);
             UIThemeHelper.ApplyCardStyle(pnlScannerBar);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+
+            _cameraController = new CameraScannerController(
+               cameraService,
+               barcodeService,
+               picWebcam,
+               btnToggleCam,
+               barcode => _ = ProcessScannedBarcodeAsync(barcode));
 
             this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
             this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
@@ -174,7 +179,7 @@ namespace CompriaxSystem.WinFormsUI
             }
 
             int paymentMethodId = 1;
-            string paymentMethodName = "Efectivo";
+            string paymentMethodName = PaymentMethodConstants.CASH;
 
             if (cboPaymentMethod.SelectedValue is int pId && pId > 0)
             {
@@ -195,7 +200,7 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     string supplierName = txtSupplierName.Text.Trim();
                     string supplierCuit = txtSupplierDoc.Text.Trim();
-                    string registeredBy = _currentUser.CurrentUser?.FullName ?? "Administrador";
+                    string registeredBy = _currentUser.CurrentUser?.FullName ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
 
                     var dto = new PurchaseCreateDto
                     {

@@ -24,15 +24,13 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IPromotionService _promotionService;
         private readonly ICashShiftService _cashShiftService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly IMercadoPagoQrClient _mercadoPagoQrClient;
 
         private readonly List<SaleItemDto> _cart = new();
         private CustomerDto? _selectedCustomer;
         private List<PaymentMethod> _paymentMethods = new();
-        private SaleCalculationResultDto _currentCalculation = new();
-
-        private bool _isCameraActive = false;
-        private string _lastScannedBarcode = string.Empty;
-        private DateTime _lastScanTime = DateTime.MinValue;
+        private SaleCalculationResultDto _currentCalculation = new(); 
+        private CameraScannerController? _cameraController;
         private bool _isInitializing = false;
 
         public FormSales(
@@ -48,7 +46,8 @@ namespace CompriaxSystem.WinFormsUI
             IBarcodeService barcodeService,
             IPromotionService promotionService,
             ICashShiftService cashShiftService,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            IMercadoPagoQrClient mercadoPagoQrClient)
         {
             _saleService = saleService;
             _productService = productService;
@@ -63,6 +62,7 @@ namespace CompriaxSystem.WinFormsUI
             _promotionService = promotionService;
             _cashShiftService = cashShiftService;
             _serviceProvider = serviceProvider;
+            _mercadoPagoQrClient = mercadoPagoQrClient;
 
             InitializeComponent();
 
@@ -70,6 +70,13 @@ namespace CompriaxSystem.WinFormsUI
             UIThemeHelper.ApplyCardStyle(pnlBarcodeBar);
             UIThemeHelper.ApplyCardStyle(pnlVoucherCard);
             UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+
+            _cameraController = new CameraScannerController(
+                cameraService,
+                barcodeService,
+                picWebcam,
+                btnToggleCam,
+                barcode => _ = ProcessScannedBarcodeAsync(barcode, (int)numQuantity.Value));
 
             this.Load += async (s, e) => await InitializeFormAsync();
             this.btnRemove.Click += (s, e) => RemoveSelectedItem();
@@ -91,43 +98,7 @@ namespace CompriaxSystem.WinFormsUI
                 await ProcessScannedBarcodeAsync(product.Barcode, (int)numQuantity.Value);
             };
 
-            // Atajos de Teclado Globales en POS
-            this.KeyDown += async (s, e) =>
-            {
-                switch (e.KeyCode)
-                {
-                    case UIThemeHelper.Shortcuts.SearchProduct:
-                        quickSearchBox.FocusInput();
-                        break;
-
-                    case UIThemeHelper.Shortcuts.SelectCustomer:
-                        await PromptSelectCustomerAsync();
-                        break;
-
-                    case UIThemeHelper.Shortcuts.ChangeQuantity:
-                        numQuantity.Focus();
-                        numQuantity.Select(0, numQuantity.Text.Length);
-                        break;
-
-                    case UIThemeHelper.Shortcuts.CheckPrice:
-                        var priceCheckForm = _serviceProvider.GetRequiredService<FormPriceCheck>();
-                        priceCheckForm.ShowDialog(this);
-                        break;
-
-                    case UIThemeHelper.Shortcuts.Checkout:
-                        await ExecuteCheckoutAsync();
-                        break;
-
-                    case UIThemeHelper.Shortcuts.DeleteItem:
-                        RemoveSelectedItem();
-                        break;
-
-                    case UIThemeHelper.Shortcuts.ClearOrCancel:
-                        ResetInputBar();
-                        break;
-                }
-            };
-
+            this.KeyDown += async (s, e) => await HandleShortcutsAsync(e);
             this.dgvCart.CellDoubleClick += (s, e) => RemoveSelectedItem();
         }
 
@@ -210,6 +181,36 @@ namespace CompriaxSystem.WinFormsUI
 
                 await UpdateVoucherContextAsync();
                 ResetSaleSession();
+            }
+        }
+
+        private async Task HandleShortcutsAsync(KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case UIThemeHelper.Shortcuts.SearchProduct:
+                    quickSearchBox.FocusInput();
+                    break;
+                case UIThemeHelper.Shortcuts.SelectCustomer:
+                    await PromptSelectCustomerAsync();
+                    break;
+                case UIThemeHelper.Shortcuts.ChangeQuantity:
+                    numQuantity.Focus();
+                    numQuantity.Select(0, numQuantity.Text.Length);
+                    break;
+                case UIThemeHelper.Shortcuts.CheckPrice:
+                    var priceCheckForm = _serviceProvider.GetRequiredService<FormPriceCheck>();
+                    priceCheckForm.ShowDialog(this);
+                    break;
+                case UIThemeHelper.Shortcuts.Checkout:
+                    await ExecuteCheckoutAsync();
+                    break;
+                case UIThemeHelper.Shortcuts.DeleteItem:
+                    RemoveSelectedItem();
+                    break;
+                case UIThemeHelper.Shortcuts.ClearOrCancel:
+                    ResetInputBar();
+                    break;
             }
         }
 
