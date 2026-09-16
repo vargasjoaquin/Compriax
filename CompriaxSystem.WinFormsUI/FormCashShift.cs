@@ -27,21 +27,25 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlOpenShift);
-            UIThemeHelper.ApplyCardStyle(pnlActiveShift);
+            UIThemeHelper.ApplyCardStyle(panelOpenShift);
+            UIThemeHelper.ApplyCardStyle(panelActiveShift);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnOpenShift.Click += async (s, e) => await ExecuteOpenShiftAction();
-            this.btnCashIn.Click += async (s, e) => await ExecuteRegisterManualMovementAction(CashMovementType.CashIn);
-            this.btnCashOut.Click += async (s, e) => await ExecuteRegisterManualMovementAction(CashMovementType.CashOut);
-            this.btnPrintX.Click += async (s, e) => await ExecutePrintShiftTicketAction(isZClose: false);
-            this.btnCloseShiftZ.Click += async (s, e) => await ExecuteCloseShiftZAction();
-            this.dgvMovements.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvMovements, e);
+            this.Load += async (s, e) => await InitializeCashShiftFormAsync();
+            this.buttonOpenShift.Click += async (s, e) => await ExecuteOpenCashShiftAsync();
+            this.buttonRegisterCashIn.Click += async (s, e) => await ExecuteRegisterManualCashMovementAsync(CashMovementType.CashIn);
+            this.buttonRegisterCashOut.Click += async (s, e) => await ExecuteRegisterManualCashMovementAsync(CashMovementType.CashOut);
+            this.buttonPrintPartialCloseX.Click += async (s, e) => await ExecutePrintCashShiftTicketAsync(isZClose: false);
+            this.buttonCloseShiftZ.Click += async (s, e) => await ExecuteCloseShiftAndBlindCountAsync();
+            this.dataGridViewMovements.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewMovements, e);
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeCashShiftFormAsync()
         {
-            numInitialCash.Minimum = -100000000m;
+            numericUpDownInitialCash.Minimum = -100000000m;
 
             if (!_currentUserService.HasRegisterAssigned)
             {
@@ -55,11 +59,11 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
 
-            DataGridViewHelper.ApplyStyle(dgvMovements);
-            await RefreshShiftDataAsync();
+            DataGridViewHelper.ApplyStyle(dataGridViewMovements);
+            await RefreshActiveShiftDataAsync();
         }
 
-        private async Task RefreshShiftDataAsync()
+        private async Task RefreshActiveShiftDataAsync()
         {
             using (new WaitCursorHelper(this))
             {
@@ -67,92 +71,104 @@ namespace CompriaxSystem.WinFormsUI
 
                 if (_currentShift == null)
                 {
-                    pnlOpenShift.Visible = true;
-                    pnlActiveShift.Visible = false;
-                    dgvMovements.DataSource = null;
-                    numInitialCash.Value = 0;
-                    numInitialCash.Focus();
+                    panelOpenShift.Visible = true;
+                    panelActiveShift.Visible = false;
+                    dataGridViewMovements.DataSource = null;
+                    numericUpDownInitialCash.Value = 0;
+                    numericUpDownInitialCash.Focus();
                 }
                 else
                 {
-                    pnlOpenShift.Visible = false;
-                    pnlActiveShift.Visible = true;
+                    panelOpenShift.Visible = false;
+                    panelActiveShift.Visible = true;
 
-                    DateTime localOpening = _currentShift.OpeningDate.Kind == DateTimeKind.Utc
+                    DateTime openingDateTime = _currentShift.OpeningDate.Kind == DateTimeKind.Utc
                         ? _currentShift.OpeningDate.ToLocalTime()
                         : _currentShift.OpeningDate;
 
-                    lblShiftStatus.Text = $"TURNO ABIERTO #{_currentShift.Id} ({localOpening:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
-                    lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelShiftStatus.Text = $"TURNO ABIERTO #{_currentShift.Id} ({openingDateTime:dd/MM/yyyy HH:mm}) - {_currentShift.UserName}";
+                    labelShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
 
-                    lblFondoInicialVal.Text = $"Fondo Inicial: {_currentShift.InitialCash:C2}";
-                    lblVentasEfectivoVal.Text = $"Ventas en Efectivo: {_currentShift.TotalCashSales:C2}";
+                    labelInitialCashValue.Text = $"Fondo Inicial: {_currentShift.InitialCash:C2}";
+                    labelCashSalesValue.Text = $"Ventas en Efectivo: {_currentShift.TotalCashSales:C2}";
 
-                    decimal digitalSales = _currentShift.TotalDebitSales + _currentShift.TotalCreditSales + _currentShift.TotalTransferSales + _currentShift.TotalQrSales;
-                    lblVentasTarjetasVal.Text = $"Tarjetas / QR / Transf: {digitalSales:C2}";
-                    lblTotalFacturadoVal.Text = $"Total Facturado en Turno: {_currentShift.TotalTurnover:C2}";
-                    lblEfectivoEsperadoVal.Text = $"EFECTIVO EN GAVETA: {_currentShift.CurrentSystemCash:C2}";
+                    decimal totalDigitalSales = _currentShift.TotalDebitSales + _currentShift.TotalCreditSales + _currentShift.TotalTransferSales + _currentShift.TotalQrSales;
+                    labelCardSalesValue.Text = $"Tarjetas / QR / Transf: {totalDigitalSales:C2}";
+                    labelTotalTurnoverValue.Text = $"Total Facturado en Turno: {_currentShift.TotalTurnover:C2}";
+                    labelExpectedCashValue.Text = $"EFECTIVO EN GAVETA: {_currentShift.CurrentSystemCash:C2}";
 
-                    var movements = await _cashShiftService.GetCurrentShiftMovementsAsync();
-                    dgvMovements.DataSource = null;
-                    dgvMovements.DataSource = movements.ToList();
-                    DataGridViewHelper.ApplyStyle(dgvMovements);
+                    var shiftMovementsList = await _cashShiftService.GetCurrentShiftMovementsAsync();
+                    dataGridViewMovements.DataSource = null;
+                    dataGridViewMovements.DataSource = shiftMovementsList.ToList();
+                    DataGridViewHelper.ApplyStyle(dataGridViewMovements);
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de OpenCashShift.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteOpenShiftAction()
+        private async Task ExecuteOpenCashShiftAsync()
         {
-            if (numInitialCash.Value < 0)
+            if (numericUpDownInitialCash.Value < 0)
             {
                 UIHelper.WarnMessage(this, "El fondo inicial de caja no puede ser negativo.", "Monto Inválido");
-                numInitialCash.Select(0, numInitialCash.Text.Length);
-                numInitialCash.Focus();
+                numericUpDownInitialCash.Select(0, numericUpDownInitialCash.Text.Length);
+                numericUpDownInitialCash.Focus();
                 return;
             }
 
-            var dto = new CashShiftOpenDto { InitialCash = numInitialCash.Value };
+            var dto = new CashShiftOpenDto { InitialCash = numericUpDownInitialCash.Value };
 
             using (new WaitCursorHelper(this))
             {
                 var result = await _cashShiftService.OpenShiftAsync(dto);
                 UIHelper.ShowResult(result, "Apertura de Caja", async () =>
                 {
-                    await RefreshShiftDataAsync();
+                    await RefreshActiveShiftDataAsync();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de RegisterManualCashMovement.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteRegisterManualMovementAction(CashMovementType type)
+        private async Task ExecuteRegisterManualCashMovementAsync(CashMovementType type)
         {
-            string typeTitle = type == CashMovementType.CashIn ? "Ingreso Manual de Dinero" : "Retiro / Egreso de Dinero";
-            string prompt = type == CashMovementType.CashIn
+            string dialogTitle = type == CashMovementType.CashIn ? "Ingreso Manual de Dinero" : "Retiro / Egreso de Dinero";
+            string dialogPromptMessage = type == CashMovementType.CashIn
                 ? "Ingrese el monto a incorporar en la caja:"
                 : "Ingrese el monto a retirar de la caja:";
 
-            using var inputForm = new FormBlindCashCountDialog.FormPromptDialog(typeTitle, prompt);
+            using var promptDialog = new FormBlindCashCountDialog.FormPromptDialog(dialogTitle, dialogPromptMessage);
 
-            if (inputForm.ShowDialog(this) == DialogResult.OK)
+            if (promptDialog.ShowDialog(this) == DialogResult.OK)
             {
                 var dto = new CashMovementCreateDto
                 {
                     MovementType = type,
-                    Amount = inputForm.EnteredAmount,
-                    Description = inputForm.EnteredDescription
+                    Amount = promptDialog.EnteredAmount,
+                    Description = promptDialog.EnteredDescription
                 };
 
                 using (new WaitCursorHelper(this))
                 {
                     var result = await _cashShiftService.RegisterMovementAsync(dto);
-                    UIHelper.ShowResult(result, typeTitle, async () =>
+                    UIHelper.ShowResult(result, dialogTitle, async () =>
                     {
-                        await RefreshShiftDataAsync();
+                        await RefreshActiveShiftDataAsync();
                     });
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de PrintCashShiftTicket.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecutePrintShiftTicketAction(bool isZClose)
+        private async Task ExecutePrintCashShiftTicketAsync(bool isZClose)
         {
             if (_currentShift == null)
             {
@@ -162,50 +178,54 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                var summary = await _cashShiftService.GetCurrentShiftSummaryAsync();
-                byte[] ticketBytes = await _documentService.GenerateCashShiftTicketAsync(summary, isZClose);
+                var cashShiftSummary = await _cashShiftService.GetCurrentShiftSummaryAsync();
+                byte[] generatedTicketPdfBytes = await _documentService.GenerateCashShiftTicketAsync(cashShiftSummary, isZClose);
 
-                string docTitle = isZClose ? $"Cierre_Z_Turno_{summary.ShiftId}.pdf" : $"Cierre_X_Turno_{summary.ShiftId}.pdf";
-                await FileExportHelper.SaveAndOpenPdfAsync(this, ticketBytes, docTitle, "Informe de Caja");
+                string documentPdfTitle = isZClose ? $"Cierre_Z_Turno_{cashShiftSummary.ShiftId}.pdf" : $"Cierre_X_Turno_{cashShiftSummary.ShiftId}.pdf";
+                await FileExportHelper.SaveAndOpenPdfAsync(this, generatedTicketPdfBytes, documentPdfTitle, "Informe de Caja");
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de CloseShiftAndBlindCount.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteCloseShiftZAction()
+        private async Task ExecuteCloseShiftAndBlindCountAsync()
         {
             if (_currentShift == null)
                 return;
 
-            var summary = await _cashShiftService.GetCurrentShiftSummaryAsync();
+            var cashShiftSummary = await _cashShiftService.GetCurrentShiftSummaryAsync();
 
-            using var countDialog = new FormBlindCashCountDialog(summary.ExpectedCashInDrawer);
+            using var blindCountDialog = new FormBlindCashCountDialog(cashShiftSummary.ExpectedCashInDrawer);
 
-            if (countDialog.ShowDialog(this) == DialogResult.OK)
+            if (blindCountDialog.ShowDialog(this) == DialogResult.OK)
             {
-                var closeDto = new CashShiftCloseDto
+                var cashShiftCloseDto = new CashShiftCloseDto
                 {
                     ShiftId = _currentShift.Id,
-                    RealCash = countDialog.CountedCash,
-                    ClosingNotes = countDialog.Notes
+                    RealCash = blindCountDialog.CountedCash,
+                    ClosingNotes = blindCountDialog.Notes
                 };
 
                 using (new WaitCursorHelper(this))
                 {
-                    var result = await _cashShiftService.CloseShiftAsync(closeDto);
+                    var result = await _cashShiftService.CloseShiftAsync(cashShiftCloseDto);
 
                     if (result.Success)
                     {
-                        summary.RealCashCounted = countDialog.CountedCash;
+                        cashShiftSummary.RealCashCounted = blindCountDialog.CountedCash;
 
                         try
                         {
-                            byte[] ticketBytes = await _documentService.GenerateCashShiftTicketAsync(summary, isZClose: true);
-                            await FileExportHelper.SaveAndOpenPdfAsync(this, ticketBytes, $"Cierre_Z_Turno_{summary.ShiftId}.pdf", "Ticket de Cierre Z");
+                            byte[] generatedTicketPdfBytes = await _documentService.GenerateCashShiftTicketAsync(cashShiftSummary, isZClose: true);
+                            await FileExportHelper.SaveAndOpenPdfAsync(this, generatedTicketPdfBytes, $"Cierre_Z_Turno_{cashShiftSummary.ShiftId}.pdf", "Ticket de Cierre Z");
                         }
                         catch { }
 
                         UIHelper.ShowResult(result, "Cierre de Caja Finalizado", async () =>
                         {
-                            await RefreshShiftDataAsync();
+                            await RefreshActiveShiftDataAsync();
                         });
                     }
                     else

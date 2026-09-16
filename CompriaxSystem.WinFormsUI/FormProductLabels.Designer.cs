@@ -8,110 +8,110 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            lblSubtitle = new Label();
-            pnlLeftConfig = new Panel();
-            lblSearch = new Label();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            labelSubtitle = new Label();
+            panelLeftConfiguration = new Panel();
+            labelSearchPrompt = new Label();
             quickSearchBox = new CompriaxSystem.WinFormsUI.Controls.QuickSearchProductBox();
-            lblSelectedInfo = new Label();
-            lblDescTitle = new Label();
-            txtShortDescription = new TextBox();
-            lblPriceTitle = new Label();
-            numPrice = new NumericUpDown();
-            lblQtyTitle = new Label();
-            numQuantity = new NumericUpDown();
-            btnAddItem = new Button();
-            lblQueueTitle = new Label();
-            dgvQueue = new DataGridView();
-            btnRemoveItem = new Button();
-            btnClearQueue = new Button();
-            lblTotalSummary = new Label();
-            pnlRightPreview = new Panel();
-            lblPreviewHeader = new Label();
-            picSheetPreview = new PictureBox();
-            pnlPagination = new Panel();
-            btnPrevPage = new Button();
-            lblPageIndicator = new Label();
-            btnNextPage = new Button();
-            btnPrint = new Button();
-            btnExportImage = new Button();
-            pnlHeader.SuspendLayout();
-            pnlLeftConfig.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numPrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvQueue).BeginInit();
-            pnlRightPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picSheetPreview).BeginInit();
-            pnlPagination.SuspendLayout();
+            labelSelectedProductInfo = new Label();
+            labelDescriptionPrompt = new Label();
+            textBoxShortDescription = new TextBox();
+            labelPricePrompt = new Label();
+            numericUpDownPrice = new NumericUpDown();
+            labelQuantityPrompt = new Label();
+            numericUpDownQuantity = new NumericUpDown();
+            buttonAddLabelToQueue = new Button();
+            labelQueueTitle = new Label();
+            dataGridViewLabelQueue = new DataGridView();
+            buttonRemoveSelectedFromQueue = new Button();
+            buttonClearQueue = new Button();
+            labelTotalSummary = new Label();
+            panelRightPreviewCard = new Panel();
+            labelPreviewHeader = new Label();
+            pictureBoxSheetPreview = new PictureBox();
+            panelPagination = new Panel();
+            buttonPreviousPage = new Button();
+            labelPageIndicator = new Label();
+            buttonNextPage = new Button();
+            buttonPrintSheet = new Button();
+            buttonExportSheetPng = new Button();
+            panelHeader.SuspendLayout();
+            panelLeftConfiguration.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewLabelQueue).BeginInit();
+            panelRightPreviewCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxSheetPreview).BeginInit();
+            panelPagination.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlHeader
+            // panelHeader
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(lblSubtitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1280, 68);
-            pnlHeader.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(labelSubtitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1280, 68);
+            panelHeader.TabIndex = 0;
             // 
-            // lblTitle
+            // labelTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(20, 12);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(438, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "IMPRESIÓN DE ETIQUETAS DE GÓNDOLA";
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(20, 12);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(438, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "IMPRESIÓN DE ETIQUETAS DE GÓNDOLA";
             // 
-            // lblSubtitle
+            // labelSubtitle
             // 
-            lblSubtitle.AutoSize = true;
-            lblSubtitle.Font = new Font("Segoe UI", 8.5F);
-            lblSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
-            lblSubtitle.Location = new Point(22, 40);
-            lblSubtitle.Name = "lblSubtitle";
-            lblSubtitle.Size = new Size(578, 20);
-            lblSubtitle.TabIndex = 1;
-            lblSubtitle.Text = "Agregue múltiples productos e imprima todas las etiquetas en una sola hoja continua.";
+            labelSubtitle.AutoSize = true;
+            labelSubtitle.Font = new Font("Segoe UI", 8.5F);
+            labelSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            labelSubtitle.Location = new Point(22, 40);
+            labelSubtitle.Name = "labelSubtitle";
+            labelSubtitle.Size = new Size(578, 20);
+            labelSubtitle.TabIndex = 1;
+            labelSubtitle.Text = "Agregue múltiples productos e imprima todas las etiquetas en una sola hoja continua.";
             // 
-            // pnlLeftConfig
+            // panelLeftConfiguration
             // 
-            pnlLeftConfig.BackColor = Color.White;
-            pnlLeftConfig.Controls.Add(lblSearch);
-            pnlLeftConfig.Controls.Add(quickSearchBox);
-            pnlLeftConfig.Controls.Add(lblSelectedInfo);
-            pnlLeftConfig.Controls.Add(lblDescTitle);
-            pnlLeftConfig.Controls.Add(txtShortDescription);
-            pnlLeftConfig.Controls.Add(lblPriceTitle);
-            pnlLeftConfig.Controls.Add(numPrice);
-            pnlLeftConfig.Controls.Add(lblQtyTitle);
-            pnlLeftConfig.Controls.Add(numQuantity);
-            pnlLeftConfig.Controls.Add(btnAddItem);
-            pnlLeftConfig.Controls.Add(lblQueueTitle);
-            pnlLeftConfig.Controls.Add(dgvQueue);
-            pnlLeftConfig.Controls.Add(btnRemoveItem);
-            pnlLeftConfig.Controls.Add(btnClearQueue);
-            pnlLeftConfig.Controls.Add(lblTotalSummary);
-            pnlLeftConfig.Location = new Point(20, 80);
-            pnlLeftConfig.Name = "pnlLeftConfig";
-            pnlLeftConfig.Padding = new Padding(16);
-            pnlLeftConfig.Size = new Size(600, 742);
-            pnlLeftConfig.TabIndex = 1;
+            panelLeftConfiguration.BackColor = Color.White;
+            panelLeftConfiguration.Controls.Add(labelSearchPrompt);
+            panelLeftConfiguration.Controls.Add(quickSearchBox);
+            panelLeftConfiguration.Controls.Add(labelSelectedProductInfo);
+            panelLeftConfiguration.Controls.Add(labelDescriptionPrompt);
+            panelLeftConfiguration.Controls.Add(textBoxShortDescription);
+            panelLeftConfiguration.Controls.Add(labelPricePrompt);
+            panelLeftConfiguration.Controls.Add(numericUpDownPrice);
+            panelLeftConfiguration.Controls.Add(labelQuantityPrompt);
+            panelLeftConfiguration.Controls.Add(numericUpDownQuantity);
+            panelLeftConfiguration.Controls.Add(buttonAddLabelToQueue);
+            panelLeftConfiguration.Controls.Add(labelQueueTitle);
+            panelLeftConfiguration.Controls.Add(dataGridViewLabelQueue);
+            panelLeftConfiguration.Controls.Add(buttonRemoveSelectedFromQueue);
+            panelLeftConfiguration.Controls.Add(buttonClearQueue);
+            panelLeftConfiguration.Controls.Add(labelTotalSummary);
+            panelLeftConfiguration.Location = new Point(20, 80);
+            panelLeftConfiguration.Name = "panelLeftConfiguration";
+            panelLeftConfiguration.Padding = new Padding(16);
+            panelLeftConfiguration.Size = new Size(600, 742);
+            panelLeftConfiguration.TabIndex = 1;
             // 
-            // lblSearch
+            // labelSearchPrompt
             // 
-            lblSearch.AutoSize = true;
-            lblSearch.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSearch.Location = new Point(16, 10);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(138, 21);
-            lblSearch.TabIndex = 0;
-            lblSearch.Text = "Buscar Producto:";
+            labelSearchPrompt.AutoSize = true;
+            labelSearchPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSearchPrompt.Location = new Point(16, 10);
+            labelSearchPrompt.Name = "labelSearchPrompt";
+            labelSearchPrompt.Size = new Size(138, 21);
+            labelSearchPrompt.TabIndex = 0;
+            labelSearchPrompt.Text = "Buscar Producto:";
             // 
             // quickSearchBox
             // 
@@ -123,252 +123,252 @@
             quickSearchBox.Size = new Size(568, 48);
             quickSearchBox.TabIndex = 1;
             // 
-            // lblSelectedInfo
+            // labelSelectedProductInfo
             // 
-            lblSelectedInfo.AutoEllipsis = true;
-            lblSelectedInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblSelectedInfo.ForeColor = Color.FromArgb(100, 116, 139);
-            lblSelectedInfo.Location = new Point(16, 88);
-            lblSelectedInfo.Name = "lblSelectedInfo";
-            lblSelectedInfo.Size = new Size(568, 20);
-            lblSelectedInfo.TabIndex = 2;
-            lblSelectedInfo.Text = "Ningún producto seleccionado";
+            labelSelectedProductInfo.AutoEllipsis = true;
+            labelSelectedProductInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelSelectedProductInfo.ForeColor = Color.FromArgb(100, 116, 139);
+            labelSelectedProductInfo.Location = new Point(16, 88);
+            labelSelectedProductInfo.Name = "labelSelectedProductInfo";
+            labelSelectedProductInfo.Size = new Size(568, 20);
+            labelSelectedProductInfo.TabIndex = 2;
+            labelSelectedProductInfo.Text = "Ningún producto seleccionado";
             // 
-            // lblDescTitle
+            // labelDescriptionPrompt
             // 
-            lblDescTitle.AutoSize = true;
-            lblDescTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDescTitle.Location = new Point(16, 118);
-            lblDescTitle.Name = "lblDescTitle";
-            lblDescTitle.Size = new Size(165, 20);
-            lblDescTitle.TabIndex = 3;
-            lblDescTitle.Text = "Texto para la Etiqueta:";
+            labelDescriptionPrompt.AutoSize = true;
+            labelDescriptionPrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelDescriptionPrompt.Location = new Point(16, 118);
+            labelDescriptionPrompt.Name = "labelDescriptionPrompt";
+            labelDescriptionPrompt.Size = new Size(165, 20);
+            labelDescriptionPrompt.TabIndex = 3;
+            labelDescriptionPrompt.Text = "Texto para la Etiqueta:";
             // 
-            // txtShortDescription
+            // textBoxShortDescription
             // 
-            txtShortDescription.BorderStyle = BorderStyle.FixedSingle;
-            txtShortDescription.Font = new Font("Segoe UI", 9.5F);
-            txtShortDescription.Location = new Point(13, 141);
-            txtShortDescription.MaxLength = 50;
-            txtShortDescription.Name = "txtShortDescription";
-            txtShortDescription.Size = new Size(568, 29);
-            txtShortDescription.TabIndex = 4;
+            textBoxShortDescription.BorderStyle = BorderStyle.FixedSingle;
+            textBoxShortDescription.Font = new Font("Segoe UI", 9.5F);
+            textBoxShortDescription.Location = new Point(13, 141);
+            textBoxShortDescription.MaxLength = 50;
+            textBoxShortDescription.Name = "textBoxShortDescription";
+            textBoxShortDescription.Size = new Size(568, 29);
+            textBoxShortDescription.TabIndex = 4;
             // 
-            // lblPriceTitle
+            // labelPricePrompt
             // 
-            lblPriceTitle.AutoSize = true;
-            lblPriceTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPriceTitle.Location = new Point(16, 182);
-            lblPriceTitle.Name = "lblPriceTitle";
-            lblPriceTitle.Size = new Size(81, 20);
-            lblPriceTitle.TabIndex = 5;
-            lblPriceTitle.Text = "Precio ($):";
+            labelPricePrompt.AutoSize = true;
+            labelPricePrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelPricePrompt.Location = new Point(16, 182);
+            labelPricePrompt.Name = "labelPricePrompt";
+            labelPricePrompt.Size = new Size(81, 20);
+            labelPricePrompt.TabIndex = 5;
+            labelPricePrompt.Text = "Precio ($):";
             // 
-            // numPrice
+            // numericUpDownPrice
             // 
-            numPrice.DecimalPlaces = 2;
-            numPrice.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            numPrice.Location = new Point(16, 205);
-            numPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-            numPrice.Name = "numPrice";
-            numPrice.Size = new Size(150, 30);
-            numPrice.TabIndex = 6;
+            numericUpDownPrice.DecimalPlaces = 2;
+            numericUpDownPrice.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            numericUpDownPrice.Location = new Point(16, 205);
+            numericUpDownPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            numericUpDownPrice.Name = "numericUpDownPrice";
+            numericUpDownPrice.Size = new Size(150, 30);
+            numericUpDownPrice.TabIndex = 6;
             // 
-            // lblQtyTitle
+            // labelQuantityPrompt
             // 
-            lblQtyTitle.AutoSize = true;
-            lblQtyTitle.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblQtyTitle.Location = new Point(180, 182);
-            lblQtyTitle.Name = "lblQtyTitle";
-            lblQtyTitle.Size = new Size(75, 20);
-            lblQtyTitle.TabIndex = 7;
-            lblQtyTitle.Text = "Cantidad:";
+            labelQuantityPrompt.AutoSize = true;
+            labelQuantityPrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelQuantityPrompt.Location = new Point(180, 182);
+            labelQuantityPrompt.Name = "labelQuantityPrompt";
+            labelQuantityPrompt.Size = new Size(75, 20);
+            labelQuantityPrompt.TabIndex = 7;
+            labelQuantityPrompt.Text = "Cantidad:";
             // 
-            // numQuantity
+            // numericUpDownQuantity
             // 
-            numQuantity.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            numQuantity.Location = new Point(180, 205);
-            numQuantity.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
-            numQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numQuantity.Name = "numQuantity";
-            numQuantity.Size = new Size(100, 30);
-            numQuantity.TabIndex = 8;
-            numQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownQuantity.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            numericUpDownQuantity.Location = new Point(180, 205);
+            numericUpDownQuantity.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
+            numericUpDownQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownQuantity.Name = "numericUpDownQuantity";
+            numericUpDownQuantity.Size = new Size(100, 30);
+            numericUpDownQuantity.TabIndex = 8;
+            numericUpDownQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // btnAddItem
+            // buttonAddLabelToQueue
             // 
-            btnAddItem.BackColor = Color.FromArgb(2, 132, 199);
-            btnAddItem.FlatAppearance.BorderSize = 0;
-            btnAddItem.FlatStyle = FlatStyle.Flat;
-            btnAddItem.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnAddItem.ForeColor = Color.White;
-            btnAddItem.Location = new Point(300, 199);
-            btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(284, 38);
-            btnAddItem.TabIndex = 9;
-            btnAddItem.Text = "+ AGREGAR A LA PLANTILLA";
-            btnAddItem.UseVisualStyleBackColor = false;
+            buttonAddLabelToQueue.BackColor = Color.FromArgb(2, 132, 199);
+            buttonAddLabelToQueue.FlatAppearance.BorderSize = 0;
+            buttonAddLabelToQueue.FlatStyle = FlatStyle.Flat;
+            buttonAddLabelToQueue.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonAddLabelToQueue.ForeColor = Color.White;
+            buttonAddLabelToQueue.Location = new Point(300, 199);
+            buttonAddLabelToQueue.Name = "buttonAddLabelToQueue";
+            buttonAddLabelToQueue.Size = new Size(284, 38);
+            buttonAddLabelToQueue.TabIndex = 9;
+            buttonAddLabelToQueue.Text = "+ AGREGAR A LA PLANTILLA";
+            buttonAddLabelToQueue.UseVisualStyleBackColor = false;
             // 
-            // lblQueueTitle
+            // labelQueueTitle
             // 
-            lblQueueTitle.AutoSize = true;
-            lblQueueTitle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblQueueTitle.ForeColor = Color.FromArgb(15, 23, 42);
-            lblQueueTitle.Location = new Point(16, 266);
-            lblQueueTitle.Name = "lblQueueTitle";
-            lblQueueTitle.Size = new Size(300, 21);
-            lblQueueTitle.TabIndex = 10;
-            lblQueueTitle.Text = "Lista de Productos a Imprimir en Hoja:";
+            labelQueueTitle.AutoSize = true;
+            labelQueueTitle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelQueueTitle.ForeColor = Color.FromArgb(15, 23, 42);
+            labelQueueTitle.Location = new Point(16, 266);
+            labelQueueTitle.Name = "labelQueueTitle";
+            labelQueueTitle.Size = new Size(300, 21);
+            labelQueueTitle.TabIndex = 10;
+            labelQueueTitle.Text = "Lista de Productos a Imprimir en Hoja:";
             // 
-            // dgvQueue
+            // dataGridViewLabelQueue
             // 
-            dgvQueue.BackgroundColor = Color.White;
-            dgvQueue.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvQueue.Location = new Point(16, 300);
-            dgvQueue.Name = "dgvQueue";
-            dgvQueue.RowHeadersWidth = 30;
-            dgvQueue.Size = new Size(568, 330);
-            dgvQueue.TabIndex = 11;
+            dataGridViewLabelQueue.BackgroundColor = Color.White;
+            dataGridViewLabelQueue.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewLabelQueue.Location = new Point(16, 300);
+            dataGridViewLabelQueue.Name = "dataGridViewLabelQueue";
+            dataGridViewLabelQueue.RowHeadersWidth = 30;
+            dataGridViewLabelQueue.Size = new Size(568, 330);
+            dataGridViewLabelQueue.TabIndex = 11;
             // 
-            // btnRemoveItem
+            // buttonRemoveSelectedFromQueue
             // 
-            btnRemoveItem.BackColor = Color.FromArgb(239, 68, 68);
-            btnRemoveItem.FlatAppearance.BorderSize = 0;
-            btnRemoveItem.FlatStyle = FlatStyle.Flat;
-            btnRemoveItem.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            btnRemoveItem.ForeColor = Color.White;
-            btnRemoveItem.Location = new Point(16, 654);
-            btnRemoveItem.Name = "btnRemoveItem";
-            btnRemoveItem.Size = new Size(160, 32);
-            btnRemoveItem.TabIndex = 12;
-            btnRemoveItem.Text = "QUITAR SELECCIÓN";
-            btnRemoveItem.UseVisualStyleBackColor = false;
+            buttonRemoveSelectedFromQueue.BackColor = Color.FromArgb(239, 68, 68);
+            buttonRemoveSelectedFromQueue.FlatAppearance.BorderSize = 0;
+            buttonRemoveSelectedFromQueue.FlatStyle = FlatStyle.Flat;
+            buttonRemoveSelectedFromQueue.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            buttonRemoveSelectedFromQueue.ForeColor = Color.White;
+            buttonRemoveSelectedFromQueue.Location = new Point(16, 654);
+            buttonRemoveSelectedFromQueue.Name = "buttonRemoveSelectedFromQueue";
+            buttonRemoveSelectedFromQueue.Size = new Size(160, 32);
+            buttonRemoveSelectedFromQueue.TabIndex = 12;
+            buttonRemoveSelectedFromQueue.Text = "QUITAR SELECCIÓN";
+            buttonRemoveSelectedFromQueue.UseVisualStyleBackColor = false;
             // 
-            // btnClearQueue
+            // buttonClearQueue
             // 
-            btnClearQueue.FlatStyle = FlatStyle.Flat;
-            btnClearQueue.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            btnClearQueue.Location = new Point(182, 654);
-            btnClearQueue.Name = "btnClearQueue";
-            btnClearQueue.Size = new Size(140, 32);
-            btnClearQueue.TabIndex = 13;
-            btnClearQueue.Text = "VACIAR LISTA";
-            btnClearQueue.UseVisualStyleBackColor = true;
+            buttonClearQueue.FlatStyle = FlatStyle.Flat;
+            buttonClearQueue.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            buttonClearQueue.Location = new Point(182, 654);
+            buttonClearQueue.Name = "buttonClearQueue";
+            buttonClearQueue.Size = new Size(140, 32);
+            buttonClearQueue.TabIndex = 13;
+            buttonClearQueue.Text = "VACIAR LISTA";
+            buttonClearQueue.UseVisualStyleBackColor = true;
             // 
-            // lblTotalSummary
+            // labelTotalSummary
             // 
-            lblTotalSummary.AutoEllipsis = true;
-            lblTotalSummary.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblTotalSummary.ForeColor = Color.FromArgb(2, 132, 199);
-            lblTotalSummary.Location = new Point(16, 694);
-            lblTotalSummary.Name = "lblTotalSummary";
-            lblTotalSummary.Size = new Size(568, 22);
-            lblTotalSummary.TabIndex = 14;
-            lblTotalSummary.Text = "Productos: 0  |  Total Etiquetas: 0  (0 hoja/s)";
+            labelTotalSummary.AutoEllipsis = true;
+            labelTotalSummary.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelTotalSummary.ForeColor = Color.FromArgb(2, 132, 199);
+            labelTotalSummary.Location = new Point(16, 694);
+            labelTotalSummary.Name = "labelTotalSummary";
+            labelTotalSummary.Size = new Size(568, 22);
+            labelTotalSummary.TabIndex = 14;
+            labelTotalSummary.Text = "Productos: 0  |  Total Etiquetas: 0  (0 hoja/s)";
             // 
-            // pnlRightPreview
+            // panelRightPreviewCard
             // 
-            pnlRightPreview.BackColor = Color.White;
-            pnlRightPreview.Controls.Add(lblPreviewHeader);
-            pnlRightPreview.Controls.Add(picSheetPreview);
-            pnlRightPreview.Controls.Add(pnlPagination);
-            pnlRightPreview.Controls.Add(btnPrint);
-            pnlRightPreview.Controls.Add(btnExportImage);
-            pnlRightPreview.Location = new Point(640, 80);
-            pnlRightPreview.Name = "pnlRightPreview";
-            pnlRightPreview.Padding = new Padding(16);
-            pnlRightPreview.Size = new Size(620, 742);
-            pnlRightPreview.TabIndex = 2;
+            panelRightPreviewCard.BackColor = Color.White;
+            panelRightPreviewCard.Controls.Add(labelPreviewHeader);
+            panelRightPreviewCard.Controls.Add(pictureBoxSheetPreview);
+            panelRightPreviewCard.Controls.Add(panelPagination);
+            panelRightPreviewCard.Controls.Add(buttonPrintSheet);
+            panelRightPreviewCard.Controls.Add(buttonExportSheetPng);
+            panelRightPreviewCard.Location = new Point(640, 80);
+            panelRightPreviewCard.Name = "panelRightPreviewCard";
+            panelRightPreviewCard.Padding = new Padding(16);
+            panelRightPreviewCard.Size = new Size(620, 742);
+            panelRightPreviewCard.TabIndex = 2;
             // 
-            // lblPreviewHeader
+            // labelPreviewHeader
             // 
-            lblPreviewHeader.AutoSize = true;
-            lblPreviewHeader.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPreviewHeader.ForeColor = Color.FromArgb(15, 23, 42);
-            lblPreviewHeader.Location = new Point(16, 10);
-            lblPreviewHeader.Name = "lblPreviewHeader";
-            lblPreviewHeader.Size = new Size(246, 23);
-            lblPreviewHeader.TabIndex = 0;
-            lblPreviewHeader.Text = "VISTA PREVIA DE PLANTILLA:";
+            labelPreviewHeader.AutoSize = true;
+            labelPreviewHeader.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelPreviewHeader.ForeColor = Color.FromArgb(15, 23, 42);
+            labelPreviewHeader.Location = new Point(16, 10);
+            labelPreviewHeader.Name = "labelPreviewHeader";
+            labelPreviewHeader.Size = new Size(246, 23);
+            labelPreviewHeader.TabIndex = 0;
+            labelPreviewHeader.Text = "VISTA PREVIA DE PLANTILLA:";
             // 
-            // picSheetPreview
+            // pictureBoxSheetPreview
             // 
-            picSheetPreview.BackColor = Color.FromArgb(248, 250, 252);
-            picSheetPreview.BorderStyle = BorderStyle.FixedSingle;
-            picSheetPreview.Location = new Point(16, 36);
-            picSheetPreview.Name = "picSheetPreview";
-            picSheetPreview.Size = new Size(588, 506);
-            picSheetPreview.SizeMode = PictureBoxSizeMode.Zoom;
-            picSheetPreview.TabIndex = 1;
-            picSheetPreview.TabStop = false;
+            pictureBoxSheetPreview.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxSheetPreview.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxSheetPreview.Location = new Point(16, 36);
+            pictureBoxSheetPreview.Name = "pictureBoxSheetPreview";
+            pictureBoxSheetPreview.Size = new Size(588, 506);
+            pictureBoxSheetPreview.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxSheetPreview.TabIndex = 1;
+            pictureBoxSheetPreview.TabStop = false;
             // 
-            // pnlPagination
+            // panelPagination
             // 
-            pnlPagination.Controls.Add(btnPrevPage);
-            pnlPagination.Controls.Add(lblPageIndicator);
-            pnlPagination.Controls.Add(btnNextPage);
-            pnlPagination.Location = new Point(16, 562);
-            pnlPagination.Name = "pnlPagination";
-            pnlPagination.Size = new Size(588, 33);
-            pnlPagination.TabIndex = 2;
+            panelPagination.Controls.Add(buttonPreviousPage);
+            panelPagination.Controls.Add(labelPageIndicator);
+            panelPagination.Controls.Add(buttonNextPage);
+            panelPagination.Location = new Point(16, 562);
+            panelPagination.Name = "panelPagination";
+            panelPagination.Size = new Size(588, 33);
+            panelPagination.TabIndex = 2;
             // 
-            // btnPrevPage
+            // buttonPreviousPage
             // 
-            btnPrevPage.FlatStyle = FlatStyle.Flat;
-            btnPrevPage.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
-            btnPrevPage.Location = new Point(150, 2);
-            btnPrevPage.Name = "btnPrevPage";
-            btnPrevPage.Size = new Size(80, 28);
-            btnPrevPage.TabIndex = 0;
-            btnPrevPage.Text = "◀ ANTERIOR";
-            btnPrevPage.UseVisualStyleBackColor = true;
+            buttonPreviousPage.FlatStyle = FlatStyle.Flat;
+            buttonPreviousPage.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            buttonPreviousPage.Location = new Point(150, 2);
+            buttonPreviousPage.Name = "buttonPreviousPage";
+            buttonPreviousPage.Size = new Size(80, 28);
+            buttonPreviousPage.TabIndex = 0;
+            buttonPreviousPage.Text = "◀ ANTERIOR";
+            buttonPreviousPage.UseVisualStyleBackColor = true;
             // 
-            // lblPageIndicator
+            // labelPageIndicator
             // 
-            lblPageIndicator.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPageIndicator.ForeColor = Color.FromArgb(100, 116, 139);
-            lblPageIndicator.Location = new Point(235, 2);
-            lblPageIndicator.Name = "lblPageIndicator";
-            lblPageIndicator.Size = new Size(120, 28);
-            lblPageIndicator.TabIndex = 1;
-            lblPageIndicator.Text = "Página 1 de 1";
-            lblPageIndicator.TextAlign = ContentAlignment.MiddleCenter;
+            labelPageIndicator.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelPageIndicator.ForeColor = Color.FromArgb(100, 116, 139);
+            labelPageIndicator.Location = new Point(235, 2);
+            labelPageIndicator.Name = "labelPageIndicator";
+            labelPageIndicator.Size = new Size(120, 28);
+            labelPageIndicator.TabIndex = 1;
+            labelPageIndicator.Text = "Página 1 de 1";
+            labelPageIndicator.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // btnNextPage
+            // buttonNextPage
             // 
-            btnNextPage.FlatStyle = FlatStyle.Flat;
-            btnNextPage.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
-            btnNextPage.Location = new Point(360, 2);
-            btnNextPage.Name = "btnNextPage";
-            btnNextPage.Size = new Size(114, 28);
-            btnNextPage.TabIndex = 2;
-            btnNextPage.Text = "SIGUIENTE ▶";
-            btnNextPage.UseVisualStyleBackColor = true;
+            buttonNextPage.FlatStyle = FlatStyle.Flat;
+            buttonNextPage.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            buttonNextPage.Location = new Point(360, 2);
+            buttonNextPage.Name = "buttonNextPage";
+            buttonNextPage.Size = new Size(114, 28);
+            buttonNextPage.TabIndex = 2;
+            buttonNextPage.Text = "SIGUIENTE ▶";
+            buttonNextPage.UseVisualStyleBackColor = true;
             // 
-            // btnPrint
+            // buttonPrintSheet
             // 
-            btnPrint.BackColor = Color.FromArgb(16, 185, 129);
-            btnPrint.FlatAppearance.BorderSize = 0;
-            btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(18, 611);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(380, 105);
-            btnPrint.TabIndex = 3;
-            btnPrint.Text = "IMPRIMIR PLANTILLA(S)";
-            btnPrint.UseVisualStyleBackColor = false;
+            buttonPrintSheet.BackColor = Color.FromArgb(16, 185, 129);
+            buttonPrintSheet.FlatAppearance.BorderSize = 0;
+            buttonPrintSheet.FlatStyle = FlatStyle.Flat;
+            buttonPrintSheet.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonPrintSheet.ForeColor = Color.White;
+            buttonPrintSheet.Location = new Point(18, 611);
+            buttonPrintSheet.Name = "buttonPrintSheet";
+            buttonPrintSheet.Size = new Size(380, 105);
+            buttonPrintSheet.TabIndex = 3;
+            buttonPrintSheet.Text = "IMPRIMIR PLANTILLA(S)";
+            buttonPrintSheet.UseVisualStyleBackColor = false;
             // 
-            // btnExportImage
+            // buttonExportSheetPng
             // 
-            btnExportImage.FlatStyle = FlatStyle.Flat;
-            btnExportImage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnExportImage.Location = new Point(404, 611);
-            btnExportImage.Name = "btnExportImage";
-            btnExportImage.Size = new Size(200, 105);
-            btnExportImage.TabIndex = 4;
-            btnExportImage.Text = "GUARDAR PNG";
-            btnExportImage.UseVisualStyleBackColor = true;
+            buttonExportSheetPng.FlatStyle = FlatStyle.Flat;
+            buttonExportSheetPng.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonExportSheetPng.Location = new Point(404, 611);
+            buttonExportSheetPng.Name = "buttonExportSheetPng";
+            buttonExportSheetPng.Size = new Size(200, 105);
+            buttonExportSheetPng.TabIndex = 4;
+            buttonExportSheetPng.Text = "GUARDAR PNG";
+            buttonExportSheetPng.UseVisualStyleBackColor = true;
             // 
             // FormProductLabels
             // 
@@ -376,56 +376,56 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1280, 837);
-            Controls.Add(pnlRightPreview);
-            Controls.Add(pnlLeftConfig);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelRightPreviewCard);
+            Controls.Add(panelLeftConfiguration);
+            Controls.Add(panelHeader);
             KeyPreview = true;
             Name = "FormProductLabels";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Generador de Plancha de Etiquetas - CompriaxSystem";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlLeftConfig.ResumeLayout(false);
-            pnlLeftConfig.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numPrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvQueue).EndInit();
-            pnlRightPreview.ResumeLayout(false);
-            pnlRightPreview.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picSheetPreview).EndInit();
-            pnlPagination.ResumeLayout(false);
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelLeftConfiguration.ResumeLayout(false);
+            panelLeftConfiguration.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewLabelQueue).EndInit();
+            panelRightPreviewCard.ResumeLayout(false);
+            panelRightPreviewCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxSheetPreview).EndInit();
+            panelPagination.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Label lblSubtitle;
-        private System.Windows.Forms.Panel pnlLeftConfig;
-        private System.Windows.Forms.Label lblSearch;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Label labelSubtitle;
+        private System.Windows.Forms.Panel panelLeftConfiguration;
+        private System.Windows.Forms.Label labelSearchPrompt;
         private Controls.QuickSearchProductBox quickSearchBox;
-        private System.Windows.Forms.Label lblSelectedInfo;
-        private System.Windows.Forms.Label lblDescTitle;
-        private System.Windows.Forms.TextBox txtShortDescription;
-        private System.Windows.Forms.Label lblPriceTitle;
-        private System.Windows.Forms.NumericUpDown numPrice;
-        private System.Windows.Forms.Label lblQtyTitle;
-        private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.Label lblQueueTitle;
-        private System.Windows.Forms.DataGridView dgvQueue;
-        private System.Windows.Forms.Button btnRemoveItem;
-        private System.Windows.Forms.Button btnClearQueue;
-        private System.Windows.Forms.Label lblTotalSummary;
-        private System.Windows.Forms.Panel pnlRightPreview;
-        private System.Windows.Forms.Label lblPreviewHeader;
-        private System.Windows.Forms.PictureBox picSheetPreview;
-        private System.Windows.Forms.Panel pnlPagination;
-        private System.Windows.Forms.Button btnPrevPage;
-        private System.Windows.Forms.Label lblPageIndicator;
-        private System.Windows.Forms.Button btnNextPage;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnExportImage;
+        private System.Windows.Forms.Label labelSelectedProductInfo;
+        private System.Windows.Forms.Label labelDescriptionPrompt;
+        private System.Windows.Forms.TextBox textBoxShortDescription;
+        private System.Windows.Forms.Label labelPricePrompt;
+        private System.Windows.Forms.NumericUpDown numericUpDownPrice;
+        private System.Windows.Forms.Label labelQuantityPrompt;
+        private System.Windows.Forms.NumericUpDown numericUpDownQuantity;
+        private System.Windows.Forms.Button buttonAddLabelToQueue;
+        private System.Windows.Forms.Label labelQueueTitle;
+        private System.Windows.Forms.DataGridView dataGridViewLabelQueue;
+        private System.Windows.Forms.Button buttonRemoveSelectedFromQueue;
+        private System.Windows.Forms.Button buttonClearQueue;
+        private System.Windows.Forms.Label labelTotalSummary;
+        private System.Windows.Forms.Panel panelRightPreviewCard;
+        private System.Windows.Forms.Label labelPreviewHeader;
+        private System.Windows.Forms.PictureBox pictureBoxSheetPreview;
+        private System.Windows.Forms.Panel panelPagination;
+        private System.Windows.Forms.Button buttonPreviousPage;
+        private System.Windows.Forms.Label labelPageIndicator;
+        private System.Windows.Forms.Button buttonNextPage;
+        private System.Windows.Forms.Button buttonPrintSheet;
+        private System.Windows.Forms.Button buttonExportSheetPng;
     }
 }

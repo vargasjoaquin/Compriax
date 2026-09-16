@@ -17,339 +17,339 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            btnExportPdf = new Button();
-            groupBoxData = new Panel();
-            picPhoto = new PictureBox();
-            btnBrowsePhoto = new Button();
-            btnClearPhoto = new Button();
-            lblUsername = new Label();
-            txtUsername = new TextBox();
-            lblFirstName = new Label();
-            txtFirstName = new TextBox();
-            lblLastName = new Label();
-            txtLastName = new TextBox();
-            lblEmail = new Label();
-            txtEmail = new TextBox();
-            lblPassword = new Label();
-            txtPassword = new TextBox();
-            btnTogglePassword = new Button();
-            lblRole = new Label();
-            cboRole = new ComboBox();
-            btnSave = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            dgvUsers = new DataGridView();
-            pnlHeader.SuspendLayout();
-            groupBoxData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picPhoto).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).BeginInit();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            buttonExportPdf = new Button();
+            panelUserForm = new Panel();
+            pictureBoxUserPhoto = new PictureBox();
+            buttonBrowsePhoto = new Button();
+            buttonClearPhoto = new Button();
+            labelUsername = new Label();
+            textBoxUsername = new TextBox();
+            labelFirstName = new Label();
+            textBoxFirstName = new TextBox();
+            labelLastName = new Label();
+            textBoxLastName = new TextBox();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            labelPassword = new Label();
+            textBoxPassword = new TextBox();
+            buttonTogglePasswordVisibility = new Button();
+            labelRole = new Label();
+            comboBoxRole = new ComboBox();
+            buttonSave = new Button();
+            buttonEdit = new Button();
+            buttonDelete = new Button();
+            dataGridViewUsers = new DataGridView();
+            panelHeader.SuspendLayout();
+            panelUserForm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxUserPhoto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).BeginInit();
             SuspendLayout();
 
-            // pnlHeader
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(btnExportPdf);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1103, 76);
-            pnlHeader.TabIndex = 0;
+            // panelHeader
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(buttonExportPdf);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1103, 76);
+            panelHeader.TabIndex = 0;
 
-            // lblTitle
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 21);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(534, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "ADMINISTRACIÓN DE USUARIOS DEL SISTEMA";
+            // labelTitle
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 21);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(534, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "ADMINISTRACIÓN DE USUARIOS DEL SISTEMA";
 
-            // btnExportPdf
-            btnExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportPdf.BackColor = Color.FromArgb(2, 132, 199);
-            btnExportPdf.FlatAppearance.BorderSize = 0;
-            btnExportPdf.FlatStyle = FlatStyle.Flat;
-            btnExportPdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnExportPdf.ForeColor = Color.White;
-            btnExportPdf.Location = new Point(919, 12);
-            btnExportPdf.Name = "btnExportPdf";
-            btnExportPdf.Size = new Size(165, 54);
-            btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "EXPORTAR PDF";
-            btnExportPdf.UseVisualStyleBackColor = false;
+            // buttonExportPdf
+            buttonExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportPdf.BackColor = Color.FromArgb(2, 132, 199);
+            buttonExportPdf.FlatAppearance.BorderSize = 0;
+            buttonExportPdf.FlatStyle = FlatStyle.Flat;
+            buttonExportPdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonExportPdf.ForeColor = Color.White;
+            buttonExportPdf.Location = new Point(919, 12);
+            buttonExportPdf.Name = "buttonExportPdf";
+            buttonExportPdf.Size = new Size(165, 54);
+            buttonExportPdf.TabIndex = 1;
+            buttonExportPdf.Text = "EXPORTAR PDF";
+            buttonExportPdf.UseVisualStyleBackColor = false;
 
-            // groupBoxData
-            groupBoxData.BackColor = Color.White;
-            groupBoxData.Controls.Add(picPhoto);
-            groupBoxData.Controls.Add(btnBrowsePhoto);
-            groupBoxData.Controls.Add(btnClearPhoto);
-            groupBoxData.Controls.Add(lblUsername);
-            groupBoxData.Controls.Add(txtUsername);
-            groupBoxData.Controls.Add(lblFirstName);
-            groupBoxData.Controls.Add(txtFirstName);
-            groupBoxData.Controls.Add(lblLastName);
-            groupBoxData.Controls.Add(txtLastName);
-            groupBoxData.Controls.Add(lblEmail);
-            groupBoxData.Controls.Add(txtEmail);
-            groupBoxData.Controls.Add(lblPassword);
-            groupBoxData.Controls.Add(txtPassword);
-            groupBoxData.Controls.Add(btnTogglePassword);
-            groupBoxData.Controls.Add(lblRole);
-            groupBoxData.Controls.Add(cboRole);
-            groupBoxData.Controls.Add(btnSave);
-            groupBoxData.Controls.Add(btnEdit);
-            groupBoxData.Controls.Add(btnDelete);
-            groupBoxData.Location = new Point(16, 82);
-            groupBoxData.Name = "groupBoxData";
-            groupBoxData.Size = new Size(1068, 261);
-            groupBoxData.TabIndex = 1;
+            // panelUserForm
+            panelUserForm.BackColor = Color.White;
+            panelUserForm.Controls.Add(pictureBoxUserPhoto);
+            panelUserForm.Controls.Add(buttonBrowsePhoto);
+            panelUserForm.Controls.Add(buttonClearPhoto);
+            panelUserForm.Controls.Add(labelUsername);
+            panelUserForm.Controls.Add(textBoxUsername);
+            panelUserForm.Controls.Add(labelFirstName);
+            panelUserForm.Controls.Add(textBoxFirstName);
+            panelUserForm.Controls.Add(labelLastName);
+            panelUserForm.Controls.Add(textBoxLastName);
+            panelUserForm.Controls.Add(labelEmail);
+            panelUserForm.Controls.Add(textBoxEmail);
+            panelUserForm.Controls.Add(labelPassword);
+            panelUserForm.Controls.Add(textBoxPassword);
+            panelUserForm.Controls.Add(buttonTogglePasswordVisibility);
+            panelUserForm.Controls.Add(labelRole);
+            panelUserForm.Controls.Add(comboBoxRole);
+            panelUserForm.Controls.Add(buttonSave);
+            panelUserForm.Controls.Add(buttonEdit);
+            panelUserForm.Controls.Add(buttonDelete);
+            panelUserForm.Location = new Point(16, 82);
+            panelUserForm.Name = "panelUserForm";
+            panelUserForm.Size = new Size(1068, 261);
+            panelUserForm.TabIndex = 1;
 
-            // picPhoto
-            picPhoto.BackColor = Color.FromArgb(248, 250, 252);
-            picPhoto.BorderStyle = BorderStyle.FixedSingle;
-            picPhoto.Location = new Point(16, 16);
-            picPhoto.Name = "picPhoto";
-            picPhoto.Size = new Size(162, 170);
-            picPhoto.SizeMode = PictureBoxSizeMode.Zoom;
-            picPhoto.TabIndex = 0;
-            picPhoto.TabStop = false;
+            // pictureBoxUserPhoto
+            pictureBoxUserPhoto.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxUserPhoto.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxUserPhoto.Location = new Point(16, 16);
+            pictureBoxUserPhoto.Name = "pictureBoxUserPhoto";
+            pictureBoxUserPhoto.Size = new Size(162, 170);
+            pictureBoxUserPhoto.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxUserPhoto.TabIndex = 0;
+            pictureBoxUserPhoto.TabStop = false;
 
-            // btnBrowsePhoto
-            btnBrowsePhoto.BackColor = Color.FromArgb(2, 132, 199);
-            btnBrowsePhoto.FlatAppearance.BorderSize = 0;
-            btnBrowsePhoto.FlatStyle = FlatStyle.Flat;
-            btnBrowsePhoto.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            btnBrowsePhoto.ForeColor = Color.White;
-            btnBrowsePhoto.Location = new Point(16, 192);
-            btnBrowsePhoto.Name = "btnBrowsePhoto";
-            btnBrowsePhoto.Size = new Size(96, 46);
-            btnBrowsePhoto.TabIndex = 1;
-            btnBrowsePhoto.Text = "FOTO";
-            btnBrowsePhoto.UseVisualStyleBackColor = false;
+            // buttonBrowsePhoto
+            buttonBrowsePhoto.BackColor = Color.FromArgb(2, 132, 199);
+            buttonBrowsePhoto.FlatAppearance.BorderSize = 0;
+            buttonBrowsePhoto.FlatStyle = FlatStyle.Flat;
+            buttonBrowsePhoto.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            buttonBrowsePhoto.ForeColor = Color.White;
+            buttonBrowsePhoto.Location = new Point(16, 192);
+            buttonBrowsePhoto.Name = "buttonBrowsePhoto";
+            buttonBrowsePhoto.Size = new Size(96, 46);
+            buttonBrowsePhoto.TabIndex = 1;
+            buttonBrowsePhoto.Text = "FOTO";
+            buttonBrowsePhoto.UseVisualStyleBackColor = false;
 
-            // btnClearPhoto
-            btnClearPhoto.BackColor = Color.FromArgb(239, 68, 68);
-            btnClearPhoto.FlatAppearance.BorderSize = 0;
-            btnClearPhoto.FlatStyle = FlatStyle.Flat;
-            btnClearPhoto.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            btnClearPhoto.ForeColor = Color.White;
-            btnClearPhoto.Location = new Point(118, 192);
-            btnClearPhoto.Name = "btnClearPhoto";
-            btnClearPhoto.Size = new Size(60, 46);
-            btnClearPhoto.TabIndex = 2;
-            btnClearPhoto.Text = "";
-            btnClearPhoto.UseVisualStyleBackColor = false;
+            // buttonClearPhoto
+            buttonClearPhoto.BackColor = Color.FromArgb(239, 68, 68);
+            buttonClearPhoto.FlatAppearance.BorderSize = 0;
+            buttonClearPhoto.FlatStyle = FlatStyle.Flat;
+            buttonClearPhoto.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            buttonClearPhoto.ForeColor = Color.White;
+            buttonClearPhoto.Location = new Point(118, 192);
+            buttonClearPhoto.Name = "buttonClearPhoto";
+            buttonClearPhoto.Size = new Size(60, 46);
+            buttonClearPhoto.TabIndex = 2;
+            buttonClearPhoto.Text = "";
+            buttonClearPhoto.UseVisualStyleBackColor = false;
 
-            // lblUsername
-            lblUsername.AutoSize = true;
-            lblUsername.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblUsername.Location = new Point(209, 16);
-            lblUsername.Name = "lblUsername";
-            lblUsername.Size = new Size(163, 21);
-            lblUsername.TabIndex = 3;
-            lblUsername.Text = "Nombre de Usuario:";
+            // labelUsername
+            labelUsername.AutoSize = true;
+            labelUsername.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelUsername.Location = new Point(209, 16);
+            labelUsername.Name = "labelUsername";
+            labelUsername.Size = new Size(163, 21);
+            labelUsername.TabIndex = 3;
+            labelUsername.Text = "Nombre de Usuario:";
 
-            // txtUsername
-            txtUsername.BorderStyle = BorderStyle.FixedSingle;
-            txtUsername.Font = new Font("Segoe UI", 10F);
-            txtUsername.Location = new Point(209, 40);
-            txtUsername.Name = "txtUsername";
-            txtUsername.Size = new Size(227, 30);
-            txtUsername.TabIndex = 4;
+            // textBoxUsername
+            textBoxUsername.BorderStyle = BorderStyle.FixedSingle;
+            textBoxUsername.Font = new Font("Segoe UI", 10F);
+            textBoxUsername.Location = new Point(209, 40);
+            textBoxUsername.Name = "textBoxUsername";
+            textBoxUsername.Size = new Size(227, 30);
+            textBoxUsername.TabIndex = 4;
 
-            // lblFirstName
-            lblFirstName.AutoSize = true;
-            lblFirstName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblFirstName.Location = new Point(209, 88);
-            lblFirstName.Name = "lblFirstName";
-            lblFirstName.Size = new Size(77, 21);
-            lblFirstName.TabIndex = 5;
-            lblFirstName.Text = "Nombre:";
+            // labelFirstName
+            labelFirstName.AutoSize = true;
+            labelFirstName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelFirstName.Location = new Point(209, 88);
+            labelFirstName.Name = "labelFirstName";
+            labelFirstName.Size = new Size(77, 21);
+            labelFirstName.TabIndex = 5;
+            labelFirstName.Text = "Nombre:";
 
-            // txtFirstName
-            txtFirstName.BorderStyle = BorderStyle.FixedSingle;
-            txtFirstName.Font = new Font("Segoe UI", 10F);
-            txtFirstName.Location = new Point(209, 111);
-            txtFirstName.Name = "txtFirstName";
-            txtFirstName.Size = new Size(227, 30);
-            txtFirstName.TabIndex = 6;
+            // textBoxFirstName
+            textBoxFirstName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxFirstName.Font = new Font("Segoe UI", 10F);
+            textBoxFirstName.Location = new Point(209, 111);
+            textBoxFirstName.Name = "textBoxFirstName";
+            textBoxFirstName.Size = new Size(227, 30);
+            textBoxFirstName.TabIndex = 6;
 
-            // lblLastName
-            lblLastName.AutoSize = true;
-            lblLastName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblLastName.Location = new Point(209, 165);
-            lblLastName.Name = "lblLastName";
-            lblLastName.Size = new Size(79, 21);
-            lblLastName.TabIndex = 7;
-            lblLastName.Text = "Apellido:";
+            // labelLastName
+            labelLastName.AutoSize = true;
+            labelLastName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelLastName.Location = new Point(209, 165);
+            labelLastName.Name = "labelLastName";
+            labelLastName.Size = new Size(79, 21);
+            labelLastName.TabIndex = 7;
+            labelLastName.Text = "Apellido:";
 
-            // txtLastName
-            txtLastName.BorderStyle = BorderStyle.FixedSingle;
-            txtLastName.Font = new Font("Segoe UI", 10F);
-            txtLastName.Location = new Point(209, 190);
-            txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(227, 30);
-            txtLastName.TabIndex = 8;
+            // textBoxLastName
+            textBoxLastName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxLastName.Font = new Font("Segoe UI", 10F);
+            textBoxLastName.Location = new Point(209, 190);
+            textBoxLastName.Name = "textBoxLastName";
+            textBoxLastName.Size = new Size(227, 30);
+            textBoxLastName.TabIndex = 8;
 
-            // lblEmail
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEmail.Location = new Point(501, 16);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(155, 21);
-            lblEmail.TabIndex = 9;
-            lblEmail.Text = "Correo Electrónico:";
+            // labelEmail
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelEmail.Location = new Point(501, 16);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(155, 21);
+            labelEmail.TabIndex = 9;
+            labelEmail.Text = "Correo Electrónico:";
 
-            // txtEmail
-            txtEmail.BorderStyle = BorderStyle.FixedSingle;
-            txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(501, 40);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(239, 30);
-            txtEmail.TabIndex = 10;
+            // textBoxEmail
+            textBoxEmail.BorderStyle = BorderStyle.FixedSingle;
+            textBoxEmail.Font = new Font("Segoe UI", 10F);
+            textBoxEmail.Location = new Point(501, 40);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(239, 30);
+            textBoxEmail.TabIndex = 10;
 
-            // lblPassword
-            lblPassword.AutoSize = true;
-            lblPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblPassword.Location = new Point(501, 87);
-            lblPassword.Name = "lblPassword";
-            lblPassword.Size = new Size(100, 21);
-            lblPassword.TabIndex = 11;
-            lblPassword.Text = "Contraseña:";
+            // labelPassword
+            labelPassword.AutoSize = true;
+            labelPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelPassword.Location = new Point(501, 87);
+            labelPassword.Name = "labelPassword";
+            labelPassword.Size = new Size(100, 21);
+            labelPassword.TabIndex = 11;
+            labelPassword.Text = "Contraseña:";
 
-            // txtPassword
-            txtPassword.BorderStyle = BorderStyle.FixedSingle;
-            txtPassword.Font = new Font("Segoe UI", 10F);
-            txtPassword.Location = new Point(501, 111);
-            txtPassword.Name = "txtPassword";
-            txtPassword.PasswordChar = '●';
-            txtPassword.Size = new Size(190, 30);
-            txtPassword.TabIndex = 12;
+            // textBoxPassword
+            textBoxPassword.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPassword.Font = new Font("Segoe UI", 10F);
+            textBoxPassword.Location = new Point(501, 111);
+            textBoxPassword.Name = "textBoxPassword";
+            textBoxPassword.PasswordChar = '●';
+            textBoxPassword.Size = new Size(190, 30);
+            textBoxPassword.TabIndex = 12;
 
-            // btnTogglePassword (Botón con Ojito)
-            btnTogglePassword.BackColor = Color.FromArgb(241, 245, 249);
-            btnTogglePassword.FlatStyle = FlatStyle.Flat;
-            btnTogglePassword.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
-            btnTogglePassword.Font = new Font("Segoe UI", 10F);
-            btnTogglePassword.Location = new Point(697, 111);
-            btnTogglePassword.Name = "btnTogglePassword";
-            btnTogglePassword.Size = new Size(43, 30);
-            btnTogglePassword.TabIndex = 13;
-            btnTogglePassword.Text = "";
-            btnTogglePassword.UseVisualStyleBackColor = false;
+            // buttonTogglePasswordVisibility (Botón con Ojito)
+            buttonTogglePasswordVisibility.BackColor = Color.FromArgb(241, 245, 249);
+            buttonTogglePasswordVisibility.FlatStyle = FlatStyle.Flat;
+            buttonTogglePasswordVisibility.FlatAppearance.BorderColor = Color.FromArgb(203, 213, 225);
+            buttonTogglePasswordVisibility.Font = new Font("Segoe UI", 10F);
+            buttonTogglePasswordVisibility.Location = new Point(697, 111);
+            buttonTogglePasswordVisibility.Name = "buttonTogglePasswordVisibility";
+            buttonTogglePasswordVisibility.Size = new Size(43, 30);
+            buttonTogglePasswordVisibility.TabIndex = 13;
+            buttonTogglePasswordVisibility.Text = "";
+            buttonTogglePasswordVisibility.UseVisualStyleBackColor = false;
 
-            // lblRole
-            lblRole.AutoSize = true;
-            lblRole.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblRole.Location = new Point(501, 165);
-            lblRole.Name = "lblRole";
-            lblRole.Size = new Size(119, 21);
-            lblRole.TabIndex = 14;
-            lblRole.Text = "Rol de Acceso:";
+            // labelRole
+            labelRole.AutoSize = true;
+            labelRole.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelRole.Location = new Point(501, 165);
+            labelRole.Name = "labelRole";
+            labelRole.Size = new Size(119, 21);
+            labelRole.TabIndex = 14;
+            labelRole.Text = "Rol de Acceso:";
 
-            // cboRole
-            cboRole.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboRole.Font = new Font("Segoe UI", 10F);
-            cboRole.Location = new Point(501, 190);
-            cboRole.Name = "cboRole";
-            cboRole.Size = new Size(239, 31);
-            cboRole.TabIndex = 15;
+            // comboBoxRole
+            comboBoxRole.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxRole.Font = new Font("Segoe UI", 10F);
+            comboBoxRole.Location = new Point(501, 190);
+            comboBoxRole.Name = "comboBoxRole";
+            comboBoxRole.Size = new Size(239, 31);
+            comboBoxRole.TabIndex = 15;
 
-            // btnSave
-            btnSave.BackColor = Color.FromArgb(16, 185, 129);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(789, 8);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(251, 74);
-            btnSave.TabIndex = 16;
-            btnSave.Text = "GUARDAR USUARIO";
-            btnSave.UseVisualStyleBackColor = false;
+            // buttonSave
+            buttonSave.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSave.FlatAppearance.BorderSize = 0;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonSave.ForeColor = Color.White;
+            buttonSave.Location = new Point(789, 8);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(251, 74);
+            buttonSave.TabIndex = 16;
+            buttonSave.Text = "GUARDAR USUARIO";
+            buttonSave.UseVisualStyleBackColor = false;
 
-            // btnEdit
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnEdit.Location = new Point(789, 88);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(251, 81);
-            btnEdit.TabIndex = 17;
-            btnEdit.Text = "EDITAR USUARIO";
-            btnEdit.UseVisualStyleBackColor = true;
+            // buttonEdit
+            buttonEdit.FlatStyle = FlatStyle.Flat;
+            buttonEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonEdit.Location = new Point(789, 88);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(251, 81);
+            buttonEdit.TabIndex = 17;
+            buttonEdit.Text = "EDITAR USUARIO";
+            buttonEdit.UseVisualStyleBackColor = true;
 
-            // btnDelete
-            btnDelete.BackColor = Color.FromArgb(239, 68, 68);
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(789, 177);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(251, 76);
-            btnDelete.TabIndex = 18;
-            btnDelete.Text = "ACTIVAR / DESACTIVAR";
-            btnDelete.UseVisualStyleBackColor = false;
+            // buttonDelete
+            buttonDelete.BackColor = Color.FromArgb(239, 68, 68);
+            buttonDelete.FlatAppearance.BorderSize = 0;
+            buttonDelete.FlatStyle = FlatStyle.Flat;
+            buttonDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonDelete.ForeColor = Color.White;
+            buttonDelete.Location = new Point(789, 177);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(251, 76);
+            buttonDelete.TabIndex = 18;
+            buttonDelete.Text = "ACTIVAR / DESACTIVAR";
+            buttonDelete.UseVisualStyleBackColor = false;
 
-            // dgvUsers
-            dgvUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvUsers.BackgroundColor = Color.White;
-            dgvUsers.BorderStyle = BorderStyle.None;
-            dgvUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvUsers.Location = new Point(16, 349);
-            dgvUsers.Name = "dgvUsers";
-            dgvUsers.RowHeadersWidth = 51;
-            dgvUsers.Size = new Size(1068, 367);
-            dgvUsers.TabIndex = 2;
+            // dataGridViewUsers
+            dataGridViewUsers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewUsers.BackgroundColor = Color.White;
+            dataGridViewUsers.BorderStyle = BorderStyle.None;
+            dataGridViewUsers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewUsers.Location = new Point(16, 349);
+            dataGridViewUsers.Name = "dataGridViewUsers";
+            dataGridViewUsers.RowHeadersWidth = 51;
+            dataGridViewUsers.Size = new Size(1068, 367);
+            dataGridViewUsers.TabIndex = 2;
 
             // FormUsers
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1103, 728);
-            Controls.Add(dgvUsers);
-            Controls.Add(groupBoxData);
-            Controls.Add(pnlHeader);
+            Controls.Add(dataGridViewUsers);
+            Controls.Add(panelUserForm);
+            Controls.Add(panelHeader);
             Name = "FormUsers";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Usuarios del Sistema";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            groupBoxData.ResumeLayout(false);
-            groupBoxData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picPhoto).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvUsers).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelUserForm.ResumeLayout(false);
+            panelUserForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxUserPhoto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewUsers).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnExportPdf;
-        private System.Windows.Forms.Panel groupBoxData;
-        private System.Windows.Forms.PictureBox picPhoto;
-        private System.Windows.Forms.Button btnBrowsePhoto;
-        private System.Windows.Forms.Button btnClearPhoto;
-        private System.Windows.Forms.Label lblUsername;
-        private System.Windows.Forms.TextBox txtUsername;
-        private System.Windows.Forms.Label lblFirstName;
-        private System.Windows.Forms.TextBox txtFirstName;
-        private System.Windows.Forms.Label lblLastName;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Label lblPassword;
-        private System.Windows.Forms.TextBox txtPassword;
-        private System.Windows.Forms.Button btnTogglePassword;
-        private System.Windows.Forms.Label lblRole;
-        private System.Windows.Forms.ComboBox cboRole;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridView dgvUsers;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonExportPdf;
+        private System.Windows.Forms.Panel panelUserForm;
+        private System.Windows.Forms.PictureBox pictureBoxUserPhoto;
+        private System.Windows.Forms.Button buttonBrowsePhoto;
+        private System.Windows.Forms.Button buttonClearPhoto;
+        private System.Windows.Forms.Label labelUsername;
+        private System.Windows.Forms.TextBox textBoxUsername;
+        private System.Windows.Forms.Label labelFirstName;
+        private System.Windows.Forms.TextBox textBoxFirstName;
+        private System.Windows.Forms.Label labelLastName;
+        private System.Windows.Forms.TextBox textBoxLastName;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.Label labelPassword;
+        private System.Windows.Forms.TextBox textBoxPassword;
+        private System.Windows.Forms.Button buttonTogglePasswordVisibility;
+        private System.Windows.Forms.Label labelRole;
+        private System.Windows.Forms.ComboBox comboBoxRole;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.DataGridView dataGridViewUsers;
     }
 }

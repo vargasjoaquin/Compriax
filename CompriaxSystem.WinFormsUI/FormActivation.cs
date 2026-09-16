@@ -13,52 +13,56 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlCard);
-            pnlHeader.BackColor = UIThemeHelper.SidebarBackground;
+            UIThemeHelper.ApplyCardStyle(panelCard);
+            panelHeader.BackColor = UIThemeHelper.SidebarBackground;
 
-            this.txtCuit.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuit);
+            this.textBoxTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxId);
 
-            this.txtKey1.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(txtKey1, txtKey2, txtKey1, txtKey2, txtKey3, txtKey4);
-            this.txtKey2.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(txtKey2, txtKey3, txtKey1, txtKey2, txtKey3, txtKey4);
-            this.txtKey3.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(txtKey3, txtKey4, txtKey1, txtKey2, txtKey3, txtKey4);
-            this.txtKey4.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(txtKey4, null, txtKey1, txtKey2, txtKey3, txtKey4);
+            this.textBoxLicenseKeyPart1.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxLicenseKeyPart1, textBoxLicenseKeyPart2, textBoxLicenseKeyPart1, textBoxLicenseKeyPart2, textBoxLicenseKeyPart3, textBoxLicenseKeyPart4);
+            this.textBoxLicenseKeyPart2.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxLicenseKeyPart2, textBoxLicenseKeyPart3, textBoxLicenseKeyPart1, textBoxLicenseKeyPart2, textBoxLicenseKeyPart3, textBoxLicenseKeyPart4);
+            this.textBoxLicenseKeyPart3.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxLicenseKeyPart3, textBoxLicenseKeyPart4, textBoxLicenseKeyPart1, textBoxLicenseKeyPart2, textBoxLicenseKeyPart3, textBoxLicenseKeyPart4);
+            this.textBoxLicenseKeyPart4.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxLicenseKeyPart4, null, textBoxLicenseKeyPart1, textBoxLicenseKeyPart2, textBoxLicenseKeyPart3, textBoxLicenseKeyPart4);
 
-            this.txtKey2.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(txtKey2, txtKey1, e);
-            this.txtKey3.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(txtKey3, txtKey2, e);
-            this.txtKey4.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(txtKey4, txtKey3, e);
+            this.textBoxLicenseKeyPart2.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxLicenseKeyPart2, textBoxLicenseKeyPart1, e);
+            this.textBoxLicenseKeyPart3.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxLicenseKeyPart3, textBoxLicenseKeyPart2, e);
+            this.textBoxLicenseKeyPart4.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxLicenseKeyPart4, textBoxLicenseKeyPart3, e);
 
-            this.btnActivate.Click += async (s, e) => await ExecuteActivationAsync();
-            this.btnExit.Click += (s, e) =>
+            this.buttonActivate.Click += async (s, e) => await ExecuteSystemLicenseActivationAsync();
+            this.buttonExit.Click += (s, e) =>
             {
                 this.DialogResult = DialogResult.Cancel;
                 this.Close();
             };
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SystemLicenseActivation.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteActivationAsync()
+        private async Task ExecuteSystemLicenseActivationAsync()
         {
-            string cuitKey = new string(txtCuit.Text.Where(char.IsDigit).ToArray());
-            string licenseKey = new string($"{txtKey1.Text}{txtKey2.Text}{txtKey3.Text}{txtKey4.Text}".Where(char.IsLetterOrDigit).ToArray()).ToUpper();
+            string taxIdentificationNumber = new string(textBoxTaxId.Text.Where(char.IsDigit).ToArray());
+            string licenseKey = new string($"{textBoxLicenseKeyPart1.Text}{textBoxLicenseKeyPart2.Text}{textBoxLicenseKeyPart3.Text}{textBoxLicenseKeyPart4.Text}".Where(char.IsLetterOrDigit).ToArray()).ToUpper();
 
-            if (string.IsNullOrWhiteSpace(txtCuit.Text) ||
-                string.IsNullOrWhiteSpace(txtKey1.Text) ||
-                string.IsNullOrWhiteSpace(txtKey2.Text) ||
-                string.IsNullOrWhiteSpace(txtKey3.Text) ||
-                string.IsNullOrWhiteSpace(txtKey4.Text))
+            if (string.IsNullOrWhiteSpace(textBoxTaxId.Text) ||
+                string.IsNullOrWhiteSpace(textBoxLicenseKeyPart1.Text) ||
+                string.IsNullOrWhiteSpace(textBoxLicenseKeyPart2.Text) ||
+                string.IsNullOrWhiteSpace(textBoxLicenseKeyPart3.Text) ||
+                string.IsNullOrWhiteSpace(textBoxLicenseKeyPart4.Text))
             {
                 UIHelper.WarnMessage(this, "Por favor, complete todos los campos de CUIT y License Key.", "Validación");
                 return;
             }
 
-            btnActivate.Enabled = false;
-            btnActivate.Text = "ACTIVANDO...";
-            lblStatusMessage.Visible = false;
+            buttonActivate.Enabled = false;
+            buttonActivate.Text = "ACTIVANDO...";
+            labelStatusMessage.Visible = false;
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _licenseService.ActivateOnlineAsync(cuitKey, licenseKey);
+                var licenseActivationResult = await _licenseService.ActivateOnlineAsync(taxIdentificationNumber, licenseKey);
 
-                if (result.Success)
+                if (licenseActivationResult.Success)
                 {
                     UIHelper.InfoMessage(this, $"¡Sistema activado con éxito!\n\nComercio: {_licenseService.CurrentLicense?.BusinessName}", "Activación Exitosa");
                     this.DialogResult = DialogResult.OK;
@@ -66,11 +70,11 @@ namespace CompriaxSystem.WinFormsUI
                 }
                 else
                 {
-                    lblStatusMessage.Text = result.Message;
-                    lblStatusMessage.ForeColor = UIThemeHelper.Danger;
-                    lblStatusMessage.Visible = true;
-                    btnActivate.Enabled = true;
-                    btnActivate.Text = "ACTIVAR SISTEMA";
+                    labelStatusMessage.Text = licenseActivationResult.Message;
+                    labelStatusMessage.ForeColor = UIThemeHelper.Danger;
+                    labelStatusMessage.Visible = true;
+                    buttonActivate.Enabled = true;
+                    buttonActivate.Text = "ACTIVAR SISTEMA";
                 }
             }
         }

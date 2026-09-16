@@ -34,14 +34,14 @@ namespace CompriaxSystem.WinFormsUI
 
             InitializeComponent();
 
-            this.rb80mm.CheckedChanged += async (s, e) => { if (rb80mm.Checked) await RenderTicketAsync(); };
-            this.rb58mm.CheckedChanged += async (s, e) => { if (rb58mm.Checked) await RenderTicketAsync(); };
-            this.btnSavePdf.Click += async (s, e) => await ExecuteSavePdfAction();
-            this.btnPrint.Click += async (s, e) => await ExecutePrintAction();
-            this.btnWhatsapp.Click += async (s, e) => await ExecuteSendWhatsappAction();
+            this.radioButtonWidth80mm.CheckedChanged += async (s, e) => { if (radioButtonWidth80mm.Checked) await RenderThermalTicketPreviewPdfAsync(); };
+            this.radioButtonWidth58mm.CheckedChanged += async (s, e) => { if (radioButtonWidth58mm.Checked) await RenderThermalTicketPreviewPdfAsync(); };
+            this.buttonSavePdf.Click += async (s, e) => await ExecuteSaveThermalTicketPdfAsync();
+            this.buttonPrintTicket.Click += async (s, e) => await ExecuteSendTicketToThermalPrinterAsync();
+            this.buttonSendWhatsapp.Click += async (s, e) => await ExecuteSendDigitalTicketViaWhatsappAsync();
         }
 
-        public async Task LoadSaleTicketAsync(
+        public async Task LoadSaleTicketAndRenderPreviewAsync(
             SaleDto sale,
             string docNumber,
             string cashierName,
@@ -54,30 +54,30 @@ namespace CompriaxSystem.WinFormsUI
             _customerPhone = customerPhone;
             _customerName = customerName ?? sale.CustomerName;
 
-            this.lblTicketTitle.Text = $"TICKET GENERADO";
-            btnWhatsapp.Enabled = !string.IsNullOrWhiteSpace(_customerPhone) && _whatsappService != null && _storageService != null;
+            this.labelTicketTitle.Text = $"TICKET GENERADO";
+            buttonSendWhatsapp.Enabled = !string.IsNullOrWhiteSpace(_customerPhone) && _whatsappService != null && _storageService != null;
 
-            await RenderTicketAsync();
+            await RenderThermalTicketPreviewPdfAsync();
         }
 
-        private async Task RenderTicketAsync()
+        private async Task RenderThermalTicketPreviewPdfAsync()
         {
             if (_sale == null)
                 return;
 
-            var size = rb58mm.Checked ? ThermalPaperSize.Width58mm : ThermalPaperSize.Width80mm;
+            var selectedThermalPaperSize = radioButtonWidth58mm.Checked ? ThermalPaperSize.Width58mm : ThermalPaperSize.Width80mm;
 
             using (new WaitCursorHelper(this))
             {
                 try
                 {
                     _currentTicketBytes = await _documentService.GenerateThermalTicketReceiptAsync(
-                        _sale, _docNumber, _cashierName, size);
+                        _sale, _docNumber, _cashierName, selectedThermalPaperSize);
 
                     _lastGeneratedTempPdf = Path.Combine(Path.GetTempPath(), $"ticket_preview_{Guid.NewGuid()}.pdf");
                     await File.WriteAllBytesAsync(_lastGeneratedTempPdf, _currentTicketBytes);
 
-                    pdfViewer.Navigate(_lastGeneratedTempPdf);
+                    webBrowserPdfViewer.Navigate(_lastGeneratedTempPdf);
                 }
                 catch (Exception ex)
                 {
@@ -85,8 +85,12 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveThermalTicketPdf.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSavePdfAction()
+        private async Task ExecuteSaveThermalTicketPdfAsync()
         {
             if (_currentTicketBytes == null)
             {
@@ -94,11 +98,15 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            string defaultFileName = $"Ticket_{_docNumber.Replace('/', '-')}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-            await FileExportHelper.SaveAndOpenPdfAsync(this, _currentTicketBytes, defaultFileName, "Guardar Ticket Térmico en PDF");
+            string suggestedTicketPdfFileName = $"Ticket_{_docNumber.Replace('/', '-')}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+            await FileExportHelper.SaveAndOpenPdfAsync(this, _currentTicketBytes, suggestedTicketPdfFileName, "Guardar Ticket Térmico en PDF");
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SendTicketToThermalPrinter.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecutePrintAction()
+        private async Task ExecuteSendTicketToThermalPrinterAsync()
         {
             if (_currentTicketBytes == null)
             {
@@ -110,8 +118,8 @@ namespace CompriaxSystem.WinFormsUI
             {
                 if (_ticketPrinter != null)
                 {
-                    bool success = await _ticketPrinter.PrintTicketAsync(_currentTicketBytes);
-                    if (success)
+                    bool printerJobSuccess = await _ticketPrinter.PrintTicketAsync(_currentTicketBytes);
+                    if (printerJobSuccess)
                     {
                         UIHelper.InfoMessage(this, "El ticket fue enviado a la cola de impresión térmica con éxito.", "Impresión");
                     }
@@ -124,9 +132,9 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     try
                     {
-                        string tempPdfPath = Path.Combine(Path.GetTempPath(), $"ticket_print_{_docNumber.Replace('/', '-')}.pdf");
-                        File.WriteAllBytes(tempPdfPath, _currentTicketBytes);
-                        Process.Start(new ProcessStartInfo(tempPdfPath) { UseShellExecute = true });
+                        string temporaryPdfFilePath = Path.Combine(Path.GetTempPath(), $"ticket_print_{_docNumber.Replace('/', '-')}.pdf");
+                        File.WriteAllBytes(temporaryPdfFilePath, _currentTicketBytes);
+                        Process.Start(new ProcessStartInfo(temporaryPdfFilePath) { UseShellExecute = true });
                     }
                     catch (Exception ex)
                     {
@@ -135,8 +143,12 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SendDigitalTicketViaWhatsapp.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSendWhatsappAction()
+        private async Task ExecuteSendDigitalTicketViaWhatsappAsync()
         {
             if (_whatsappService == null || _storageService == null)
             {
@@ -156,21 +168,21 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            btnWhatsapp.Enabled = false;
-            btnWhatsapp.Text = "ENVIANDO...";
+            buttonSendWhatsapp.Enabled = false;
+            buttonSendWhatsapp.Text = "ENVIANDO...";
 
             using (new WaitCursorHelper(this))
             {
                 try
                 {
-                    byte[] pdfBytes = await _documentService.GenerateSaleReceiptAsync(_sale, _docNumber, _cashierName);
-                    string fileName = $"Factura_{_docNumber.Replace("/", "-")}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
-                    string downloadUrl = await _storageService.UploadFileAsync(pdfBytes, fileName);
+                    byte[] saleInvoicePdfBytes = await _documentService.GenerateSaleReceiptAsync(_sale, _docNumber, _cashierName);
+                    string cloudPdfFileName = $"Factura_{_docNumber.Replace("/", "-")}_{DateTime.Now:yyyyMMdd_HHmmss}.pdf";
+                    string uploadedPdfCloudUrl = await _storageService.UploadFileAsync(saleInvoicePdfBytes, cloudPdfFileName);
 
                     await _whatsappService.SendInvoiceLinkAsync(
                         _customerPhone,
                         _customerName,
-                        downloadUrl);
+                        uploadedPdfCloudUrl);
 
                     UIHelper.InfoMessage(this, "¡El comprobante digital ha sido enviado por WhatsApp exitosamente!", "WhatsApp Enviado");
                 }
@@ -180,8 +192,8 @@ namespace CompriaxSystem.WinFormsUI
                 }
                 finally
                 {
-                    btnWhatsapp.Enabled = true;
-                    btnWhatsapp.Text = "WHATSAPP";
+                    buttonSendWhatsapp.Enabled = true;
+                    buttonSendWhatsapp.Text = "WHATSAPP";
                 }
             }
         }

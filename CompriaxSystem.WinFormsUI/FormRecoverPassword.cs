@@ -13,53 +13,57 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             this.BackColor = UIThemeHelper.SidebarBackground;
-            UIThemeHelper.ApplyCardStyle(pnlCard);
-            lblMainTitle.ForeColor = UIThemeHelper.Primary;
+            UIThemeHelper.ApplyCardStyle(panelCard);
+            labelMainTitle.ForeColor = UIThemeHelper.Primary;
 
-            this.btnSend.Click += async (s, e) => await ExecuteSendRecoveryAsync();
-            this.btnCancel.Click += (s, e) => this.Close();
-            this.btnCloseX.Click += (s, e) => this.Close();
-            this.txtIdentity.KeyDown += async (s, e) =>
+            this.buttonSendRecovery.Click += async (s, e) => await ExecuteSendPasswordRecoveryRequestAsync();
+            this.buttonCancel.Click += (s, e) => this.Close();
+            this.buttonCloseDialog.Click += (s, e) => this.Close();
+            this.textBoxIdentity.KeyDown += async (s, e) =>
             {
-                if (e.KeyCode == Keys.Enter) await ExecuteSendRecoveryAsync();
+                if (e.KeyCode == Keys.Enter) await ExecuteSendPasswordRecoveryRequestAsync();
             };
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SendPasswordRecoveryRequest.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSendRecoveryAsync()
+        private async Task ExecuteSendPasswordRecoveryRequestAsync()
         {
-            string identity = txtIdentity.Text.Trim();
-            if (string.IsNullOrWhiteSpace(identity))
+            string userIdentifierOrEmail = textBoxIdentity.Text.Trim();
+            if (string.IsNullOrWhiteSpace(userIdentifierOrEmail))
             {
                 UIHelper.WarnMessage(this, "Por favor, ingrese su nombre de usuario o correo electrónico.", "Campo Requerido");
-                txtIdentity.Focus();
+                textBoxIdentity.Focus();
                 return;
             }
 
-            btnSend.Enabled = false;
-            btnSend.Text = "VERIFICANDO...";
-            lblResult.Text = string.Empty;
+            buttonSendRecovery.Enabled = false;
+            buttonSendRecovery.Text = "VERIFICANDO...";
+            labelResultStatus.Text = string.Empty;
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _authService.SendPasswordResetAsync(identity);
-                if (result.Success)
+                var recoveryOperationResult = await _authService.SendPasswordResetAsync(userIdentifierOrEmail);
+                if (recoveryOperationResult.Success)
                 {
-                    lblResult.Text = result.Message;
-                    lblResult.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblResult.ForeColor = UIThemeHelper.Success;
-                    UIHelper.InfoMessage(this, result.Message, "Recuperación de Contraseña");
+                    labelResultStatus.Text = recoveryOperationResult.Message;
+                    labelResultStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelResultStatus.ForeColor = UIThemeHelper.Success;
+                    UIHelper.InfoMessage(this, recoveryOperationResult.Message, "Recuperación de Contraseña");
                 }
                 else
                 {
-                    lblResult.Text = result.Message;
-                    lblResult.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblResult.ForeColor = UIThemeHelper.Danger;
-                    UIHelper.WarnMessage(this, result.Message, "Cuenta No Encontrada");
+                    labelResultStatus.Text = recoveryOperationResult.Message;
+                    labelResultStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelResultStatus.ForeColor = UIThemeHelper.Danger;
+                    UIHelper.WarnMessage(this, recoveryOperationResult.Message, "Cuenta No Encontrada");
                 }
             }
 
-            btnSend.Enabled = true;
-            btnSend.Text = "ENVIAR";
+            buttonSendRecovery.Enabled = true;
+            buttonSendRecovery.Text = "ENVIAR";
         }
     }
 }

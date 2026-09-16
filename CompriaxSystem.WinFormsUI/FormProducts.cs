@@ -12,9 +12,8 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IDocumentService _documentService;
         private readonly IServiceProvider _serviceProvider;
 
-        private int _selectedProductId = 0;
-        private byte[]? _imageBuffer = null;
-
+        private int _selectedProductIdentifier = 0;
+        private byte[]? _productImageBuffer = null;
         public FormProducts(IProductService productService, ICatalogService catalogService, IDocumentService documentService, IServiceProvider serviceProvider)
         {
             _productService = productService;
@@ -24,100 +23,107 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(groupEdit);
+            UIThemeHelper.ApplyCardStyle(panelProductForm);
 
-            this.dgvProducts.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvProducts, e);
+            this.dataGridViewProducts.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewProducts, e);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
-            this.btnPrintStock.Click += async (s, e) => await ExecuteExportPdfAction();
-            this.btnBrowseImage.Click += (s, e) => HandleImageSelection();
-            this.btnClearImage.Click += (s, e) => HandleImageRemoval();
-            this.btnGenerateLabel.Click += (s, e) => ExecuteOpenLabelDesigner();
+            this.Load += async (s, e) => await InitializeProductsCatalogFormAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveProductAsync();
+            this.buttonEdit.Click += async (s, e) => await ExecuteUpdateProductAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteDeleteProductFromInventoryAsync();
+            this.buttonExportPdf.Click += async (s, e) => await ExecuteExportInventoryReportToPdfAsync();
+            this.buttonBrowsePhoto.Click += (s, e) => HandleProductImageSelection();
+            this.buttonClearPhoto.Click += (s, e) => HandleProductImageRemoval();
+            this.buttonOpenLabelDesigner.Click += (s, e) => ExecuteOpenLabelDesignerForSelectedProduct();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeProductsCatalogFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                cboCategory.DataSource = (await _catalogService.GetActiveCategoriesAsync()).ToList();
-                cboCategory.DisplayMember = "Name";
-                cboCategory.ValueMember = "Id";
-                cboCategory.SelectedIndex = -1;
+                comboBoxCategory.DataSource = (await _catalogService.GetActiveCategoriesAsync()).ToList();
+                comboBoxCategory.DisplayMember = "Name";
+                comboBoxCategory.ValueMember = "Id";
+                comboBoxCategory.SelectedIndex = -1;
 
-                cboBrand.DataSource = (await _catalogService.GetBrandsAsync()).ToList();
-                cboBrand.DisplayMember = "Name";
-                cboBrand.ValueMember = "Id";
-                cboBrand.SelectedIndex = -1;
+                comboBoxBrand.DataSource = (await _catalogService.GetBrandsAsync()).ToList();
+                comboBoxBrand.DisplayMember = "Name";
+                comboBoxBrand.ValueMember = "Id";
+                comboBoxBrand.SelectedIndex = -1;
 
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvProducts, SyncEntityToFields, ResetUI);
+                await RefreshProductsGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewProducts, SynchronizeSelectedProductToFormFields, ResetFormInputFields);
             }
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshProductsGridAsync()
         {
             var data = await _productService.GetProductListAsync();
-            dgvProducts.DataSource = null;
-            dgvProducts.DataSource = data.ToList();
-            DataGridViewHelper.ApplyStyle(dgvProducts);
+            dataGridViewProducts.DataSource = null;
+            dataGridViewProducts.DataSource = data.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewProducts);
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedProductToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedProductToFormFields()
         {
-            if (dgvProducts.CurrentRow == null)
+            if (dataGridViewProducts.CurrentRow == null)
                 return;
 
-            var p = (ProductDto)dgvProducts.CurrentRow.DataBoundItem;
+            var selectedProduct = (ProductDto)dataGridViewProducts.CurrentRow.DataBoundItem;
 
-            _selectedProductId = p.Id;
-            txtBarcode.Text = p.Barcode;
-            txtName.Text = p.Name;
-            txtDescription.Text = p.Description;
-            numBuyPrice.Value = p.BuyPrice;
-            numSellPrice.Value = p.SellPrice;
-            numStock.Value = p.CurrentStock;
-            cboCategory.SelectedValue = p.CategoryId;
-            cboBrand.SelectedValue = p.BrandId;
+            _selectedProductIdentifier = selectedProduct.Id;
+            textBoxBarcode.Text = selectedProduct.Barcode;
+            textBoxProductName.Text = selectedProduct.Name;
+            textBoxDescription.Text = selectedProduct.Description;
+            numericUpDownBuyPrice.Value = selectedProduct.BuyPrice;
+            numericUpDownSellPrice.Value = selectedProduct.SellPrice;
+            numericUpDownCurrentStock.Value = selectedProduct.CurrentStock;
+            comboBoxCategory.SelectedValue = selectedProduct.CategoryId;
+            comboBoxBrand.SelectedValue = selectedProduct.BrandId;
 
-            _imageBuffer = p.Image;
-            ImageHelper.Clear(picProductImage);
-            picProductImage.Image = ImageHelper.LoadFromBytes(p.Image);
+            _productImageBuffer = selectedProduct.Image;
+            ImageHelper.Clear(pictureBoxProductPhoto);
+            pictureBoxProductPhoto.Image = ImageHelper.LoadFromBytes(selectedProduct.Image);
 
-            SetButtonState(isEditing: true);
-            txtBarcode.ReadOnly = true;
+            UpdateButtonStates(isEditing: true);
+            textBoxBarcode.ReadOnly = true;
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedProductId = 0;
-            _imageBuffer = null;
-            ImageHelper.Clear(picProductImage);
+            _selectedProductIdentifier = 0;
+            _productImageBuffer = null;
+            ImageHelper.Clear(pictureBoxProductPhoto);
 
-            UIHelper.CleanControls(groupEdit);
-            cboCategory.SelectedIndex = -1;
-            cboBrand.SelectedIndex = -1;
+            UIHelper.CleanControls(panelProductForm);
+            comboBoxCategory.SelectedIndex = -1;
+            comboBoxBrand.SelectedIndex = -1;
 
-            SetButtonState(isEditing: false);
-            txtBarcode.ReadOnly = false;
+            UpdateButtonStates(isEditing: false);
+            textBoxBarcode.ReadOnly = false;
         }
 
-        private void SetButtonState(bool isEditing)
+        private void UpdateButtonStates(bool isEditing)
         {
-            btnSave.Enabled = !isEditing;
-            btnEdit.Enabled = isEditing;
-            btnDelete.Enabled = isEditing;
+            buttonSave.Enabled = !isEditing;
+            buttonEdit.Enabled = isEditing;
+            buttonDelete.Enabled = isEditing;
         }
 
-        private void HandleImageSelection()
+        private void HandleProductImageSelection()
         {
             if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
             {
-                ImageHelper.Clear(picProductImage);
-                _imageBuffer = imageBytes;
-                picProductImage.Image = displayImage;
+                ImageHelper.Clear(pictureBoxProductPhoto);
+                _productImageBuffer = imageBytes;
+                pictureBoxProductPhoto.Image = displayImage;
             }
             else if (!string.IsNullOrEmpty(errorMessage))
             {
@@ -125,61 +131,77 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void HandleImageRemoval()
+        private void HandleProductImageRemoval()
         {
-            _imageBuffer = null;
-            ImageHelper.Clear(picProductImage);
+            _productImageBuffer = null;
+            ImageHelper.Clear(pictureBoxProductPhoto);
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveProduct.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction()
+        private async Task ExecuteSaveProductAsync()
         {
-            var dto = MapFieldsToDto();
-            var result = await _productService.CreateProductAsync(dto);
+            var product = MapFormInputFieldsToProductCreateDto();
+            var result = await _productService.CreateProductAsync(product);
 
             UIHelper.ShowResult(result, "Gestión de Productos", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshProductsGridAsync();
+                ResetFormInputFields();
             });
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UpdateProduct.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteEditAction()
+        private async Task ExecuteUpdateProductAsync()
         {
-            if (_selectedProductId == 0)
+            if (_selectedProductIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un producto de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
 
-            var dto = MapFieldsToDto();
-            var result = await _productService.UpdateProductAsync(_selectedProductId, dto);
+            var product = MapFormInputFieldsToProductCreateDto();
+            var result = await _productService.UpdateProductAsync(_selectedProductIdentifier, product);
 
             UIHelper.ShowResult(result, "Gestión de Productos", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshProductsGridAsync();
+                ResetFormInputFields();
             });
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DeleteProductFromInventory.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDeleteAction()
+        private async Task ExecuteDeleteProductFromInventoryAsync()
         {
-            if (_selectedProductId == 0)
+            if (_selectedProductIdentifier == 0)
                 return;
 
             if (UIHelper.ConfirmMessage("¿Desea retirar este producto del inventario?"))
             {
-                var result = await _productService.DeleteProductAsync(_selectedProductId);
+                var result = await _productService.DeleteProductAsync(_selectedProductIdentifier);
                 UIHelper.ShowResult(result, "Gestión de Productos", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshProductsGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de ExportInventoryReportToPdf.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteExportPdfAction()
+        private async Task ExecuteExportInventoryReportToPdfAsync()
         {
-            if (dgvProducts.DataSource is not List<ProductDto> products || !products.Any())
+            if (dataGridViewProducts.DataSource is not List<ProductDto> productsReportList || !productsReportList.Any())
             {
                 MessageBox.Show("No hay productos disponibles para exportar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -187,40 +209,40 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                byte[] pdfBytes = await _documentService.GenerateInventoryReportAsync(products);
+                byte[] inventoryReportPdfBytes = await _documentService.GenerateInventoryReportAsync(productsReportList);
                 string fileName = $"Reporte_Stock_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-                await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Exportar Reporte de Stock");
+                await FileExportHelper.SaveAndOpenPdfAsync(this, inventoryReportPdfBytes, fileName, "Exportar Reporte de Stock");
             }
         }
 
-        private void ExecuteOpenLabelDesigner()
+        private void ExecuteOpenLabelDesignerForSelectedProduct()
         {
-            if (dgvProducts.CurrentRow?.DataBoundItem is not ProductDto selectedProduct)
+            if (dataGridViewProducts.CurrentRow?.DataBoundItem is not ProductDto selectedGridProductDto)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un producto de la tabla para generar su etiqueta.", "Selección Requerida");
                 return;
             }
 
             var labelForm = _serviceProvider.GetRequiredService<FormProductLabels>();
-            labelForm.PreloadProduct(selectedProduct, 1);
+            labelForm.PreloadProductToShelfLabelsQueue(selectedGridProductDto, 1);
             labelForm.ShowDialog(this);
         }
 
-        private ProductCreateDto MapFieldsToDto()
+        private ProductCreateDto MapFormInputFieldsToProductCreateDto()
         {
             return new ProductCreateDto
             {
-                Barcode = txtBarcode.Text.Trim(),
-                Name = txtName.Text.Trim(),
-                Description = txtDescription.Text.Trim(),
-                BuyPrice = numBuyPrice.Value,
-                SellPrice = numSellPrice.Value,
-                InitialStock = (int)numStock.Value,
+                Barcode = textBoxBarcode.Text.Trim(),
+                Name = textBoxProductName.Text.Trim(),
+                Description = textBoxDescription.Text.Trim(),
+                BuyPrice = numericUpDownBuyPrice.Value,
+                SellPrice = numericUpDownSellPrice.Value,
+                InitialStock = (int)numericUpDownCurrentStock.Value,
                 MinimumStock = 0,
-                CategoryId = cboCategory.SelectedValue as int? ?? 1,
-                BrandId = cboBrand.SelectedValue as int? ?? 1,
+                CategoryId = comboBoxCategory.SelectedValue as int? ?? 1,
+                BrandId = comboBoxBrand.SelectedValue as int? ?? 1,
                 UnitOfMeasureId = 1,
-                Image = _imageBuffer
+                Image = _productImageBuffer
             };
         }
     }

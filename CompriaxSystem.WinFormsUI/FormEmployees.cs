@@ -8,8 +8,8 @@ namespace CompriaxSystem.WinFormsUI
     {
         private readonly IEmployeeService _employeeService;
         private readonly ILookupService _lookupService;
-        private int _selectedEmployeeId = 0;
-        private byte[]? _imageBuffer = null;
+        private int _selectedEmployeeIdentifier = 0;
+        private byte[]? _employeePhotoBuffer = null;
 
         public FormEmployees(IEmployeeService employeeService, ILookupService lookupService)
         {
@@ -19,178 +19,193 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(gbData);
+            UIThemeHelper.ApplyCardStyle(panelEmployeeForm);
 
-            this.txtCuil.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtCuil);
-            this.dgvEmployees.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvEmployees, e);
+            this.textBoxTaxCode.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxCode);
+            this.dataGridViewEmployees.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewEmployees, e);
 
-            txtDni.MaxLength = 8;
-            txtCuil.MaxLength = 13;
+            textBoxDocumentNumber.MaxLength = 8;
+            textBoxTaxCode.MaxLength = 13;
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
-            this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-            this.btnBrowse.Click += (s, e) => HandlePhotoSelection();
+            this.Load += async (s, e) => await InitializeEmployeesFormAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveEmployeeAsync();
+            this.buttonEdit.Click += async (s, e) => await ExecuteEditEmployeeAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteDeactivateEmployeeAsync();
+            this.buttonExportPdf.Click += async (s, e) => await ExecuteExportEmployeesReportToPdfAsync();
+            this.buttonBrowsePhoto.Click += (s, e) => HandleEmployeePhotoSelection();
         }
 
-        private async Task InitializeFormAsync()
+        private async Task InitializeEmployeesFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var positions = (await _lookupService.GetPositionsAsync()).ToList();
-                cboPosition.DataSource = positions;
-                cboPosition.DisplayMember = "Name";
-                cboPosition.ValueMember = "Id";
-                cboPosition.SelectedIndex = -1;
+                var positionsList = (await _lookupService.GetPositionsAsync()).ToList();
+                comboBoxPosition.DataSource = positionsList;
+                comboBoxPosition.DisplayMember = "Name";
+                comboBoxPosition.ValueMember = "Id";
+                comboBoxPosition.SelectedIndex = -1;
 
-                var genders = (await _lookupService.GetGendersAsync()).ToList();
-                cboGender.DataSource = genders;
-                cboGender.DisplayMember = "Name";
-                cboGender.ValueMember = "Id";
-                cboGender.SelectedIndex = -1;
+                var gendersList = (await _lookupService.GetGendersAsync()).ToList();
+                comboBoxGender.DataSource = gendersList;
+                comboBoxGender.DisplayMember = "Name";
+                comboBoxGender.ValueMember = "Id";
+                comboBoxGender.SelectedIndex = -1;
 
-                var civilStatuses = (await _lookupService.GetCivilStatusesAsync()).ToList();
-                cboCivilStatus.DataSource = civilStatuses;
-                cboCivilStatus.DisplayMember = "Name";
-                cboCivilStatus.ValueMember = "Id";
-                cboCivilStatus.SelectedIndex = -1;
+                var civilStatusesList = (await _lookupService.GetCivilStatusesAsync()).ToList();
+                comboBoxCivilStatus.DataSource = civilStatusesList;
+                comboBoxCivilStatus.DisplayMember = "Name";
+                comboBoxCivilStatus.ValueMember = "Id";
+                comboBoxCivilStatus.SelectedIndex = -1;
 
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvEmployees, SyncEntityToFields, ResetUI);
+                await RefreshEmployeesGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewEmployees, SynchronizeSelectedEmployeeToFormFields, ResetFormInputFields);
             }
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshEmployeesGridAsync()
         {
-            var data = await _employeeService.GetEmployeesAsync();
-            dgvEmployees.DataSource = null;
-            dgvEmployees.DataSource = data.ToList();
+            var employeesList = await _employeeService.GetEmployeesAsync();
+            dataGridViewEmployees.DataSource = null;
+            dataGridViewEmployees.DataSource = employeesList.ToList();
             
-            DataGridViewHelper.ApplyStyle(dgvEmployees);
+            DataGridViewHelper.ApplyStyle(dataGridViewEmployees);
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedEmployeeToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedEmployeeToFormFields()
         {
-            if (dgvEmployees.CurrentRow == null) 
+            if (dataGridViewEmployees.CurrentRow == null) 
                 return;
             
-            var emp = (EmployeeDto)dgvEmployees.CurrentRow.DataBoundItem;
+            var selectedEmployee = (EmployeeDto)dataGridViewEmployees.CurrentRow.DataBoundItem;
 
-            _selectedEmployeeId = emp.Id;
-            txtCode.Text = emp.EmployeeCode;
-            txtDni.Text = emp.DocumentNumber;
-            txtCuil.Text = emp.Cuil;
-            txtFirstName.Text = emp.FirstName;
-            txtLastName.Text = emp.LastName;
-            txtEmail.Text = emp.Email;
-            txtPhone.Text = emp.Phone;
-            txtAddress.Text = emp.Address;
+            _selectedEmployeeIdentifier = selectedEmployee.Id;
+            textBoxEmployeeCode.Text = selectedEmployee.EmployeeCode;
+            textBoxDocumentNumber.Text = selectedEmployee.DocumentNumber;
+            textBoxTaxCode.Text = selectedEmployee.Cuil;
+            textBoxFirstName.Text = selectedEmployee.FirstName;
+            textBoxLastName.Text = selectedEmployee.LastName;
+            textBoxEmail.Text = selectedEmployee.Email;
+            textBoxPhone.Text = selectedEmployee.Phone;
+            textBoxAddress.Text = selectedEmployee.Address;
 
-            cboPosition.SelectedValue = emp.PositionId ?? -1;
-            cboGender.SelectedValue = emp.GenderId ?? -1;
-            cboCivilStatus.SelectedValue = emp.CivilStatusId ?? -1;
-            numChildren.Value = emp.ChildrenCount;
+            comboBoxPosition.SelectedValue = selectedEmployee.PositionId ?? -1;
+            comboBoxGender.SelectedValue = selectedEmployee.GenderId ?? -1;
+            comboBoxCivilStatus.SelectedValue = selectedEmployee.CivilStatusId ?? -1;
+            numericUpDownChildrenCount.Value = selectedEmployee.ChildrenCount;
 
-            picPhoto.Image?.Dispose();
-            picPhoto.Image = ImageHelper.LoadFromBytes(emp.Photo);
-            _imageBuffer = emp.Photo;
+            pictureBoxPhoto.Image?.Dispose();
+            pictureBoxPhoto.Image = ImageHelper.LoadFromBytes(selectedEmployee.Photo);
+            _employeePhotoBuffer = selectedEmployee.Photo;
 
-            SetButtonState(true);
+            UpdateButtonStates(true);
             
-            txtCode.ReadOnly = true;
-            txtDni.ReadOnly = true;
-            txtCuil.ReadOnly = true;
+            textBoxEmployeeCode.ReadOnly = true;
+            textBoxDocumentNumber.ReadOnly = true;
+            textBoxTaxCode.ReadOnly = true;
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedEmployeeId = 0;
-            _imageBuffer = null;
+            _selectedEmployeeIdentifier = 0;
+            _employeePhotoBuffer = null;
 
             
-            UIHelper.CleanControls(gbData);
-            cboPosition.SelectedIndex = -1;
-            cboGender.SelectedIndex = -1;
-            cboCivilStatus.SelectedIndex = -1;
-            numChildren.Value = 0;
+            UIHelper.CleanControls(panelEmployeeForm);
+            comboBoxPosition.SelectedIndex = -1;
+            comboBoxGender.SelectedIndex = -1;
+            comboBoxCivilStatus.SelectedIndex = -1;
+            numericUpDownChildrenCount.Value = 0;
             
-            picPhoto.Image?.Dispose();
-            picPhoto.Image = null;
+            pictureBoxPhoto.Image?.Dispose();
+            pictureBoxPhoto.Image = null;
 
-            SetButtonState(false);
+            UpdateButtonStates(false);
             
-            txtCode.ReadOnly = false;
-            txtDni.ReadOnly = false;
-            txtCuil.ReadOnly = false;
+            textBoxEmployeeCode.ReadOnly = false;
+            textBoxDocumentNumber.ReadOnly = false;
+            textBoxTaxCode.ReadOnly = false;
         }
 
-        private void SetButtonState(bool isEditing)
+        private void UpdateButtonStates(bool isEditing)
         {
-            btnSave.Enabled = !isEditing;
-            btnEdit.Enabled = isEditing;
-            btnDelete.Enabled = isEditing;
+            buttonSave.Enabled = !isEditing;
+            buttonEdit.Enabled = isEditing;
+            buttonDelete.Enabled = isEditing;
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveEmployee.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction() => await ProcessAction(0);
-        private async Task ExecuteEditAction()
+        private async Task ExecuteSaveEmployeeAsync() => await ProcessSaveOrUpdateEmployeeAsync(0);
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de EditEmployee.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
+        private async Task ExecuteEditEmployeeAsync()
         {
-            if (_selectedEmployeeId == 0)
+            if (_selectedEmployeeIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un empleado de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
 
-            await ProcessAction(_selectedEmployeeId);
+            await ProcessSaveOrUpdateEmployeeAsync(_selectedEmployeeIdentifier);
         }
 
-        private async Task ProcessAction(int id)
+        private async Task ProcessSaveOrUpdateEmployeeAsync(int id)
         {
-            var dto = new EmployeeDto
+            var employee = new EmployeeDto
             {
                 Id = id,
-                EmployeeCode = txtCode.Text.Trim(),
-                DocumentNumber = txtDni.Text.Trim(),
-                Cuil = txtCuil.Text.Trim(),
-                FirstName = txtFirstName.Text.Trim(),
-                LastName = txtLastName.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Phone = txtPhone.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
-                PositionId = cboPosition.SelectedValue as int? ?? 0,
-                GenderId = cboGender.SelectedValue as int? ?? 0,
-                CivilStatusId = cboCivilStatus.SelectedValue as int? ?? 0,
-                ChildrenCount = (int)numChildren.Value,
-                Photo = _imageBuffer,
+                EmployeeCode = textBoxEmployeeCode.Text.Trim(),
+                DocumentNumber = textBoxDocumentNumber.Text.Trim(),
+                Cuil = textBoxTaxCode.Text.Trim(),
+                FirstName = textBoxFirstName.Text.Trim(),
+                LastName = textBoxLastName.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
+                Phone = textBoxPhone.Text.Trim(),
+                Address = textBoxAddress.Text.Trim(),
+                PositionId = comboBoxPosition.SelectedValue as int? ?? 0,
+                GenderId = comboBoxGender.SelectedValue as int? ?? 0,
+                CivilStatusId = comboBoxCivilStatus.SelectedValue as int? ?? 0,
+                ChildrenCount = (int)numericUpDownChildrenCount.Value,
+                Photo = _employeePhotoBuffer,
                 IsActive = true
             };
 
-            var result = await _employeeService.UpsertEmployeeAsync(dto);
+            var result = await _employeeService.UpsertEmployeeAsync(employee);
             UIHelper.ShowResult(result, "Gestión de Personal", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshEmployeesGridAsync();
+                ResetFormInputFields();
             });
         }
 
-        private void HandlePhotoSelection()
+        private void HandleEmployeePhotoSelection()
         {
-            if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
+            if (ImageHelper.SelectImage(out byte[]? selectedPhotoBytes, out Image? selectedDisplayBitmap, out string? photoErrorMessage))
             {
-                picPhoto.Image?.Dispose();
-                _imageBuffer = imageBytes;
-                picPhoto.Image = displayImage;
+                pictureBoxPhoto.Image?.Dispose();
+                _employeePhotoBuffer = selectedPhotoBytes;
+                pictureBoxPhoto.Image = selectedDisplayBitmap;
             }
-            else if (!string.IsNullOrEmpty(errorMessage))
+            else if (!string.IsNullOrEmpty(photoErrorMessage))
             {
-                UIHelper.WarnMessage(this, errorMessage, "Imagen");
+                UIHelper.WarnMessage(this, photoErrorMessage, "Imagen");
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DeactivateEmployee.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDeleteAction()
+        private async Task ExecuteDeactivateEmployeeAsync()
         {
-            if (_selectedEmployeeId == 0)
+            if (_selectedEmployeeIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un empleado de la lista para eliminarlo.", "Selección Requerida");
                 return;
@@ -198,18 +213,18 @@ namespace CompriaxSystem.WinFormsUI
 
             if (UIHelper.ConfirmMessage("¿Desactivar este registro de personal?"))
             {
-                var result = await _employeeService.DeleteEmployeeAsync(_selectedEmployeeId);
+                var result = await _employeeService.DeleteEmployeeAsync(_selectedEmployeeIdentifier);
                 UIHelper.ShowResult(result, "Personal", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI(); 
+                    await RefreshEmployeesGridAsync();
+                    ResetFormInputFields(); 
                 });
             }
         }
 
-        public async Task ExecuteExportPdfAction()
+        public async Task ExecuteExportEmployeesReportToPdfAsync()
         {
-            if (dgvEmployees.DataSource is not List<EmployeeDto> employees || !employees.Any())
+            if (dataGridViewEmployees.DataSource is not List<EmployeeDto> employeesReportList || !employeesReportList.Any())
             {
                 UIHelper.WarnMessage(this, "No hay empleados registrados para exportar a PDF.", "Sin Registros");
                 return;

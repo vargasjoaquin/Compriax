@@ -17,255 +17,255 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            btnExportPdf = new Button();
-            groupBoxData = new Panel();
-            lblTaxId = new Label();
-            txtTaxId = new TextBox();
-            lblCompanyName = new Label();
-            txtCompanyName = new TextBox();
-            lblContact = new Label();
-            txtContact = new TextBox();
-            lblEmail = new Label();
-            txtEmail = new TextBox();
-            lblPhone = new Label();
-            txtPhone = new TextBox();
-            lblAddress = new Label();
-            txtAddress = new TextBox();
-            btnSave = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            dgvSuppliers = new DataGridView();
-            pnlHeader.SuspendLayout();
-            groupBoxData.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvSuppliers).BeginInit();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            buttonExportPdf = new Button();
+            panelSupplierForm = new Panel();
+            labelTaxId = new Label();
+            textBoxTaxId = new TextBox();
+            labelCompanyName = new Label();
+            textBoxCompanyName = new TextBox();
+            labelContactName = new Label();
+            textBoxContactName = new TextBox();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            labelPhone = new Label();
+            textBoxPhone = new TextBox();
+            labelAddress = new Label();
+            textBoxAddress = new TextBox();
+            buttonSave = new Button();
+            buttonEdit = new Button();
+            buttonDelete = new Button();
+            dataGridViewSuppliers = new DataGridView();
+            panelHeader.SuspendLayout();
+            panelSupplierForm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
+            // panelHeader
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(btnExportPdf);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1125, 69);
-            pnlHeader.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(buttonExportPdf);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1125, 69);
+            panelHeader.TabIndex = 0;
             // 
-            // lblTitle
+            // labelTitle
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 16);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(339, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "GESTIÓN DE PROVEEDORES";
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(339, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "GESTIÓN DE PROVEEDORES";
             // 
-            // btnExportPdf
+            // buttonExportPdf
             // 
-            btnExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportPdf.BackColor = Color.FromArgb(2, 132, 199);
-            btnExportPdf.FlatAppearance.BorderSize = 0;
-            btnExportPdf.FlatStyle = FlatStyle.Flat;
-            btnExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnExportPdf.ForeColor = Color.White;
-            btnExportPdf.Location = new Point(892, 8);
-            btnExportPdf.Name = "btnExportPdf";
-            btnExportPdf.Size = new Size(182, 51);
-            btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "EXPORTAR PDF";
-            btnExportPdf.UseVisualStyleBackColor = false;
+            buttonExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportPdf.BackColor = Color.FromArgb(2, 132, 199);
+            buttonExportPdf.FlatAppearance.BorderSize = 0;
+            buttonExportPdf.FlatStyle = FlatStyle.Flat;
+            buttonExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonExportPdf.ForeColor = Color.White;
+            buttonExportPdf.Location = new Point(892, 8);
+            buttonExportPdf.Name = "buttonExportPdf";
+            buttonExportPdf.Size = new Size(182, 51);
+            buttonExportPdf.TabIndex = 1;
+            buttonExportPdf.Text = "EXPORTAR PDF";
+            buttonExportPdf.UseVisualStyleBackColor = false;
             // 
-            // groupBoxData
+            // panelSupplierForm
             // 
-            groupBoxData.BackColor = Color.White;
-            groupBoxData.Controls.Add(lblTaxId);
-            groupBoxData.Controls.Add(txtTaxId);
-            groupBoxData.Controls.Add(lblCompanyName);
-            groupBoxData.Controls.Add(txtCompanyName);
-            groupBoxData.Controls.Add(lblContact);
-            groupBoxData.Controls.Add(txtContact);
-            groupBoxData.Controls.Add(lblEmail);
-            groupBoxData.Controls.Add(txtEmail);
-            groupBoxData.Controls.Add(lblPhone);
-            groupBoxData.Controls.Add(txtPhone);
-            groupBoxData.Controls.Add(lblAddress);
-            groupBoxData.Controls.Add(txtAddress);
-            groupBoxData.Controls.Add(btnSave);
-            groupBoxData.Controls.Add(btnEdit);
-            groupBoxData.Controls.Add(btnDelete);
-            groupBoxData.Location = new Point(16, 86);
-            groupBoxData.Name = "groupBoxData";
-            groupBoxData.Size = new Size(1090, 210);
-            groupBoxData.TabIndex = 1;
+            panelSupplierForm.BackColor = Color.White;
+            panelSupplierForm.Controls.Add(labelTaxId);
+            panelSupplierForm.Controls.Add(textBoxTaxId);
+            panelSupplierForm.Controls.Add(labelCompanyName);
+            panelSupplierForm.Controls.Add(textBoxCompanyName);
+            panelSupplierForm.Controls.Add(labelContactName);
+            panelSupplierForm.Controls.Add(textBoxContactName);
+            panelSupplierForm.Controls.Add(labelEmail);
+            panelSupplierForm.Controls.Add(textBoxEmail);
+            panelSupplierForm.Controls.Add(labelPhone);
+            panelSupplierForm.Controls.Add(textBoxPhone);
+            panelSupplierForm.Controls.Add(labelAddress);
+            panelSupplierForm.Controls.Add(textBoxAddress);
+            panelSupplierForm.Controls.Add(buttonSave);
+            panelSupplierForm.Controls.Add(buttonEdit);
+            panelSupplierForm.Controls.Add(buttonDelete);
+            panelSupplierForm.Location = new Point(16, 86);
+            panelSupplierForm.Name = "panelSupplierForm";
+            panelSupplierForm.Size = new Size(1090, 210);
+            panelSupplierForm.TabIndex = 1;
             // 
-            // lblTaxId
+            // labelTaxId
             // 
-            lblTaxId.AutoSize = true;
-            lblTaxId.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblTaxId.Location = new Point(20, 16);
-            lblTaxId.Name = "lblTaxId";
-            lblTaxId.Size = new Size(155, 21);
-            lblTaxId.TabIndex = 0;
-            lblTaxId.Text = "CUIT / Documento:";
+            labelTaxId.AutoSize = true;
+            labelTaxId.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelTaxId.Location = new Point(20, 16);
+            labelTaxId.Name = "labelTaxId";
+            labelTaxId.Size = new Size(155, 21);
+            labelTaxId.TabIndex = 0;
+            labelTaxId.Text = "CUIT / Documento:";
             // 
-            // txtTaxId
+            // textBoxTaxId
             // 
-            txtTaxId.BorderStyle = BorderStyle.FixedSingle;
-            txtTaxId.Font = new Font("Segoe UI", 10F);
-            txtTaxId.Location = new Point(20, 38);
-            txtTaxId.Name = "txtTaxId";
-            txtTaxId.Size = new Size(220, 30);
-            txtTaxId.TabIndex = 1;
+            textBoxTaxId.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTaxId.Font = new Font("Segoe UI", 10F);
+            textBoxTaxId.Location = new Point(20, 38);
+            textBoxTaxId.Name = "textBoxTaxId";
+            textBoxTaxId.Size = new Size(220, 30);
+            textBoxTaxId.TabIndex = 1;
             // 
-            // lblCompanyName
+            // labelCompanyName
             // 
-            lblCompanyName.AutoSize = true;
-            lblCompanyName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCompanyName.Location = new Point(260, 16);
-            lblCompanyName.Name = "lblCompanyName";
-            lblCompanyName.Size = new Size(191, 21);
-            lblCompanyName.TabIndex = 2;
-            lblCompanyName.Text = "Razón Social / Empresa:";
+            labelCompanyName.AutoSize = true;
+            labelCompanyName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCompanyName.Location = new Point(260, 16);
+            labelCompanyName.Name = "labelCompanyName";
+            labelCompanyName.Size = new Size(191, 21);
+            labelCompanyName.TabIndex = 2;
+            labelCompanyName.Text = "Razón Social / Empresa:";
             // 
-            // txtCompanyName
+            // textBoxCompanyName
             // 
-            txtCompanyName.BorderStyle = BorderStyle.FixedSingle;
-            txtCompanyName.Font = new Font("Segoe UI", 10F);
-            txtCompanyName.Location = new Point(260, 38);
-            txtCompanyName.Name = "txtCompanyName";
-            txtCompanyName.Size = new Size(250, 30);
-            txtCompanyName.TabIndex = 3;
+            textBoxCompanyName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCompanyName.Font = new Font("Segoe UI", 10F);
+            textBoxCompanyName.Location = new Point(260, 38);
+            textBoxCompanyName.Name = "textBoxCompanyName";
+            textBoxCompanyName.Size = new Size(250, 30);
+            textBoxCompanyName.TabIndex = 3;
             // 
-            // lblContact
+            // labelContactName
             // 
-            lblContact.AutoSize = true;
-            lblContact.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblContact.Location = new Point(530, 16);
-            lblContact.Name = "lblContact";
-            lblContact.Size = new Size(164, 21);
-            lblContact.TabIndex = 4;
-            lblContact.Text = "Contacto Comercial:";
+            labelContactName.AutoSize = true;
+            labelContactName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelContactName.Location = new Point(530, 16);
+            labelContactName.Name = "labelContactName";
+            labelContactName.Size = new Size(164, 21);
+            labelContactName.TabIndex = 4;
+            labelContactName.Text = "Contacto Comercial:";
             // 
-            // txtContact
+            // textBoxContactName
             // 
-            txtContact.BorderStyle = BorderStyle.FixedSingle;
-            txtContact.Font = new Font("Segoe UI", 10F);
-            txtContact.Location = new Point(530, 38);
-            txtContact.Name = "txtContact";
-            txtContact.Size = new Size(240, 30);
-            txtContact.TabIndex = 5;
+            textBoxContactName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxContactName.Font = new Font("Segoe UI", 10F);
+            textBoxContactName.Location = new Point(530, 38);
+            textBoxContactName.Name = "textBoxContactName";
+            textBoxContactName.Size = new Size(240, 30);
+            textBoxContactName.TabIndex = 5;
             // 
-            // lblEmail
+            // labelEmail
             // 
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEmail.Location = new Point(20, 105);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(155, 21);
-            lblEmail.TabIndex = 6;
-            lblEmail.Text = "Correo Electrónico:";
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelEmail.Location = new Point(20, 105);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(155, 21);
+            labelEmail.TabIndex = 6;
+            labelEmail.Text = "Correo Electrónico:";
             // 
-            // txtEmail
+            // textBoxEmail
             // 
-            txtEmail.BorderStyle = BorderStyle.FixedSingle;
-            txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(20, 127);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(220, 30);
-            txtEmail.TabIndex = 7;
+            textBoxEmail.BorderStyle = BorderStyle.FixedSingle;
+            textBoxEmail.Font = new Font("Segoe UI", 10F);
+            textBoxEmail.Location = new Point(20, 127);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(220, 30);
+            textBoxEmail.TabIndex = 7;
             // 
-            // lblPhone
+            // labelPhone
             // 
-            lblPhone.AutoSize = true;
-            lblPhone.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblPhone.Location = new Point(260, 105);
-            lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(81, 21);
-            lblPhone.TabIndex = 8;
-            lblPhone.Text = "Teléfono:";
+            labelPhone.AutoSize = true;
+            labelPhone.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelPhone.Location = new Point(260, 105);
+            labelPhone.Name = "labelPhone";
+            labelPhone.Size = new Size(81, 21);
+            labelPhone.TabIndex = 8;
+            labelPhone.Text = "Teléfono:";
             // 
-            // txtPhone
+            // textBoxPhone
             // 
-            txtPhone.BorderStyle = BorderStyle.FixedSingle;
-            txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(260, 127);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(250, 30);
-            txtPhone.TabIndex = 9;
+            textBoxPhone.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPhone.Font = new Font("Segoe UI", 10F);
+            textBoxPhone.Location = new Point(260, 127);
+            textBoxPhone.Name = "textBoxPhone";
+            textBoxPhone.Size = new Size(250, 30);
+            textBoxPhone.TabIndex = 9;
             // 
-            // lblAddress
+            // labelAddress
             // 
-            lblAddress.AutoSize = true;
-            lblAddress.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblAddress.Location = new Point(530, 105);
-            lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(168, 21);
-            lblAddress.TabIndex = 10;
-            lblAddress.Text = "Dirección Comercial:";
+            labelAddress.AutoSize = true;
+            labelAddress.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelAddress.Location = new Point(530, 105);
+            labelAddress.Name = "labelAddress";
+            labelAddress.Size = new Size(168, 21);
+            labelAddress.TabIndex = 10;
+            labelAddress.Text = "Dirección Comercial:";
             // 
-            // txtAddress
+            // textBoxAddress
             // 
-            txtAddress.BorderStyle = BorderStyle.FixedSingle;
-            txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(530, 127);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(240, 30);
-            txtAddress.TabIndex = 11;
+            textBoxAddress.BorderStyle = BorderStyle.FixedSingle;
+            textBoxAddress.Font = new Font("Segoe UI", 10F);
+            textBoxAddress.Location = new Point(530, 127);
+            textBoxAddress.Name = "textBoxAddress";
+            textBoxAddress.Size = new Size(240, 30);
+            textBoxAddress.TabIndex = 11;
             // 
-            // btnSave
+            // buttonSave
             // 
-            btnSave.BackColor = Color.FromArgb(16, 185, 129);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(800, 16);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(284, 54);
-            btnSave.TabIndex = 12;
-            btnSave.Text = "GUARDAR PROVEEDOR";
-            btnSave.UseVisualStyleBackColor = false;
+            buttonSave.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSave.FlatAppearance.BorderSize = 0;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonSave.ForeColor = Color.White;
+            buttonSave.Location = new Point(800, 16);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(284, 54);
+            buttonSave.TabIndex = 12;
+            buttonSave.Text = "GUARDAR PROVEEDOR";
+            buttonSave.UseVisualStyleBackColor = false;
             // 
-            // btnEdit
+            // buttonEdit
             // 
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnEdit.Location = new Point(800, 76);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(284, 55);
-            btnEdit.TabIndex = 13;
-            btnEdit.Text = "EDITAR PROVEEDOR";
-            btnEdit.UseVisualStyleBackColor = true;
+            buttonEdit.FlatStyle = FlatStyle.Flat;
+            buttonEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonEdit.Location = new Point(800, 76);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(284, 55);
+            buttonEdit.TabIndex = 13;
+            buttonEdit.Text = "EDITAR PROVEEDOR";
+            buttonEdit.UseVisualStyleBackColor = true;
             // 
-            // btnDelete
+            // buttonDelete
             // 
-            btnDelete.BackColor = Color.FromArgb(239, 68, 68);
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(800, 137);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(284, 55);
-            btnDelete.TabIndex = 14;
-            btnDelete.Text = "ELIMINAR PROVEEDOR";
-            btnDelete.UseVisualStyleBackColor = false;
+            buttonDelete.BackColor = Color.FromArgb(239, 68, 68);
+            buttonDelete.FlatAppearance.BorderSize = 0;
+            buttonDelete.FlatStyle = FlatStyle.Flat;
+            buttonDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonDelete.ForeColor = Color.White;
+            buttonDelete.Location = new Point(800, 137);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(284, 55);
+            buttonDelete.TabIndex = 14;
+            buttonDelete.Text = "ELIMINAR PROVEEDOR";
+            buttonDelete.UseVisualStyleBackColor = false;
             // 
-            // dgvSuppliers
+            // dataGridViewSuppliers
             // 
-            dgvSuppliers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvSuppliers.BackgroundColor = Color.White;
-            dgvSuppliers.BorderStyle = BorderStyle.None;
-            dgvSuppliers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvSuppliers.Location = new Point(16, 302);
-            dgvSuppliers.Name = "dgvSuppliers";
-            dgvSuppliers.RowHeadersWidth = 51;
-            dgvSuppliers.Size = new Size(1090, 376);
-            dgvSuppliers.TabIndex = 2;
+            dataGridViewSuppliers.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewSuppliers.BackgroundColor = Color.White;
+            dataGridViewSuppliers.BorderStyle = BorderStyle.None;
+            dataGridViewSuppliers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewSuppliers.Location = new Point(16, 302);
+            dataGridViewSuppliers.Name = "dataGridViewSuppliers";
+            dataGridViewSuppliers.RowHeadersWidth = 51;
+            dataGridViewSuppliers.Size = new Size(1090, 376);
+            dataGridViewSuppliers.TabIndex = 2;
             // 
             // FormSuppliers
             // 
@@ -273,41 +273,41 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1125, 698);
-            Controls.Add(dgvSuppliers);
-            Controls.Add(groupBoxData);
-            Controls.Add(pnlHeader);
+            Controls.Add(dataGridViewSuppliers);
+            Controls.Add(panelSupplierForm);
+            Controls.Add(panelHeader);
             Name = "FormSuppliers";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Proveedores";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            groupBoxData.ResumeLayout(false);
-            groupBoxData.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvSuppliers).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSupplierForm.ResumeLayout(false);
+            panelSupplierForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSuppliers).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnExportPdf;
-        private System.Windows.Forms.Panel groupBoxData;
-        private System.Windows.Forms.Label lblTaxId;
-        private System.Windows.Forms.TextBox txtTaxId;
-        private System.Windows.Forms.Label lblCompanyName;
-        private System.Windows.Forms.TextBox txtCompanyName;
-        private System.Windows.Forms.Label lblContact;
-        private System.Windows.Forms.TextBox txtContact;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Label lblPhone;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.Label lblAddress;
-        private System.Windows.Forms.TextBox txtAddress;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridView dgvSuppliers;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonExportPdf;
+        private System.Windows.Forms.Panel panelSupplierForm;
+        private System.Windows.Forms.Label labelTaxId;
+        private System.Windows.Forms.TextBox textBoxTaxId;
+        private System.Windows.Forms.Label labelCompanyName;
+        private System.Windows.Forms.TextBox textBoxCompanyName;
+        private System.Windows.Forms.Label labelContactName;
+        private System.Windows.Forms.TextBox textBoxContactName;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.Label labelPhone;
+        private System.Windows.Forms.TextBox textBoxPhone;
+        private System.Windows.Forms.Label labelAddress;
+        private System.Windows.Forms.TextBox textBoxAddress;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.DataGridView dataGridViewSuppliers;
     }
 }

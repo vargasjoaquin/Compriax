@@ -23,60 +23,64 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlFilters);
+            UIThemeHelper.ApplyCardStyle(panelFiltersCard);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSearchDates.Click += async (s, e) => await ExecuteSearchAction();
-            this.btnExportExcel.Click += (s, e) => ExecuteExportExcelAction();
-            this.dgvData.CellDoubleClick += (s, e) => ExecuteOpenDetailAction();
-            this.txtSearchValue.TextChanged += (s, e) => ExecuteFilterAction();
+            this.Load += async (s, e) => await InitializeSalesReportFormAsync();
+            this.buttonFilterDates.Click += async (s, e) => await ExecuteSearchSalesReportHistoryAsync();
+            this.buttonExportExcel.Click += (s, e) => ExecuteExportSalesReportToExcelAsync();
+            this.dataGridViewSalesData.CellDoubleClick += (s, e) => ExecuteOpenAuditedSaleDetail();
+            this.textBoxSearchValue.TextChanged += (s, e) => ExecuteFilterSalesReportData();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeSalesReportFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                cboSearchBy.DataSource = UIHelper.GetSearchableCriteria(
+                comboBoxSearchCriteria.DataSource = UIHelper.GetSearchableCriteria(
                     nameof(SalesReportDto.DocumentNumber),
                     nameof(SalesReportDto.CashRegisterName),
                     nameof(SalesReportDto.CustomerName),
                     nameof(SalesReportDto.CashierName)
                 );
-                cboSearchBy.DisplayMember = "Name";
-                cboSearchBy.ValueMember = "Id";
+                comboBoxSearchCriteria.DisplayMember = "Name";
+                comboBoxSearchCriteria.ValueMember = "Id";
 
-                await ExecuteSearchAction();
+                await ExecuteSearchSalesReportHistoryAsync();
             }
         }
 
-        public async Task ExecuteSearchAction()
+        public async Task ExecuteSearchSalesReportHistoryAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var data = await _reportService.GetSalesHistoryAsync(dtpStart.Value, dtpEnd.Value);
-                _fullHistory = data.ToList();
-                ExecuteFilterAction();
+                var salesHistoryDataList = await _reportService.GetSalesHistoryAsync(dateTimePickerStartDate.Value, dateTimePickerEndDate.Value);
+                _fullHistory = salesHistoryDataList.ToList();
+                ExecuteFilterSalesReportData();
             }
         }
 
-        private void ExecuteFilterAction()
+        private void ExecuteFilterSalesReportData()
         {
-            string filterText = txtSearchValue.Text.Trim().ToLower();
-            string criteria = cboSearchBy.SelectedValue?.ToString() ?? nameof(SalesReportDto.DocumentNumber);
+            string FilterText = textBoxSearchValue.Text.Trim().ToLower();
+            string selectedSearchCriteriaProperty = comboBoxSearchCriteria.SelectedValue?.ToString() ?? nameof(SalesReportDto.DocumentNumber);
 
-            var filtered = _fullHistory.Where(x =>
+            var filteredSalesReportList = _fullHistory.Where(x =>
             {
-                var value = x.GetType().GetProperty(criteria)?.GetValue(x, null)?.ToString()?.ToLower() ?? "";
-                return value.Contains(filterText);
+                var value = x.GetType().GetProperty(selectedSearchCriteriaProperty)?.GetValue(x, null)?.ToString()?.ToLower() ?? "";
+                return value.Contains(FilterText);
             }).ToList();
 
-            dgvData.DataSource = filtered;
-            DataGridViewHelper.ApplyStyle(dgvData);
+            dataGridViewSalesData.DataSource = filteredSalesReportList;
+            DataGridViewHelper.ApplyStyle(dataGridViewSalesData);
         }
 
-        private async void ExecuteExportExcelAction()
+        private async void ExecuteExportSalesReportToExcelAsync()
         {
-            if (dgvData.Rows.Count == 0 || !_fullHistory.Any())
+            if (dataGridViewSalesData.Rows.Count == 0 || !_fullHistory.Any())
             {
                 UIHelper.WarnMessage(this, "No hay registros de ventas para exportar.", "Sin Datos");
                 return;
@@ -84,24 +88,24 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                byte[] fileBytes = _excelService.ExportToExcel((List<SalesReportDto>)dgvData.DataSource, "Ventas");
-                string fileName = $"Ventas_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
-                await FileExportHelper.SaveAndOpenExcelAsync(this, fileBytes, fileName, "Exportar Reporte de Ventas");
+                byte[] generatedExcelFileBytes = _excelService.ExportToExcel((List<SalesReportDto>)dataGridViewSalesData.DataSource, "Ventas");
+                string exportExcelFileName = $"Ventas_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
+                await FileExportHelper.SaveAndOpenExcelAsync(this, generatedExcelFileBytes, exportExcelFileName, "Exportar Reporte de Ventas");
             }
         }
 
-        private void ExecuteOpenDetailAction()
+        private void ExecuteOpenAuditedSaleDetail()
         {
-            if (dgvData.CurrentRow == null)
+            if (dataGridViewSalesData.CurrentRow == null)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una venta de la lista para ver su detalle auditado.", "Selección Requerida");
                 return;
             }
 
-            var item = (SalesReportDto)dgvData.CurrentRow.DataBoundItem;
-            var detailWindow = _serviceProvider.GetRequiredService<FormSaleDetail>();
-            detailWindow.Show();
-            detailWindow.LoadByNumber(item.DocumentNumber);
+            var selectedSalesReport = (SalesReportDto)dataGridViewSalesData.CurrentRow.DataBoundItem;
+            var saleDetailForm = _serviceProvider.GetRequiredService<FormSaleDetail>();
+            saleDetailForm.Show();
+            saleDetailForm.LoadSaleDetailsByDocumentNumber(selectedSalesReport.DocumentNumber);
         }
     }
 }

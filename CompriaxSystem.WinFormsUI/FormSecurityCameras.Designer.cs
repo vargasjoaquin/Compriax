@@ -17,241 +17,241 @@
 
         private void InitializeComponent()
         {
-            this.pnlHeader = new System.Windows.Forms.Panel();
-            this.lblTitle = new System.Windows.Forms.Label();
-            this.pnlToolbar = new System.Windows.Forms.Panel();
-            this.lblCamSelect = new System.Windows.Forms.Label();
-            this.cboCameraDevices = new System.Windows.Forms.ComboBox();
-            this.btnActivate = new System.Windows.Forms.Button();
-            this.btnCapture = new System.Windows.Forms.Button();
-            this.lblRecordingStatus = new System.Windows.Forms.Label();
-            this.btnToggleAutoRecording = new System.Windows.Forms.Button();
-            this.pnlFeeds = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlLiveContainer = new System.Windows.Forms.Panel();
-            this.lblLiveTitle = new System.Windows.Forms.Label();
-            this.picLiveFeed = new System.Windows.Forms.PictureBox();
-            this.pnlCaptureContainer = new System.Windows.Forms.Panel();
-            this.lblCaptureTitle = new System.Windows.Forms.Label();
-            this.picLastCapture = new System.Windows.Forms.PictureBox();
+            this.panelHeader = new System.Windows.Forms.Panel();
+            this.labelTitle = new System.Windows.Forms.Label();
+            this.panelToolbar = new System.Windows.Forms.Panel();
+            this.labelCameraDevicePrompt = new System.Windows.Forms.Label();
+            this.comboBoxCameraDevices = new System.Windows.Forms.ComboBox();
+            this.buttonToggleLiveView = new System.Windows.Forms.Button();
+            this.buttonCaptureSnapshot = new System.Windows.Forms.Button();
+            this.labelRecordingStatus = new System.Windows.Forms.Label();
+            this.buttonToggleAutoRecording = new System.Windows.Forms.Button();
+            this.tableLayoutPanelFeeds = new System.Windows.Forms.TableLayoutPanel();
+            this.panelLiveContainer = new System.Windows.Forms.Panel();
+            this.labelLiveTitle = new System.Windows.Forms.Label();
+            this.pictureBoxLiveFeed = new System.Windows.Forms.PictureBox();
+            this.panelCaptureContainer = new System.Windows.Forms.Panel();
+            this.labelCaptureTitle = new System.Windows.Forms.Label();
+            this.pictureBoxLastCapture = new System.Windows.Forms.PictureBox();
 
-            this.pnlHeader.SuspendLayout();
-            this.pnlToolbar.SuspendLayout();
-            this.pnlFeeds.SuspendLayout();
-            this.pnlLiveContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLiveFeed)).BeginInit();
-            this.pnlCaptureContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.picLastCapture)).BeginInit();
+            this.panelHeader.SuspendLayout();
+            this.panelToolbar.SuspendLayout();
+            this.tableLayoutPanelFeeds.SuspendLayout();
+            this.panelLiveContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).BeginInit();
+            this.panelCaptureContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).BeginInit();
             this.SuspendLayout();
 
-            // pnlHeader
-            this.pnlHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.pnlHeader.Controls.Add(this.lblTitle);
-            this.pnlHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlHeader.Location = new System.Drawing.Point(0, 0);
-            this.pnlHeader.Name = "pnlHeader";
-            this.pnlHeader.Size = new System.Drawing.Size(1080, 56);
-            this.pnlHeader.TabIndex = 0;
+            // panelHeader
+            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
+            this.panelHeader.Controls.Add(this.labelTitle);
+            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelHeader.Location = new System.Drawing.Point(0, 0);
+            this.panelHeader.Name = "panelHeader";
+            this.panelHeader.Size = new System.Drawing.Size(1080, 56);
+            this.panelHeader.TabIndex = 0;
 
-            // lblTitle
-            this.lblTitle.AutoSize = true;
-            this.lblTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.lblTitle.ForeColor = System.Drawing.Color.White;
-            this.lblTitle.Location = new System.Drawing.Point(16, 16);
-            this.lblTitle.Name = "lblTitle";
-            this.lblTitle.Size = new System.Drawing.Size(445, 25);
-            this.lblTitle.TabIndex = 0;
-            this.lblTitle.Text = "MONITOREO Y CÁMARAS DE SEGURIDAD (CCTV)";
+            // labelTitle
+            this.labelTitle.AutoSize = true;
+            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
+            this.labelTitle.ForeColor = System.Drawing.Color.White;
+            this.labelTitle.Location = new System.Drawing.Point(16, 16);
+            this.labelTitle.Name = "labelTitle";
+            this.labelTitle.Size = new System.Drawing.Size(445, 25);
+            this.labelTitle.TabIndex = 0;
+            this.labelTitle.Text = "MONITOREO Y CÁMARAS DE SEGURIDAD (CCTV)";
 
-            // pnlToolbar
-            this.pnlToolbar.BackColor = System.Drawing.Color.White;
-            this.pnlToolbar.Controls.Add(this.lblCamSelect);
-            this.pnlToolbar.Controls.Add(this.cboCameraDevices);
-            this.pnlToolbar.Controls.Add(this.btnActivate);
-            this.pnlToolbar.Controls.Add(this.btnCapture);
-            this.pnlToolbar.Controls.Add(this.lblRecordingStatus);
-            this.pnlToolbar.Controls.Add(this.btnToggleAutoRecording);
-            this.pnlToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlToolbar.Location = new System.Drawing.Point(0, 56);
-            this.pnlToolbar.Name = "pnlToolbar";
-            this.pnlToolbar.Padding = new System.Windows.Forms.Padding(16, 12, 16, 12);
-            this.pnlToolbar.Size = new System.Drawing.Size(1080, 70);
-            this.pnlToolbar.TabIndex = 1;
+            // panelToolbar
+            this.panelToolbar.BackColor = System.Drawing.Color.White;
+            this.panelToolbar.Controls.Add(this.labelCameraDevicePrompt);
+            this.panelToolbar.Controls.Add(this.comboBoxCameraDevices);
+            this.panelToolbar.Controls.Add(this.buttonToggleLiveView);
+            this.panelToolbar.Controls.Add(this.buttonCaptureSnapshot);
+            this.panelToolbar.Controls.Add(this.labelRecordingStatus);
+            this.panelToolbar.Controls.Add(this.buttonToggleAutoRecording);
+            this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelToolbar.Location = new System.Drawing.Point(0, 56);
+            this.panelToolbar.Name = "panelToolbar";
+            this.panelToolbar.Padding = new System.Windows.Forms.Padding(16, 12, 16, 12);
+            this.panelToolbar.Size = new System.Drawing.Size(1080, 70);
+            this.panelToolbar.TabIndex = 1;
 
-            // lblCamSelect
-            this.lblCamSelect.AutoSize = true;
-            this.lblCamSelect.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblCamSelect.Location = new System.Drawing.Point(16, 12);
-            this.lblCamSelect.Name = "lblCamSelect";
-            this.lblCamSelect.Size = new System.Drawing.Size(74, 15);
-            this.lblCamSelect.TabIndex = 0;
-            this.lblCamSelect.Text = "Dispositivo:";
+            // labelCameraDevicePrompt
+            this.labelCameraDevicePrompt.AutoSize = true;
+            this.labelCameraDevicePrompt.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.labelCameraDevicePrompt.Location = new System.Drawing.Point(16, 12);
+            this.labelCameraDevicePrompt.Name = "labelCameraDevicePrompt";
+            this.labelCameraDevicePrompt.Size = new System.Drawing.Size(74, 15);
+            this.labelCameraDevicePrompt.TabIndex = 0;
+            this.labelCameraDevicePrompt.Text = "Dispositivo:";
 
-            // cboCameraDevices
-            this.cboCameraDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cboCameraDevices.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.cboCameraDevices.Location = new System.Drawing.Point(16, 32);
-            this.cboCameraDevices.Name = "cboCameraDevices";
-            this.cboCameraDevices.Size = new System.Drawing.Size(200, 25);
-            this.cboCameraDevices.TabIndex = 1;
+            // comboBoxCameraDevices
+            this.comboBoxCameraDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCameraDevices.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.comboBoxCameraDevices.Location = new System.Drawing.Point(16, 32);
+            this.comboBoxCameraDevices.Name = "comboBoxCameraDevices";
+            this.comboBoxCameraDevices.Size = new System.Drawing.Size(200, 25);
+            this.comboBoxCameraDevices.TabIndex = 1;
 
-            // btnActivate
-            this.btnActivate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            this.btnActivate.FlatAppearance.BorderSize = 0;
-            this.btnActivate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnActivate.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnActivate.ForeColor = System.Drawing.Color.White;
-            this.btnActivate.Location = new System.Drawing.Point(230, 24);
-            this.btnActivate.Name = "btnActivate";
-            this.btnActivate.Size = new System.Drawing.Size(180, 38);
-            this.btnActivate.TabIndex = 2;
-            this.btnActivate.Text = "ACTIVAR CÁMARA";
-            this.btnActivate.UseVisualStyleBackColor = false;
+            // buttonToggleLiveView
+            this.buttonToggleLiveView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
+            this.buttonToggleLiveView.FlatAppearance.BorderSize = 0;
+            this.buttonToggleLiveView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonToggleLiveView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonToggleLiveView.ForeColor = System.Drawing.Color.White;
+            this.buttonToggleLiveView.Location = new System.Drawing.Point(230, 24);
+            this.buttonToggleLiveView.Name = "buttonToggleLiveView";
+            this.buttonToggleLiveView.Size = new System.Drawing.Size(180, 38);
+            this.buttonToggleLiveView.TabIndex = 2;
+            this.buttonToggleLiveView.Text = "ACTIVAR CÁMARA";
+            this.buttonToggleLiveView.UseVisualStyleBackColor = false;
 
-            // btnCapture
-            this.btnCapture.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCapture.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnCapture.Location = new System.Drawing.Point(420, 24);
-            this.btnCapture.Name = "btnCapture";
-            this.btnCapture.Size = new System.Drawing.Size(170, 38);
-            this.btnCapture.TabIndex = 3;
-            this.btnCapture.Text = "CAPTURAR FOTO";
-            this.btnCapture.UseVisualStyleBackColor = true;
+            // buttonCaptureSnapshot
+            this.buttonCaptureSnapshot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCaptureSnapshot.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonCaptureSnapshot.Location = new System.Drawing.Point(420, 24);
+            this.buttonCaptureSnapshot.Name = "buttonCaptureSnapshot";
+            this.buttonCaptureSnapshot.Size = new System.Drawing.Size(170, 38);
+            this.buttonCaptureSnapshot.TabIndex = 3;
+            this.buttonCaptureSnapshot.Text = "CAPTURAR FOTO";
+            this.buttonCaptureSnapshot.UseVisualStyleBackColor = true;
 
-            // lblRecordingStatus
-            this.lblRecordingStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.lblRecordingStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
-            this.lblRecordingStatus.Location = new System.Drawing.Point(610, 32);
-            this.lblRecordingStatus.Name = "lblRecordingStatus";
-            this.lblRecordingStatus.Size = new System.Drawing.Size(280, 22);
-            this.lblRecordingStatus.TabIndex = 4;
-            this.lblRecordingStatus.Text = "ESTADO: AUTO-GRABACIÓN ACTIVA";
+            // labelRecordingStatus
+            this.labelRecordingStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.labelRecordingStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
+            this.labelRecordingStatus.Location = new System.Drawing.Point(610, 32);
+            this.labelRecordingStatus.Name = "labelRecordingStatus";
+            this.labelRecordingStatus.Size = new System.Drawing.Size(280, 22);
+            this.labelRecordingStatus.TabIndex = 4;
+            this.labelRecordingStatus.Text = "ESTADO: AUTO-GRABACIÓN ACTIVA";
 
-            // btnToggleAutoRecording
-            this.btnToggleAutoRecording.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.btnToggleAutoRecording.FlatAppearance.BorderSize = 0;
-            this.btnToggleAutoRecording.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnToggleAutoRecording.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.btnToggleAutoRecording.ForeColor = System.Drawing.Color.White;
-            this.btnToggleAutoRecording.Location = new System.Drawing.Point(900, 24);
-            this.btnToggleAutoRecording.Name = "btnToggleAutoRecording";
-            this.btnToggleAutoRecording.Size = new System.Drawing.Size(150, 38);
-            this.btnToggleAutoRecording.TabIndex = 5;
-            this.btnToggleAutoRecording.Text = "PAUSAR AUTO";
-            this.btnToggleAutoRecording.UseVisualStyleBackColor = false;
+            // buttonToggleAutoRecording
+            this.buttonToggleAutoRecording.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
+            this.buttonToggleAutoRecording.FlatAppearance.BorderSize = 0;
+            this.buttonToggleAutoRecording.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonToggleAutoRecording.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
+            this.buttonToggleAutoRecording.ForeColor = System.Drawing.Color.White;
+            this.buttonToggleAutoRecording.Location = new System.Drawing.Point(900, 24);
+            this.buttonToggleAutoRecording.Name = "buttonToggleAutoRecording";
+            this.buttonToggleAutoRecording.Size = new System.Drawing.Size(150, 38);
+            this.buttonToggleAutoRecording.TabIndex = 5;
+            this.buttonToggleAutoRecording.Text = "PAUSAR AUTO";
+            this.buttonToggleAutoRecording.UseVisualStyleBackColor = false;
 
-            // pnlFeeds
-            this.pnlFeeds.ColumnCount = 2;
-            this.pnlFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pnlFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pnlFeeds.Controls.Add(this.pnlLiveContainer, 0, 0);
-            this.pnlFeeds.Controls.Add(this.pnlCaptureContainer, 1, 0);
-            this.pnlFeeds.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFeeds.Location = new System.Drawing.Point(0, 126);
-            this.pnlFeeds.Name = "pnlFeeds";
-            this.pnlFeeds.Padding = new System.Windows.Forms.Padding(16);
-            this.pnlFeeds.RowCount = 1;
-            this.pnlFeeds.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.pnlFeeds.Size = new System.Drawing.Size(1080, 554);
-            this.pnlFeeds.TabIndex = 2;
+            // tableLayoutPanelFeeds
+            this.tableLayoutPanelFeeds.ColumnCount = 2;
+            this.tableLayoutPanelFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelFeeds.Controls.Add(this.panelLiveContainer, 0, 0);
+            this.tableLayoutPanelFeeds.Controls.Add(this.panelCaptureContainer, 1, 0);
+            this.tableLayoutPanelFeeds.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelFeeds.Location = new System.Drawing.Point(0, 126);
+            this.tableLayoutPanelFeeds.Name = "tableLayoutPanelFeeds";
+            this.tableLayoutPanelFeeds.Padding = new System.Windows.Forms.Padding(16);
+            this.tableLayoutPanelFeeds.RowCount = 1;
+            this.tableLayoutPanelFeeds.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanelFeeds.Size = new System.Drawing.Size(1080, 554);
+            this.tableLayoutPanelFeeds.TabIndex = 2;
 
-            // pnlLiveContainer
-            this.pnlLiveContainer.Controls.Add(this.picLiveFeed);
-            this.pnlLiveContainer.Controls.Add(this.lblLiveTitle);
-            this.pnlLiveContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlLiveContainer.Location = new System.Drawing.Point(19, 19);
-            this.pnlLiveContainer.Name = "pnlLiveContainer";
-            this.pnlLiveContainer.Size = new System.Drawing.Size(518, 516);
-            this.pnlLiveContainer.TabIndex = 0;
+            // panelLiveContainer
+            this.panelLiveContainer.Controls.Add(this.pictureBoxLiveFeed);
+            this.panelLiveContainer.Controls.Add(this.labelLiveTitle);
+            this.panelLiveContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelLiveContainer.Location = new System.Drawing.Point(19, 19);
+            this.panelLiveContainer.Name = "panelLiveContainer";
+            this.panelLiveContainer.Size = new System.Drawing.Size(518, 516);
+            this.panelLiveContainer.TabIndex = 0;
 
-            // lblLiveTitle
-            this.lblLiveTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblLiveTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblLiveTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblLiveTitle.Name = "lblLiveTitle";
-            this.lblLiveTitle.Size = new System.Drawing.Size(518, 28);
-            this.lblLiveTitle.TabIndex = 0;
-            this.lblLiveTitle.Text = "Transmisión en Vivo";
+            // labelLiveTitle
+            this.labelLiveTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelLiveTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.labelLiveTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelLiveTitle.Name = "labelLiveTitle";
+            this.labelLiveTitle.Size = new System.Drawing.Size(518, 28);
+            this.labelLiveTitle.TabIndex = 0;
+            this.labelLiveTitle.Text = "Transmisión en Vivo";
 
-            // picLiveFeed
-            this.picLiveFeed.BackColor = System.Drawing.Color.Black;
-            this.picLiveFeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picLiveFeed.Location = new System.Drawing.Point(0, 28);
-            this.picLiveFeed.Name = "picLiveFeed";
-            this.picLiveFeed.Size = new System.Drawing.Size(518, 488);
-            this.picLiveFeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picLiveFeed.TabIndex = 1;
-            this.picLiveFeed.TabStop = false;
+            // pictureBoxLiveFeed
+            this.pictureBoxLiveFeed.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxLiveFeed.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxLiveFeed.Location = new System.Drawing.Point(0, 28);
+            this.pictureBoxLiveFeed.Name = "pictureBoxLiveFeed";
+            this.pictureBoxLiveFeed.Size = new System.Drawing.Size(518, 488);
+            this.pictureBoxLiveFeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLiveFeed.TabIndex = 1;
+            this.pictureBoxLiveFeed.TabStop = false;
 
-            // pnlCaptureContainer
-            this.pnlCaptureContainer.Controls.Add(this.picLastCapture);
-            this.pnlCaptureContainer.Controls.Add(this.lblCaptureTitle);
-            this.pnlCaptureContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCaptureContainer.Location = new System.Drawing.Point(543, 19);
-            this.pnlCaptureContainer.Name = "pnlCaptureContainer";
-            this.pnlCaptureContainer.Size = new System.Drawing.Size(518, 516);
-            this.pnlCaptureContainer.TabIndex = 1;
+            // panelCaptureContainer
+            this.panelCaptureContainer.Controls.Add(this.pictureBoxLastCapture);
+            this.panelCaptureContainer.Controls.Add(this.labelCaptureTitle);
+            this.panelCaptureContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCaptureContainer.Location = new System.Drawing.Point(543, 19);
+            this.panelCaptureContainer.Name = "panelCaptureContainer";
+            this.panelCaptureContainer.Size = new System.Drawing.Size(518, 516);
+            this.panelCaptureContainer.TabIndex = 1;
 
-            // lblCaptureTitle
-            this.lblCaptureTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCaptureTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.lblCaptureTitle.Location = new System.Drawing.Point(0, 0);
-            this.lblCaptureTitle.Name = "lblCaptureTitle";
-            this.lblCaptureTitle.Size = new System.Drawing.Size(518, 28);
-            this.lblCaptureTitle.TabIndex = 0;
-            this.lblCaptureTitle.Text = "Última Instantánea de Seguridad";
+            // labelCaptureTitle
+            this.labelCaptureTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelCaptureTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
+            this.labelCaptureTitle.Location = new System.Drawing.Point(0, 0);
+            this.labelCaptureTitle.Name = "labelCaptureTitle";
+            this.labelCaptureTitle.Size = new System.Drawing.Size(518, 28);
+            this.labelCaptureTitle.TabIndex = 0;
+            this.labelCaptureTitle.Text = "Última Instantánea de Seguridad";
 
-            // picLastCapture
-            this.picLastCapture.BackColor = System.Drawing.Color.White;
-            this.picLastCapture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.picLastCapture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.picLastCapture.Location = new System.Drawing.Point(0, 28);
-            this.picLastCapture.Name = "picLastCapture";
-            this.picLastCapture.Size = new System.Drawing.Size(518, 488);
-            this.picLastCapture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picLastCapture.TabIndex = 1;
-            this.picLastCapture.TabStop = false;
+            // pictureBoxLastCapture
+            this.pictureBoxLastCapture.BackColor = System.Drawing.Color.White;
+            this.pictureBoxLastCapture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pictureBoxLastCapture.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxLastCapture.Location = new System.Drawing.Point(0, 28);
+            this.pictureBoxLastCapture.Name = "pictureBoxLastCapture";
+            this.pictureBoxLastCapture.Size = new System.Drawing.Size(518, 488);
+            this.pictureBoxLastCapture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pictureBoxLastCapture.TabIndex = 1;
+            this.pictureBoxLastCapture.TabStop = false;
 
             // Form Properties
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
             this.ClientSize = new System.Drawing.Size(1080, 680);
-            this.Controls.Add(this.pnlFeeds);
-            this.Controls.Add(this.pnlToolbar);
-            this.Controls.Add(this.pnlHeader);
+            this.Controls.Add(this.tableLayoutPanelFeeds);
+            this.Controls.Add(this.panelToolbar);
+            this.Controls.Add(this.panelHeader);
             this.Name = "FormSecurityCameras";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cámaras CCTV";
 
-            this.pnlHeader.ResumeLayout(false);
-            this.pnlHeader.PerformLayout();
-            this.pnlToolbar.ResumeLayout(false);
-            this.pnlToolbar.PerformLayout();
-            this.pnlFeeds.ResumeLayout(false);
-            this.pnlLiveContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picLiveFeed)).EndInit();
-            this.pnlCaptureContainer.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.picLastCapture)).EndInit();
+            this.panelHeader.ResumeLayout(false);
+            this.panelHeader.PerformLayout();
+            this.panelToolbar.ResumeLayout(false);
+            this.panelToolbar.PerformLayout();
+            this.tableLayoutPanelFeeds.ResumeLayout(false);
+            this.panelLiveContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).EndInit();
+            this.panelCaptureContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).EndInit();
             this.ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlToolbar;
-        private System.Windows.Forms.Label lblCamSelect;
-        private System.Windows.Forms.ComboBox cboCameraDevices;
-        private System.Windows.Forms.Button btnActivate;
-        private System.Windows.Forms.Button btnCapture;
-        private System.Windows.Forms.Label lblRecordingStatus;
-        private System.Windows.Forms.Button btnToggleAutoRecording;
-        private System.Windows.Forms.TableLayoutPanel pnlFeeds;
-        private System.Windows.Forms.Panel pnlLiveContainer;
-        private System.Windows.Forms.Label lblLiveTitle;
-        private System.Windows.Forms.PictureBox picLiveFeed;
-        private System.Windows.Forms.Panel pnlCaptureContainer;
-        private System.Windows.Forms.Label lblCaptureTitle;
-        private System.Windows.Forms.PictureBox picLastCapture;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelToolbar;
+        private System.Windows.Forms.Label labelCameraDevicePrompt;
+        private System.Windows.Forms.ComboBox comboBoxCameraDevices;
+        private System.Windows.Forms.Button buttonToggleLiveView;
+        private System.Windows.Forms.Button buttonCaptureSnapshot;
+        private System.Windows.Forms.Label labelRecordingStatus;
+        private System.Windows.Forms.Button buttonToggleAutoRecording;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelFeeds;
+        private System.Windows.Forms.Panel panelLiveContainer;
+        private System.Windows.Forms.Label labelLiveTitle;
+        private System.Windows.Forms.PictureBox pictureBoxLiveFeed;
+        private System.Windows.Forms.Panel panelCaptureContainer;
+        private System.Windows.Forms.Label labelCaptureTitle;
+        private System.Windows.Forms.PictureBox pictureBoxLastCapture;
     }
 }

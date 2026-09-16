@@ -11,8 +11,8 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IUserService _userService;
         private readonly IDocumentService _documentService;
         private readonly IPasswordHasher _passwordHasher;
-        private int _selectedUserId = 0;
-        private byte[]? _imageBuffer = null;
+        private int _selectedUserIdentifier = 0;
+        private byte[]? _userPhotoBuffer = null;
         private bool _isPasswordVisible = false;
 
         public FormUsers(IUserService userService, IDocumentService documentService, IPasswordHasher passwordHasher)
@@ -23,148 +23,167 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(groupBoxData);
+            UIThemeHelper.ApplyCardStyle(panelUserForm);
 
-            this.dgvUsers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvUsers, e);
+            this.dataGridViewUsers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewUsers, e);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteToggleStatusAction();
-            this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
-            this.btnBrowsePhoto.Click += (s, e) => HandlePhotoSelection();
-            this.btnClearPhoto.Click += (s, e) => HandlePhotoRemoval();
-            this.btnTogglePassword.Click += (s, e) => TogglePasswordVisibility();
+            this.Load += async (s, e) => await InitializeUsersManagementFormAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveUserAsync();
+            this.buttonEdit.Click += async (s, e) => await ExecuteUpdateUserAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteToggleUserActiveStatusAsync();
+            this.buttonExportPdf.Click += async (s, e) => await ExecuteExportUsersReportToPdfAsync();
+            this.buttonBrowsePhoto.Click += (s, e) => HandleUserPhotoSelection();
+            this.buttonClearPhoto.Click += (s, e) => HandleUserPhotoRemoval();
+            this.buttonTogglePasswordVisibility.Click += (s, e) => TogglePasswordVisibilityChar();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeUsersManagementFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                cboRole.DataSource = (await _userService.GetRolesAsync()).ToList();
-                cboRole.DisplayMember = "Name";
-                cboRole.ValueMember = "Id";
+                comboBoxRole.DataSource = (await _userService.GetRolesAsync()).ToList();
+                comboBoxRole.DisplayMember = "Name";
+                comboBoxRole.ValueMember = "Id";
 
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvUsers, SyncEntityToFields, ResetUI);
-                ResetUI();
+                await RefreshUsersGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewUsers, SynchronizeSelectedUserToFormFields, ResetFormInputFields);
+                ResetFormInputFields();
             }
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshUsersGridAsync()
         {
-            var users = await _userService.GetUserListAsync();
-            dgvUsers.DataSource = null;
-            dgvUsers.DataSource = users.ToList();
-            DataGridViewHelper.ApplyStyle(dgvUsers);
+            var usersList = await _userService.GetUserListAsync();
+            dataGridViewUsers.DataSource = null;
+            dataGridViewUsers.DataSource = usersList.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewUsers);
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedUserToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedUserToFormFields()
         {
-            if (dgvUsers.CurrentRow == null)
+            if (dataGridViewUsers.CurrentRow == null)
                 return;
 
-            var u = (UserDto)dgvUsers.CurrentRow.DataBoundItem;
+            var selectedUser = (UserDto)dataGridViewUsers.CurrentRow.DataBoundItem;
 
-            _selectedUserId = u.Id;
-            txtUsername.Text = u.Username;
-            txtFirstName.Text = u.FirstName;
-            txtLastName.Text = u.LastName;
-            txtEmail.Text = u.Email;
-            cboRole.SelectedValue = u.RoleId;
+            _selectedUserIdentifier = selectedUser.Id;
+            textBoxUsername.Text = selectedUser.Username;
+            textBoxFirstName.Text = selectedUser.FirstName;
+            textBoxLastName.Text = selectedUser.LastName;
+            textBoxEmail.Text = selectedUser.Email;
+            comboBoxRole.SelectedValue = selectedUser.RoleId;
 
-            if (u is UserCreateDto createDto)
-                txtPassword.Text = createDto.Password;
+            if (selectedUser is UserCreateDto user)
+                textBoxPassword.Text = user.Password;
 
-            _imageBuffer = u.Photo;
-            ImageHelper.Clear(picPhoto);
-            picPhoto.Image = ImageHelper.LoadFromBytes(u.Photo);
+            _userPhotoBuffer = selectedUser.Photo;
+            ImageHelper.Clear(pictureBoxUserPhoto);
+            pictureBoxUserPhoto.Image = ImageHelper.LoadFromBytes(selectedUser.Photo);
 
-            SetButtonState(isEditing: true);
-            txtUsername.ReadOnly = true;
+            UpdateButtonStates(isEditing: true);
+            textBoxUsername.ReadOnly = true;
 
-            bool isAdmin = u.Username.Equals(RoleConstants.DEFAULT_ADMIN_USERNAME, StringComparison.OrdinalIgnoreCase) ||
-                           u.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
-            btnDelete.Enabled = !isAdmin;
-            cboRole.Enabled = !isAdmin;
+            bool isAdmin = selectedUser.Username.Equals(RoleConstants.DEFAULT_ADMIN_USERNAME, StringComparison.OrdinalIgnoreCase) ||
+                           selectedUser.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
+            buttonDelete.Enabled = !isAdmin;
+            comboBoxRole.Enabled = !isAdmin;
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedUserId = 0;
-            _imageBuffer = null;
-            ImageHelper.Clear(picPhoto);
+            _selectedUserIdentifier = 0;
+            _userPhotoBuffer = null;
+            ImageHelper.Clear(pictureBoxUserPhoto);
 
-            UIHelper.CleanControls(groupBoxData);
+            UIHelper.CleanControls(panelUserForm);
 
-            cboRole.SelectedIndex = -1;
-            cboRole.Enabled = true;
-            txtUsername.ReadOnly = false;
-            txtPassword.Clear();
+            comboBoxRole.SelectedIndex = -1;
+            comboBoxRole.Enabled = true;
+            textBoxUsername.ReadOnly = false;
+            textBoxPassword.Clear();
 
             _isPasswordVisible = false;
-            txtPassword.PasswordChar = '●';
+            textBoxPassword.PasswordChar = '●';
 
-            SetButtonState(isEditing: false);
-            txtUsername.Focus();
+            UpdateButtonStates(isEditing: false);
+            textBoxUsername.Focus();
         }
 
-        private void SetButtonState(bool isEditing)
+        private void UpdateButtonStates(bool isEditing)
         {
-            btnSave.Enabled = !isEditing;
-            btnEdit.Enabled = isEditing;
-            btnDelete.Enabled = isEditing;
+            buttonSave.Enabled = !isEditing;
+            buttonEdit.Enabled = isEditing;
+            buttonDelete.Enabled = isEditing;
         }
 
-        private void TogglePasswordVisibility()
+        private void TogglePasswordVisibilityChar()
         {
             _isPasswordVisible = !_isPasswordVisible;
-            txtPassword.PasswordChar = _isPasswordVisible ? '\0' : '●';
-            txtPassword.Focus();
+            textBoxPassword.PasswordChar = _isPasswordVisible ? '\0' : '●';
+            textBoxPassword.Focus();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveUser.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction() => await ProcessAction(0);
+        private async Task ExecuteSaveUserAsync() => await ProcessSaveOrUpdateUserAsync(0);
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UpdateUser.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteEditAction()
+        private async Task ExecuteUpdateUserAsync()
         {
-            if (_selectedUserId == 0)
+            if (_selectedUserIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un usuario de la lista para poder editarlo.", "Selección Requerida");
                 return;
             }
 
-            await ProcessAction(_selectedUserId);
+            await ProcessSaveOrUpdateUserAsync(_selectedUserIdentifier);
         }
 
-        private async Task ProcessAction(int id)
+        private async Task ProcessSaveOrUpdateUserAsync(int id)
         {
-            var dto = new UserCreateDto
+            var user = new UserCreateDto
             {
                 Id = id,
-                Username = txtUsername.Text.Trim(),
-                FirstName = txtFirstName.Text.Trim(),
-                LastName = txtLastName.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                RoleId = (int)(cboRole.SelectedValue),
-                Password = txtPassword.Text,
-                Photo = _imageBuffer,
+                Username = textBoxUsername.Text.Trim(),
+                FirstName = textBoxFirstName.Text.Trim(),
+                LastName = textBoxLastName.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
+                RoleId = (int)(comboBoxRole.SelectedValue),
+                Password = textBoxPassword.Text,
+                Photo = _userPhotoBuffer,
                 IsActive = true
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _userService.UpsertUserAsync(dto);
-                UIHelper.ShowResult(result, "Gestión de Usuarios", async () =>
+                var operationResult = await _userService.UpsertUserAsync(user);
+                UIHelper.ShowResult(operationResult, "Gestión de Usuarios", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshUsersGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de ToggleUserActiveStatus.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteToggleStatusAction()
+        private async Task ExecuteToggleUserActiveStatusAsync()
         {
-            if (_selectedUserId == 0)
+            if (_selectedUserIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar un usuario de la lista para cambiar su estado.", "Selección Requerida");
                 return;
@@ -172,18 +191,18 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _userService.ToggleUserStatusAsync(_selectedUserId);
-                UIHelper.ShowResult(result, "Seguridad de Usuarios", async () =>
+                var operationResult = await _userService.ToggleUserStatusAsync(_selectedUserIdentifier);
+                UIHelper.ShowResult(operationResult, "Seguridad de Usuarios", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshUsersGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
 
-        public async Task ExecuteExportPdfAction()
+        public async Task ExecuteExportUsersReportToPdfAsync()
         {
-            if (dgvUsers.DataSource is not List<UserDto> users || !users.Any())
+            if (dataGridViewUsers.DataSource is not List<UserDto> usersList || !usersList.Any())
             {
                 UIHelper.WarnMessage(this, "No hay usuarios registrados para exportar a PDF.", "Sin Registros");
                 return;
@@ -191,30 +210,30 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                byte[] pdfBytes = await _documentService.GenerateUsersReportAsync(users);
-                string fileName = $"Reporte_Usuarios_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-                await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Exportar Reporte de Usuarios");
+                byte[] usersReportPdfBytes = await _documentService.GenerateUsersReportAsync(usersList);
+                string reportPdfFileName = $"Reporte_Usuarios_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+                await FileExportHelper.SaveAndOpenPdfAsync(this, usersReportPdfBytes, reportPdfFileName, "Exportar Reporte de Usuarios");
             }
         }
 
-        private void HandlePhotoSelection()
+        private void HandleUserPhotoSelection()
         {
-            if (ImageHelper.SelectImage(out byte[]? imageBytes, out Image? displayImage, out string? errorMessage))
+            if (ImageHelper.SelectImage(out byte[]? selectedImageBytes, out Image? selectedDisplayImage, out string? photoValidationErrorMessage))
             {
-                ImageHelper.Clear(picPhoto);
-                _imageBuffer = imageBytes;
-                picPhoto.Image = displayImage;
+                ImageHelper.Clear(pictureBoxUserPhoto);
+                _userPhotoBuffer = selectedImageBytes;
+                pictureBoxUserPhoto.Image = selectedDisplayImage;
             }
-            else if (!string.IsNullOrEmpty(errorMessage))
+            else if (!string.IsNullOrEmpty(photoValidationErrorMessage))
             {
-                UIHelper.WarnMessage(this, errorMessage, "Validación de Fotografía");
+                UIHelper.WarnMessage(this, photoValidationErrorMessage, "Validación de Fotografía");
             }
         }
 
-        private void HandlePhotoRemoval()
+        private void HandleUserPhotoRemoval()
         {
-            _imageBuffer = null;
-            ImageHelper.Clear(picPhoto);
+            _userPhotoBuffer = null;
+            ImageHelper.Clear(pictureBoxUserPhoto);
         }
     }
 }

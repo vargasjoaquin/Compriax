@@ -17,410 +17,410 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            btnGenerateLabel = new Button();
-            btnPrintStock = new Button();
-            pnlMain = new Panel();
-            dgvProducts = new DataGridView();
-            groupEdit = new Panel();
-            picProductImage = new PictureBox();
-            btnBrowseImage = new Button();
-            btnClearImage = new Button();
-            lblBarcode = new Label();
-            txtBarcode = new TextBox();
-            lblName = new Label();
-            txtName = new TextBox();
-            lblDesc = new Label();
-            txtDescription = new TextBox();
-            lblCategory = new Label();
-            cboCategory = new ComboBox();
-            lblBrand = new Label();
-            cboBrand = new ComboBox();
-            lblBuyPrice = new Label();
-            numBuyPrice = new NumericUpDown();
-            lblSellPrice = new Label();
-            numSellPrice = new NumericUpDown();
-            lblStock = new Label();
-            numStock = new NumericUpDown();
-            btnSave = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            pnlHeader.SuspendLayout();
-            pnlMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
-            groupEdit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picProductImage).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numBuyPrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numSellPrice).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)numStock).BeginInit();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            buttonOpenLabelDesigner = new Button();
+            buttonExportPdf = new Button();
+            panelMain = new Panel();
+            dataGridViewProducts = new DataGridView();
+            panelProductForm = new Panel();
+            pictureBoxProductPhoto = new PictureBox();
+            buttonBrowsePhoto = new Button();
+            buttonClearPhoto = new Button();
+            labelBarcode = new Label();
+            textBoxBarcode = new TextBox();
+            labelProductName = new Label();
+            textBoxProductName = new TextBox();
+            labelDescription = new Label();
+            textBoxDescription = new TextBox();
+            labelCategory = new Label();
+            comboBoxCategory = new ComboBox();
+            labelBrand = new Label();
+            comboBoxBrand = new ComboBox();
+            labelBuyPrice = new Label();
+            numericUpDownBuyPrice = new NumericUpDown();
+            labelSellPrice = new Label();
+            numericUpDownSellPrice = new NumericUpDown();
+            labelCurrentStock = new Label();
+            numericUpDownCurrentStock = new NumericUpDown();
+            buttonSave = new Button();
+            buttonEdit = new Button();
+            buttonDelete = new Button();
+            panelHeader.SuspendLayout();
+            panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewProducts).BeginInit();
+            panelProductForm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProductPhoto).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownBuyPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSellPrice).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCurrentStock).BeginInit();
             SuspendLayout();
 
-            // pnlHeader
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(btnGenerateLabel);
-            pnlHeader.Controls.Add(btnPrintStock);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1260, 74);
-            pnlHeader.TabIndex = 0;
+            // panelHeader
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(buttonOpenLabelDesigner);
+            panelHeader.Controls.Add(buttonExportPdf);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1260, 74);
+            panelHeader.TabIndex = 0;
 
-            // lblTitle
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 22);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(492, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "CATÁLOGO DE PRODUCTOS E INVENTARIO";
+            // labelTitle
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 22);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(492, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "CATÁLOGO DE PRODUCTOS E INVENTARIO";
 
-            // btnGenerateLabel
-            btnGenerateLabel.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnGenerateLabel.BackColor = Color.FromArgb(16, 185, 129);
-            btnGenerateLabel.FlatAppearance.BorderSize = 0;
-            btnGenerateLabel.FlatStyle = FlatStyle.Flat;
-            btnGenerateLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnGenerateLabel.ForeColor = Color.White;
-            btnGenerateLabel.Location = new Point(818, 10);
-            btnGenerateLabel.Name = "btnGenerateLabel";
-            btnGenerateLabel.Size = new Size(200, 54);
-            btnGenerateLabel.TabIndex = 1;
-            btnGenerateLabel.Text = "IMPRIMIR ETIQUETA";
-            btnGenerateLabel.UseVisualStyleBackColor = false;
+            // buttonOpenLabelDesigner
+            buttonOpenLabelDesigner.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonOpenLabelDesigner.BackColor = Color.FromArgb(16, 185, 129);
+            buttonOpenLabelDesigner.FlatAppearance.BorderSize = 0;
+            buttonOpenLabelDesigner.FlatStyle = FlatStyle.Flat;
+            buttonOpenLabelDesigner.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonOpenLabelDesigner.ForeColor = Color.White;
+            buttonOpenLabelDesigner.Location = new Point(818, 10);
+            buttonOpenLabelDesigner.Name = "buttonOpenLabelDesigner";
+            buttonOpenLabelDesigner.Size = new Size(200, 54);
+            buttonOpenLabelDesigner.TabIndex = 1;
+            buttonOpenLabelDesigner.Text = "IMPRIMIR ETIQUETA";
+            buttonOpenLabelDesigner.UseVisualStyleBackColor = false;
 
-            // btnPrintStock
-            btnPrintStock.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnPrintStock.BackColor = Color.FromArgb(2, 132, 199);
-            btnPrintStock.FlatAppearance.BorderSize = 0;
-            btnPrintStock.FlatStyle = FlatStyle.Flat;
-            btnPrintStock.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnPrintStock.ForeColor = Color.White;
-            btnPrintStock.Location = new Point(1028, 10);
-            btnPrintStock.Name = "btnPrintStock";
-            btnPrintStock.Size = new Size(202, 58);
-            btnPrintStock.TabIndex = 1;
-            btnPrintStock.Text = "EXPORTAR PDF";
-            btnPrintStock.UseVisualStyleBackColor = false;
+            // buttonExportPdf
+            buttonExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportPdf.BackColor = Color.FromArgb(2, 132, 199);
+            buttonExportPdf.FlatAppearance.BorderSize = 0;
+            buttonExportPdf.FlatStyle = FlatStyle.Flat;
+            buttonExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonExportPdf.ForeColor = Color.White;
+            buttonExportPdf.Location = new Point(1028, 10);
+            buttonExportPdf.Name = "buttonExportPdf";
+            buttonExportPdf.Size = new Size(202, 58);
+            buttonExportPdf.TabIndex = 1;
+            buttonExportPdf.Text = "EXPORTAR PDF";
+            buttonExportPdf.UseVisualStyleBackColor = false;
 
-            // pnlMain
-            pnlMain.BackColor = Color.FromArgb(248, 250, 252);
-            pnlMain.Controls.Add(dgvProducts);
-            pnlMain.Controls.Add(groupEdit);
-            pnlMain.Dock = DockStyle.Fill;
-            pnlMain.Location = new Point(0, 74);
-            pnlMain.Name = "pnlMain";
-            pnlMain.Padding = new Padding(16, 12, 16, 16);
-            pnlMain.Size = new Size(1260, 676);
-            pnlMain.TabIndex = 1;
+            // panelMain
+            panelMain.BackColor = Color.FromArgb(248, 250, 252);
+            panelMain.Controls.Add(dataGridViewProducts);
+            panelMain.Controls.Add(panelProductForm);
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(0, 74);
+            panelMain.Name = "panelMain";
+            panelMain.Padding = new Padding(16, 12, 16, 16);
+            panelMain.Size = new Size(1260, 676);
+            panelMain.TabIndex = 1;
 
-            // dgvProducts
-            dgvProducts.BackgroundColor = Color.White;
-            dgvProducts.BorderStyle = BorderStyle.None;
-            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducts.Dock = DockStyle.Fill;
-            dgvProducts.Location = new Point(16, 262);
-            dgvProducts.Name = "dgvProducts";
-            dgvProducts.RowHeadersWidth = 51;
-            dgvProducts.Size = new Size(1228, 398);
-            dgvProducts.TabIndex = 1;
+            // dataGridViewProducts
+            dataGridViewProducts.BackgroundColor = Color.White;
+            dataGridViewProducts.BorderStyle = BorderStyle.None;
+            dataGridViewProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewProducts.Dock = DockStyle.Fill;
+            dataGridViewProducts.Location = new Point(16, 262);
+            dataGridViewProducts.Name = "dataGridViewProducts";
+            dataGridViewProducts.RowHeadersWidth = 51;
+            dataGridViewProducts.Size = new Size(1228, 398);
+            dataGridViewProducts.TabIndex = 1;
 
-            // groupEdit
-            groupEdit.BackColor = Color.White;
-            groupEdit.Controls.Add(picProductImage);
-            groupEdit.Controls.Add(btnBrowseImage);
-            groupEdit.Controls.Add(btnClearImage);
-            groupEdit.Controls.Add(lblBarcode);
-            groupEdit.Controls.Add(txtBarcode);
-            groupEdit.Controls.Add(lblName);
-            groupEdit.Controls.Add(txtName);
-            groupEdit.Controls.Add(lblDesc);
-            groupEdit.Controls.Add(txtDescription);
-            groupEdit.Controls.Add(lblCategory);
-            groupEdit.Controls.Add(cboCategory);
-            groupEdit.Controls.Add(lblBrand);
-            groupEdit.Controls.Add(cboBrand);
-            groupEdit.Controls.Add(lblBuyPrice);
-            groupEdit.Controls.Add(numBuyPrice);
-            groupEdit.Controls.Add(lblSellPrice);
-            groupEdit.Controls.Add(numSellPrice);
-            groupEdit.Controls.Add(lblStock);
-            groupEdit.Controls.Add(numStock);
-            groupEdit.Controls.Add(btnSave);
-            groupEdit.Controls.Add(btnEdit);
-            groupEdit.Controls.Add(btnDelete);
-            groupEdit.Dock = DockStyle.Top;
-            groupEdit.Location = new Point(16, 12);
-            groupEdit.Name = "groupEdit";
-            groupEdit.Size = new Size(1228, 250);
-            groupEdit.TabIndex = 0;
+            // panelProductForm
+            panelProductForm.BackColor = Color.White;
+            panelProductForm.Controls.Add(pictureBoxProductPhoto);
+            panelProductForm.Controls.Add(buttonBrowsePhoto);
+            panelProductForm.Controls.Add(buttonClearPhoto);
+            panelProductForm.Controls.Add(labelBarcode);
+            panelProductForm.Controls.Add(textBoxBarcode);
+            panelProductForm.Controls.Add(labelProductName);
+            panelProductForm.Controls.Add(textBoxProductName);
+            panelProductForm.Controls.Add(labelDescription);
+            panelProductForm.Controls.Add(textBoxDescription);
+            panelProductForm.Controls.Add(labelCategory);
+            panelProductForm.Controls.Add(comboBoxCategory);
+            panelProductForm.Controls.Add(labelBrand);
+            panelProductForm.Controls.Add(comboBoxBrand);
+            panelProductForm.Controls.Add(labelBuyPrice);
+            panelProductForm.Controls.Add(numericUpDownBuyPrice);
+            panelProductForm.Controls.Add(labelSellPrice);
+            panelProductForm.Controls.Add(numericUpDownSellPrice);
+            panelProductForm.Controls.Add(labelCurrentStock);
+            panelProductForm.Controls.Add(numericUpDownCurrentStock);
+            panelProductForm.Controls.Add(buttonSave);
+            panelProductForm.Controls.Add(buttonEdit);
+            panelProductForm.Controls.Add(buttonDelete);
+            panelProductForm.Dock = DockStyle.Top;
+            panelProductForm.Location = new Point(16, 12);
+            panelProductForm.Name = "panelProductForm";
+            panelProductForm.Size = new Size(1228, 250);
+            panelProductForm.TabIndex = 0;
 
-            // picProductImage
-            picProductImage.BackColor = Color.FromArgb(248, 250, 252);
-            picProductImage.BorderStyle = BorderStyle.FixedSingle;
-            picProductImage.Location = new Point(11, 16);
-            picProductImage.Name = "picProductImage";
-            picProductImage.Size = new Size(170, 159);
-            picProductImage.SizeMode = PictureBoxSizeMode.Zoom;
-            picProductImage.TabIndex = 0;
-            picProductImage.TabStop = false;
+            // pictureBoxProductPhoto
+            pictureBoxProductPhoto.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxProductPhoto.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxProductPhoto.Location = new Point(11, 16);
+            pictureBoxProductPhoto.Name = "pictureBoxProductPhoto";
+            pictureBoxProductPhoto.Size = new Size(170, 159);
+            pictureBoxProductPhoto.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxProductPhoto.TabIndex = 0;
+            pictureBoxProductPhoto.TabStop = false;
 
-            // btnBrowseImage
-            btnBrowseImage.BackColor = Color.FromArgb(2, 132, 199);
-            btnBrowseImage.FlatAppearance.BorderSize = 0;
-            btnBrowseImage.FlatStyle = FlatStyle.Flat;
-            btnBrowseImage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnBrowseImage.ForeColor = Color.White;
-            btnBrowseImage.Location = new Point(11, 187);
-            btnBrowseImage.Name = "btnBrowseImage";
-            btnBrowseImage.Size = new Size(95, 48);
-            btnBrowseImage.TabIndex = 1;
-            btnBrowseImage.Text = "FOTO";
-            btnBrowseImage.UseVisualStyleBackColor = false;
+            // buttonBrowsePhoto
+            buttonBrowsePhoto.BackColor = Color.FromArgb(2, 132, 199);
+            buttonBrowsePhoto.FlatAppearance.BorderSize = 0;
+            buttonBrowsePhoto.FlatStyle = FlatStyle.Flat;
+            buttonBrowsePhoto.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonBrowsePhoto.ForeColor = Color.White;
+            buttonBrowsePhoto.Location = new Point(11, 187);
+            buttonBrowsePhoto.Name = "buttonBrowsePhoto";
+            buttonBrowsePhoto.Size = new Size(95, 48);
+            buttonBrowsePhoto.TabIndex = 1;
+            buttonBrowsePhoto.Text = "FOTO";
+            buttonBrowsePhoto.UseVisualStyleBackColor = false;
 
-            // btnClearImage
-            btnClearImage.BackColor = Color.FromArgb(239, 68, 68);
-            btnClearImage.FlatAppearance.BorderSize = 0;
-            btnClearImage.FlatStyle = FlatStyle.Flat;
-            btnClearImage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClearImage.ForeColor = Color.White;
-            btnClearImage.Location = new Point(112, 187);
-            btnClearImage.Name = "btnClearImage";
-            btnClearImage.Size = new Size(69, 48);
-            btnClearImage.TabIndex = 2;
-            btnClearImage.Text = "✕";
-            btnClearImage.UseVisualStyleBackColor = false;
+            // buttonClearPhoto
+            buttonClearPhoto.BackColor = Color.FromArgb(239, 68, 68);
+            buttonClearPhoto.FlatAppearance.BorderSize = 0;
+            buttonClearPhoto.FlatStyle = FlatStyle.Flat;
+            buttonClearPhoto.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonClearPhoto.ForeColor = Color.White;
+            buttonClearPhoto.Location = new Point(112, 187);
+            buttonClearPhoto.Name = "buttonClearPhoto";
+            buttonClearPhoto.Size = new Size(69, 48);
+            buttonClearPhoto.TabIndex = 2;
+            buttonClearPhoto.Text = "✕";
+            buttonClearPhoto.UseVisualStyleBackColor = false;
 
-            // lblBarcode
-            lblBarcode.AutoSize = true;
-            lblBarcode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblBarcode.Location = new Point(187, 13);
-            lblBarcode.Name = "lblBarcode";
-            lblBarcode.Size = new Size(143, 21);
-            lblBarcode.TabIndex = 3;
-            lblBarcode.Text = "Código de Barras:";
+            // labelBarcode
+            labelBarcode.AutoSize = true;
+            labelBarcode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelBarcode.Location = new Point(187, 13);
+            labelBarcode.Name = "labelBarcode";
+            labelBarcode.Size = new Size(143, 21);
+            labelBarcode.TabIndex = 3;
+            labelBarcode.Text = "Código de Barras:";
 
-            // txtBarcode
-            txtBarcode.BorderStyle = BorderStyle.FixedSingle;
-            txtBarcode.Font = new Font("Segoe UI", 10F);
-            txtBarcode.Location = new Point(187, 37);
-            txtBarcode.Name = "txtBarcode";
-            txtBarcode.Size = new Size(289, 30);
-            txtBarcode.TabIndex = 4;
+            // textBoxBarcode
+            textBoxBarcode.BorderStyle = BorderStyle.FixedSingle;
+            textBoxBarcode.Font = new Font("Segoe UI", 10F);
+            textBoxBarcode.Location = new Point(187, 37);
+            textBoxBarcode.Name = "textBoxBarcode";
+            textBoxBarcode.Size = new Size(289, 30);
+            textBoxBarcode.TabIndex = 4;
 
-            // lblName
-            lblName.AutoSize = true;
-            lblName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblName.Location = new Point(187, 82);
-            lblName.Name = "lblName";
-            lblName.Size = new Size(179, 21);
-            lblName.TabIndex = 5;
-            lblName.Text = "Nombre del Producto:";
+            // labelProductName
+            labelProductName.AutoSize = true;
+            labelProductName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelProductName.Location = new Point(187, 82);
+            labelProductName.Name = "labelProductName";
+            labelProductName.Size = new Size(179, 21);
+            labelProductName.TabIndex = 5;
+            labelProductName.Text = "Nombre del Producto:";
 
-            // txtName
-            txtName.BorderStyle = BorderStyle.FixedSingle;
-            txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(187, 106);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(289, 30);
-            txtName.TabIndex = 6;
+            // textBoxProductName
+            textBoxProductName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxProductName.Font = new Font("Segoe UI", 10F);
+            textBoxProductName.Location = new Point(187, 106);
+            textBoxProductName.Name = "textBoxProductName";
+            textBoxProductName.Size = new Size(289, 30);
+            textBoxProductName.TabIndex = 6;
 
-            // lblDesc
-            lblDesc.AutoSize = true;
-            lblDesc.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDesc.Location = new Point(187, 154);
-            lblDesc.Name = "lblDesc";
-            lblDesc.Size = new Size(104, 21);
-            lblDesc.TabIndex = 7;
-            lblDesc.Text = "Descripción:";
+            // labelDescription
+            labelDescription.AutoSize = true;
+            labelDescription.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelDescription.Location = new Point(187, 154);
+            labelDescription.Name = "labelDescription";
+            labelDescription.Size = new Size(104, 21);
+            labelDescription.TabIndex = 7;
+            labelDescription.Text = "Descripción:";
 
-            // txtDescription
-            txtDescription.BorderStyle = BorderStyle.FixedSingle;
-            txtDescription.Font = new Font("Segoe UI", 10F);
-            txtDescription.Location = new Point(187, 178);
-            txtDescription.Multiline = true;
-            txtDescription.Name = "txtDescription";
-            txtDescription.Size = new Size(505, 57);
-            txtDescription.TabIndex = 8;
+            // textBoxDescription
+            textBoxDescription.BorderStyle = BorderStyle.FixedSingle;
+            textBoxDescription.Font = new Font("Segoe UI", 10F);
+            textBoxDescription.Location = new Point(187, 178);
+            textBoxDescription.Multiline = true;
+            textBoxDescription.Name = "textBoxDescription";
+            textBoxDescription.Size = new Size(505, 57);
+            textBoxDescription.TabIndex = 8;
 
-            // lblCategory
-            lblCategory.AutoSize = true;
-            lblCategory.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCategory.Location = new Point(510, 12);
-            lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(88, 21);
-            lblCategory.TabIndex = 9;
-            lblCategory.Text = "Categoría:";
+            // labelCategory
+            labelCategory.AutoSize = true;
+            labelCategory.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCategory.Location = new Point(510, 12);
+            labelCategory.Name = "labelCategory";
+            labelCategory.Size = new Size(88, 21);
+            labelCategory.TabIndex = 9;
+            labelCategory.Text = "Categoría:";
 
-            // cboCategory
-            cboCategory.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboCategory.Font = new Font("Segoe UI", 10F);
-            cboCategory.Location = new Point(510, 36);
-            cboCategory.Name = "cboCategory";
-            cboCategory.Size = new Size(200, 31);
-            cboCategory.TabIndex = 10;
+            // comboBoxCategory
+            comboBoxCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxCategory.Font = new Font("Segoe UI", 10F);
+            comboBoxCategory.Location = new Point(510, 36);
+            comboBoxCategory.Name = "comboBoxCategory";
+            comboBoxCategory.Size = new Size(200, 31);
+            comboBoxCategory.TabIndex = 10;
 
-            // lblBrand
-            lblBrand.AutoSize = true;
-            lblBrand.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblBrand.Location = new Point(510, 82);
-            lblBrand.Name = "lblBrand";
-            lblBrand.Size = new Size(61, 21);
-            lblBrand.TabIndex = 11;
-            lblBrand.Text = "Marca:";
+            // labelBrand
+            labelBrand.AutoSize = true;
+            labelBrand.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelBrand.Location = new Point(510, 82);
+            labelBrand.Name = "labelBrand";
+            labelBrand.Size = new Size(61, 21);
+            labelBrand.TabIndex = 11;
+            labelBrand.Text = "Marca:";
 
-            // cboBrand
-            cboBrand.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboBrand.Font = new Font("Segoe UI", 10F);
-            cboBrand.Location = new Point(510, 106);
-            cboBrand.Name = "cboBrand";
-            cboBrand.Size = new Size(200, 31);
-            cboBrand.TabIndex = 12;
+            // comboBoxBrand
+            comboBoxBrand.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxBrand.Font = new Font("Segoe UI", 10F);
+            comboBoxBrand.Location = new Point(510, 106);
+            comboBoxBrand.Name = "comboBoxBrand";
+            comboBoxBrand.Size = new Size(200, 31);
+            comboBoxBrand.TabIndex = 12;
 
-            // lblBuyPrice
-            lblBuyPrice.AutoSize = true;
-            lblBuyPrice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblBuyPrice.Location = new Point(740, 12);
-            lblBuyPrice.Name = "lblBuyPrice";
-            lblBuyPrice.Size = new Size(151, 21);
-            lblBuyPrice.TabIndex = 13;
-            lblBuyPrice.Text = "Precio Compra ($):";
+            // labelBuyPrice
+            labelBuyPrice.AutoSize = true;
+            labelBuyPrice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelBuyPrice.Location = new Point(740, 12);
+            labelBuyPrice.Name = "labelBuyPrice";
+            labelBuyPrice.Size = new Size(151, 21);
+            labelBuyPrice.TabIndex = 13;
+            labelBuyPrice.Text = "Precio Compra ($):";
 
-            // numBuyPrice
-            numBuyPrice.DecimalPlaces = 2;
-            numBuyPrice.Font = new Font("Segoe UI", 10F);
-            numBuyPrice.Location = new Point(740, 36);
-            numBuyPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-            numBuyPrice.Name = "numBuyPrice";
-            numBuyPrice.Size = new Size(171, 30);
-            numBuyPrice.TabIndex = 14;
+            // numericUpDownBuyPrice
+            numericUpDownBuyPrice.DecimalPlaces = 2;
+            numericUpDownBuyPrice.Font = new Font("Segoe UI", 10F);
+            numericUpDownBuyPrice.Location = new Point(740, 36);
+            numericUpDownBuyPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            numericUpDownBuyPrice.Name = "numericUpDownBuyPrice";
+            numericUpDownBuyPrice.Size = new Size(171, 30);
+            numericUpDownBuyPrice.TabIndex = 14;
 
-            // lblSellPrice
-            lblSellPrice.AutoSize = true;
-            lblSellPrice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSellPrice.Location = new Point(740, 83);
-            lblSellPrice.Name = "lblSellPrice";
-            lblSellPrice.Size = new Size(135, 21);
-            lblSellPrice.TabIndex = 15;
-            lblSellPrice.Text = "Precio Venta ($):";
+            // labelSellPrice
+            labelSellPrice.AutoSize = true;
+            labelSellPrice.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSellPrice.Location = new Point(740, 83);
+            labelSellPrice.Name = "labelSellPrice";
+            labelSellPrice.Size = new Size(135, 21);
+            labelSellPrice.TabIndex = 15;
+            labelSellPrice.Text = "Precio Venta ($):";
 
-            // numSellPrice
-            numSellPrice.DecimalPlaces = 2;
-            numSellPrice.Font = new Font("Segoe UI", 10F);
-            numSellPrice.Location = new Point(740, 107);
-            numSellPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
-            numSellPrice.Name = "numSellPrice";
-            numSellPrice.Size = new Size(171, 30);
-            numSellPrice.TabIndex = 16;
+            // numericUpDownSellPrice
+            numericUpDownSellPrice.DecimalPlaces = 2;
+            numericUpDownSellPrice.Font = new Font("Segoe UI", 10F);
+            numericUpDownSellPrice.Location = new Point(740, 107);
+            numericUpDownSellPrice.Maximum = new decimal(new int[] { 10000000, 0, 0, 0 });
+            numericUpDownSellPrice.Name = "numericUpDownSellPrice";
+            numericUpDownSellPrice.Size = new Size(171, 30);
+            numericUpDownSellPrice.TabIndex = 16;
 
-            // lblStock
-            lblStock.AutoSize = true;
-            lblStock.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblStock.Location = new Point(740, 154);
-            lblStock.Name = "lblStock";
-            lblStock.Size = new Size(109, 21);
-            lblStock.TabIndex = 17;
-            lblStock.Text = "Stock Actual:";
+            // labelCurrentStock
+            labelCurrentStock.AutoSize = true;
+            labelCurrentStock.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCurrentStock.Location = new Point(740, 154);
+            labelCurrentStock.Name = "labelCurrentStock";
+            labelCurrentStock.Size = new Size(109, 21);
+            labelCurrentStock.TabIndex = 17;
+            labelCurrentStock.Text = "Stock Actual:";
 
-            // numStock
-            numStock.Font = new Font("Segoe UI", 10F);
-            numStock.Location = new Point(740, 178);
-            numStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
-            numStock.Name = "numStock";
-            numStock.Size = new Size(171, 30);
-            numStock.TabIndex = 18;
+            // numericUpDownCurrentStock
+            numericUpDownCurrentStock.Font = new Font("Segoe UI", 10F);
+            numericUpDownCurrentStock.Location = new Point(740, 178);
+            numericUpDownCurrentStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            numericUpDownCurrentStock.Name = "numericUpDownCurrentStock";
+            numericUpDownCurrentStock.Size = new Size(171, 30);
+            numericUpDownCurrentStock.TabIndex = 18;
 
-            // btnSave
-            btnSave.BackColor = Color.FromArgb(16, 185, 129);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(957, 12);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(257, 70);
-            btnSave.TabIndex = 19;
-            btnSave.Text = "GUARDAR";
-            btnSave.UseVisualStyleBackColor = false;
+            // buttonSave
+            buttonSave.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSave.FlatAppearance.BorderSize = 0;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonSave.ForeColor = Color.White;
+            buttonSave.Location = new Point(957, 12);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(257, 70);
+            buttonSave.TabIndex = 19;
+            buttonSave.Text = "GUARDAR";
+            buttonSave.UseVisualStyleBackColor = false;
 
-            // btnEdit
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnEdit.Location = new Point(957, 88);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(257, 68);
-            btnEdit.TabIndex = 20;
-            btnEdit.Text = "EDITAR";
-            btnEdit.UseVisualStyleBackColor = true;
+            // buttonEdit
+            buttonEdit.FlatStyle = FlatStyle.Flat;
+            buttonEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonEdit.Location = new Point(957, 88);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(257, 68);
+            buttonEdit.TabIndex = 20;
+            buttonEdit.Text = "EDITAR";
+            buttonEdit.UseVisualStyleBackColor = true;
 
-            // btnDelete
-            btnDelete.BackColor = Color.FromArgb(239, 68, 68);
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(957, 165);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(257, 70);
-            btnDelete.TabIndex = 21;
-            btnDelete.Text = "DESACTIVAR";
-            btnDelete.UseVisualStyleBackColor = false;
+            // buttonDelete
+            buttonDelete.BackColor = Color.FromArgb(239, 68, 68);
+            buttonDelete.FlatAppearance.BorderSize = 0;
+            buttonDelete.FlatStyle = FlatStyle.Flat;
+            buttonDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonDelete.ForeColor = Color.White;
+            buttonDelete.Location = new Point(957, 165);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(257, 70);
+            buttonDelete.TabIndex = 21;
+            buttonDelete.Text = "DESACTIVAR";
+            buttonDelete.UseVisualStyleBackColor = false;
 
             // FormProducts
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1260, 750);
-            Controls.Add(pnlMain);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelMain);
+            Controls.Add(panelHeader);
             Name = "FormProducts";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Administración de Productos";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
-            groupEdit.ResumeLayout(false);
-            groupEdit.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picProductImage).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numBuyPrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numSellPrice).EndInit();
-            ((System.ComponentModel.ISupportInitialize)numStock).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewProducts).EndInit();
+            panelProductForm.ResumeLayout(false);
+            panelProductForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProductPhoto).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownBuyPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownSellPrice).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownCurrentStock).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnGenerateLabel;
-        private System.Windows.Forms.Button btnPrintStock;
-        private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Panel groupEdit;
-        private System.Windows.Forms.PictureBox picProductImage;
-        private System.Windows.Forms.Button btnBrowseImage;
-        private System.Windows.Forms.Button btnClearImage;
-        private System.Windows.Forms.Label lblBarcode;
-        private System.Windows.Forms.TextBox txtBarcode;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblDesc;
-        private System.Windows.Forms.TextBox txtDescription;
-        private System.Windows.Forms.Label lblCategory;
-        private System.Windows.Forms.ComboBox cboCategory;
-        private System.Windows.Forms.Label lblBrand;
-        private System.Windows.Forms.ComboBox cboBrand;
-        private System.Windows.Forms.Label lblBuyPrice;
-        private System.Windows.Forms.NumericUpDown numBuyPrice;
-        private System.Windows.Forms.Label lblSellPrice;
-        private System.Windows.Forms.NumericUpDown numSellPrice;
-        private System.Windows.Forms.Label lblStock;
-        private System.Windows.Forms.NumericUpDown numStock;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridView dgvProducts;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonOpenLabelDesigner;
+        private System.Windows.Forms.Button buttonExportPdf;
+        private System.Windows.Forms.Panel panelMain;
+        private System.Windows.Forms.Panel panelProductForm;
+        private System.Windows.Forms.PictureBox pictureBoxProductPhoto;
+        private System.Windows.Forms.Button buttonBrowsePhoto;
+        private System.Windows.Forms.Button buttonClearPhoto;
+        private System.Windows.Forms.Label labelBarcode;
+        private System.Windows.Forms.TextBox textBoxBarcode;
+        private System.Windows.Forms.Label labelProductName;
+        private System.Windows.Forms.TextBox textBoxProductName;
+        private System.Windows.Forms.Label labelDescription;
+        private System.Windows.Forms.TextBox textBoxDescription;
+        private System.Windows.Forms.Label labelCategory;
+        private System.Windows.Forms.ComboBox comboBoxCategory;
+        private System.Windows.Forms.Label labelBrand;
+        private System.Windows.Forms.ComboBox comboBoxBrand;
+        private System.Windows.Forms.Label labelBuyPrice;
+        private System.Windows.Forms.NumericUpDown numericUpDownBuyPrice;
+        private System.Windows.Forms.Label labelSellPrice;
+        private System.Windows.Forms.NumericUpDown numericUpDownSellPrice;
+        private System.Windows.Forms.Label labelCurrentStock;
+        private System.Windows.Forms.NumericUpDown numericUpDownCurrentStock;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.DataGridView dataGridViewProducts;
     }
 }

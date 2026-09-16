@@ -7,90 +7,103 @@ namespace CompriaxSystem.WinFormsUI
     public partial class FormCashRegisters : Form
     {
         private readonly ICashRegisterService _registerService;
-        private int _selectedRegisterId = 0;
+        private int _selectedCashRegisterId = 0;
 
         public FormCashRegisters(ICashRegisterService registerService)
         {
             _registerService = registerService;
             InitializeComponent();
 
-            this.Load += async (s, e) => await RefreshGridAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
-            this.btnCancel.Click += (s, e) => ResetUI();
-            this.dgvRegisters.CellClick += (s, e) => SyncSelectedRegister();
+            this.Load += async (s, e) => await RefreshCashRegistersGridAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveCashRegisterAsync();
+            this.buttonToggleStatus.Click += async (s, e) => await ExecuteToggleCashRegisterStatusAsync();
+            this.buttonCancel.Click += (s, e) => ResetFormInputFields();
+            this.dataGridViewRegisters.CellClick += (s, e) => SynchronizeSelectedRegisterToFormFields();
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshCashRegistersGridAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var registers = await _registerService.GetAllRegistersAsync();
-                dgvRegisters.DataSource = null;
-                dgvRegisters.DataSource = registers.ToList();
-                UIHelper.FormatGrid(dgvRegisters);
+                var cashRegisters = await _registerService.GetAllRegistersAsync();
+                dataGridViewRegisters.DataSource = null;
+                dataGridViewRegisters.DataSource = cashRegisters.ToList();
+                UIHelper.FormatGrid(dataGridViewRegisters);
             }
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedRegisterToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncSelectedRegister()
+        private void SynchronizeSelectedRegisterToFormFields()
         {
-            if (dgvRegisters.CurrentRow == null) return;
+            if (dataGridViewRegisters.CurrentRow == null)
+                return;
 
-            var reg = (CashRegisterDto)dgvRegisters.CurrentRow.DataBoundItem;
-            _selectedRegisterId = reg.Id;
-            numNumber.Value = reg.Number;
-            txtName.Text = reg.Name;
-            txtDescription.Text = reg.Description ?? string.Empty;
+            var selectedCashRegister = (CashRegisterDto)dataGridViewRegisters.CurrentRow.DataBoundItem;
+            _selectedCashRegisterId = selectedCashRegister.Id;
+            numericUpDownRegisterNumber.Value = selectedCashRegister.Number;
+            textBoxRegisterName.Text = selectedCashRegister.Name;
+            textBoxDescription.Text = selectedCashRegister.Description ?? string.Empty;
 
-            btnSave.Text = "ACTUALIZAR";
-            btnToggle.Enabled = true;
+            buttonSave.Text = "ACTUALIZAR";
+            buttonToggleStatus.Enabled = true;
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedRegisterId = 0;
-            numNumber.Value = 1;
-            txtName.Clear();
-            txtDescription.Clear();
+            _selectedCashRegisterId = 0;
+            numericUpDownRegisterNumber.Value = 1;
+            textBoxRegisterName.Clear();
+            textBoxDescription.Clear();
 
-            btnSave.Text = "GUARDAR";
-            btnToggle.Enabled = false;
-            txtName.Focus();
+            buttonSave.Text = "GUARDAR";
+            buttonToggleStatus.Enabled = false;
+            textBoxRegisterName.Focus();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveCashRegister.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction()
+        private async Task ExecuteSaveCashRegisterAsync()
         {
-            var dto = new CashRegisterDto
+            var cashRegister = new CashRegisterDto
             {
-                Id = _selectedRegisterId,
-                Number = (int)numNumber.Value,
-                Name = txtName.Text.Trim(),
-                Description = txtDescription.Text.Trim(),
+                Id = _selectedCashRegisterId,
+                Number = (int)numericUpDownRegisterNumber.Value,
+                Name = textBoxRegisterName.Text.Trim(),
+                Description = textBoxDescription.Text.Trim(),
                 IsActive = true
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _registerService.UpsertCashRegisterAsync(dto);
-                UIHelper.ShowResult(result, "Gestión de Cajas", async () =>
+                var operationResult = await _registerService.UpsertCashRegisterAsync(cashRegister);
+                UIHelper.ShowResult(operationResult, "Gestión de Cajas", async () =>
                 {
-                    ResetUI();
-                    await RefreshGridAsync();
+                    ResetFormInputFields();
+                    await RefreshCashRegistersGridAsync();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de ToggleCashRegisterStatus.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteToggleAction()
+        private async Task ExecuteToggleCashRegisterStatusAsync()
         {
-            if (_selectedRegisterId == 0) return;
+            if (_selectedCashRegisterId == 0) 
+                return;
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _registerService.ToggleRegisterStatusAsync(_selectedRegisterId);
-                UIHelper.ShowResult(result, "Cajas", async () =>
+                var operationResult = await _registerService.ToggleRegisterStatusAsync(_selectedCashRegisterId);
+                UIHelper.ShowResult(operationResult, "Cajas", async () =>
                 {
-                    ResetUI();
-                    await RefreshGridAsync();
+                    ResetFormInputFields();
+                    await RefreshCashRegistersGridAsync();
                 });
             }
         }

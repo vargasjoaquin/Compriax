@@ -13,10 +13,10 @@ namespace CompriaxSystem.WinFormsUI
             _reportService = reportService;
             InitializeComponent();
 
-            this.Load += async (s, e) => await RefreshDashboardAsync();
+            this.Load += async (s, e) => await RefreshDashboardMetricsAndTablesAsync();
         }
 
-        public async Task RefreshDashboardAsync()
+        public async Task RefreshDashboardMetricsAndTablesAsync()
         {
             if (!await _dashboardLock.WaitAsync(0))
                 return;
@@ -25,25 +25,25 @@ namespace CompriaxSystem.WinFormsUI
             {
                 try
                 {
-                    var stats = await _reportService.GetDashboardStatsAsync();
+                    var dashboardStats = await _reportService.GetDashboardStatsAsync();
 
-                    lblSalesAmount.Text = stats.TotalSalesToday.ToString("C2");
-                    lblWeeklyAmount.Text = stats.TotalSalesWeek.ToString("C2");
-                    lblSalesCount.Text = stats.SalesCountToday.ToString("N0");
-                    lblLowStockCount.Text = stats.ProductsLowStockCount.ToString("N0");
+                    labelSalesAmountToday.Text = dashboardStats.TotalSalesToday.ToString("C2");
+                    labelWeeklyAmount.Text = dashboardStats.TotalSalesWeek.ToString("C2");
+                    labelSalesCountToday.Text = dashboardStats.SalesCountToday.ToString("N0");
+                    labelLowStockCount.Text = dashboardStats.ProductsLowStockCount.ToString("N0");
 
-                    cardStockAlert.BackColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.DangerLight : UIThemeHelper.Surface;
-                    lblLowStockCount.ForeColor = stats.ProductsLowStockCount > 0 ? UIThemeHelper.Danger : UIThemeHelper.TextMain;
+                    panelCardStockAlert.BackColor = dashboardStats.ProductsLowStockCount > 0 ? UIThemeHelper.DangerLight : UIThemeHelper.Surface;
+                    labelLowStockCount.ForeColor = dashboardStats.ProductsLowStockCount > 0 ? UIThemeHelper.Danger : UIThemeHelper.TextMain;
 
-                    dgvTopProducts.DataSource = null;
-                    dgvTopProducts.AutoGenerateColumns = true;
-                    dgvTopProducts.DataSource = stats.TopSellingProducts.ToList();
-                    UIHelper.FormatGrid(dgvTopProducts);
+                    dataGridViewTopProducts.DataSource = null;
+                    dataGridViewTopProducts.AutoGenerateColumns = true;
+                    dataGridViewTopProducts.DataSource = dashboardStats.TopSellingProducts.ToList();
+                    UIHelper.FormatGrid(dataGridViewTopProducts);
 
-                    dgvCriticalStock.DataSource = null;
-                    dgvCriticalStock.AutoGenerateColumns = true;
-                    dgvCriticalStock.DataSource = stats.CriticalStockList.ToList();
-                    UIHelper.FormatGrid(dgvCriticalStock);
+                    dataGridViewCriticalStock.DataSource = null;
+                    dataGridViewCriticalStock.AutoGenerateColumns = true;
+                    dataGridViewCriticalStock.DataSource = dashboardStats.CriticalStockList.ToList();
+                    UIHelper.FormatGrid(dataGridViewCriticalStock);
                 }
                 catch (Exception ex)
                 {

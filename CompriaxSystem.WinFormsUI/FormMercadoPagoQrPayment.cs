@@ -31,20 +31,20 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlCard);
+            UIThemeHelper.ApplyCardStyle(panelPaymentCard);
 
-            this.Load += async (s, e) => await InitializePaymentViewAsync();
-            this.btnCancel.Click += async (s, e) => await CancelPaymentAsync();
-            this.FormClosing += (s, e) => StopPolling();
+            this.Load += async (s, e) => await InitializeMercadoPagoPaymentViewAsync();
+            this.buttonCancelPayment.Click += async (s, e) => await CancelMercadoPagoPaymentOrderAsync();
+            this.FormClosing += (s, e) => StopPaymentStatusPollingTimer();
         }
 
-        private async Task InitializePaymentViewAsync()
+        private async Task InitializeMercadoPagoPaymentViewAsync()
         {
-            lblAmount.Text = _totalAmount.ToString("C2");
-            lblStatus.Text = "Esperando que el cliente escanee y pague...";
-            lblStatus.ForeColor = UIThemeHelper.Primary;
+            labelAmountToPay.Text = _totalAmount.ToString("C2");
+            labelPaymentStatus.Text = "Esperando que el cliente escanee y pague...";
+            labelPaymentStatus.ForeColor = UIThemeHelper.Primary;
 
-            RenderQrCodeImage(_qrData);
+            RenderMercadoPagoQrCodeImage(_qrData);
 
             _pollingTimer = new System.Windows.Forms.Timer
             {
@@ -52,38 +52,38 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             _pollingTimer.Tick += async (s, e) =>
-                await CheckPaymentStatusAsync();
+                await CheckMercadoPagoPaymentStatusAsync();
 
             _pollingTimer.Start();
 
             await Task.CompletedTask;
         }
 
-        private void RenderQrCodeImage(string qrData)
+        private void RenderMercadoPagoQrCodeImage(string qrData)
         {
             try
             {
-                var barcodeWriter = new ZXing.Windows.Compatibility.BarcodeWriter
+                var qrBarcodeWriter = new ZXing.Windows.Compatibility.BarcodeWriter
                 {
                     Format = ZXing.BarcodeFormat.QR_CODE,
                     Options = new ZXing.Common.EncodingOptions
                     {
-                        Height = picQr.Height,
-                        Width = picQr.Width,
+                        Height = pictureBoxQrCode.Height,
+                        Width = pictureBoxQrCode.Width,
                         Margin = 1
                     }
                 };
 
-                picQr.Image?.Dispose();
-                picQr.Image = barcodeWriter.Write(qrData);
+                pictureBoxQrCode.Image?.Dispose();
+                pictureBoxQrCode.Image = qrBarcodeWriter.Write(qrData);
             }
             catch
             {
-                lblStatus.Text =  "Código QR disponible (Escanee el enlace generado).";
+                labelPaymentStatus.Text =  "Código QR disponible (Escanee el enlace generado).";
             }
         }
 
-        private async Task CheckPaymentStatusAsync()
+        private async Task CheckMercadoPagoPaymentStatusAsync()
         {
             if (_isCheckingStatus || IsPaymentApproved)
                 return;
@@ -108,15 +108,15 @@ namespace CompriaxSystem.WinFormsUI
 
                         if (paymentStatus.Equals("Approved", StringComparison.OrdinalIgnoreCase))
                         {
-                            StopPolling();
+                            StopPaymentStatusPollingTimer();
 
                             IsPaymentApproved = true;
 
                             SystemSounds.Asterisk.Play();
 
-                            lblStatus.Text = "¡PAGO APROBADO EXITOSAMENTE!";
+                            labelPaymentStatus.Text = "¡PAGO APROBADO EXITOSAMENTE!";
 
-                            lblStatus.ForeColor =
+                            labelPaymentStatus.ForeColor =
                                 UIThemeHelper.Success;
 
                             await Task.Delay(1000);
@@ -126,11 +126,11 @@ namespace CompriaxSystem.WinFormsUI
                         }
                         else if (paymentStatus.Equals("Rejected", StringComparison.OrdinalIgnoreCase) || paymentStatus.Equals("Cancelled", StringComparison.OrdinalIgnoreCase))
                         {
-                            StopPolling();
+                            StopPaymentStatusPollingTimer();
 
-                            lblStatus.Text = "El pago fue rechazado o cancelado por el cliente.";
+                            labelPaymentStatus.Text = "El pago fue rechazado o cancelado por el cliente.";
 
-                            lblStatus.ForeColor = UIThemeHelper.Danger;
+                            labelPaymentStatus.ForeColor = UIThemeHelper.Danger;
 
                             UIHelper.WarnMessage(this, "El pago no pudo ser completado.", "Pago No Aprobado");
 
@@ -151,9 +151,9 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private async Task CancelPaymentAsync()
+        private async Task CancelMercadoPagoPaymentOrderAsync()
         {
-            StopPolling();
+            StopPaymentStatusPollingTimer();
 
             try
             {
@@ -169,7 +169,7 @@ namespace CompriaxSystem.WinFormsUI
             this.Close();
         }
 
-        private void StopPolling()
+        private void StopPaymentStatusPollingTimer()
         {
             if (_pollingTimer != null)
             {

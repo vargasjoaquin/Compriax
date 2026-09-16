@@ -17,128 +17,128 @@
 
         private void InitializeComponent()
         {
-            pnlTopStatus = new Panel();
-            lblPosTitle = new Label();
-            lblCashierBadge = new Label();
-            lblShiftBadge = new Label();
-            pnlLeftWork = new Panel();
-            dgvCart = new DataGridView();
-            pnlBarcodeBar = new Panel();
+            panelTopStatusBar = new Panel();
+            labelPosTitle = new Label();
+            labelCashierBadge = new Label();
+            labelShiftBadge = new Label();
+            panelLeftWork = new Panel();
+            dataGridViewCart = new DataGridView();
+            panelBarcodeBar = new Panel();
             quickSearchBox = new CompriaxSystem.WinFormsUI.Controls.QuickSearchProductBox();
-            numQuantity = new NumericUpDown();
-            btnRemove = new Button();
-            pnlShortcutsFooter = new Panel();
-            lblShortcuts = new Label();
-            pnlRightSummary = new Panel();
-            pnlVoucherCard = new Panel();
-            lblVoucherHeader = new Label();
-            lblVoucherLetter = new Label();
-            cboDocType = new ComboBox();
-            lblVoucherNumber = new Label();
-            lblClientNameVal = new Label();
-            lblClientDocVal = new Label();
-            lblClientTaxVal = new Label();
-            btnSelectCustomer = new Button();
-            lblSubTotal = new Label();
-            lblDiscount = new Label();
-            lblTotalTitle = new Label();
-            lblTotalDisplay = new Label();
-            btnRegister = new Button();
-            picWebcam = new PictureBox();
-            btnToggleCam = new Button();
-            pnlTopStatus.SuspendLayout();
-            pnlLeftWork.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
-            pnlBarcodeBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
-            pnlShortcutsFooter.SuspendLayout();
-            pnlRightSummary.SuspendLayout();
-            pnlVoucherCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picWebcam).BeginInit();
+            numericUpDownQuantity = new NumericUpDown();
+            buttonRemoveItem = new Button();
+            panelShortcutsFooter = new Panel();
+            labelShortcutsGuide = new Label();
+            panelRightSummary = new Panel();
+            panelVoucherCard = new Panel();
+            labelVoucherHeader = new Label();
+            labelVoucherLetter = new Label();
+            comboBoxDocumentType = new ComboBox();
+            labelVoucherNumber = new Label();
+            labelClientNameValue = new Label();
+            labelClientDocValue = new Label();
+            labelClientTaxValue = new Label();
+            buttonSelectCustomer = new Button();
+            labelSubTotalValue = new Label();
+            labelDiscountValue = new Label();
+            labelTotalTitle = new Label();
+            labelTotalDisplay = new Label();
+            buttonRegisterSale = new Button();
+            pictureBoxWebcamPreview = new PictureBox();
+            buttonToggleScannerCamera = new Button();
+            panelTopStatusBar.SuspendLayout();
+            panelLeftWork.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewCart).BeginInit();
+            panelBarcodeBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).BeginInit();
+            panelShortcutsFooter.SuspendLayout();
+            panelRightSummary.SuspendLayout();
+            panelVoucherCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).BeginInit();
             SuspendLayout();
             // 
-            // pnlTopStatus
+            // panelTopStatusBar
             // 
-            pnlTopStatus.BackColor = Color.FromArgb(15, 23, 42);
-            pnlTopStatus.Controls.Add(lblPosTitle);
-            pnlTopStatus.Controls.Add(lblCashierBadge);
-            pnlTopStatus.Controls.Add(lblShiftBadge);
-            pnlTopStatus.Dock = DockStyle.Top;
-            pnlTopStatus.Location = new Point(0, 0);
-            pnlTopStatus.Name = "pnlTopStatus";
-            pnlTopStatus.Size = new Size(1409, 58);
-            pnlTopStatus.TabIndex = 0;
+            panelTopStatusBar.BackColor = Color.FromArgb(15, 23, 42);
+            panelTopStatusBar.Controls.Add(labelPosTitle);
+            panelTopStatusBar.Controls.Add(labelCashierBadge);
+            panelTopStatusBar.Controls.Add(labelShiftBadge);
+            panelTopStatusBar.Dock = DockStyle.Top;
+            panelTopStatusBar.Location = new Point(0, 0);
+            panelTopStatusBar.Name = "panelTopStatusBar";
+            panelTopStatusBar.Size = new Size(1409, 58);
+            panelTopStatusBar.TabIndex = 0;
             // 
-            // lblPosTitle
+            // labelPosTitle
             // 
-            lblPosTitle.AutoSize = true;
-            lblPosTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblPosTitle.ForeColor = Color.White;
-            lblPosTitle.Location = new Point(16, 14);
-            lblPosTitle.Name = "lblPosTitle";
-            lblPosTitle.Size = new Size(310, 30);
-            lblPosTitle.TabIndex = 0;
-            lblPosTitle.Text = "TERMINAL DE VENTAS";
+            labelPosTitle.AutoSize = true;
+            labelPosTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelPosTitle.ForeColor = Color.White;
+            labelPosTitle.Location = new Point(16, 14);
+            labelPosTitle.Name = "labelPosTitle";
+            labelPosTitle.Size = new Size(310, 30);
+            labelPosTitle.TabIndex = 0;
+            labelPosTitle.Text = "TERMINAL DE VENTAS";
             // 
-            // lblCashierBadge
+            // labelCashierBadge
             // 
-            lblCashierBadge.AutoSize = true;
-            lblCashierBadge.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCashierBadge.ForeColor = Color.FromArgb(226, 232, 240);
-            lblCashierBadge.Location = new Point(360, 18);
-            lblCashierBadge.Name = "lblCashierBadge";
-            lblCashierBadge.Size = new Size(79, 21);
-            lblCashierBadge.TabIndex = 1;
-            lblCashierBadge.Text = "Cajero: --";
+            labelCashierBadge.AutoSize = true;
+            labelCashierBadge.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCashierBadge.ForeColor = Color.FromArgb(226, 232, 240);
+            labelCashierBadge.Location = new Point(360, 18);
+            labelCashierBadge.Name = "labelCashierBadge";
+            labelCashierBadge.Size = new Size(79, 21);
+            labelCashierBadge.TabIndex = 1;
+            labelCashierBadge.Text = "Cajero: --";
             // 
-            // lblShiftBadge
+            // labelShiftBadge
             // 
-            lblShiftBadge.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            lblShiftBadge.AutoSize = true;
-            lblShiftBadge.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblShiftBadge.ForeColor = Color.FromArgb(16, 185, 129);
-            lblShiftBadge.Location = new Point(1171, 18);
-            lblShiftBadge.Name = "lblShiftBadge";
-            lblShiftBadge.Size = new Size(197, 21);
-            lblShiftBadge.TabIndex = 2;
-            lblShiftBadge.Text = "TURNO DE CAJA ACTIVO";
+            labelShiftBadge.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            labelShiftBadge.AutoSize = true;
+            labelShiftBadge.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelShiftBadge.ForeColor = Color.FromArgb(16, 185, 129);
+            labelShiftBadge.Location = new Point(1171, 18);
+            labelShiftBadge.Name = "labelShiftBadge";
+            labelShiftBadge.Size = new Size(197, 21);
+            labelShiftBadge.TabIndex = 2;
+            labelShiftBadge.Text = "TURNO DE CAJA ACTIVO";
             // 
-            // pnlLeftWork
+            // panelLeftWork
             // 
-            pnlLeftWork.BackColor = Color.FromArgb(248, 250, 252);
-            pnlLeftWork.Controls.Add(dgvCart);
-            pnlLeftWork.Controls.Add(pnlBarcodeBar);
-            pnlLeftWork.Controls.Add(pnlShortcutsFooter);
-            pnlLeftWork.Dock = DockStyle.Fill;
-            pnlLeftWork.Location = new Point(0, 58);
-            pnlLeftWork.Name = "pnlLeftWork";
-            pnlLeftWork.Padding = new Padding(16, 12, 8, 12);
-            pnlLeftWork.Size = new Size(1029, 696);
-            pnlLeftWork.TabIndex = 1;
+            panelLeftWork.BackColor = Color.FromArgb(248, 250, 252);
+            panelLeftWork.Controls.Add(dataGridViewCart);
+            panelLeftWork.Controls.Add(panelBarcodeBar);
+            panelLeftWork.Controls.Add(panelShortcutsFooter);
+            panelLeftWork.Dock = DockStyle.Fill;
+            panelLeftWork.Location = new Point(0, 58);
+            panelLeftWork.Name = "panelLeftWork";
+            panelLeftWork.Padding = new Padding(16, 12, 8, 12);
+            panelLeftWork.Size = new Size(1029, 696);
+            panelLeftWork.TabIndex = 1;
             // 
-            // dgvCart
+            // dataGridViewCart
             // 
-            dgvCart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvCart.BackgroundColor = Color.White;
-            dgvCart.BorderStyle = BorderStyle.None;
-            dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCart.Location = new Point(16, 90);
-            dgvCart.Name = "dgvCart";
-            dgvCart.RowHeadersWidth = 51;
-            dgvCart.Size = new Size(1005, 548);
-            dgvCart.TabIndex = 1;
+            dataGridViewCart.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewCart.BackgroundColor = Color.White;
+            dataGridViewCart.BorderStyle = BorderStyle.None;
+            dataGridViewCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCart.Location = new Point(16, 90);
+            dataGridViewCart.Name = "dataGridViewCart";
+            dataGridViewCart.RowHeadersWidth = 51;
+            dataGridViewCart.Size = new Size(1005, 548);
+            dataGridViewCart.TabIndex = 1;
             // 
-            // pnlBarcodeBar
+            // panelBarcodeBar
             // 
-            pnlBarcodeBar.BackColor = Color.White;
-            pnlBarcodeBar.Controls.Add(quickSearchBox);
-            pnlBarcodeBar.Controls.Add(numQuantity);
-            pnlBarcodeBar.Controls.Add(btnRemove);
-            pnlBarcodeBar.Dock = DockStyle.Top;
-            pnlBarcodeBar.Location = new Point(16, 12);
-            pnlBarcodeBar.Name = "pnlBarcodeBar";
-            pnlBarcodeBar.Size = new Size(1005, 72);
-            pnlBarcodeBar.TabIndex = 0;
+            panelBarcodeBar.BackColor = Color.White;
+            panelBarcodeBar.Controls.Add(quickSearchBox);
+            panelBarcodeBar.Controls.Add(numericUpDownQuantity);
+            panelBarcodeBar.Controls.Add(buttonRemoveItem);
+            panelBarcodeBar.Dock = DockStyle.Top;
+            panelBarcodeBar.Location = new Point(16, 12);
+            panelBarcodeBar.Name = "panelBarcodeBar";
+            panelBarcodeBar.Size = new Size(1005, 72);
+            panelBarcodeBar.TabIndex = 0;
             // 
             // quickSearchBox
             // 
@@ -152,254 +152,254 @@
             quickSearchBox.Size = new Size(735, 53);
             quickSearchBox.TabIndex = 0;
             // 
-            // numQuantity
+            // numericUpDownQuantity
             // 
-            numQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            numQuantity.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            numQuantity.Location = new Point(757, 18);
-            numQuantity.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
-            numQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numQuantity.Name = "numQuantity";
-            numQuantity.Size = new Size(85, 34);
-            numQuantity.TabIndex = 1;
-            numQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            numericUpDownQuantity.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            numericUpDownQuantity.Location = new Point(757, 18);
+            numericUpDownQuantity.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
+            numericUpDownQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownQuantity.Name = "numericUpDownQuantity";
+            numericUpDownQuantity.Size = new Size(85, 34);
+            numericUpDownQuantity.TabIndex = 1;
+            numericUpDownQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // btnRemove
+            // buttonRemoveItem
             // 
-            btnRemove.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnRemove.BackColor = Color.FromArgb(239, 68, 68);
-            btnRemove.FlatAppearance.BorderSize = 0;
-            btnRemove.FlatStyle = FlatStyle.Flat;
-            btnRemove.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnRemove.ForeColor = Color.White;
-            btnRemove.Location = new Point(848, 14);
-            btnRemove.Name = "btnRemove";
-            btnRemove.Size = new Size(148, 47);
-            btnRemove.TabIndex = 2;
-            btnRemove.Text = "QUITAR [SUPR]";
-            btnRemove.UseVisualStyleBackColor = false;
+            buttonRemoveItem.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonRemoveItem.BackColor = Color.FromArgb(239, 68, 68);
+            buttonRemoveItem.FlatAppearance.BorderSize = 0;
+            buttonRemoveItem.FlatStyle = FlatStyle.Flat;
+            buttonRemoveItem.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonRemoveItem.ForeColor = Color.White;
+            buttonRemoveItem.Location = new Point(848, 14);
+            buttonRemoveItem.Name = "buttonRemoveItem";
+            buttonRemoveItem.Size = new Size(148, 47);
+            buttonRemoveItem.TabIndex = 2;
+            buttonRemoveItem.Text = "QUITAR [SUPR]";
+            buttonRemoveItem.UseVisualStyleBackColor = false;
             // 
-            // pnlShortcutsFooter
+            // panelShortcutsFooter
             // 
-            pnlShortcutsFooter.Controls.Add(lblShortcuts);
-            pnlShortcutsFooter.Dock = DockStyle.Bottom;
-            pnlShortcutsFooter.Location = new Point(16, 648);
-            pnlShortcutsFooter.Name = "pnlShortcutsFooter";
-            pnlShortcutsFooter.Size = new Size(1005, 36);
-            pnlShortcutsFooter.TabIndex = 2;
+            panelShortcutsFooter.Controls.Add(labelShortcutsGuide);
+            panelShortcutsFooter.Dock = DockStyle.Bottom;
+            panelShortcutsFooter.Location = new Point(16, 648);
+            panelShortcutsFooter.Name = "panelShortcutsFooter";
+            panelShortcutsFooter.Size = new Size(1005, 36);
+            panelShortcutsFooter.TabIndex = 2;
             // 
-            // lblShortcuts
+            // labelShortcutsGuide
             // 
-            lblShortcuts.Dock = DockStyle.Fill;
-            lblShortcuts.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblShortcuts.ForeColor = Color.FromArgb(100, 116, 139);
-            lblShortcuts.Location = new Point(0, 0);
-            lblShortcuts.Name = "lblShortcuts";
-            lblShortcuts.Size = new Size(1005, 36);
-            lblShortcuts.TabIndex = 0;
-            lblShortcuts.Text = "ATAJOS: [F2] Buscar | [F3] Cliente | [F4] Cantidad | [F6] Ver Precio | [F8] Cobrar | [SUPR] Quitar | [ESC] Cancelar";
-            lblShortcuts.TextAlign = ContentAlignment.MiddleLeft;
+            labelShortcutsGuide.Dock = DockStyle.Fill;
+            labelShortcutsGuide.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelShortcutsGuide.ForeColor = Color.FromArgb(100, 116, 139);
+            labelShortcutsGuide.Location = new Point(0, 0);
+            labelShortcutsGuide.Name = "labelShortcutsGuide";
+            labelShortcutsGuide.Size = new Size(1005, 36);
+            labelShortcutsGuide.TabIndex = 0;
+            labelShortcutsGuide.Text = "ATAJOS: [F2] Buscar | [F3] Cliente | [F4] Cantidad | [F6] Ver Precio | [F8] Cobrar | [SUPR] Quitar | [ESC] Cancelar";
+            labelShortcutsGuide.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // pnlRightSummary
+            // panelRightSummary
             // 
-            pnlRightSummary.BackColor = Color.White;
-            pnlRightSummary.Controls.Add(pnlVoucherCard);
-            pnlRightSummary.Controls.Add(lblSubTotal);
-            pnlRightSummary.Controls.Add(lblDiscount);
-            pnlRightSummary.Controls.Add(lblTotalTitle);
-            pnlRightSummary.Controls.Add(lblTotalDisplay);
-            pnlRightSummary.Controls.Add(btnRegister);
-            pnlRightSummary.Controls.Add(picWebcam);
-            pnlRightSummary.Controls.Add(btnToggleCam);
-            pnlRightSummary.Dock = DockStyle.Right;
-            pnlRightSummary.Location = new Point(1029, 58);
-            pnlRightSummary.Name = "pnlRightSummary";
-            pnlRightSummary.Padding = new Padding(16);
-            pnlRightSummary.Size = new Size(380, 696);
-            pnlRightSummary.TabIndex = 2;
+            panelRightSummary.BackColor = Color.White;
+            panelRightSummary.Controls.Add(panelVoucherCard);
+            panelRightSummary.Controls.Add(labelSubTotalValue);
+            panelRightSummary.Controls.Add(labelDiscountValue);
+            panelRightSummary.Controls.Add(labelTotalTitle);
+            panelRightSummary.Controls.Add(labelTotalDisplay);
+            panelRightSummary.Controls.Add(buttonRegisterSale);
+            panelRightSummary.Controls.Add(pictureBoxWebcamPreview);
+            panelRightSummary.Controls.Add(buttonToggleScannerCamera);
+            panelRightSummary.Dock = DockStyle.Right;
+            panelRightSummary.Location = new Point(1029, 58);
+            panelRightSummary.Name = "panelRightSummary";
+            panelRightSummary.Padding = new Padding(16);
+            panelRightSummary.Size = new Size(380, 696);
+            panelRightSummary.TabIndex = 2;
             // 
-            // pnlVoucherCard
+            // panelVoucherCard
             // 
-            pnlVoucherCard.BackColor = Color.FromArgb(248, 250, 252);
-            pnlVoucherCard.Controls.Add(lblVoucherHeader);
-            pnlVoucherCard.Controls.Add(lblVoucherLetter);
-            pnlVoucherCard.Controls.Add(cboDocType);
-            pnlVoucherCard.Controls.Add(lblVoucherNumber);
-            pnlVoucherCard.Controls.Add(lblClientNameVal);
-            pnlVoucherCard.Controls.Add(lblClientDocVal);
-            pnlVoucherCard.Controls.Add(lblClientTaxVal);
-            pnlVoucherCard.Controls.Add(btnSelectCustomer);
-            pnlVoucherCard.Location = new Point(16, 12);
-            pnlVoucherCard.Name = "pnlVoucherCard";
-            pnlVoucherCard.Padding = new Padding(10);
-            pnlVoucherCard.Size = new Size(348, 198);
-            pnlVoucherCard.TabIndex = 0;
+            panelVoucherCard.BackColor = Color.FromArgb(248, 250, 252);
+            panelVoucherCard.Controls.Add(labelVoucherHeader);
+            panelVoucherCard.Controls.Add(labelVoucherLetter);
+            panelVoucherCard.Controls.Add(comboBoxDocumentType);
+            panelVoucherCard.Controls.Add(labelVoucherNumber);
+            panelVoucherCard.Controls.Add(labelClientNameValue);
+            panelVoucherCard.Controls.Add(labelClientDocValue);
+            panelVoucherCard.Controls.Add(labelClientTaxValue);
+            panelVoucherCard.Controls.Add(buttonSelectCustomer);
+            panelVoucherCard.Location = new Point(16, 12);
+            panelVoucherCard.Name = "panelVoucherCard";
+            panelVoucherCard.Padding = new Padding(10);
+            panelVoucherCard.Size = new Size(348, 198);
+            panelVoucherCard.TabIndex = 0;
             // 
-            // lblVoucherHeader
+            // labelVoucherHeader
             // 
-            lblVoucherHeader.AutoSize = true;
-            lblVoucherHeader.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblVoucherHeader.ForeColor = Color.FromArgb(15, 23, 42);
-            lblVoucherHeader.Location = new Point(10, 8);
-            lblVoucherHeader.Name = "lblVoucherHeader";
-            lblVoucherHeader.Size = new Size(219, 21);
-            lblVoucherHeader.TabIndex = 0;
-            lblVoucherHeader.Text = "DATOS DEL COMPROBANTE";
+            labelVoucherHeader.AutoSize = true;
+            labelVoucherHeader.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelVoucherHeader.ForeColor = Color.FromArgb(15, 23, 42);
+            labelVoucherHeader.Location = new Point(10, 8);
+            labelVoucherHeader.Name = "labelVoucherHeader";
+            labelVoucherHeader.Size = new Size(219, 21);
+            labelVoucherHeader.TabIndex = 0;
+            labelVoucherHeader.Text = "DATOS DEL COMPROBANTE";
             // 
-            // lblVoucherLetter
+            // labelVoucherLetter
             // 
-            lblVoucherLetter.BackColor = Color.FromArgb(15, 23, 42);
-            lblVoucherLetter.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
-            lblVoucherLetter.ForeColor = Color.White;
-            lblVoucherLetter.Location = new Point(10, 34);
-            lblVoucherLetter.Name = "lblVoucherLetter";
-            lblVoucherLetter.Size = new Size(42, 40);
-            lblVoucherLetter.TabIndex = 1;
-            lblVoucherLetter.Text = "B";
-            lblVoucherLetter.TextAlign = ContentAlignment.MiddleCenter;
+            labelVoucherLetter.BackColor = Color.FromArgb(15, 23, 42);
+            labelVoucherLetter.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
+            labelVoucherLetter.ForeColor = Color.White;
+            labelVoucherLetter.Location = new Point(10, 34);
+            labelVoucherLetter.Name = "labelVoucherLetter";
+            labelVoucherLetter.Size = new Size(42, 40);
+            labelVoucherLetter.TabIndex = 1;
+            labelVoucherLetter.Text = "B";
+            labelVoucherLetter.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // cboDocType
+            // comboBoxDocumentType
             // 
-            cboDocType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboDocType.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            cboDocType.Location = new Point(58, 38);
-            cboDocType.Name = "cboDocType";
-            cboDocType.Size = new Size(280, 31);
-            cboDocType.TabIndex = 2;
+            comboBoxDocumentType.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxDocumentType.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            comboBoxDocumentType.Location = new Point(58, 38);
+            comboBoxDocumentType.Name = "comboBoxDocumentType";
+            comboBoxDocumentType.Size = new Size(280, 31);
+            comboBoxDocumentType.TabIndex = 2;
             // 
-            // lblVoucherNumber
+            // labelVoucherNumber
             // 
-            lblVoucherNumber.AutoSize = true;
-            lblVoucherNumber.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblVoucherNumber.ForeColor = Color.FromArgb(2, 132, 199);
-            lblVoucherNumber.Location = new Point(10, 78);
-            lblVoucherNumber.Name = "lblVoucherNumber";
-            lblVoucherNumber.Size = new Size(192, 20);
-            lblVoucherNumber.TabIndex = 3;
-            lblVoucherNumber.Text = "P.V.: 0001 - N.°: 00000001";
+            labelVoucherNumber.AutoSize = true;
+            labelVoucherNumber.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelVoucherNumber.ForeColor = Color.FromArgb(2, 132, 199);
+            labelVoucherNumber.Location = new Point(10, 78);
+            labelVoucherNumber.Name = "labelVoucherNumber";
+            labelVoucherNumber.Size = new Size(192, 20);
+            labelVoucherNumber.TabIndex = 3;
+            labelVoucherNumber.Text = "P.V.: 0001 - N.°: 00000001";
             // 
-            // lblClientNameVal
+            // labelClientNameValue
             // 
-            lblClientNameVal.AutoEllipsis = true;
-            lblClientNameVal.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblClientNameVal.ForeColor = Color.FromArgb(15, 23, 42);
-            lblClientNameVal.Location = new Point(10, 111);
-            lblClientNameVal.Name = "lblClientNameVal";
-            lblClientNameVal.Size = new Size(230, 20);
-            lblClientNameVal.TabIndex = 4;
-            lblClientNameVal.Text = "CONSUMIDOR FINAL";
+            labelClientNameValue.AutoEllipsis = true;
+            labelClientNameValue.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelClientNameValue.ForeColor = Color.FromArgb(15, 23, 42);
+            labelClientNameValue.Location = new Point(10, 111);
+            labelClientNameValue.Name = "labelClientNameValue";
+            labelClientNameValue.Size = new Size(230, 20);
+            labelClientNameValue.TabIndex = 4;
+            labelClientNameValue.Text = "CONSUMIDOR FINAL";
             // 
-            // lblClientDocVal
+            // labelClientDocValue
             // 
-            lblClientDocVal.AutoEllipsis = true;
-            lblClientDocVal.Font = new Font("Segoe UI", 8.5F);
-            lblClientDocVal.ForeColor = Color.FromArgb(100, 116, 139);
-            lblClientDocVal.Location = new Point(10, 133);
-            lblClientDocVal.Name = "lblClientDocVal";
-            lblClientDocVal.Size = new Size(230, 18);
-            lblClientDocVal.TabIndex = 5;
-            lblClientDocVal.Text = "DOC: S/D";
+            labelClientDocValue.AutoEllipsis = true;
+            labelClientDocValue.Font = new Font("Segoe UI", 8.5F);
+            labelClientDocValue.ForeColor = Color.FromArgb(100, 116, 139);
+            labelClientDocValue.Location = new Point(10, 133);
+            labelClientDocValue.Name = "labelClientDocValue";
+            labelClientDocValue.Size = new Size(230, 18);
+            labelClientDocValue.TabIndex = 5;
+            labelClientDocValue.Text = "DOC: S/D";
             // 
-            // lblClientTaxVal
+            // labelClientTaxValue
             // 
-            lblClientTaxVal.AutoEllipsis = true;
-            lblClientTaxVal.Font = new Font("Segoe UI", 8.5F);
-            lblClientTaxVal.ForeColor = Color.FromArgb(100, 116, 139);
-            lblClientTaxVal.Location = new Point(10, 153);
-            lblClientTaxVal.Name = "lblClientTaxVal";
-            lblClientTaxVal.Size = new Size(230, 18);
-            lblClientTaxVal.TabIndex = 6;
-            lblClientTaxVal.Text = "IVA: Consumidor Final";
+            labelClientTaxValue.AutoEllipsis = true;
+            labelClientTaxValue.Font = new Font("Segoe UI", 8.5F);
+            labelClientTaxValue.ForeColor = Color.FromArgb(100, 116, 139);
+            labelClientTaxValue.Location = new Point(10, 153);
+            labelClientTaxValue.Name = "labelClientTaxValue";
+            labelClientTaxValue.Size = new Size(230, 18);
+            labelClientTaxValue.TabIndex = 6;
+            labelClientTaxValue.Text = "IVA: Consumidor Final";
             // 
-            // btnSelectCustomer
+            // buttonSelectCustomer
             // 
-            btnSelectCustomer.FlatStyle = FlatStyle.Flat;
-            btnSelectCustomer.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
-            btnSelectCustomer.Location = new Point(246, 112);
-            btnSelectCustomer.Name = "btnSelectCustomer";
-            btnSelectCustomer.Size = new Size(92, 60);
-            btnSelectCustomer.TabIndex = 7;
-            btnSelectCustomer.Text = "CLIENTE\r\n[F3]";
-            btnSelectCustomer.UseVisualStyleBackColor = true;
+            buttonSelectCustomer.FlatStyle = FlatStyle.Flat;
+            buttonSelectCustomer.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            buttonSelectCustomer.Location = new Point(246, 112);
+            buttonSelectCustomer.Name = "buttonSelectCustomer";
+            buttonSelectCustomer.Size = new Size(92, 60);
+            buttonSelectCustomer.TabIndex = 7;
+            buttonSelectCustomer.Text = "CLIENTE\r\n[F3]";
+            buttonSelectCustomer.UseVisualStyleBackColor = true;
             // 
-            // lblSubTotal
+            // labelSubTotalValue
             // 
-            lblSubTotal.Font = new Font("Segoe UI", 10.5F);
-            lblSubTotal.Location = new Point(16, 222);
-            lblSubTotal.Name = "lblSubTotal";
-            lblSubTotal.Size = new Size(348, 25);
-            lblSubTotal.TabIndex = 1;
-            lblSubTotal.Text = "Subtotal: $ 0,00";
-            lblSubTotal.TextAlign = ContentAlignment.MiddleRight;
+            labelSubTotalValue.Font = new Font("Segoe UI", 10.5F);
+            labelSubTotalValue.Location = new Point(16, 222);
+            labelSubTotalValue.Name = "labelSubTotalValue";
+            labelSubTotalValue.Size = new Size(348, 25);
+            labelSubTotalValue.TabIndex = 1;
+            labelSubTotalValue.Text = "Subtotal: $ 0,00";
+            labelSubTotalValue.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // lblDiscount
+            // labelDiscountValue
             // 
-            lblDiscount.Font = new Font("Segoe UI", 10.5F);
-            lblDiscount.ForeColor = Color.FromArgb(239, 68, 68);
-            lblDiscount.Location = new Point(16, 250);
-            lblDiscount.Name = "lblDiscount";
-            lblDiscount.Size = new Size(348, 25);
-            lblDiscount.TabIndex = 2;
-            lblDiscount.Text = "Descuentos: -$ 0,00";
-            lblDiscount.TextAlign = ContentAlignment.MiddleRight;
+            labelDiscountValue.Font = new Font("Segoe UI", 10.5F);
+            labelDiscountValue.ForeColor = Color.FromArgb(239, 68, 68);
+            labelDiscountValue.Location = new Point(16, 250);
+            labelDiscountValue.Name = "labelDiscountValue";
+            labelDiscountValue.Size = new Size(348, 25);
+            labelDiscountValue.TabIndex = 2;
+            labelDiscountValue.Text = "Descuentos: -$ 0,00";
+            labelDiscountValue.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // lblTotalTitle
+            // labelTotalTitle
             // 
-            lblTotalTitle.AutoSize = true;
-            lblTotalTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblTotalTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblTotalTitle.Location = new Point(16, 290);
-            lblTotalTitle.Name = "lblTotalTitle";
-            lblTotalTitle.Size = new Size(154, 25);
-            lblTotalTitle.TabIndex = 3;
-            lblTotalTitle.Text = "TOTAL A PAGAR";
+            labelTotalTitle.AutoSize = true;
+            labelTotalTitle.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            labelTotalTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelTotalTitle.Location = new Point(16, 290);
+            labelTotalTitle.Name = "labelTotalTitle";
+            labelTotalTitle.Size = new Size(154, 25);
+            labelTotalTitle.TabIndex = 3;
+            labelTotalTitle.Text = "TOTAL A PAGAR";
             // 
-            // lblTotalDisplay
+            // labelTotalDisplay
             // 
-            lblTotalDisplay.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblTotalDisplay.ForeColor = Color.FromArgb(16, 185, 129);
-            lblTotalDisplay.Location = new Point(16, 312);
-            lblTotalDisplay.Name = "lblTotalDisplay";
-            lblTotalDisplay.Size = new Size(348, 55);
-            lblTotalDisplay.TabIndex = 4;
-            lblTotalDisplay.Text = "$ 0,00";
-            lblTotalDisplay.TextAlign = ContentAlignment.MiddleRight;
+            labelTotalDisplay.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            labelTotalDisplay.ForeColor = Color.FromArgb(16, 185, 129);
+            labelTotalDisplay.Location = new Point(16, 312);
+            labelTotalDisplay.Name = "labelTotalDisplay";
+            labelTotalDisplay.Size = new Size(348, 55);
+            labelTotalDisplay.TabIndex = 4;
+            labelTotalDisplay.Text = "$ 0,00";
+            labelTotalDisplay.TextAlign = ContentAlignment.MiddleRight;
             // 
-            // btnRegister
+            // buttonRegisterSale
             // 
-            btnRegister.BackColor = Color.FromArgb(16, 185, 129);
-            btnRegister.FlatAppearance.BorderSize = 0;
-            btnRegister.FlatStyle = FlatStyle.Flat;
-            btnRegister.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnRegister.ForeColor = Color.White;
-            btnRegister.Location = new Point(16, 375);
-            btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(348, 64);
-            btnRegister.TabIndex = 5;
-            btnRegister.Text = "COBRAR (F8)";
-            btnRegister.UseVisualStyleBackColor = false;
+            buttonRegisterSale.BackColor = Color.FromArgb(16, 185, 129);
+            buttonRegisterSale.FlatAppearance.BorderSize = 0;
+            buttonRegisterSale.FlatStyle = FlatStyle.Flat;
+            buttonRegisterSale.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            buttonRegisterSale.ForeColor = Color.White;
+            buttonRegisterSale.Location = new Point(16, 375);
+            buttonRegisterSale.Name = "buttonRegisterSale";
+            buttonRegisterSale.Size = new Size(348, 64);
+            buttonRegisterSale.TabIndex = 5;
+            buttonRegisterSale.Text = "COBRAR (F8)";
+            buttonRegisterSale.UseVisualStyleBackColor = false;
             // 
-            // picWebcam
+            // pictureBoxWebcamPreview
             // 
-            picWebcam.BackColor = Color.Black;
-            picWebcam.BorderStyle = BorderStyle.FixedSingle;
-            picWebcam.Location = new Point(16, 452);
-            picWebcam.Name = "picWebcam";
-            picWebcam.Size = new Size(348, 120);
-            picWebcam.SizeMode = PictureBoxSizeMode.Zoom;
-            picWebcam.TabIndex = 6;
-            picWebcam.TabStop = false;
+            pictureBoxWebcamPreview.BackColor = Color.Black;
+            pictureBoxWebcamPreview.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxWebcamPreview.Location = new Point(16, 452);
+            pictureBoxWebcamPreview.Name = "pictureBoxWebcamPreview";
+            pictureBoxWebcamPreview.Size = new Size(348, 120);
+            pictureBoxWebcamPreview.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxWebcamPreview.TabIndex = 6;
+            pictureBoxWebcamPreview.TabStop = false;
             // 
-            // btnToggleCam
+            // buttonToggleScannerCamera
             // 
-            btnToggleCam.FlatStyle = FlatStyle.Flat;
-            btnToggleCam.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnToggleCam.Location = new Point(16, 580);
-            btnToggleCam.Name = "btnToggleCam";
-            btnToggleCam.Size = new Size(348, 34);
-            btnToggleCam.TabIndex = 7;
-            btnToggleCam.Text = "CÁMARA ESCÁNER";
-            btnToggleCam.UseVisualStyleBackColor = true;
+            buttonToggleScannerCamera.FlatStyle = FlatStyle.Flat;
+            buttonToggleScannerCamera.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonToggleScannerCamera.Location = new Point(16, 580);
+            buttonToggleScannerCamera.Name = "buttonToggleScannerCamera";
+            buttonToggleScannerCamera.Size = new Size(348, 34);
+            buttonToggleScannerCamera.TabIndex = 7;
+            buttonToggleScannerCamera.Text = "CÁMARA ESCÁNER";
+            buttonToggleScannerCamera.UseVisualStyleBackColor = true;
             // 
             // FormSales
             // 
@@ -407,58 +407,58 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1409, 754);
-            Controls.Add(pnlLeftWork);
-            Controls.Add(pnlRightSummary);
-            Controls.Add(pnlTopStatus);
+            Controls.Add(panelLeftWork);
+            Controls.Add(panelRightSummary);
+            Controls.Add(panelTopStatusBar);
             KeyPreview = true;
             Name = "FormSales";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Punto de Venta POS - CompriaxSystem";
-            pnlTopStatus.ResumeLayout(false);
-            pnlTopStatus.PerformLayout();
-            pnlLeftWork.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
-            pnlBarcodeBar.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
-            pnlShortcutsFooter.ResumeLayout(false);
-            pnlRightSummary.ResumeLayout(false);
-            pnlRightSummary.PerformLayout();
-            pnlVoucherCard.ResumeLayout(false);
-            pnlVoucherCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picWebcam).EndInit();
+            panelTopStatusBar.ResumeLayout(false);
+            panelTopStatusBar.PerformLayout();
+            panelLeftWork.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewCart).EndInit();
+            panelBarcodeBar.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
+            panelShortcutsFooter.ResumeLayout(false);
+            panelRightSummary.ResumeLayout(false);
+            panelRightSummary.PerformLayout();
+            panelVoucherCard.ResumeLayout(false);
+            panelVoucherCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlTopStatus;
-        private System.Windows.Forms.Label lblPosTitle;
-        private System.Windows.Forms.Label lblCashierBadge;
-        private System.Windows.Forms.Label lblShiftBadge;
-        private System.Windows.Forms.Panel pnlLeftWork;
-        private System.Windows.Forms.Panel pnlBarcodeBar;
+        private System.Windows.Forms.Panel panelTopStatusBar;
+        private System.Windows.Forms.Label labelPosTitle;
+        private System.Windows.Forms.Label labelCashierBadge;
+        private System.Windows.Forms.Label labelShiftBadge;
+        private System.Windows.Forms.Panel panelLeftWork;
+        private System.Windows.Forms.Panel panelBarcodeBar;
         private Controls.QuickSearchProductBox quickSearchBox;
-        private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.Button btnRemove;
-        private System.Windows.Forms.DataGridView dgvCart;
-        private System.Windows.Forms.Panel pnlShortcutsFooter;
-        private System.Windows.Forms.Label lblShortcuts;
-        private System.Windows.Forms.Panel pnlRightSummary;
-        private System.Windows.Forms.Panel pnlVoucherCard;
-        private System.Windows.Forms.Label lblVoucherHeader;
-        private System.Windows.Forms.Label lblVoucherLetter;
-        private System.Windows.Forms.ComboBox cboDocType;
-        private System.Windows.Forms.Label lblVoucherNumber;
-        private System.Windows.Forms.Label lblClientNameVal;
-        private System.Windows.Forms.Label lblClientDocVal;
-        private System.Windows.Forms.Label lblClientTaxVal;
-        private System.Windows.Forms.Button btnSelectCustomer;
-        private System.Windows.Forms.Label lblSubTotal;
-        private System.Windows.Forms.Label lblDiscount;
-        private System.Windows.Forms.Label lblTotalTitle;
-        private System.Windows.Forms.Label lblTotalDisplay;
-        private System.Windows.Forms.Button btnRegister;
-        private System.Windows.Forms.PictureBox picWebcam;
-        private System.Windows.Forms.Button btnToggleCam;
+        private System.Windows.Forms.NumericUpDown numericUpDownQuantity;
+        private System.Windows.Forms.Button buttonRemoveItem;
+        private System.Windows.Forms.DataGridView dataGridViewCart;
+        private System.Windows.Forms.Panel panelShortcutsFooter;
+        private System.Windows.Forms.Label labelShortcutsGuide;
+        private System.Windows.Forms.Panel panelRightSummary;
+        private System.Windows.Forms.Panel panelVoucherCard;
+        private System.Windows.Forms.Label labelVoucherHeader;
+        private System.Windows.Forms.Label labelVoucherLetter;
+        private System.Windows.Forms.ComboBox comboBoxDocumentType;
+        private System.Windows.Forms.Label labelVoucherNumber;
+        private System.Windows.Forms.Label labelClientNameValue;
+        private System.Windows.Forms.Label labelClientDocValue;
+        private System.Windows.Forms.Label labelClientTaxValue;
+        private System.Windows.Forms.Button buttonSelectCustomer;
+        private System.Windows.Forms.Label labelSubTotalValue;
+        private System.Windows.Forms.Label labelDiscountValue;
+        private System.Windows.Forms.Label labelTotalTitle;
+        private System.Windows.Forms.Label labelTotalDisplay;
+        private System.Windows.Forms.Button buttonRegisterSale;
+        private System.Windows.Forms.PictureBox pictureBoxWebcamPreview;
+        private System.Windows.Forms.Button buttonToggleScannerCamera;
     }
 }

@@ -67,56 +67,60 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlBarcodeBar);
-            UIThemeHelper.ApplyCardStyle(pnlVoucherCard);
-            UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+            UIThemeHelper.ApplyCardStyle(panelBarcodeBar);
+            UIThemeHelper.ApplyCardStyle(panelVoucherCard);
+            UIThemeHelper.ApplyCardStyle(panelRightSummary);
 
             _cameraController = new CameraScannerController(
                 cameraService,
                 barcodeService,
-                picWebcam,
-                btnToggleCam,
-                barcode => _ = ProcessScannedBarcodeAsync(barcode, (int)numQuantity.Value));
+                pictureBoxWebcamPreview,
+                buttonToggleScannerCamera,
+                barcode => _ = ProcessScannedProductBarcodeAsync(barcode, (int)numericUpDownQuantity.Value));
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnRemove.Click += (s, e) => RemoveSelectedItem();
-            this.btnSelectCustomer.Click += async (s, e) => await PromptSelectCustomerAsync();
-            this.btnRegister.Click += async (s, e) => await ExecuteCheckoutAsync();
+            this.Load += async (s, e) => await InitializePointOfSaleFormAsync();
+            this.buttonRemoveItem.Click += (s, e) => RemoveSelectedItemFromSaleCart();
+            this.buttonSelectCustomer.Click += async (s, e) => await PromptSelectCustomerDialogAsync();
+            this.buttonRegisterSale.Click += async (s, e) => await ExecuteSaleCheckoutAndPaymentAsync();
 
             // Sincronización dinámica de comprobante y correlativo
-            this.cboDocType.SelectedIndexChanged += async (s, e) =>
+            this.comboBoxDocumentType.SelectedIndexChanged += async (s, e) =>
             {
                 if (!_isInitializing)
-                    await UpdateVoucherContextAsync();
+                    await UpdateVoucherContextAndSequenceNumberAsync();
             };
 
             // Conexión del buscador rápido predictivo
-            this.quickSearchBox.ProductSelected += async (s, product) =>
+            this.quickSearchBox.ProductSelected += async (s, matchedProduct) =>
             {
-                await ProcessScannedBarcodeAsync(product.Barcode, (int)numQuantity.Value);
+                await ProcessScannedProductBarcodeAsync(matchedProduct.Barcode, (int)numericUpDownQuantity.Value);
             };
 
-            this.KeyDown += async (s, e) => await HandleShortcutsAsync(e);
-            this.dgvCart.CellDoubleClick += (s, e) => RemoveSelectedItem();
+            this.KeyDown += async (s, e) => await HandleKeyboardShortcutsAsync(e);
+            this.dataGridViewCart.CellDoubleClick += (s, e) => RemoveSelectedItemFromSaleCart();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePointOfSaleFormAsync()
         {
             _isInitializing = true;
-            var user = _currentUser.CurrentUser;
-            bool isAdmin = user != null && user.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
+            var currentUser = _currentUser.CurrentUser;
+            bool isAdministratorUser = currentUser != null && currentUser.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
 
             if (!_currentUser.HasRegisterAssigned)
             {
-                if (isAdmin)
+                if (isAdministratorUser)
                 {
-                    var registerService = _serviceProvider.GetRequiredService<ICashRegisterService>();
-                    var allRegisters = await registerService.GetAllRegistersAsync();
-                    var defaultRegister = allRegisters.FirstOrDefault(r => r.IsActive);
+                    var cashRegisterService = _serviceProvider.GetRequiredService<ICashRegisterService>();
+                    var allCashRegistersList = await cashRegisterService.GetAllRegistersAsync();
+                    var firstActiveRegister = allCashRegistersList.FirstOrDefault(r => r.IsActive);
 
-                    if (defaultRegister != null)
+                    if (firstActiveRegister != null)
                     {
-                        _currentUser.SetCashRegister(defaultRegister.Id, defaultRegister.Number, defaultRegister.Name);
+                        _currentUser.SetCashRegister(firstActiveRegister.Id, firstActiveRegister.Number, firstActiveRegister.Name);
                     }
                     else
                     {
@@ -127,9 +131,9 @@ namespace CompriaxSystem.WinFormsUI
                 }
                 else
                 {
-                    var selectForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
+                    var selectCashRegisterDialog = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
 
-                    if (selectForm.ShowDialog(this) != DialogResult.OK)
+                    if (selectCashRegisterDialog.ShowDialog(this) != DialogResult.OK)
                     {
                         this.BeginInvoke(new Action(this.Close));
                         return;
@@ -139,50 +143,50 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                string regName = _currentUser.OperationalContext?.CashRegisterName ?? "Caja";
-                lblCashierBadge.Text = $"Cajero: {user?.FullName} ({regName})";
+                string cashRegisterName = _currentUser.OperationalContext?.CashRegisterName ?? "Caja";
+                labelCashierBadge.Text = $"Cajero: {currentUser?.FullName} ({cashRegisterName})";
 
-                var activeShift = await _cashShiftService.GetCurrentActiveShiftAsync();
-                if (activeShift != null)
+                var currentActiveCashShiftDto = await _cashShiftService.GetCurrentActiveShiftAsync();
+                if (currentActiveCashShiftDto != null)
                 {
-                    DateTime localOpening = activeShift.OpeningDate.Kind == DateTimeKind.Utc
-                        ? activeShift.OpeningDate.ToLocalTime()
-                        : activeShift.OpeningDate;
+                    DateTime localOpeningDateTime = currentActiveCashShiftDto.OpeningDate.Kind == DateTimeKind.Utc
+                        ? currentActiveCashShiftDto.OpeningDate.ToLocalTime()
+                        : currentActiveCashShiftDto.OpeningDate;
 
-                    lblShiftBadge.Text = $"TURNO #{activeShift.Id} ACTIVO ({localOpening:HH:mm})";
-                    lblShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblShiftBadge.ForeColor = UIThemeHelper.Success;
+                    labelShiftBadge.Text = $"TURNO #{currentActiveCashShiftDto.Id} ACTIVO ({localOpeningDateTime:HH:mm})";
+                    labelShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelShiftBadge.ForeColor = UIThemeHelper.Success;
                 }
                 else
                 {
-                    lblShiftBadge.Text = "SIN TURNO DE CAJA";
-                    lblShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblShiftBadge.ForeColor = UIThemeHelper.Danger;
+                    labelShiftBadge.Text = "SIN TURNO DE CAJA";
+                    labelShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelShiftBadge.ForeColor = UIThemeHelper.Danger;
                 }
 
-                var docTypes = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
-                cboDocType.DataSource = docTypes;
-                cboDocType.DisplayMember = "Name";
-                cboDocType.ValueMember = "Id";
+                var availableDocumentTypesList = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
+                comboBoxDocumentType.DataSource = availableDocumentTypesList;
+                comboBoxDocumentType.DisplayMember = "Name";
+                comboBoxDocumentType.ValueMember = "Id";
 
-                if (docTypes.Any())
-                    cboDocType.SelectedIndex = 0;
+                if (availableDocumentTypesList.Any())
+                    comboBoxDocumentType.SelectedIndex = 0;
 
                 _paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
 
                 // Cargar catálogo en memoria para búsqueda predictiva instantánea
-                var catalog = await _productService.GetProductListAsync();
-                quickSearchBox.SetProductsSource(catalog);
+                var activeProductsCatalogList = await _productService.GetProductListAsync();
+                quickSearchBox.SetProductsSource(activeProductsCatalogList);
 
-                DataGridViewHelper.ApplyStyle(dgvCart);
+                DataGridViewHelper.ApplyStyle(dataGridViewCart);
                 _isInitializing = false;
 
-                await UpdateVoucherContextAsync();
-                ResetSaleSession();
+                await UpdateVoucherContextAndSequenceNumberAsync();
+                ResetPointOfSaleSession();
             }
         }
 
-        private async Task HandleShortcutsAsync(KeyEventArgs e)
+        private async Task HandleKeyboardShortcutsAsync(KeyEventArgs e)
         {
             switch (e.KeyCode)
             {
@@ -190,213 +194,217 @@ namespace CompriaxSystem.WinFormsUI
                     quickSearchBox.FocusInput();
                     break;
                 case UIThemeHelper.Shortcuts.SelectCustomer:
-                    await PromptSelectCustomerAsync();
+                    await PromptSelectCustomerDialogAsync();
                     break;
                 case UIThemeHelper.Shortcuts.ChangeQuantity:
-                    numQuantity.Focus();
-                    numQuantity.Select(0, numQuantity.Text.Length);
+                    numericUpDownQuantity.Focus();
+                    numericUpDownQuantity.Select(0, numericUpDownQuantity.Text.Length);
                     break;
                 case UIThemeHelper.Shortcuts.CheckPrice:
-                    var priceCheckForm = _serviceProvider.GetRequiredService<FormPriceCheck>();
-                    priceCheckForm.ShowDialog(this);
+                    var priceCheckDialogForm = _serviceProvider.GetRequiredService<FormPriceCheck>();
+                    priceCheckDialogForm.ShowDialog(this);
                     break;
                 case UIThemeHelper.Shortcuts.Checkout:
-                    await ExecuteCheckoutAsync();
+                    await ExecuteSaleCheckoutAndPaymentAsync();
                     break;
                 case UIThemeHelper.Shortcuts.DeleteItem:
-                    RemoveSelectedItem();
+                    RemoveSelectedItemFromSaleCart();
                     break;
                 case UIThemeHelper.Shortcuts.ClearOrCancel:
-                    ResetInputBar();
+                    ResetProductScannerInputBar();
                     break;
             }
         }
 
-        private async Task UpdateVoucherContextAsync()
+        private async Task UpdateVoucherContextAndSequenceNumberAsync()
         {
-            if (cboDocType.SelectedItem is not DocumentType docType)
+            if (comboBoxDocumentType.SelectedItem is not DocumentType selectedDocumentTypeEntity)
                 return;
 
-            string typeName = docType.Name.ToUpperInvariant();
+            string normalizedDocumentTypeName = selectedDocumentTypeEntity.Name.ToUpperInvariant();
 
-            string letter = VoucherLetterCodes.LETTER_B;
+            string voucherClassificationLetter = VoucherLetterCodes.LETTER_B;
 
-            if (typeName.Contains("FACTURA A") || typeName.Contains("NOTA DE DÉBITO A") || typeName.Contains("NOTA DE CRÉDITO A") || typeName.Contains("RECIBO A") || typeName.Contains("TICKET FACTURA A"))
-                letter = VoucherLetterCodes.LETTER_A;
-            else if (typeName.Contains("FACTURA C") || typeName.Contains("NOTA DE DÉBITO C") || typeName.Contains("NOTA DE CRÉDITO C") || typeName.Contains("RECIBO C"))
-                letter = VoucherLetterCodes.LETTER_C;
-            else if (typeName.Contains("FACTURA M") || typeName.Contains("NOTA DE DÉBITO M") || typeName.Contains("NOTA DE CRÉDITO M"))
-                letter = VoucherLetterCodes.LETTER_M;
-            else if (typeName.Contains("EXPORTACIÓN") || typeName.Contains("EXPORTACION"))
-                letter = VoucherLetterCodes.LETTER_E;
-            else if (typeName.Contains("REMITO R"))
-                letter = VoucherLetterCodes.LETTER_R;
-            else if (typeName.Contains("REMITO X") || typeName.Contains("PRESUPUESTO") || typeName.Contains("COMPROBANTE X"))
-                letter = VoucherLetterCodes.LETTER_X;
+            if (normalizedDocumentTypeName.Contains("FACTURA A") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO A") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO A") || normalizedDocumentTypeName.Contains("RECIBO A") || normalizedDocumentTypeName.Contains("TICKET FACTURA A"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_A;
+            else if (normalizedDocumentTypeName.Contains("FACTURA C") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO C") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO C") || normalizedDocumentTypeName.Contains("RECIBO C"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_C;
+            else if (normalizedDocumentTypeName.Contains("FACTURA M") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO M") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO M"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_M;
+            else if (normalizedDocumentTypeName.Contains("EXPORTACIÓN") || normalizedDocumentTypeName.Contains("EXPORTACION"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_E;
+            else if (normalizedDocumentTypeName.Contains("REMITO R"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_R;
+            else if (normalizedDocumentTypeName.Contains("REMITO X") || normalizedDocumentTypeName.Contains("PRESUPUESTO") || normalizedDocumentTypeName.Contains("COMPROBANTE X"))
+                voucherClassificationLetter = VoucherLetterCodes.LETTER_X;
 
-            lblVoucherLetter.Text = letter;
+            labelVoucherLetter.Text = voucherClassificationLetter;
 
-            int docId = docType.Id;
+            int selectedDocumentTypeId = selectedDocumentTypeEntity.Id;
             
-            int posNumber = _currentUser.OperationalContext?.CashRegisterNumber ?? 1;
+            int assignedPosPointOfSaleNumber = _currentUser.OperationalContext?.CashRegisterNumber ?? 1;
 
-            string nextNumber = await _saleService.GetNextDocumentNumberAsync(docId);
+            string nextDocumentSequenceNumber = await _saleService.GetNextDocumentNumberAsync(selectedDocumentTypeId);
 
-            lblVoucherNumber.Text = $"P.V.: {posNumber:D4}  -  N.°: {nextNumber}";
+            labelVoucherNumber.Text = $"P.V.: {assignedPosPointOfSaleNumber:D4}  -  N.°: {nextDocumentSequenceNumber}";
 
             if (_selectedCustomer != null)
             {
-                lblClientNameVal.Text = $"{_selectedCustomer.LastName}, {_selectedCustomer.FirstName}".Trim();
-                lblClientDocVal.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
-                lblClientTaxVal.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
+                labelClientNameValue.Text = $"{_selectedCustomer.LastName}, {_selectedCustomer.FirstName}".Trim();
+                labelClientDocValue.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
+                labelClientTaxValue.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
 
-                if (letter == VoucherLetterCodes.LETTER_A && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
+                if (voucherClassificationLetter == VoucherLetterCodes.LETTER_A && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
                 {
-                    lblClientTaxVal.Text += "  [Requiere Resp. Inscripto]";
-                    lblClientTaxVal.ForeColor = UIThemeHelper.Danger;
+                    labelClientTaxValue.Text += "  [Requiere Resp. Inscripto]";
+                    labelClientTaxValue.ForeColor = UIThemeHelper.Danger;
                 }
                 else
                 {
-                    lblClientTaxVal.ForeColor = Color.FromArgb(100, 116, 139);
+                    labelClientTaxValue.ForeColor = Color.FromArgb(100, 116, 139);
                 }
             }
             else
             {
-                lblClientNameVal.Text = TaxConstants.DEFAULT_TAX_CONDITION_NAME.ToUpper();
-                lblClientDocVal.Text = $"DOC: {TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER}";
-                lblClientTaxVal.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME}";
-                lblClientTaxVal.ForeColor = letter == VoucherLetterCodes.LETTER_A ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
+                labelClientNameValue.Text = TaxConstants.DEFAULT_TAX_CONDITION_NAME.ToUpper();
+                labelClientDocValue.Text = $"DOC: {TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER}";
+                labelClientTaxValue.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME}";
+                labelClientTaxValue.ForeColor = voucherClassificationLetter == VoucherLetterCodes.LETTER_A ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
 
-                if (letter == VoucherLetterCodes.LETTER_A)
-                    lblClientTaxVal.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME} [Requiere Cliente Resp. Inscripto]";
+                if (voucherClassificationLetter == VoucherLetterCodes.LETTER_A)
+                    labelClientTaxValue.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME} [Requiere Cliente Resp. Inscripto]";
             }
         }
 
-        private void ResetSaleSession()
+        private void ResetPointOfSaleSession()
         {
             _cart.Clear();
             _selectedCustomer = null;
-            ResetInputBar();
-            _ = UpdateVoucherContextAsync();
-            RefreshCartUI();
+            ResetProductScannerInputBar();
+            _ = UpdateVoucherContextAndSequenceNumberAsync();
+            RefreshSaleCartGridAndCalculateDiscountsAsync();
         }
 
-        private void ResetInputBar()
+        private void ResetProductScannerInputBar()
         {
             quickSearchBox.Clear();
-            numQuantity.Value = 1;
+            numericUpDownQuantity.Value = 1;
             quickSearchBox.FocusInput();
         }
 
-        private async Task ProcessScannedBarcodeAsync(string barcode, int quantity)
+        private async Task ProcessScannedProductBarcodeAsync(string barcode, int quantity)
         {
             if (string.IsNullOrWhiteSpace(barcode))
                 return;
 
-            var product = await _productService.GetByBarcodeAsync(barcode);
+            var matchedProduct = await _productService.GetByBarcodeAsync(barcode);
 
-            if (product == null)
+            if (matchedProduct == null)
             {
                 SystemSounds.Asterisk.Play();
                 UIHelper.WarnMessage(this, $"No se encontró ningún producto con código: '{barcode}'", "Artículo No Registrado");
-                ResetInputBar();
+                ResetProductScannerInputBar();
                 return;
             }
 
-            if (!product.IsActive)
+            if (!matchedProduct.IsActive)
             {
-                UIHelper.WarnMessage(this, $"El producto '{product.Name}' se encuentra inactivo.", "Producto No Disponible");
-                ResetInputBar();
+                UIHelper.WarnMessage(this, $"El producto '{matchedProduct.Name}' se encuentra inactivo.", "Producto No Disponible");
+                ResetProductScannerInputBar();
                 return;
             }
 
-            var existing = _cart.FirstOrDefault(x => x.ProductId == product.Id);
-            int newTotalQty = (existing?.Quantity ?? 0) + quantity;
+            var existingCartItem = _cart.FirstOrDefault(x => x.ProductId == matchedProduct.Id);
+            int calculatedNewTotalQuantity = (existingCartItem?.Quantity ?? 0) + quantity;
 
-            var stockCheck = await _saleService.ValidateStockAsync(product.Id, newTotalQty);
-            if (!stockCheck.Success)
+            var stockValidationResult = await _saleService.ValidateStockAsync(matchedProduct.Id, calculatedNewTotalQuantity);
+            if (!stockValidationResult.Success)
             {
                 SystemSounds.Hand.Play();
-                UIHelper.ShowResult(stockCheck, "Validación de Stock");
-                ResetInputBar();
+                UIHelper.ShowResult(stockValidationResult, "Validación de Stock");
+                ResetProductScannerInputBar();
                 return;
             }
 
             SystemSounds.Beep.Play();
 
-            if (existing != null)
+            if (existingCartItem != null)
             {
-                existing.Quantity = newTotalQty;
+                existingCartItem.Quantity = calculatedNewTotalQuantity;
             }
             else
             {
                 _cart.Add(new SaleItemDto
                 {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    CategoryId = product.CategoryId,
-                    UnitPrice = product.SellPrice,
+                    ProductId = matchedProduct.Id,
+                    ProductName = matchedProduct.Name,
+                    CategoryId = matchedProduct.CategoryId,
+                    UnitPrice = matchedProduct.SellPrice,
                     Quantity = quantity,
                     DiscountAmount = 0
                 });
             }
 
-            ResetInputBar();
-            RefreshCartUI();
+            ResetProductScannerInputBar();
+            RefreshSaleCartGridAndCalculateDiscountsAsync();
         }
 
-        private async void RefreshCartUI()
+        private async void RefreshSaleCartGridAndCalculateDiscountsAsync()
         {
             _currentCalculation = await _promotionService.CalculateSaleDiscountsAsync(_cart, DateTime.Now);
 
-            dgvCart.DataSource = null;
-            dgvCart.DataSource = _currentCalculation.CalculatedItems.ToList();
-            DataGridViewHelper.ApplyStyle(dgvCart);
+            dataGridViewCart.DataSource = null;
+            dataGridViewCart.DataSource = _currentCalculation.CalculatedItems.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewCart);
 
-            lblSubTotal.Text = $"Subtotal: {_currentCalculation.SubTotal:C2}";
-            lblDiscount.Text = $"Descuentos: -{_currentCalculation.TotalDiscount:C2}";
-            lblTotalDisplay.Text = _currentCalculation.FinalTotal.ToString("C2");
-            btnRegister.Text = $"COBRAR {_currentCalculation.FinalTotal:C2} (F8)";
+            labelSubTotalValue.Text = $"Subtotal: {_currentCalculation.SubTotal:C2}";
+            labelDiscountValue.Text = $"Descuentos: -{_currentCalculation.TotalDiscount:C2}";
+            labelTotalDisplay.Text = _currentCalculation.FinalTotal.ToString("C2");
+            buttonRegisterSale.Text = $"COBRAR {_currentCalculation.FinalTotal:C2} (F8)";
         }
 
-        private void RemoveSelectedItem()
+        private void RemoveSelectedItemFromSaleCart()
         {
-            if (dgvCart.CurrentRow == null || dgvCart.CurrentRow.DataBoundItem is not SaleItemDto item)
+            if (dataGridViewCart.CurrentRow == null || dataGridViewCart.CurrentRow.DataBoundItem is not SaleItemDto item)
             {
                 UIHelper.WarnMessage(this, "Seleccione un producto de la grilla para quitarlo.", "Aviso");
                 return;
             }
 
             _cart.RemoveAll(x => x.ProductId == item.ProductId);
-            RefreshCartUI();
-            ResetInputBar();
+            RefreshSaleCartGridAndCalculateDiscountsAsync();
+            ResetProductScannerInputBar();
         }
 
-        private async Task PromptSelectCustomerAsync()
+        private async Task PromptSelectCustomerDialogAsync()
         {
-            using var searchDialog = new FormSearchCustomerDialog();
+            using var customerSearchDialogForm = new FormSearchCustomerDialog();
 
-            if (searchDialog.ShowDialog(this) == DialogResult.OK)
+            if (customerSearchDialogForm.ShowDialog(this) == DialogResult.OK)
             {
-                string queryDni = searchDialog.EnteredDocument;
+                string enteredCustomerDni = customerSearchDialogForm.EnteredDocument;
 
-                var customers = await _customerService.GetAllActiveAsync();
-                var found = customers.FirstOrDefault(c => c.DocumentNumber.Trim() == queryDni);
+                var allActiveCustomersList = await _customerService.GetAllActiveAsync();
+                var matchedCustomer = allActiveCustomersList.FirstOrDefault(c => c.DocumentNumber.Trim() == enteredCustomerDni);
 
-                if (found != null)
+                if (matchedCustomer != null)
                 {
-                    _selectedCustomer = found;
-                    await UpdateVoucherContextAsync();
+                    _selectedCustomer = matchedCustomer;
+                    await UpdateVoucherContextAndSequenceNumberAsync();
                 }
                 else
                 {
-                    UIHelper.WarnMessage(this, $"No se encontró ningún cliente activo con el DNI '{queryDni}'.", "Búsqueda de Cliente");
+                    UIHelper.WarnMessage(this, $"No se encontró ningún cliente activo con el DNI '{enteredCustomerDni}'.", "Búsqueda de Cliente");
                 }
             }
             quickSearchBox.FocusInput();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaleCheckoutAndPayment.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteCheckoutAsync()
+        private async Task ExecuteSaleCheckoutAndPaymentAsync()
         {
             if (!_cart.Any())
             {
@@ -405,61 +413,61 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            using var paymentDialog = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
+            using var paymentCheckoutDialogForm = new FormPaymentDialog(_currentCalculation.FinalTotal, _paymentMethods);
             
-            if (paymentDialog.ShowDialog(this) != DialogResult.OK)
+            if (paymentCheckoutDialogForm.ShowDialog(this) != DialogResult.OK)
             {
                 quickSearchBox.FocusInput();
                 return;
             }
 
-            string customerName = _selectedCustomer != null
+            string resolvedCustomerFullName = _selectedCustomer != null
                 ? $"{_selectedCustomer.FirstName} {_selectedCustomer.LastName}".Trim()
                 : "Consumidor Final";
 
-            string customerDocument = _selectedCustomer?.DocumentNumber;
+            string resolvedCustomerDocument = _selectedCustomer?.DocumentNumber;
 
-            var saleDto = new SaleDto
+            var saleTransaction = new SaleDto
             {
-                DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
-                DocumentTypeName = cboDocType.Text,
-                PaymentMethodId = paymentDialog.SelectedPaymentMethodId,
-                PaymentMethodName = paymentDialog.SelectedPaymentMethodName,
+                DocumentTypeId = (int)(comboBoxDocumentType.SelectedValue ?? 1),
+                DocumentTypeName = comboBoxDocumentType.Text,
+                PaymentMethodId = paymentCheckoutDialogForm.SelectedPaymentMethodId,
+                PaymentMethodName = paymentCheckoutDialogForm.SelectedPaymentMethodName,
                 CustomerId = _selectedCustomer?.Id,
-                CustomerDoc = customerDocument,
-                CustomerName = customerName,
+                CustomerDoc = resolvedCustomerDocument,
+                CustomerName = resolvedCustomerFullName,
                 CashierName = _currentUser.CurrentUser!.FullName,
                 SubTotal = _currentCalculation.SubTotal,
                 DiscountAmount = _currentCalculation.TotalDiscount,
                 TotalAmount = _currentCalculation.FinalTotal,
-                PaymentReceived = paymentDialog.AmountPaid,
+                PaymentReceived = paymentCheckoutDialogForm.AmountPaid,
                 Items = _currentCalculation.CalculatedItems,
                 AppliedDiscounts = _currentCalculation.Discounts,
                 Date = DateTime.Now
             };
 
-            bool isMercadoPagoQrPayment = paymentDialog.SelectedPaymentMethodName.Contains("Mercado Pago", StringComparison.OrdinalIgnoreCase) ||
-                                   paymentDialog.SelectedPaymentMethodName.Contains("QR", StringComparison.OrdinalIgnoreCase);
+            bool isMercadoPagoQrPaymentMethod = paymentCheckoutDialogForm.SelectedPaymentMethodName.Contains("Mercado Pago", StringComparison.OrdinalIgnoreCase) ||
+                                   paymentCheckoutDialogForm.SelectedPaymentMethodName.Contains("QR", StringComparison.OrdinalIgnoreCase);
 
-            if (isMercadoPagoQrPayment)
+            if (isMercadoPagoQrPaymentMethod)
             {
-                bool shouldGenerateQr = UIHelper.ConfirmMessage("¿QUIERES GENERAR EL CÓDIGO QR?", "Mercado Pago QR");
+                bool userConfirmedQrGeneration = UIHelper.ConfirmMessage("¿QUIERES GENERAR EL CÓDIGO QR?", "Mercado Pago QR");
 
-                if (shouldGenerateQr)
+                if (userConfirmedQrGeneration)
                 {
                     using (new WaitCursorHelper(this))
                     {
                         try
                         {
-                            var saleResult = await _saleService.ProcessSaleAsync(saleDto);
+                            var saleProcessingResult = await _saleService.ProcessSaleAsync(saleTransaction);
 
-                            if (!saleResult.Success || !saleResult.EntityId.HasValue)
+                            if (!saleProcessingResult.Success || !saleProcessingResult.EntityId.HasValue)
                             {
-                                UIHelper.ErrorMessage(this, $"No se pudo inicializar la venta:\n{saleResult.Message}", "Error de Venta");
+                                UIHelper.ErrorMessage(this, $"No se pudo inicializar la venta:\n{saleProcessingResult.Message}", "Error de Venta");
                                 return;
                             }
 
-                            int saleId = saleResult.EntityId.Value;
+                            int registeredSaleId = saleProcessingResult.EntityId.Value;
 
                             var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient();
                             
@@ -467,9 +475,9 @@ namespace CompriaxSystem.WinFormsUI
 
                             var paymentRequest = new
                             {
-                                saleId = saleId,
+                                registeredSaleId = registeredSaleId,
                                 amount = _currentCalculation.FinalTotal,
-                                description = $"Venta POS #{saleId}"
+                                description = $"Venta POS #{registeredSaleId}"
                             };
 
                             var paymentRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7133/api/mercadopago/payments")
@@ -492,36 +500,36 @@ namespace CompriaxSystem.WinFormsUI
 
                             using var responseDocument = JsonDocument.Parse(responseContent);
 
-                            string orderId = responseDocument.RootElement.GetProperty("orderId").GetString() ?? string.Empty;
+                            string mercadoPagoOrderId = responseDocument.RootElement.GetProperty("mercadoPagoOrderId").GetString() ?? string.Empty;
 
-                            string qrData = responseDocument.RootElement.GetProperty("qrData").GetString() ?? string.Empty;
+                            string mercadoPagoRawQrData = responseDocument.RootElement.GetProperty("mercadoPagoRawQrData").GetString() ?? string.Empty;
 
                             var barcodeService = _serviceProvider.GetRequiredService<IBarcodeService>();
 
                             var qrHttpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
 
-                            using var qrPaymentForm = new FormMercadoPagoQrPayment(barcodeService, qrHttpClientFactory, orderId, _currentCalculation.FinalTotal, qrData);
+                            using var mercadoPagoQrPaymentDialog = new FormMercadoPagoQrPayment(barcodeService, qrHttpClientFactory, mercadoPagoOrderId, _currentCalculation.FinalTotal, mercadoPagoRawQrData);
 
-                            if (qrPaymentForm.ShowDialog(this) != DialogResult.OK || !qrPaymentForm.IsPaymentApproved)
+                            if (mercadoPagoQrPaymentDialog.ShowDialog(this) != DialogResult.OK || !mercadoPagoQrPaymentDialog.IsPaymentApproved)
                             {
                                 UIHelper.WarnMessage(this, "Operación de Mercado Pago no completada. Venta no finalizada.", "Aviso");
                                 return;
                             }
 
-                            string documentNumber = saleDto.DocumentNumber ?? "00000001";
+                            string saleDocumentNumber = saleTransaction.DocumentNumber ?? "00000001";
 
-                            var ticketPreviewForm =  new FormTicketPreview(_documentService, _whatsappService, _storageService);
+                            var ticketPreviewFormInstance =  new FormTicketPreview(_documentService, _whatsappService, _storageService);
                             
-                            _ = ticketPreviewForm.LoadSaleTicketAsync(
-                                saleDto,
-                                documentNumber,
-                                saleDto.CashierName,
+                            _ = ticketPreviewFormInstance.LoadSaleTicketAndRenderPreviewAsync(
+                                saleTransaction,
+                                saleDocumentNumber,
+                                saleTransaction.CashierName,
                                 _selectedCustomer?.Phone,
                                 _selectedCustomer?.FirstName);
 
-                            ticketPreviewForm.Show();
+                            ticketPreviewFormInstance.Show();
 
-                            ResetSaleSession();
+                            ResetPointOfSaleSession();
                             return;
                         }
                         catch (Exception ex)
@@ -535,27 +543,27 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                var saleResult = await _saleService.ProcessSaleAsync(saleDto);
+                var saleProcessingResult = await _saleService.ProcessSaleAsync(saleTransaction);
 
-                if (saleResult.Success)
+                if (saleProcessingResult.Success)
                 {
-                    string documentNumber = saleDto.DocumentNumber ?? "00000001";
+                    string saleDocumentNumber = saleTransaction.DocumentNumber ?? "00000001";
 
-                    var ticketPreviewForm = new FormTicketPreview(_documentService, _whatsappService, _storageService);
+                    var ticketPreviewFormInstance = new FormTicketPreview(_documentService, _whatsappService, _storageService);
 
-                    _ = ticketPreviewForm.LoadSaleTicketAsync(
-                        saleDto,
-                        documentNumber,
-                        saleDto.CashierName,
+                    _ = ticketPreviewFormInstance.LoadSaleTicketAndRenderPreviewAsync(
+                        saleTransaction,
+                        saleDocumentNumber,
+                        saleTransaction.CashierName,
                         _selectedCustomer?.Phone,
                         _selectedCustomer?.FirstName);
 
-                    ticketPreviewForm.Show();
-                    ResetSaleSession();
+                    ticketPreviewFormInstance.Show();
+                    ResetPointOfSaleSession();
                 }
                 else
                 {
-                    UIHelper.ShowResult(saleResult, "Error en Venta");
+                    UIHelper.ShowResult(saleProcessingResult, "Error en Venta");
                 }
             }
         }

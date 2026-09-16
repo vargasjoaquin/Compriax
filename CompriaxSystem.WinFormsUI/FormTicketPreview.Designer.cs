@@ -17,128 +17,128 @@
 
         private void InitializeComponent()
         {
-            pnlTop = new Panel();
-            lblTicketTitle = new Label();
-            gbPaperSize = new GroupBox();
-            rb80mm = new RadioButton();
-            rb58mm = new RadioButton();
-            btnPrint = new Button();
-            btnWhatsapp = new Button();
-            btnSavePdf = new Button();
-            pdfViewer = new WebBrowser();
-            pnlTop.SuspendLayout();
-            gbPaperSize.SuspendLayout();
+            panelTopBar = new Panel();
+            labelTicketTitle = new Label();
+            groupBoxPaperSize = new GroupBox();
+            radioButtonWidth80mm = new RadioButton();
+            radioButtonWidth58mm = new RadioButton();
+            buttonPrintTicket = new Button();
+            buttonSendWhatsapp = new Button();
+            buttonSavePdf = new Button();
+            webBrowserPdfViewer = new WebBrowser();
+            panelTopBar.SuspendLayout();
+            groupBoxPaperSize.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlTop
+            // panelTopBar
             // 
-            pnlTop.BackColor = Color.FromArgb(15, 23, 42);
-            pnlTop.Controls.Add(lblTicketTitle);
-            pnlTop.Controls.Add(gbPaperSize);
-            pnlTop.Controls.Add(btnPrint);
-            pnlTop.Controls.Add(btnWhatsapp);
-            pnlTop.Controls.Add(btnSavePdf);
-            pnlTop.Dock = DockStyle.Top;
-            pnlTop.Location = new Point(0, 0);
-            pnlTop.Name = "pnlTop";
-            pnlTop.Size = new Size(1006, 70);
-            pnlTop.TabIndex = 0;
+            panelTopBar.BackColor = Color.FromArgb(15, 23, 42);
+            panelTopBar.Controls.Add(labelTicketTitle);
+            panelTopBar.Controls.Add(groupBoxPaperSize);
+            panelTopBar.Controls.Add(buttonPrintTicket);
+            panelTopBar.Controls.Add(buttonSendWhatsapp);
+            panelTopBar.Controls.Add(buttonSavePdf);
+            panelTopBar.Dock = DockStyle.Top;
+            panelTopBar.Location = new Point(0, 0);
+            panelTopBar.Name = "panelTopBar";
+            panelTopBar.Size = new Size(1006, 70);
+            panelTopBar.TabIndex = 0;
             // 
-            // lblTicketTitle
+            // labelTicketTitle
             // 
-            lblTicketTitle.AutoSize = true;
-            lblTicketTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTicketTitle.ForeColor = Color.White;
-            lblTicketTitle.Location = new Point(3, 26);
-            lblTicketTitle.Name = "lblTicketTitle";
-            lblTicketTitle.Size = new Size(0, 30);
-            lblTicketTitle.TabIndex = 0;
+            labelTicketTitle.AutoSize = true;
+            labelTicketTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTicketTitle.ForeColor = Color.White;
+            labelTicketTitle.Location = new Point(3, 26);
+            labelTicketTitle.Name = "labelTicketTitle";
+            labelTicketTitle.Size = new Size(0, 30);
+            labelTicketTitle.TabIndex = 0;
             // 
-            // gbPaperSize
+            // groupBoxPaperSize
             // 
-            gbPaperSize.Controls.Add(rb80mm);
-            gbPaperSize.Controls.Add(rb58mm);
-            gbPaperSize.Font = new Font("Segoe UI", 8.5F);
-            gbPaperSize.ForeColor = Color.FromArgb(226, 232, 240);
-            gbPaperSize.Location = new Point(231, 12);
-            gbPaperSize.Name = "gbPaperSize";
-            gbPaperSize.Size = new Size(180, 52);
-            gbPaperSize.TabIndex = 1;
-            gbPaperSize.TabStop = false;
-            gbPaperSize.Text = "Ancho Térmico:";
+            groupBoxPaperSize.Controls.Add(radioButtonWidth80mm);
+            groupBoxPaperSize.Controls.Add(radioButtonWidth58mm);
+            groupBoxPaperSize.Font = new Font("Segoe UI", 8.5F);
+            groupBoxPaperSize.ForeColor = Color.FromArgb(226, 232, 240);
+            groupBoxPaperSize.Location = new Point(231, 12);
+            groupBoxPaperSize.Name = "groupBoxPaperSize";
+            groupBoxPaperSize.Size = new Size(180, 52);
+            groupBoxPaperSize.TabIndex = 1;
+            groupBoxPaperSize.TabStop = false;
+            groupBoxPaperSize.Text = "Ancho Térmico:";
             // 
-            // rb80mm
+            // radioButtonWidth80mm
             // 
-            rb80mm.AutoSize = true;
-            rb80mm.Checked = true;
-            rb80mm.Font = new Font("Segoe UI", 8.5F);
-            rb80mm.Location = new Point(12, 22);
-            rb80mm.Name = "rb80mm";
-            rb80mm.Size = new Size(76, 24);
-            rb80mm.TabIndex = 0;
-            rb80mm.TabStop = true;
-            rb80mm.Text = "80 mm";
-            rb80mm.UseVisualStyleBackColor = true;
+            radioButtonWidth80mm.AutoSize = true;
+            radioButtonWidth80mm.Checked = true;
+            radioButtonWidth80mm.Font = new Font("Segoe UI", 8.5F);
+            radioButtonWidth80mm.Location = new Point(12, 22);
+            radioButtonWidth80mm.Name = "radioButtonWidth80mm";
+            radioButtonWidth80mm.Size = new Size(76, 24);
+            radioButtonWidth80mm.TabIndex = 0;
+            radioButtonWidth80mm.TabStop = true;
+            radioButtonWidth80mm.Text = "80 mm";
+            radioButtonWidth80mm.UseVisualStyleBackColor = true;
             // 
-            // rb58mm
+            // radioButtonWidth58mm
             // 
-            rb58mm.AutoSize = true;
-            rb58mm.Font = new Font("Segoe UI", 8.5F);
-            rb58mm.Location = new Point(98, 22);
-            rb58mm.Name = "rb58mm";
-            rb58mm.Size = new Size(76, 24);
-            rb58mm.TabIndex = 1;
-            rb58mm.Text = "58 mm";
-            rb58mm.UseVisualStyleBackColor = true;
+            radioButtonWidth58mm.AutoSize = true;
+            radioButtonWidth58mm.Font = new Font("Segoe UI", 8.5F);
+            radioButtonWidth58mm.Location = new Point(98, 22);
+            radioButtonWidth58mm.Name = "radioButtonWidth58mm";
+            radioButtonWidth58mm.Size = new Size(76, 24);
+            radioButtonWidth58mm.TabIndex = 1;
+            radioButtonWidth58mm.Text = "58 mm";
+            radioButtonWidth58mm.UseVisualStyleBackColor = true;
             // 
-            // btnPrint
+            // buttonPrintTicket
             // 
-            btnPrint.BackColor = Color.FromArgb(2, 132, 199);
-            btnPrint.FlatAppearance.BorderSize = 0;
-            btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(430, 16);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(130, 42);
-            btnPrint.TabIndex = 2;
-            btnPrint.Text = "IMPRIMIR";
-            btnPrint.UseVisualStyleBackColor = false;
+            buttonPrintTicket.BackColor = Color.FromArgb(2, 132, 199);
+            buttonPrintTicket.FlatAppearance.BorderSize = 0;
+            buttonPrintTicket.FlatStyle = FlatStyle.Flat;
+            buttonPrintTicket.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonPrintTicket.ForeColor = Color.White;
+            buttonPrintTicket.Location = new Point(430, 16);
+            buttonPrintTicket.Name = "buttonPrintTicket";
+            buttonPrintTicket.Size = new Size(130, 42);
+            buttonPrintTicket.TabIndex = 2;
+            buttonPrintTicket.Text = "IMPRIMIR";
+            buttonPrintTicket.UseVisualStyleBackColor = false;
             // 
-            // btnWhatsapp
+            // buttonSendWhatsapp
             // 
-            btnWhatsapp.BackColor = Color.FromArgb(16, 185, 129);
-            btnWhatsapp.FlatAppearance.BorderSize = 0;
-            btnWhatsapp.FlatStyle = FlatStyle.Flat;
-            btnWhatsapp.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnWhatsapp.ForeColor = Color.White;
-            btnWhatsapp.Location = new Point(584, 16);
-            btnWhatsapp.Name = "btnWhatsapp";
-            btnWhatsapp.Size = new Size(140, 42);
-            btnWhatsapp.TabIndex = 3;
-            btnWhatsapp.Text = "WHATSAPP";
-            btnWhatsapp.UseVisualStyleBackColor = false;
+            buttonSendWhatsapp.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSendWhatsapp.FlatAppearance.BorderSize = 0;
+            buttonSendWhatsapp.FlatStyle = FlatStyle.Flat;
+            buttonSendWhatsapp.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonSendWhatsapp.ForeColor = Color.White;
+            buttonSendWhatsapp.Location = new Point(584, 16);
+            buttonSendWhatsapp.Name = "buttonSendWhatsapp";
+            buttonSendWhatsapp.Size = new Size(140, 42);
+            buttonSendWhatsapp.TabIndex = 3;
+            buttonSendWhatsapp.Text = "WHATSAPP";
+            buttonSendWhatsapp.UseVisualStyleBackColor = false;
             // 
-            // btnSavePdf
+            // buttonSavePdf
             // 
-            btnSavePdf.FlatStyle = FlatStyle.Flat;
-            btnSavePdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnSavePdf.ForeColor = Color.White;
-            btnSavePdf.Location = new Point(750, 16);
-            btnSavePdf.Name = "btnSavePdf";
-            btnSavePdf.Size = new Size(130, 42);
-            btnSavePdf.TabIndex = 4;
-            btnSavePdf.Text = "GUARDAR";
-            btnSavePdf.UseVisualStyleBackColor = true;
+            buttonSavePdf.FlatStyle = FlatStyle.Flat;
+            buttonSavePdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonSavePdf.ForeColor = Color.White;
+            buttonSavePdf.Location = new Point(750, 16);
+            buttonSavePdf.Name = "buttonSavePdf";
+            buttonSavePdf.Size = new Size(130, 42);
+            buttonSavePdf.TabIndex = 4;
+            buttonSavePdf.Text = "GUARDAR";
+            buttonSavePdf.UseVisualStyleBackColor = true;
             // 
-            // pdfViewer
+            // webBrowserPdfViewer
             // 
-            pdfViewer.Dock = DockStyle.Fill;
-            pdfViewer.Location = new Point(0, 70);
-            pdfViewer.MinimumSize = new Size(20, 20);
-            pdfViewer.Name = "pdfViewer";
-            pdfViewer.Size = new Size(1006, 680);
-            pdfViewer.TabIndex = 1;
+            webBrowserPdfViewer.Dock = DockStyle.Fill;
+            webBrowserPdfViewer.Location = new Point(0, 70);
+            webBrowserPdfViewer.MinimumSize = new Size(20, 20);
+            webBrowserPdfViewer.Name = "webBrowserPdfViewer";
+            webBrowserPdfViewer.Size = new Size(1006, 680);
+            webBrowserPdfViewer.TabIndex = 1;
             // 
             // FormTicketPreview
             // 
@@ -146,28 +146,28 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1006, 750);
-            Controls.Add(pdfViewer);
-            Controls.Add(pnlTop);
+            Controls.Add(webBrowserPdfViewer);
+            Controls.Add(panelTopBar);
             Name = "FormTicketPreview";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Comprobante Fiscal Digital - Ticket Térmico";
-            pnlTop.ResumeLayout(false);
-            pnlTop.PerformLayout();
-            gbPaperSize.ResumeLayout(false);
-            gbPaperSize.PerformLayout();
+            panelTopBar.ResumeLayout(false);
+            panelTopBar.PerformLayout();
+            groupBoxPaperSize.ResumeLayout(false);
+            groupBoxPaperSize.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlTop;
-        private System.Windows.Forms.Label lblTicketTitle;
-        private System.Windows.Forms.GroupBox gbPaperSize;
-        private System.Windows.Forms.RadioButton rb80mm;
-        private System.Windows.Forms.RadioButton rb58mm;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnWhatsapp;
-        private System.Windows.Forms.Button btnSavePdf;
-        private System.Windows.Forms.WebBrowser pdfViewer;
+        private System.Windows.Forms.Panel panelTopBar;
+        private System.Windows.Forms.Label labelTicketTitle;
+        private System.Windows.Forms.GroupBox groupBoxPaperSize;
+        private System.Windows.Forms.RadioButton radioButtonWidth80mm;
+        private System.Windows.Forms.RadioButton radioButtonWidth58mm;
+        private System.Windows.Forms.Button buttonPrintTicket;
+        private System.Windows.Forms.Button buttonSendWhatsapp;
+        private System.Windows.Forms.Button buttonSavePdf;
+        private System.Windows.Forms.WebBrowser webBrowserPdfViewer;
     }
 }

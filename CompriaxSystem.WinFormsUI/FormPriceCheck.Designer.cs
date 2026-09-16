@@ -17,93 +17,93 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblHeaderTitle = new Label();
-            lblHeaderSubtitle = new Label();
-            pnlSearchCard = new Panel();
-            lblSearchPrompt = new Label();
+            panelHeader = new Panel();
+            labelHeaderTitle = new Label();
+            labelHeaderSubtitle = new Label();
+            panelSearchCard = new Panel();
+            labelSearchPrompt = new Label();
             quickSearchBox = new Controls.QuickSearchProductBox();
-            btnClear = new Button();
-            pnlDetailsCard = new Panel();
-            picProduct = new PictureBox();
-            lblProductName = new Label();
-            lblPriceTitle = new Label();
-            lblPrice = new Label();
-            pnlInfoGrid = new TableLayoutPanel();
-            lblBarcodeTitle = new Label();
-            lblBarcodeVal = new Label();
-            lblCategoryTitle = new Label();
-            lblCategoryVal = new Label();
-            lblBrandTitle = new Label();
-            lblBrandVal = new Label();
-            lblStockTitle = new Label();
-            lblStockVal = new Label();
-            lblStockBadge = new Label();
-            pnlFooter = new Panel();
-            lblHelp = new Label();
-            btnClose = new Button();
-            pnlHeader.SuspendLayout();
-            pnlSearchCard.SuspendLayout();
-            pnlDetailsCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picProduct).BeginInit();
-            pnlInfoGrid.SuspendLayout();
-            pnlFooter.SuspendLayout();
+            buttonClearSearch = new Button();
+            panelDetailsCard = new Panel();
+            pictureBoxProduct = new PictureBox();
+            labelProductName = new Label();
+            labelPriceTitle = new Label();
+            labelPriceValue = new Label();
+            tableLayoutPanelInfoGrid = new TableLayoutPanel();
+            labelBarcodeTitle = new Label();
+            labelBarcodeValue = new Label();
+            labelCategoryTitle = new Label();
+            labelCategoryValue = new Label();
+            labelBrandTitle = new Label();
+            labelBrandValue = new Label();
+            labelStockTitle = new Label();
+            labelStockValue = new Label();
+            labelStockBadge = new Label();
+            panelFooter = new Panel();
+            labelHelpShortcuts = new Label();
+            buttonCloseDialog = new Button();
+            panelHeader.SuspendLayout();
+            panelSearchCard.SuspendLayout();
+            panelDetailsCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).BeginInit();
+            tableLayoutPanelInfoGrid.SuspendLayout();
+            panelFooter.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlHeader
+            // panelHeader
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblHeaderTitle);
-            pnlHeader.Controls.Add(lblHeaderSubtitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(892, 68);
-            pnlHeader.TabIndex = 0;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelHeaderTitle);
+            panelHeader.Controls.Add(labelHeaderSubtitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(892, 68);
+            panelHeader.TabIndex = 0;
             // 
-            // lblHeaderTitle
+            // labelHeaderTitle
             // 
-            lblHeaderTitle.AutoSize = true;
-            lblHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblHeaderTitle.ForeColor = Color.White;
-            lblHeaderTitle.Location = new Point(20, 12);
-            lblHeaderTitle.Name = "lblHeaderTitle";
-            lblHeaderTitle.Size = new Size(342, 30);
-            lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "CONSULTA RÁPIDA DE PRECIOS";
+            labelHeaderTitle.AutoSize = true;
+            labelHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelHeaderTitle.ForeColor = Color.White;
+            labelHeaderTitle.Location = new Point(20, 12);
+            labelHeaderTitle.Name = "labelHeaderTitle";
+            labelHeaderTitle.Size = new Size(342, 30);
+            labelHeaderTitle.TabIndex = 0;
+            labelHeaderTitle.Text = "CONSULTA RÁPIDA DE PRECIOS";
             // 
-            // lblHeaderSubtitle
+            // labelHeaderSubtitle
             // 
-            lblHeaderSubtitle.AutoSize = true;
-            lblHeaderSubtitle.Font = new Font("Segoe UI", 8.5F);
-            lblHeaderSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
-            lblHeaderSubtitle.Location = new Point(22, 40);
-            lblHeaderSubtitle.Name = "lblHeaderSubtitle";
-            lblHeaderSubtitle.Size = new Size(428, 20);
-            lblHeaderSubtitle.TabIndex = 1;
-            lblHeaderSubtitle.Text = "Escanee un código de barras o comience a escribir para buscar.";
+            labelHeaderSubtitle.AutoSize = true;
+            labelHeaderSubtitle.Font = new Font("Segoe UI", 8.5F);
+            labelHeaderSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
+            labelHeaderSubtitle.Location = new Point(22, 40);
+            labelHeaderSubtitle.Name = "labelHeaderSubtitle";
+            labelHeaderSubtitle.Size = new Size(428, 20);
+            labelHeaderSubtitle.TabIndex = 1;
+            labelHeaderSubtitle.Text = "Escanee un código de barras o comience a escribir para buscar.";
             // 
-            // pnlSearchCard
+            // panelSearchCard
             // 
-            pnlSearchCard.BackColor = Color.White;
-            pnlSearchCard.Controls.Add(lblSearchPrompt);
-            pnlSearchCard.Controls.Add(quickSearchBox);
-            pnlSearchCard.Controls.Add(btnClear);
-            pnlSearchCard.Location = new Point(20, 80);
-            pnlSearchCard.Name = "pnlSearchCard";
-            pnlSearchCard.Padding = new Padding(16);
-            pnlSearchCard.Size = new Size(858, 113);
-            pnlSearchCard.TabIndex = 1;
+            panelSearchCard.BackColor = Color.White;
+            panelSearchCard.Controls.Add(labelSearchPrompt);
+            panelSearchCard.Controls.Add(quickSearchBox);
+            panelSearchCard.Controls.Add(buttonClearSearch);
+            panelSearchCard.Location = new Point(20, 80);
+            panelSearchCard.Name = "panelSearchCard";
+            panelSearchCard.Padding = new Padding(16);
+            panelSearchCard.Size = new Size(858, 113);
+            panelSearchCard.TabIndex = 1;
             // 
-            // lblSearchPrompt
+            // labelSearchPrompt
             // 
-            lblSearchPrompt.AutoSize = true;
-            lblSearchPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSearchPrompt.Location = new Point(16, 8);
-            lblSearchPrompt.Name = "lblSearchPrompt";
-            lblSearchPrompt.Size = new Size(129, 21);
-            lblSearchPrompt.TabIndex = 0;
-            lblSearchPrompt.Text = "Buscar Artículo:";
+            labelSearchPrompt.AutoSize = true;
+            labelSearchPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSearchPrompt.Location = new Point(16, 8);
+            labelSearchPrompt.Name = "labelSearchPrompt";
+            labelSearchPrompt.Size = new Size(129, 21);
+            labelSearchPrompt.TabIndex = 0;
+            labelSearchPrompt.Text = "Buscar Artículo:";
             // 
             // quickSearchBox
             // 
@@ -116,229 +116,229 @@
             quickSearchBox.Size = new Size(650, 54);
             quickSearchBox.TabIndex = 1;
             // 
-            // btnClear
+            // buttonClearSearch
             // 
-            btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClear.Location = new Point(676, 32);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(146, 54);
-            btnClear.TabIndex = 2;
-            btnClear.Text = "LIMPIAR";
-            btnClear.UseVisualStyleBackColor = true;
+            buttonClearSearch.FlatStyle = FlatStyle.Flat;
+            buttonClearSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonClearSearch.Location = new Point(676, 32);
+            buttonClearSearch.Name = "buttonClearSearch";
+            buttonClearSearch.Size = new Size(146, 54);
+            buttonClearSearch.TabIndex = 2;
+            buttonClearSearch.Text = "LIMPIAR";
+            buttonClearSearch.UseVisualStyleBackColor = true;
             // 
-            // pnlDetailsCard
+            // panelDetailsCard
             // 
-            pnlDetailsCard.BackColor = Color.White;
-            pnlDetailsCard.Controls.Add(lblCategoryTitle);
-            pnlDetailsCard.Controls.Add(lblBrandTitle);
-            pnlDetailsCard.Controls.Add(lblStockTitle);
-            pnlDetailsCard.Controls.Add(lblBarcodeTitle);
-            pnlDetailsCard.Controls.Add(picProduct);
-            pnlDetailsCard.Controls.Add(lblProductName);
-            pnlDetailsCard.Controls.Add(lblPriceTitle);
-            pnlDetailsCard.Controls.Add(lblPrice);
-            pnlDetailsCard.Controls.Add(pnlInfoGrid);
-            pnlDetailsCard.Location = new Point(20, 199);
-            pnlDetailsCard.Name = "pnlDetailsCard";
-            pnlDetailsCard.Padding = new Padding(20);
-            pnlDetailsCard.Size = new Size(858, 490);
-            pnlDetailsCard.TabIndex = 2;
+            panelDetailsCard.BackColor = Color.White;
+            panelDetailsCard.Controls.Add(labelCategoryTitle);
+            panelDetailsCard.Controls.Add(labelBrandTitle);
+            panelDetailsCard.Controls.Add(labelStockTitle);
+            panelDetailsCard.Controls.Add(labelBarcodeTitle);
+            panelDetailsCard.Controls.Add(pictureBoxProduct);
+            panelDetailsCard.Controls.Add(labelProductName);
+            panelDetailsCard.Controls.Add(labelPriceTitle);
+            panelDetailsCard.Controls.Add(labelPriceValue);
+            panelDetailsCard.Controls.Add(tableLayoutPanelInfoGrid);
+            panelDetailsCard.Location = new Point(20, 199);
+            panelDetailsCard.Name = "panelDetailsCard";
+            panelDetailsCard.Padding = new Padding(20);
+            panelDetailsCard.Size = new Size(858, 490);
+            panelDetailsCard.TabIndex = 2;
             // 
-            // picProduct
+            // pictureBoxProduct
             // 
-            picProduct.BackColor = Color.FromArgb(248, 250, 252);
-            picProduct.BorderStyle = BorderStyle.FixedSingle;
-            picProduct.Location = new Point(20, 20);
-            picProduct.Name = "picProduct";
-            picProduct.Size = new Size(186, 195);
-            picProduct.SizeMode = PictureBoxSizeMode.Zoom;
-            picProduct.TabIndex = 0;
-            picProduct.TabStop = false;
+            pictureBoxProduct.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxProduct.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxProduct.Location = new Point(20, 20);
+            pictureBoxProduct.Name = "pictureBoxProduct";
+            pictureBoxProduct.Size = new Size(186, 195);
+            pictureBoxProduct.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxProduct.TabIndex = 0;
+            pictureBoxProduct.TabStop = false;
             // 
-            // lblProductName
+            // labelProductName
             // 
-            lblProductName.AutoEllipsis = true;
-            lblProductName.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
-            lblProductName.ForeColor = Color.FromArgb(15, 23, 42);
-            lblProductName.Location = new Point(210, 20);
-            lblProductName.Name = "lblProductName";
-            lblProductName.Size = new Size(574, 38);
-            lblProductName.TabIndex = 1;
-            lblProductName.Text = "NOMBRE DEL ARTÍCULO";
+            labelProductName.AutoEllipsis = true;
+            labelProductName.Font = new Font("Segoe UI", 14F, FontStyle.Bold);
+            labelProductName.ForeColor = Color.FromArgb(15, 23, 42);
+            labelProductName.Location = new Point(210, 20);
+            labelProductName.Name = "labelProductName";
+            labelProductName.Size = new Size(574, 38);
+            labelProductName.TabIndex = 1;
+            labelProductName.Text = "NOMBRE DEL ARTÍCULO";
             // 
-            // lblPriceTitle
+            // labelPriceTitle
             // 
-            lblPriceTitle.AutoSize = true;
-            lblPriceTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblPriceTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblPriceTitle.Location = new Point(213, 67);
-            lblPriceTitle.Name = "lblPriceTitle";
-            lblPriceTitle.Size = new Size(160, 23);
-            lblPriceTitle.TabIndex = 2;
-            lblPriceTitle.Text = "PRECIO DE VENTA:";
+            labelPriceTitle.AutoSize = true;
+            labelPriceTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelPriceTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelPriceTitle.Location = new Point(213, 67);
+            labelPriceTitle.Name = "labelPriceTitle";
+            labelPriceTitle.Size = new Size(160, 23);
+            labelPriceTitle.TabIndex = 2;
+            labelPriceTitle.Text = "PRECIO DE VENTA:";
             // 
-            // lblPrice
+            // labelPriceValue
             // 
-            lblPrice.AutoSize = true;
-            lblPrice.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
-            lblPrice.ForeColor = Color.FromArgb(2, 132, 199);
-            lblPrice.Location = new Point(212, 105);
-            lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(161, 62);
-            lblPrice.TabIndex = 3;
-            lblPrice.Text = "$ 0,00";
+            labelPriceValue.AutoSize = true;
+            labelPriceValue.Font = new Font("Segoe UI", 28F, FontStyle.Bold);
+            labelPriceValue.ForeColor = Color.FromArgb(2, 132, 199);
+            labelPriceValue.Location = new Point(212, 105);
+            labelPriceValue.Name = "labelPriceValue";
+            labelPriceValue.Size = new Size(161, 62);
+            labelPriceValue.TabIndex = 3;
+            labelPriceValue.Text = "$ 0,00";
             // 
-            // pnlInfoGrid
+            // tableLayoutPanelInfoGrid
             // 
-            pnlInfoGrid.ColumnCount = 4;
-            pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
-            pnlInfoGrid.Controls.Add(lblCategoryVal, 1, 1);
-            pnlInfoGrid.Controls.Add(lblBrandVal, 2, 1);
-            pnlInfoGrid.Controls.Add(lblStockVal, 3, 1);
-            pnlInfoGrid.Controls.Add(lblStockBadge, 3, 2);
-            pnlInfoGrid.Controls.Add(lblBarcodeVal, 0, 1);
-            pnlInfoGrid.Location = new Point(23, 278);
-            pnlInfoGrid.Name = "pnlInfoGrid";
-            pnlInfoGrid.RowCount = 3;
-            pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 24F));
-            pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
-            pnlInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
-            pnlInfoGrid.Size = new Size(818, 187);
-            pnlInfoGrid.TabIndex = 4;
+            tableLayoutPanelInfoGrid.ColumnCount = 4;
+            tableLayoutPanelInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanelInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanelInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanelInfoGrid.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 25F));
+            tableLayoutPanelInfoGrid.Controls.Add(labelCategoryValue, 1, 1);
+            tableLayoutPanelInfoGrid.Controls.Add(labelBrandValue, 2, 1);
+            tableLayoutPanelInfoGrid.Controls.Add(labelStockValue, 3, 1);
+            tableLayoutPanelInfoGrid.Controls.Add(labelStockBadge, 3, 2);
+            tableLayoutPanelInfoGrid.Controls.Add(labelBarcodeValue, 0, 1);
+            tableLayoutPanelInfoGrid.Location = new Point(23, 278);
+            tableLayoutPanelInfoGrid.Name = "tableLayoutPanelInfoGrid";
+            tableLayoutPanelInfoGrid.RowCount = 3;
+            tableLayoutPanelInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 24F));
+            tableLayoutPanelInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 30F));
+            tableLayoutPanelInfoGrid.RowStyles.Add(new RowStyle(SizeType.Absolute, 26F));
+            tableLayoutPanelInfoGrid.Size = new Size(818, 187);
+            tableLayoutPanelInfoGrid.TabIndex = 4;
             // 
-            // lblBarcodeTitle
+            // labelBarcodeTitle
             // 
-            lblBarcodeTitle.AutoSize = true;
-            lblBarcodeTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblBarcodeTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblBarcodeTitle.Location = new Point(23, 255);
-            lblBarcodeTitle.Name = "lblBarcodeTitle";
-            lblBarcodeTitle.Size = new Size(132, 20);
-            lblBarcodeTitle.TabIndex = 0;
-            lblBarcodeTitle.Text = "Código de Barras:";
+            labelBarcodeTitle.AutoSize = true;
+            labelBarcodeTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            labelBarcodeTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelBarcodeTitle.Location = new Point(23, 255);
+            labelBarcodeTitle.Name = "labelBarcodeTitle";
+            labelBarcodeTitle.Size = new Size(132, 20);
+            labelBarcodeTitle.TabIndex = 0;
+            labelBarcodeTitle.Text = "Código de Barras:";
             // 
-            // lblBarcodeVal
+            // labelBarcodeValue
             // 
-            lblBarcodeVal.AutoEllipsis = true;
-            lblBarcodeVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblBarcodeVal.Location = new Point(3, 24);
-            lblBarcodeVal.Name = "lblBarcodeVal";
-            lblBarcodeVal.Size = new Size(184, 25);
-            lblBarcodeVal.TabIndex = 1;
-            lblBarcodeVal.Text = "-";
+            labelBarcodeValue.AutoEllipsis = true;
+            labelBarcodeValue.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelBarcodeValue.Location = new Point(3, 24);
+            labelBarcodeValue.Name = "labelBarcodeValue";
+            labelBarcodeValue.Size = new Size(184, 25);
+            labelBarcodeValue.TabIndex = 1;
+            labelBarcodeValue.Text = "-";
             // 
-            // lblCategoryTitle
+            // labelCategoryTitle
             // 
-            lblCategoryTitle.AutoSize = true;
-            lblCategoryTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblCategoryTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblCategoryTitle.Location = new Point(230, 255);
-            lblCategoryTitle.Name = "lblCategoryTitle";
-            lblCategoryTitle.Size = new Size(80, 20);
-            lblCategoryTitle.TabIndex = 2;
-            lblCategoryTitle.Text = "Categoría:";
+            labelCategoryTitle.AutoSize = true;
+            labelCategoryTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            labelCategoryTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelCategoryTitle.Location = new Point(230, 255);
+            labelCategoryTitle.Name = "labelCategoryTitle";
+            labelCategoryTitle.Size = new Size(80, 20);
+            labelCategoryTitle.TabIndex = 2;
+            labelCategoryTitle.Text = "Categoría:";
             // 
-            // lblCategoryVal
+            // labelCategoryValue
             // 
-            lblCategoryVal.AutoEllipsis = true;
-            lblCategoryVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblCategoryVal.Location = new Point(207, 24);
-            lblCategoryVal.Name = "lblCategoryVal";
-            lblCategoryVal.Size = new Size(184, 25);
-            lblCategoryVal.TabIndex = 3;
-            lblCategoryVal.Text = "-";
+            labelCategoryValue.AutoEllipsis = true;
+            labelCategoryValue.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelCategoryValue.Location = new Point(207, 24);
+            labelCategoryValue.Name = "labelCategoryValue";
+            labelCategoryValue.Size = new Size(184, 25);
+            labelCategoryValue.TabIndex = 3;
+            labelCategoryValue.Text = "-";
             // 
-            // lblBrandTitle
+            // labelBrandTitle
             // 
-            lblBrandTitle.AutoSize = true;
-            lblBrandTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblBrandTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblBrandTitle.Location = new Point(434, 255);
-            lblBrandTitle.Name = "lblBrandTitle";
-            lblBrandTitle.Size = new Size(56, 20);
-            lblBrandTitle.TabIndex = 4;
-            lblBrandTitle.Text = "Marca:";
+            labelBrandTitle.AutoSize = true;
+            labelBrandTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            labelBrandTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelBrandTitle.Location = new Point(434, 255);
+            labelBrandTitle.Name = "labelBrandTitle";
+            labelBrandTitle.Size = new Size(56, 20);
+            labelBrandTitle.TabIndex = 4;
+            labelBrandTitle.Text = "Marca:";
             // 
-            // lblBrandVal
+            // labelBrandValue
             // 
-            lblBrandVal.AutoEllipsis = true;
-            lblBrandVal.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblBrandVal.Location = new Point(411, 24);
-            lblBrandVal.Name = "lblBrandVal";
-            lblBrandVal.Size = new Size(184, 25);
-            lblBrandVal.TabIndex = 5;
-            lblBrandVal.Text = "-";
+            labelBrandValue.AutoEllipsis = true;
+            labelBrandValue.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelBrandValue.Location = new Point(411, 24);
+            labelBrandValue.Name = "labelBrandValue";
+            labelBrandValue.Size = new Size(184, 25);
+            labelBrandValue.TabIndex = 5;
+            labelBrandValue.Text = "-";
             // 
-            // lblStockTitle
+            // labelStockTitle
             // 
-            lblStockTitle.AutoSize = true;
-            lblStockTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblStockTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblStockTitle.Location = new Point(638, 255);
-            lblStockTitle.Name = "lblStockTitle";
-            lblStockTitle.Size = new Size(100, 20);
-            lblStockTitle.TabIndex = 6;
-            lblStockTitle.Text = "Stock Actual:";
+            labelStockTitle.AutoSize = true;
+            labelStockTitle.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            labelStockTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelStockTitle.Location = new Point(638, 255);
+            labelStockTitle.Name = "labelStockTitle";
+            labelStockTitle.Size = new Size(100, 20);
+            labelStockTitle.TabIndex = 6;
+            labelStockTitle.Text = "Stock Actual:";
             // 
-            // lblStockVal
+            // labelStockValue
             // 
-            lblStockVal.AutoEllipsis = true;
-            lblStockVal.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblStockVal.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStockVal.Location = new Point(615, 24);
-            lblStockVal.Name = "lblStockVal";
-            lblStockVal.Size = new Size(184, 25);
-            lblStockVal.TabIndex = 7;
-            lblStockVal.Text = "-";
+            labelStockValue.AutoEllipsis = true;
+            labelStockValue.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            labelStockValue.ForeColor = Color.FromArgb(16, 185, 129);
+            labelStockValue.Location = new Point(615, 24);
+            labelStockValue.Name = "labelStockValue";
+            labelStockValue.Size = new Size(184, 25);
+            labelStockValue.TabIndex = 7;
+            labelStockValue.Text = "-";
             // 
-            // lblStockBadge
+            // labelStockBadge
             // 
-            lblStockBadge.AutoSize = true;
-            lblStockBadge.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            lblStockBadge.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStockBadge.Location = new Point(615, 54);
-            lblStockBadge.Name = "lblStockBadge";
-            lblStockBadge.Size = new Size(0, 20);
-            lblStockBadge.TabIndex = 8;
+            labelStockBadge.AutoSize = true;
+            labelStockBadge.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
+            labelStockBadge.ForeColor = Color.FromArgb(16, 185, 129);
+            labelStockBadge.Location = new Point(615, 54);
+            labelStockBadge.Name = "labelStockBadge";
+            labelStockBadge.Size = new Size(0, 20);
+            labelStockBadge.TabIndex = 8;
             // 
-            // pnlFooter
+            // panelFooter
             // 
-            pnlFooter.BackColor = Color.FromArgb(241, 245, 249);
-            pnlFooter.Controls.Add(lblHelp);
-            pnlFooter.Controls.Add(btnClose);
-            pnlFooter.Dock = DockStyle.Bottom;
-            pnlFooter.Location = new Point(0, 695);
-            pnlFooter.Name = "pnlFooter";
-            pnlFooter.Padding = new Padding(20, 10, 20, 10);
-            pnlFooter.Size = new Size(892, 52);
-            pnlFooter.TabIndex = 3;
+            panelFooter.BackColor = Color.FromArgb(241, 245, 249);
+            panelFooter.Controls.Add(labelHelpShortcuts);
+            panelFooter.Controls.Add(buttonCloseDialog);
+            panelFooter.Dock = DockStyle.Bottom;
+            panelFooter.Location = new Point(0, 695);
+            panelFooter.Name = "panelFooter";
+            panelFooter.Padding = new Padding(20, 10, 20, 10);
+            panelFooter.Size = new Size(892, 52);
+            panelFooter.TabIndex = 3;
             // 
-            // lblHelp
+            // labelHelpShortcuts
             // 
-            lblHelp.AutoSize = true;
-            lblHelp.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblHelp.ForeColor = Color.FromArgb(100, 116, 139);
-            lblHelp.Location = new Point(20, 16);
-            lblHelp.Name = "lblHelp";
-            lblHelp.Size = new Size(391, 20);
-            lblHelp.TabIndex = 0;
-            lblHelp.Text = "Atajos: [F2/F6] Buscar  |  [ESC] Cerrar  |  Pistola lectora";
+            labelHelpShortcuts.AutoSize = true;
+            labelHelpShortcuts.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelHelpShortcuts.ForeColor = Color.FromArgb(100, 116, 139);
+            labelHelpShortcuts.Location = new Point(20, 16);
+            labelHelpShortcuts.Name = "labelHelpShortcuts";
+            labelHelpShortcuts.Size = new Size(391, 20);
+            labelHelpShortcuts.TabIndex = 0;
+            labelHelpShortcuts.Text = "Atajos: [F2/F6] Buscar  |  [ESC] Cerrar  |  Pistola lectora";
             // 
-            // btnClose
+            // buttonCloseDialog
             // 
-            btnClose.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnClose.FlatStyle = FlatStyle.Flat;
-            btnClose.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClose.Location = new Point(764, 10);
-            btnClose.Name = "btnClose";
-            btnClose.Size = new Size(108, 32);
-            btnClose.TabIndex = 1;
-            btnClose.Text = "CERRAR";
-            btnClose.UseVisualStyleBackColor = true;
+            buttonCloseDialog.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonCloseDialog.FlatStyle = FlatStyle.Flat;
+            buttonCloseDialog.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonCloseDialog.Location = new Point(764, 10);
+            buttonCloseDialog.Name = "buttonCloseDialog";
+            buttonCloseDialog.Size = new Size(108, 32);
+            buttonCloseDialog.TabIndex = 1;
+            buttonCloseDialog.Text = "CERRAR";
+            buttonCloseDialog.UseVisualStyleBackColor = true;
             // 
             // FormPriceCheck
             // 
@@ -346,56 +346,56 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(892, 747);
-            Controls.Add(pnlFooter);
-            Controls.Add(pnlDetailsCard);
-            Controls.Add(pnlSearchCard);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelFooter);
+            Controls.Add(panelDetailsCard);
+            Controls.Add(panelSearchCard);
+            Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "FormPriceCheck";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Ver Precio de Artículo";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlSearchCard.ResumeLayout(false);
-            pnlSearchCard.PerformLayout();
-            pnlDetailsCard.ResumeLayout(false);
-            pnlDetailsCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picProduct).EndInit();
-            pnlInfoGrid.ResumeLayout(false);
-            pnlInfoGrid.PerformLayout();
-            pnlFooter.ResumeLayout(false);
-            pnlFooter.PerformLayout();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSearchCard.ResumeLayout(false);
+            panelSearchCard.PerformLayout();
+            panelDetailsCard.ResumeLayout(false);
+            panelDetailsCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
+            tableLayoutPanelInfoGrid.ResumeLayout(false);
+            tableLayoutPanelInfoGrid.PerformLayout();
+            panelFooter.ResumeLayout(false);
+            panelFooter.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel pnlHeader;
-        private Label lblHeaderTitle;
-        private Label lblHeaderSubtitle;
-        private Panel pnlSearchCard;
-        private Label lblSearchPrompt;
+        private Panel panelHeader;
+        private Label labelHeaderTitle;
+        private Label labelHeaderSubtitle;
+        private Panel panelSearchCard;
+        private Label labelSearchPrompt;
         private Controls.QuickSearchProductBox quickSearchBox;
-        private Button btnClear;
-        private Panel pnlDetailsCard;
-        private PictureBox picProduct;
-        private Label lblProductName;
-        private Label lblPriceTitle;
-        private Label lblPrice;
-        private TableLayoutPanel pnlInfoGrid;
-        private Label lblBarcodeTitle;
-        private Label lblBarcodeVal;
-        private Label lblCategoryTitle;
-        private Label lblCategoryVal;
-        private Label lblBrandTitle;
-        private Label lblBrandVal;
-        private Label lblStockTitle;
-        private Label lblStockVal;
-        private Label lblStockBadge;
-        private Panel pnlFooter;
-        private Label lblHelp;
-        private Button btnClose;
+        private Button buttonClearSearch;
+        private Panel panelDetailsCard;
+        private PictureBox pictureBoxProduct;
+        private Label labelProductName;
+        private Label labelPriceTitle;
+        private Label labelPriceValue;
+        private TableLayoutPanel tableLayoutPanelInfoGrid;
+        private Label labelBarcodeTitle;
+        private Label labelBarcodeValue;
+        private Label labelCategoryTitle;
+        private Label labelCategoryValue;
+        private Label labelBrandTitle;
+        private Label labelBrandValue;
+        private Label labelStockTitle;
+        private Label labelStockValue;
+        private Label labelStockBadge;
+        private Panel panelFooter;
+        private Label labelHelpShortcuts;
+        private Button buttonCloseDialog;
     }
 }

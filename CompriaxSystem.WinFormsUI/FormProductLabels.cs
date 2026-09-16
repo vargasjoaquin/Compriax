@@ -40,34 +40,38 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlLeftConfig);
-            UIThemeHelper.ApplyCardStyle(pnlRightPreview);
+            UIThemeHelper.ApplyCardStyle(panelLeftConfiguration);
+            UIThemeHelper.ApplyCardStyle(panelRightPreviewCard);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnAddItem.Click += async (s, e) => await ExecuteAddProductToQueueAsync();
-            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveSelectedFromQueue();
-            this.btnClearQueue.Click += (s, e) => ExecuteClearQueue();
-            this.btnPrint.Click += (s, e) => ExecutePrintSheetAsync();
-            this.btnExportImage.Click += async (s, e) => await ExecuteExportSheetImageAsync();
+            this.Load += async (s, e) => await InitializeProductLabelsSheetFormAsync();
+            this.buttonAddLabelToQueue.Click += async (s, e) => await ExecuteAddProductLabelToSheetQueueAsync();
+            this.buttonRemoveSelectedFromQueue.Click += (s, e) => ExecuteRemoveSelectedLabelFromQueue();
+            this.buttonClearQueue.Click += (s, e) => ExecuteClearAllLabelsQueue();
+            this.buttonPrintSheet.Click += (s, e) => ExecutePrintA4LabelsSheet();
+            this.buttonExportSheetPng.Click += async (s, e) => await ExecuteExportSheetPreviewAsPngAsync();
 
-            this.btnPrevPage.Click += (s, e) => ChangePreviewPage(-1);
-            this.btnNextPage.Click += (s, e) => ChangePreviewPage(1);
+            this.buttonPreviousPage.Click += (s, e) => ChangeCurrentPreviewPage(-1);
+            this.buttonNextPage.Click += (s, e) => ChangeCurrentPreviewPage(1);
 
-            this.quickSearchBox.ProductSelected += (s, product) => SelectProduct(product);
-            this.dgvQueue.CellDoubleClick += (s, e) => ExecuteRemoveSelectedFromQueue();
+            this.quickSearchBox.ProductSelected += (s, product) => SelectProductForLabelConfiguration(product);
+            this.dataGridViewLabelQueue.CellDoubleClick += (s, e) => ExecuteRemoveSelectedLabelFromQueue();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeProductLabelsSheetFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
                 try
                 {
                     _storeSettings = await _storeService.GetStoreProfileAsync();
-                    var products = await _productService.GetProductListAsync();
-                    quickSearchBox.SetProductsSource(products.Where(p => p.IsActive));
+                    var activeProductsList = await _productService.GetProductListAsync();
+                    quickSearchBox.SetProductsSource(activeProductsList.Where(p => p.IsActive));
 
-                    DataGridViewHelper.ApplyStyle(dgvQueue);
+                    DataGridViewHelper.ApplyStyle(dataGridViewLabelQueue);
                 }
                 catch (Exception ex)
                 {
@@ -75,8 +79,8 @@ namespace CompriaxSystem.WinFormsUI
                 }
                 finally
                 {
-                    ResetInputFields();
-                    UpdateQueueGridAndPreview();
+                    ResetFormInputFields();
+                    UpdateQueueGridAndRenderPreviewSheet();
                 }
             }
         }
@@ -84,26 +88,30 @@ namespace CompriaxSystem.WinFormsUI
         /// <summary>
         /// Precarga un producto directamente desde otro formulario (ej: FormProducts).
         /// </summary>
-        public void PreloadProduct(ProductDto product, int quantity = 1)
+        public void PreloadProductToShelfLabelsQueue(ProductDto product, int quantity = 1)
         {
-            SelectProduct(product);
-            numQuantity.Value = Math.Clamp(quantity, 1, 1000);
-            _ = ExecuteAddProductToQueueAsync();
+            SelectProductForLabelConfiguration(product);
+            numericUpDownQuantity.Value = Math.Clamp(quantity, 1, 1000);
+            _ = ExecuteAddProductLabelToSheetQueueAsync();
         }
 
-        private void SelectProduct(ProductDto product)
+        private void SelectProductForLabelConfiguration(ProductDto product)
         {
             _selectedProduct = product;
-            lblSelectedInfo.Text = $"SELECCIONADO: [{product.Barcode}] {product.Name}";
-            lblSelectedInfo.ForeColor = UIThemeHelper.PrimaryDark;
+            labelSelectedProductInfo.Text = $"SELECCIONADO: [{product.Barcode}] {product.Name}";
+            labelSelectedProductInfo.ForeColor = UIThemeHelper.PrimaryDark;
 
-            txtShortDescription.Text = product.Name.Length > 45 ? product.Name.Substring(0, 45) : product.Name;
-            numPrice.Value = product.SellPrice;
-            numQuantity.Value = 1;
-            numQuantity.Focus();
+            textBoxShortDescription.Text = product.Name.Length > 45 ? product.Name.Substring(0, 45) : product.Name;
+            numericUpDownPrice.Value = product.SellPrice;
+            numericUpDownQuantity.Value = 1;
+            numericUpDownQuantity.Focus();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de AddProductLabelToSheetQueue.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteAddProductToQueueAsync()
+        private async Task ExecuteAddProductLabelToSheetQueueAsync()
         {
             if (_selectedProduct == null)
             {
@@ -112,49 +120,50 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            var dto = new ProductLabelDto
+            var productLabel = new ProductLabelDto
             {
                 ProductId = _selectedProduct.Id,
                 Barcode = _selectedProduct.Barcode,
                 ProductName = _selectedProduct.Name,
-                LabelDescription = txtShortDescription.Text.Trim(),
-                Price = numPrice.Value,
-                Quantity = (int)numQuantity.Value,
+                LabelDescription = textBoxShortDescription.Text.Trim(),
+                Price = numericUpDownPrice.Value,
+                Quantity = (int)numericUpDownQuantity.Value,
                 CategoryName = _selectedProduct.CategoryName,
                 BrandName = _selectedProduct.BrandName,
                 StoreName = _storeSettings?.Name,
                 GeneratedAt = DateTime.Now
             };
 
-            var validation = await _labelValidator.ValidateAsync(dto);
-            if (!validation.IsValid)
+            var validationResult = await _labelValidator.ValidateAsync(productLabel);
+            
+            if (!validationResult.IsValid)
             {
-                UIHelper.ShowResult(validation.ToResult(), "Validación de Etiqueta");
+                UIHelper.ShowResult(validationResult.ToResult(), "Validación de Etiqueta");
                 return;
             }
 
-            var existing = _labelQueue.FirstOrDefault(x => x.ProductId == dto.ProductId &&
-                                                           x.LabelDescription == dto.LabelDescription &&
-                                                           x.Price == dto.Price);
+            var existing = _labelQueue.FirstOrDefault(x => x.ProductId == productLabel.ProductId &&
+                                                           x.LabelDescription == productLabel.LabelDescription &&
+                                                           x.Price == productLabel.Price);
             if (existing != null)
             {
-                existing.Quantity += dto.Quantity;
+                existing.Quantity += productLabel.Quantity;
             }
             else
             {
-                _labelQueue.Add(dto);
+                _labelQueue.Add(productLabel);
             }
 
-            ResetInputFields();
-            UpdateQueueGridAndPreview();
+            ResetFormInputFields();
+            UpdateQueueGridAndRenderPreviewSheet();
         }
 
-        private void ExecuteRemoveSelectedFromQueue()
+        private void ExecuteRemoveSelectedLabelFromQueue()
         {
-            if (dgvQueue.CurrentRow?.DataBoundItem is ProductLabelDto selectedItem)
+            if (dataGridViewLabelQueue.CurrentRow?.DataBoundItem is ProductLabelDto selectedItem)
             {
                 _labelQueue.Remove(selectedItem);
-                UpdateQueueGridAndPreview();
+                UpdateQueueGridAndRenderPreviewSheet();
             }
             else
             {
@@ -162,79 +171,79 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void ExecuteClearQueue()
+        private void ExecuteClearAllLabelsQueue()
         {
             if (_labelQueue.Any() && UIHelper.ConfirmMessage("¿Desea vaciar toda la lista de etiquetas pendientes?", "Limpiar Plancha"))
             {
                 _labelQueue.Clear();
-                UpdateQueueGridAndPreview();
+                UpdateQueueGridAndRenderPreviewSheet();
             }
         }
 
-        private void ResetInputFields()
+        private void ResetFormInputFields()
         {
             _selectedProduct = null;
-            lblSelectedInfo.Text = "Ningún producto seleccionado";
-            lblSelectedInfo.ForeColor = UIThemeHelper.TextMuted;
-            txtShortDescription.Clear();
-            numPrice.Value = 0;
-            numQuantity.Value = 1;
+            labelSelectedProductInfo.Text = "Ningún producto seleccionado";
+            labelSelectedProductInfo.ForeColor = UIThemeHelper.TextMuted;
+            textBoxShortDescription.Clear();
+            numericUpDownPrice.Value = 0;
+            numericUpDownQuantity.Value = 1;
             quickSearchBox.Clear();
             quickSearchBox.FocusInput();
         }
 
-        private void UpdateQueueGridAndPreview()
+        private void UpdateQueueGridAndRenderPreviewSheet()
         {
-            dgvQueue.DataSource = null;
-            dgvQueue.DataSource = _labelQueue.ToList();
-            DataGridViewHelper.ApplyStyle(dgvQueue);
+            dataGridViewLabelQueue.DataSource = null;
+            dataGridViewLabelQueue.DataSource = _labelQueue.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewLabelQueue);
 
             // Ocultamos columnas que no aportan a la lista de impresión
             string[] hideCols = { "ProductId", "ProductName", "CategoryName", "BrandName", "StoreName", "GeneratedAt", "FormattedPrice" };
             
             foreach (var col in hideCols)
             {
-                if (dgvQueue.Columns.Contains(col))
-                    dgvQueue.Columns[col].Visible = false;
+                if (dataGridViewLabelQueue.Columns.Contains(col))
+                    dataGridViewLabelQueue.Columns[col].Visible = false;
             }
 
-            if (dgvQueue.Columns.Contains("Barcode"))
-                dgvQueue.Columns["Barcode"].HeaderText = "Código de Barras";
+            if (dataGridViewLabelQueue.Columns.Contains("Barcode"))
+                dataGridViewLabelQueue.Columns["Barcode"].HeaderText = "Código de Barras";
             
-            if (dgvQueue.Columns.Contains("LabelDescription"))
-                dgvQueue.Columns["LabelDescription"].HeaderText = "Descripción en Etiqueta";
+            if (dataGridViewLabelQueue.Columns.Contains("LabelDescription"))
+                dataGridViewLabelQueue.Columns["LabelDescription"].HeaderText = "Descripción en Etiqueta";
             
-            if (dgvQueue.Columns.Contains("Price"))
-                dgvQueue.Columns["Price"].HeaderText = "Precio Unitario";
+            if (dataGridViewLabelQueue.Columns.Contains("Price"))
+                dataGridViewLabelQueue.Columns["Price"].HeaderText = "Precio Unitario";
             
-            if (dgvQueue.Columns.Contains("Quantity"))
-                dgvQueue.Columns["Quantity"].HeaderText = "Cant. Etiquetas";
+            if (dataGridViewLabelQueue.Columns.Contains("Quantity"))
+                dataGridViewLabelQueue.Columns["Quantity"].HeaderText = "Cant. Etiquetas";
 
             int totalLabels = _labelQueue.Sum(x => x.Quantity);
-            int totalPages = (int)Math.Ceiling(totalLabels / (double)LabelsPerPage);
+            int calculatedTotalPages = (int)Math.Ceiling(totalLabels / (double)LabelsPerPage);
             
-            if (totalPages == 0) 
-                totalPages = 1;
+            if (calculatedTotalPages == 0) 
+                calculatedTotalPages = 1;
 
-            lblTotalSummary.Text = $"Productos: {_labelQueue.Count}  |  Total Etiquetas: {totalLabels}  ({totalPages} hoja/s A4)";
+            labelTotalSummary.Text = $"Productos: {_labelQueue.Count}  |  Total Etiquetas: {totalLabels}  ({calculatedTotalPages} hoja/s A4)";
 
-            _currentPreviewPage = Math.Clamp(_currentPreviewPage, 0, Math.Max(0, totalPages - 1));
-            RenderPreviewSheet();
+            _currentPreviewPage = Math.Clamp(_currentPreviewPage, 0, Math.Max(0, calculatedTotalPages - 1));
+            RenderA4LabelsSheetPreviewBitmap();
         }
 
-        private void ChangePreviewPage(int delta)
+        private void ChangeCurrentPreviewPage(int delta)
         {
             int totalLabels = _labelQueue.Sum(x => x.Quantity);
-            int totalPages = Math.Max(1, (int)Math.Ceiling(totalLabels / (double)LabelsPerPage));
+            int calculatedTotalPages = Math.Max(1, (int)Math.Ceiling(totalLabels / (double)LabelsPerPage));
 
-            _currentPreviewPage = Math.Clamp(_currentPreviewPage + delta, 0, totalPages - 1);
-            RenderPreviewSheet();
+            _currentPreviewPage = Math.Clamp(_currentPreviewPage + delta, 0, calculatedTotalPages - 1);
+            RenderA4LabelsSheetPreviewBitmap();
         }
 
         /// <summary>
         /// Genera la lista consecutiva plana de todas las etiquetas solicitadas
         /// </summary>
-        private List<ProductLabelDto> GetFlattenedLabels()
+        private List<ProductLabelDto> GetFlattenedLabelsList()
         {
             return _labelQueue
                 .SelectMany(item => Enumerable.Repeat(item, item.Quantity))
@@ -244,14 +253,14 @@ namespace CompriaxSystem.WinFormsUI
         /// <summary>
         /// Renderiza la vista previa WYSIWYG de una página A4 completa con la grilla de etiquetas
         /// </summary>
-        private void RenderPreviewSheet()
+        private void RenderA4LabelsSheetPreviewBitmap()
         {
-            var flatList = GetFlattenedLabels();
-            int totalPages = Math.Max(1, (int)Math.Ceiling(flatList.Count / (double)LabelsPerPage));
+            var flattenedLabelsSequence = GetFlattenedLabelsList();
+            int calculatedTotalPages = Math.Max(1, (int)Math.Ceiling(flattenedLabelsSequence.Count / (double)LabelsPerPage));
 
-            lblPageIndicator.Text = $"Página {_currentPreviewPage + 1} de {totalPages}";
-            btnPrevPage.Enabled = _currentPreviewPage > 0;
-            btnNextPage.Enabled = _currentPreviewPage < totalPages - 1;
+            labelPageIndicator.Text = $"Página {_currentPreviewPage + 1} de {calculatedTotalPages}";
+            buttonPreviousPage.Enabled = _currentPreviewPage > 0;
+            buttonNextPage.Enabled = _currentPreviewPage < calculatedTotalPages - 1;
 
             // Dimensiones proporcionales a una hoja A4 vertical
             int sheetWidth = 820;
@@ -281,7 +290,7 @@ namespace CompriaxSystem.WinFormsUI
                 int cellHeight = availableHeight / RowsPerPage;
 
                 int startIndex = _currentPreviewPage * LabelsPerPage;
-                int endIndex = Math.Min(startIndex + LabelsPerPage, flatList.Count);
+                int endIndex = Math.Min(startIndex + LabelsPerPage, flattenedLabelsSequence.Count);
 
                 for (int i = startIndex; i < endIndex; i++)
                 {
@@ -293,20 +302,20 @@ namespace CompriaxSystem.WinFormsUI
                     int y = marginY + (row * cellHeight);
 
                     var cellRect = new Rectangle(x, y, cellWidth, cellHeight);
-                    DrawSingleLabel(g, cellRect, flatList[i]);
+                    DrawSingleProductLabel(g, cellRect, flattenedLabelsSequence[i]);
                 }
             }
 
             _previewBitmap?.Dispose();
             _previewBitmap = bmp;
-            ImageHelper.Clear(picSheetPreview);
-            picSheetPreview.Image = (Bitmap)_previewBitmap.Clone();
+            ImageHelper.Clear(pictureBoxSheetPreview);
+            pictureBoxSheetPreview.Image = (Bitmap)_previewBitmap.Clone();
         }
 
         /// <summary>
         /// Dibuja una etiqueta individual respetando el formato visual de la referencia
         /// </summary>
-        private void DrawSingleLabel(Graphics g, Rectangle cellRect, ProductLabelDto label)
+        private void DrawSingleProductLabel(Graphics g, Rectangle cellRect, ProductLabelDto label)
         {
             // Margen interior de cada etiqueta
             var labelRect = new Rectangle(cellRect.X + 3, cellRect.Y + 3, cellRect.Width - 6, cellRect.Height - 6);
@@ -347,11 +356,11 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void ExecutePrintSheetAsync()
+        private void ExecutePrintA4LabelsSheet()
         {
-            var flatList = GetFlattenedLabels();
+            var flattenedLabelsSequence = GetFlattenedLabelsList();
 
-            if (!flatList.Any())
+            if (!flattenedLabelsSequence.Any())
             {
                 UIHelper.WarnMessage(this, "La lista de etiquetas está vacía. Agregue productos a la plancha antes de imprimir.", "Plancha Vacía");
                 return;
@@ -362,7 +371,7 @@ namespace CompriaxSystem.WinFormsUI
                 try
                 {
                     _printPageIndex = 0;
-                    int totalPages = (int)Math.Ceiling(flatList.Count / (double)LabelsPerPage);
+                    int calculatedTotalPages = (int)Math.Ceiling(flattenedLabelsSequence.Count / (double)LabelsPerPage);
 
                     var pd = new PrintDocument();
                     pd.DefaultPageSettings.PaperSize = new PaperSize("A4", 827, 1169);
@@ -382,7 +391,7 @@ namespace CompriaxSystem.WinFormsUI
                         int cellH = bounds.Height / RowsPerPage;
 
                         int startIdx = _printPageIndex * LabelsPerPage;
-                        int endIdx = Math.Min(startIdx + LabelsPerPage, flatList.Count);
+                        int endIdx = Math.Min(startIdx + LabelsPerPage, flattenedLabelsSequence.Count);
 
                         for (int i = startIdx; i < endIdx; i++)
                         {
@@ -394,18 +403,18 @@ namespace CompriaxSystem.WinFormsUI
                             int y = bounds.Top + (r * cellH);
 
                             var cellRect = new Rectangle(x, y, cellW, cellH);
-                            DrawSingleLabel(ev.Graphics, cellRect, flatList[i]);
+                            DrawSingleProductLabel(ev.Graphics, cellRect, flattenedLabelsSequence[i]);
                         }
 
                         _printPageIndex++;
-                        ev.HasMorePages = _printPageIndex < totalPages;
+                        ev.HasMorePages = _printPageIndex < calculatedTotalPages;
                     };
 
                     using var printDlg = new PrintDialog { Document = pd, AllowSomePages = true };
                     if (printDlg.ShowDialog(this) == DialogResult.OK)
                     {
                         pd.Print();
-                        UIHelper.InfoMessage(this, $"Se enviaron {flatList.Count} etiquetas ({totalPages} plancha/s A4) a la impresora.", "Impresión Exitosa");
+                        UIHelper.InfoMessage(this, $"Se enviaron {flattenedLabelsSequence.Count} etiquetas ({calculatedTotalPages} plancha/s A4) a la impresora.", "Impresión Exitosa");
                     }
                 }
                 catch (Exception ex)
@@ -414,8 +423,12 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de ExportSheetPreviewAsPng.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteExportSheetImageAsync()
+        private async Task ExecuteExportSheetPreviewAsPngAsync()
         {
             if (_previewBitmap == null || !_labelQueue.Any())
             {

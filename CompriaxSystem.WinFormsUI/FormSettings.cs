@@ -14,58 +14,66 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(groupBoxStore);
+            UIThemeHelper.ApplyCardStyle(panelStoreProfileForm);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
+            this.Load += async (s, e) => await InitializeStoreSettingsFormAsync();
+            this.buttonSaveSettings.Click += async (s, e) => await ExecuteSaveStoreProfileSettingsAsync();
+            this.textBoxTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxId);
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeStoreSettingsFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var settings = await _storeService.GetStoreProfileAsync();
-                txtName.Text = settings.Name;
-                txtTaxId.Text = settings.CUIT;
-                txtAddress.Text = settings.Address;
-                txtPhone.Text = settings.Phone;
-                txtEmail.Text = settings.Email;
+                var currentStoreSettings = await _storeService.GetStoreProfileAsync();
+                textBoxCompanyName.Text = currentStoreSettings.Name;
+                textBoxTaxId.Text = currentStoreSettings.CUIT;
+                textBoxAddress.Text = currentStoreSettings.Address;
+                textBoxPhone.Text = currentStoreSettings.Phone;
+                textBoxEmail.Text = currentStoreSettings.Email;
 
-                picLogo.Image = Resources.logo_compriax;
-                picLogo.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBoxStoreLogo.Image = Resources.logo_compriax;
+                pictureBoxStoreLogo.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveStoreProfileSettings.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction()
+        private async Task ExecuteSaveStoreProfileSettingsAsync()
         {
-            var dto = new StoreSettingsDto
+            var updatedStoreSettings = new StoreSettingsDto
             {
-                Name = txtName.Text.Trim(),
-                CUIT = txtTaxId.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
-                Phone = txtPhone.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
+                Name = textBoxCompanyName.Text.Trim(),
+                CUIT = textBoxTaxId.Text.Trim(),
+                Address = textBoxAddress.Text.Trim(),
+                Phone = textBoxPhone.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
                 Logo = null
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _storeService.UpdateStoreProfileAsync(dto);
+                var operationResult = await _storeService.UpdateStoreProfileAsync(updatedStoreSettings);
 
-                if (result.Success)
+                if (operationResult.Success)
                 {
-                    var mainForm = System.Windows.Forms.Application.OpenForms.OfType<FormPanelControl>().FirstOrDefault();
-                    if (mainForm != null)
+                    var activePanelControlForm = System.Windows.Forms.Application.OpenForms.OfType<FormPanelControl>().FirstOrDefault();
+                    if (activePanelControlForm != null)
                     {
-                        await mainForm.SetupAppearanceAsync();
+                        await activePanelControlForm.ConfigureApplicationAppearanceAndBrandingAsync();
                     }
 
                     UIHelper.InfoMessage(this, "¡Configuración guardada y actualizada!", "Ajustes Actualizados");
                 }
                 else
                 {
-                    UIHelper.ShowResult(result, "Configuración del Sistema");
+                    UIHelper.ShowResult(operationResult, "Configuración del Sistema");
                 }
             }
         }

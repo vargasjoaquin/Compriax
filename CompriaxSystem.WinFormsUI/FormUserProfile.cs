@@ -15,68 +15,72 @@ namespace CompriaxSystem.WinFormsUI
             _currentUserService = currentUserService;
             InitializeComponent();
 
-            this.Load += (s, e) => LoadProfileData();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveProfileAsync();
+            this.Load += (s, e) => LoadAuthenticatedUserProfileData();
+            this.buttonSaveChanges.Click += async (s, e) => await ExecuteUpdateUserProfileAndCredentialsAsync();
         }
 
-        private void LoadProfileData()
+        private void LoadAuthenticatedUserProfileData()
         {
-            var user = _currentUserService.CurrentUser;
-            if (user == null)
+            var currentUser = _currentUserService.CurrentUser;
+            if (currentUser == null)
             {
                 UIHelper.ErrorMessage(this, "No se pudo recuperar la información de la sesión activa del usuario.", "Sesión Inválida");
                 return;
             }
 
-            lblNameVal.Text = $"{user.FirstName} {user.LastName}".Trim();
-            lblRoleVal.Text = user.RoleName.ToUpper();
-            lblUserVal.Text = $"Usuario: {user.Username}";
-            lblEmailVal.Text = user.Email;
+            labelUserFullName.Text = $"{currentUser.FirstName} {currentUser.LastName}".Trim();
+            labelUserRole.Text = currentUser.RoleName.ToUpper();
+            labelUsername.Text = $"Usuario: {currentUser.Username}";
+            labelUserEmail.Text = currentUser.Email;
 
-            ImageHelper.Clear(picAvatar);
-            if (user.Photo != null && user.Photo.Length > 0)
+            ImageHelper.Clear(pictureBoxAvatar);
+            if (currentUser.Photo != null && currentUser.Photo.Length > 0)
             {
-                picAvatar.Image = ImageHelper.LoadFromBytes(user.Photo);
+                pictureBoxAvatar.Image = ImageHelper.LoadFromBytes(currentUser.Photo);
             }
 
-            txtEditFirstName.Text = user.FirstName;
-            txtEditLastName.Text = user.LastName;
-            txtEditEmail.Text = user.Email;
+            textBoxFirstName.Text = currentUser.FirstName;
+            textBoxLastName.Text = currentUser.LastName;
+            textBoxEmail.Text = currentUser.Email;
 
-            txtEditCurrentPass.Clear();
-            txtEditPassword.Clear();
-            txtEditConfirmPass.Clear();
+            textBoxCurrentPassword.Clear();
+            textBoxNewPassword.Clear();
+            textBoxConfirmPassword.Clear();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UpdateUserProfileAndCredentials.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveProfileAsync()
+        private async Task ExecuteUpdateUserProfileAndCredentialsAsync()
         {
-            var dto = new UserProfileUpdateDto
+            var userProfile = new UserProfileUpdateDto
             {
                 UserId = _currentUserService.CurrentUser!.UserId,
-                FirstName = txtEditFirstName.Text.Trim(),
-                LastName = txtEditLastName.Text.Trim(),
-                Email = txtEditEmail.Text.Trim(),
-                CurrentPassword = txtEditCurrentPass.Text,
-                NewPassword = txtEditPassword.Text
+                FirstName = textBoxFirstName.Text.Trim(),
+                LastName = textBoxLastName.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
+                CurrentPassword = textBoxCurrentPassword.Text,
+                NewPassword = textBoxNewPassword.Text
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _userService.UpdateProfileAsync(dto);
+                var profileUpdateResult = await _userService.UpdateProfileAsync(userProfile);
 
-                if (result.Success)
+                if (profileUpdateResult.Success)
                 {
-                    _currentUserService.CurrentUser.FirstName = dto.FirstName;
-                    _currentUserService.CurrentUser.LastName = dto.LastName;
-                    _currentUserService.CurrentUser.FullName = $"{dto.FirstName} {dto.LastName}".Trim();
-                    _currentUserService.CurrentUser.Email = dto.Email;
+                    _currentUserService.CurrentUser.FirstName = userProfile.FirstName;
+                    _currentUserService.CurrentUser.LastName = userProfile.LastName;
+                    _currentUserService.CurrentUser.FullName = $"{userProfile.FirstName} {userProfile.LastName}".Trim();
+                    _currentUserService.CurrentUser.Email = userProfile.Email;
 
-                    UIHelper.ShowResult(result, "Perfil Actualizado");
-                    LoadProfileData();
+                    UIHelper.ShowResult(profileUpdateResult, "Perfil Actualizado");
+                    LoadAuthenticatedUserProfileData();
                 }
                 else
                 {
-                    UIHelper.WarnMessage(this, result.Message, "Error al Actualizar");
+                    UIHelper.WarnMessage(this, profileUpdateResult.Message, "Error al Actualizar");
                 }
             }
         }

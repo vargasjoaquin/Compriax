@@ -18,59 +18,59 @@ namespace CompriaxSystem.WinFormsUI
             _restoreService = restoreService;
             InitializeComponent();
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.cboEntityType.SelectedIndexChanged += async (s, e) =>
+            this.Load += async (s, e) => await InitializeRestoreRecordsFormAsync();
+            this.comboBoxEntityType.SelectedIndexChanged += async (s, e) =>
             {
                 if (!_isInitializing)
-                    await LoadDeletedRecordsAsync();
+                    await LoadDeletedRecordsByEntityTypeAsync();
             };
 
-            this.btnRestore.Click += async (s, e) => await ExecuteRestoreAction();
-            this.txtSearch.TextChanged += (s, e) => FilterRecords();
+            this.buttonRestoreRecord.Click += async (s, e) => await ExecuteRestoreSelectedEntityAsync();
+            this.textBoxSearch.TextChanged += (s, e) => FilterDeletedRecordsList();
         }
 
-        private async Task InitializeFormAsync()
+        private async Task InitializeRestoreRecordsFormAsync()
         {
             _isInitializing = true;
             try
             {
-                cboEntityType.Items.Clear();
-                cboEntityType.Items.AddRange(new object[] { "Productos", "Clientes", "Proveedores", "Usuarios", "Empleados", "Categorías" });
-                cboEntityType.SelectedIndex = 0;
+                comboBoxEntityType.Items.Clear();
+                comboBoxEntityType.Items.AddRange(new object[] { "Productos", "Clientes", "Proveedores", "Usuarios", "Empleados", "Categorías" });
+                comboBoxEntityType.SelectedIndex = 0;
 
-                UIHelper.FormatGrid(dgvDeletedRecords);
-                UIHelper.AttachManagedSelection(this, dgvDeletedRecords, SyncSelectedRecord, ResetSelection);
+                UIHelper.FormatGrid(dataGridViewDeletedRecords);
+                UIHelper.AttachManagedSelection(this, dataGridViewDeletedRecords, SynchronizeSelectedDeletedRecordToDetails, ResetSelectedRecordFields);
             }
             finally
             {
                 _isInitializing = false;
             }
 
-            await LoadDeletedRecordsAsync();
+            await LoadDeletedRecordsByEntityTypeAsync();
         }
 
-        private async Task LoadDeletedRecordsAsync()
+        private async Task LoadDeletedRecordsByEntityTypeAsync()
         {
-            if (cboEntityType.SelectedItem == null || _isLoadingData)
+            if (comboBoxEntityType.SelectedItem == null || _isLoadingData)
                 return;
 
             _isLoadingData = true;
-            string entityType = cboEntityType.SelectedItem.ToString()!;
-            lblCount.Text = "Cargando registros...";
+            string selectedEntityTypeName = comboBoxEntityType.SelectedItem.ToString()!;
+            labelRecordCount.Text = "Cargando registros...";
 
             using (new WaitCursorHelper(this))
             {
                 try
                 {
-                    var data = await _restoreService.GetDeletedEntitiesAsync(entityType);
-                    _deletedItems = data.ToList();
+                    var deletedItemsDataList = await _restoreService.GetDeletedEntitiesAsync(selectedEntityTypeName);
+                    _deletedItems = deletedItemsDataList.ToList();
 
-                    FilterRecords();
-                    ResetSelection();
+                    FilterDeletedRecordsList();
+                    ResetSelectedRecordFields();
                 }
                 catch (Exception ex)
                 {
-                    UIHelper.ErrorMessage(this, $"Error al consultar los registros eliminados de {entityType}:\n{ex.Message}", "Fallo de Consulta");
+                    UIHelper.ErrorMessage(this, $"Error al consultar los registros eliminados de {selectedEntityTypeName}:\n{ex.Message}", "Fallo de Consulta");
                 }
                 finally
                 {
@@ -79,42 +79,49 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void FilterRecords()
+        private void FilterDeletedRecordsList()
         {
-            string search = txtSearch.Text.Trim().ToLower();
+            string searchQueryText = textBoxSearch.Text.Trim().ToLower();
 
-            var filtered = _deletedItems.Where(x =>
-                x.Identifier.ToLower().Contains(search) ||
-                x.Name.ToLower().Contains(search) ||
-                (x.AdditionalInfo != null && x.AdditionalInfo.ToLower().Contains(search)) ||
-                (x.DeletedBy != null && x.DeletedBy.ToLower().Contains(search))
+            var filteredDeletedItemsList = _deletedItems.Where(x =>
+                x.Identifier.ToLower().Contains(searchQueryText) ||
+                x.Name.ToLower().Contains(searchQueryText) ||
+                (x.AdditionalInfo != null && x.AdditionalInfo.ToLower().Contains(searchQueryText)) ||
+                (x.DeletedBy != null && x.DeletedBy.ToLower().Contains(searchQueryText))
             ).ToList();
 
-            dgvDeletedRecords.DataSource = null;
-            dgvDeletedRecords.DataSource = filtered;
-            UIHelper.FormatGrid(dgvDeletedRecords);
+            dataGridViewDeletedRecords.DataSource = null;
+            dataGridViewDeletedRecords.DataSource = filteredDeletedItemsList;
+            UIHelper.FormatGrid(dataGridViewDeletedRecords);
 
-            lblCount.Text = $"Registros eliminados: {filtered.Count}";
+            labelRecordCount.Text = $"Registros eliminados: {filteredDeletedItemsList.Count}";
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedDeletedRecordToDetails seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncSelectedRecord()
+        private void SynchronizeSelectedDeletedRecordToDetails()
         {
-            if (dgvDeletedRecords.CurrentRow == null)
+            if (dataGridViewDeletedRecords.CurrentRow == null)
                 return;
 
-            _selectedItem = (DeletedItemDto)dgvDeletedRecords.CurrentRow.DataBoundItem;
-            lblSelectedItem.Text = $"SELECCIONADO: [{_selectedItem.Identifier}] {_selectedItem.Name}";
-            btnRestore.Enabled = true;
+            _selectedItem = (DeletedItemDto)dataGridViewDeletedRecords.CurrentRow.DataBoundItem;
+            labelSelectedItemInfo.Text = $"SELECCIONADO: [{_selectedItem.Identifier}] {_selectedItem.Name}";
+            buttonRestoreRecord.Enabled = true;
         }
 
-        private void ResetSelection()
+        private void ResetSelectedRecordFields()
         {
             _selectedItem = null;
-            lblSelectedItem.Text = "Ningún registro seleccionado";
-            btnRestore.Enabled = false;
+            labelSelectedItemInfo.Text = "Ningún registro seleccionado";
+            buttonRestoreRecord.Enabled = false;
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de RestoreSelectedEntity.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteRestoreAction()
+        private async Task ExecuteRestoreSelectedEntityAsync()
         {
             if (_selectedItem == null)
             {
@@ -122,20 +129,20 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            string msg = $"¿Está seguro que desea restaurar el registro:\n\n" +
+            string confirmationPromptMessage = $"¿Está seguro que desea restaurar el registro:\n\n" +
                          $"Tipo: {_selectedItem.EntityType}\n" +
                          $"Identificador: {_selectedItem.Identifier}\n" +
                          $"Nombre: {_selectedItem.Name}?\n\n" +
                          $"El registro volverá a estar disponible con su ID original {_selectedItem.Id}.";
 
-            if (UIHelper.ConfirmMessage(msg, "Confirmar Restauración"))
+            if (UIHelper.ConfirmMessage(confirmationPromptMessage, "Confirmar Restauración"))
             {
                 using (new WaitCursorHelper(this))
                 {
-                    var result = await _restoreService.RestoreEntityAsync(_selectedItem.EntityType, _selectedItem.Id);
-                    UIHelper.ShowResult(result, "Papelera y Restauración", async () =>
+                    var restoreOperationResult = await _restoreService.RestoreEntityAsync(_selectedItem.EntityType, _selectedItem.Id);
+                    UIHelper.ShowResult(restoreOperationResult, "Papelera y Restauración", async () =>
                     {
-                        await LoadDeletedRecordsAsync();
+                        await LoadDeletedRecordsByEntityTypeAsync();
                     });
                 }
             }

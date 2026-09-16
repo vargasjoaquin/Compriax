@@ -18,30 +18,34 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             this.BackColor = UIThemeHelper.SidebarBackground;
-            UIThemeHelper.ApplyCardStyle(pnlCard);
+            UIThemeHelper.ApplyCardStyle(panelLoginCard);
 
-            this.btnLogin.Click += async (s, e) => await ExecuteLoginAction();
-            this.linkPass.LinkClicked += (s, e) => OpenPasswordRecovery();
-            this.txtPass.KeyDown += async (s, e) => { if (e.KeyCode == Keys.Enter) await ExecuteLoginAction(); };
-            this.txtUsuario.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) txtPass.Focus(); };
-            this.btnClose.Click += (s, e) => System.Windows.Forms.Application.Exit();
+            this.buttonLogin.Click += async (s, e) => await ExecuteUserAuthenticationAsync();
+            this.linkLabelForgotPassword.LinkClicked += (s, e) => OpenPasswordRecoveryDialog();
+            this.textBoxPassword.KeyDown += async (s, e) => { if (e.KeyCode == Keys.Enter) await ExecuteUserAuthenticationAsync(); };
+            this.textBoxUsername.KeyDown += (s, e) => { if (e.KeyCode == Keys.Enter) textBoxPassword.Focus(); };
+            this.buttonCloseApplication.Click += (s, e) => System.Windows.Forms.Application.Exit();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UserAuthentication.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteLoginAction()
+        private async Task ExecuteUserAuthenticationAsync()
         {
-            lblErrorMessage.Visible = false;
+            labelErrorMessage.Visible = false;
 
-            if (string.IsNullOrWhiteSpace(txtUsuario.Text))
+            if (string.IsNullOrWhiteSpace(textBoxUsername.Text))
             {
-                ShowError("Por favor ingrese su nombre de usuario.");
-                txtUsuario.Focus();
+                DisplayAuthenticationErrorMessage("Por favor ingrese su nombre de usuario.");
+                textBoxUsername.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtPass.Text))
+            if (string.IsNullOrWhiteSpace(textBoxPassword.Text))
             {
-                ShowError("Por favor ingrese su contraseña.");
-                txtPass.Focus();
+                DisplayAuthenticationErrorMessage("Por favor ingrese su contraseña.");
+                textBoxPassword.Focus();
                 return;
             }
 
@@ -49,31 +53,31 @@ namespace CompriaxSystem.WinFormsUI
             {
                 try
                 {
-                    var result = await _authService.LoginAsync(txtUsuario.Text.Trim(), txtPass.Text);
+                    var result = await _authService.LoginAsync(textBoxUsername.Text.Trim(), textBoxPassword.Text);
 
                     if (result.Success)
                     {
-                        var user = _currentUserService.CurrentUser;
-                        bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+                        var authenticatedUser = _currentUserService.CurrentUser;
+                        bool isAdministratorRole = authenticatedUser != null && authenticatedUser.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
 
-                        if (!isAdmin)
+                        if (!isAdministratorRole)
                         {
-                            var selectRegisterForm = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
-                            if (selectRegisterForm.ShowDialog(this) != DialogResult.OK)
+                            var selectCashRegisterDialog = _serviceProvider.GetRequiredService<FormSelectCashRegister>();
+                            if (selectCashRegisterDialog.ShowDialog(this) != DialogResult.OK)
                             {
                                 return;
                             }
                         }
 
                         this.Hide();
-                        var panelControl = _serviceProvider.GetRequiredService<FormPanelControl>();
-                        panelControl.Show();
+                        var mainControlPanelForm = _serviceProvider.GetRequiredService<FormPanelControl>();
+                        mainControlPanelForm.Show();
                     }
                     else
                     {
-                        ShowError(result.Message);
-                        txtPass.SelectAll();
-                        txtPass.Focus();
+                        DisplayAuthenticationErrorMessage(result.Message);
+                        textBoxPassword.SelectAll();
+                        textBoxPassword.Focus();
                     }
                 }
                 catch (Exception ex)
@@ -83,18 +87,18 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void OpenPasswordRecovery()
+        private void OpenPasswordRecoveryDialog()
         {
-            var recoverForm = _serviceProvider.GetRequiredService<FormRecoverPassword>();
-            recoverForm.ShowDialog(this);
+            var passwordRecoveryDialog = _serviceProvider.GetRequiredService<FormRecoverPassword>();
+            passwordRecoveryDialog.ShowDialog(this);
         }
 
-        private void ShowError(string msg)
+        private void DisplayAuthenticationErrorMessage(string msg)
         {
-            lblErrorMessage.Text = msg;
-            lblErrorMessage.ImageAlign = ContentAlignment.MiddleLeft;
-            lblErrorMessage.ForeColor = UIThemeHelper.Danger;
-            lblErrorMessage.Visible = true;
+            labelErrorMessage.Text = msg;
+            labelErrorMessage.ImageAlign = ContentAlignment.MiddleLeft;
+            labelErrorMessage.ForeColor = UIThemeHelper.Danger;
+            labelErrorMessage.Visible = true;
         }
     }
 }

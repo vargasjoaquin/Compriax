@@ -14,128 +14,128 @@
 
         private void InitializeComponent()
         {
-            pnlCard = new Panel();
-            lblHeaderIcon = new Label();
-            lblMainTitle = new Label();
-            lblInstruct = new Label();
-            txtIdentity = new TextBox();
-            btnSend = new Button();
-            btnCancel = new Button();
-            lblResult = new Label();
-            btnCloseX = new Button();
-            pnlCard.SuspendLayout();
+            panelCard = new Panel();
+            labelHeaderIcon = new Label();
+            labelMainTitle = new Label();
+            labelInstructions = new Label();
+            textBoxIdentity = new TextBox();
+            buttonSendRecovery = new Button();
+            buttonCancel = new Button();
+            labelResultStatus = new Label();
+            buttonCloseDialog = new Button();
+            panelCard.SuspendLayout();
             SuspendLayout();
 
-            // pnlCard
-            pnlCard.BackColor = Color.White;
-            pnlCard.Controls.Add(lblHeaderIcon);
-            pnlCard.Controls.Add(lblMainTitle);
-            pnlCard.Controls.Add(lblInstruct);
-            pnlCard.Controls.Add(txtIdentity);
-            pnlCard.Controls.Add(btnSend);
-            pnlCard.Controls.Add(btnCancel);
-            pnlCard.Controls.Add(lblResult);
-            pnlCard.Location = new Point(24, 32);
-            pnlCard.Name = "pnlCard";
-            pnlCard.Size = new Size(432, 360);
-            pnlCard.TabIndex = 1;
+            // panelCard
+            panelCard.BackColor = Color.White;
+            panelCard.Controls.Add(labelHeaderIcon);
+            panelCard.Controls.Add(labelMainTitle);
+            panelCard.Controls.Add(labelInstructions);
+            panelCard.Controls.Add(textBoxIdentity);
+            panelCard.Controls.Add(buttonSendRecovery);
+            panelCard.Controls.Add(buttonCancel);
+            panelCard.Controls.Add(labelResultStatus);
+            panelCard.Location = new Point(24, 32);
+            panelCard.Name = "panelCard";
+            panelCard.Size = new Size(432, 360);
+            panelCard.TabIndex = 1;
 
-            // lblHeaderIcon
-            lblHeaderIcon.Font = new Font("Segoe UI", 24F);
-            lblHeaderIcon.Location = new Point(20, 15);
-            lblHeaderIcon.Name = "lblHeaderIcon";
-            lblHeaderIcon.Size = new Size(392, 45);
-            lblHeaderIcon.TabIndex = 0;
-            lblHeaderIcon.Text = "";
-            lblHeaderIcon.TextAlign = ContentAlignment.MiddleCenter;
+            // labelHeaderIcon
+            labelHeaderIcon.Font = new Font("Segoe UI", 24F);
+            labelHeaderIcon.Location = new Point(20, 15);
+            labelHeaderIcon.Name = "labelHeaderIcon";
+            labelHeaderIcon.Size = new Size(392, 45);
+            labelHeaderIcon.TabIndex = 0;
+            labelHeaderIcon.Text = "";
+            labelHeaderIcon.TextAlign = ContentAlignment.MiddleCenter;
 
-            // lblMainTitle
-            lblMainTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblMainTitle.ForeColor = Color.FromArgb(2, 132, 199);
-            lblMainTitle.Location = new Point(20, 65);
-            lblMainTitle.Name = "lblMainTitle";
-            lblMainTitle.Size = new Size(392, 25);
-            lblMainTitle.TabIndex = 1;
-            lblMainTitle.Text = "RECUPERAR CONTRASEÑA";
-            lblMainTitle.TextAlign = ContentAlignment.MiddleCenter;
+            // labelMainTitle
+            labelMainTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelMainTitle.ForeColor = Color.FromArgb(2, 132, 199);
+            labelMainTitle.Location = new Point(20, 65);
+            labelMainTitle.Name = "labelMainTitle";
+            labelMainTitle.Size = new Size(392, 25);
+            labelMainTitle.TabIndex = 1;
+            labelMainTitle.Text = "RECUPERAR CONTRASEÑA";
+            labelMainTitle.TextAlign = ContentAlignment.MiddleCenter;
 
-            // lblInstruct
-            lblInstruct.Font = new Font("Segoe UI", 9.5F);
-            lblInstruct.ForeColor = Color.FromArgb(100, 116, 139);
-            lblInstruct.Location = new Point(24, 100);
-            lblInstruct.Name = "lblInstruct";
-            lblInstruct.Size = new Size(384, 38);
-            lblInstruct.TabIndex = 2;
-            lblInstruct.Text = "Ingrese su nombre de usuario o correo electrónico registrado:";
+            // labelInstructions
+            labelInstructions.Font = new Font("Segoe UI", 9.5F);
+            labelInstructions.ForeColor = Color.FromArgb(100, 116, 139);
+            labelInstructions.Location = new Point(24, 100);
+            labelInstructions.Name = "labelInstructions";
+            labelInstructions.Size = new Size(384, 38);
+            labelInstructions.TabIndex = 2;
+            labelInstructions.Text = "Ingrese su nombre de usuario o correo electrónico registrado:";
 
-            // txtIdentity
-            txtIdentity.Font = new Font("Segoe UI", 11F);
-            txtIdentity.Location = new Point(24, 142);
-            txtIdentity.Name = "txtIdentity";
-            txtIdentity.PlaceholderText = "Usuario o email...";
-            txtIdentity.Size = new Size(384, 32);
-            txtIdentity.TabIndex = 3;
+            // textBoxIdentity
+            textBoxIdentity.Font = new Font("Segoe UI", 11F);
+            textBoxIdentity.Location = new Point(24, 142);
+            textBoxIdentity.Name = "textBoxIdentity";
+            textBoxIdentity.PlaceholderText = "Usuario o email...";
+            textBoxIdentity.Size = new Size(384, 32);
+            textBoxIdentity.TabIndex = 3;
 
-            // btnSend
-            btnSend.BackColor = Color.FromArgb(2, 132, 199);
-            btnSend.FlatAppearance.BorderSize = 0;
-            btnSend.FlatStyle = FlatStyle.Flat;
-            btnSend.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnSend.ForeColor = Color.White;
-            btnSend.Location = new Point(24, 190);
-            btnSend.Name = "btnSend";
-            btnSend.Size = new Size(384, 44);
-            btnSend.TabIndex = 4;
-            btnSend.Text = "ENVIAR";
-            btnSend.UseVisualStyleBackColor = false;
+            // buttonSendRecovery
+            buttonSendRecovery.BackColor = Color.FromArgb(2, 132, 199);
+            buttonSendRecovery.FlatAppearance.BorderSize = 0;
+            buttonSendRecovery.FlatStyle = FlatStyle.Flat;
+            buttonSendRecovery.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonSendRecovery.ForeColor = Color.White;
+            buttonSendRecovery.Location = new Point(24, 190);
+            buttonSendRecovery.Name = "buttonSendRecovery";
+            buttonSendRecovery.Size = new Size(384, 44);
+            buttonSendRecovery.TabIndex = 4;
+            buttonSendRecovery.Text = "ENVIAR";
+            buttonSendRecovery.UseVisualStyleBackColor = false;
 
-            // btnCancel
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Location = new Point(24, 242);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(384, 36);
-            btnCancel.TabIndex = 5;
-            btnCancel.Text = "VOLVER";
+            // buttonCancel
+            buttonCancel.FlatStyle = FlatStyle.Flat;
+            buttonCancel.Location = new Point(24, 242);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(384, 36);
+            buttonCancel.TabIndex = 5;
+            buttonCancel.Text = "VOLVER";
 
-            // lblResult
-            lblResult.Font = new Font("Segoe UI", 8.5F);
-            lblResult.ForeColor = Color.FromArgb(16, 185, 129);
-            lblResult.Location = new Point(24, 290);
-            lblResult.Name = "lblResult";
-            lblResult.Size = new Size(384, 55);
-            lblResult.TabIndex = 6;
-            lblResult.TextAlign = ContentAlignment.MiddleCenter;
+            // labelResultStatus
+            labelResultStatus.Font = new Font("Segoe UI", 8.5F);
+            labelResultStatus.ForeColor = Color.FromArgb(16, 185, 129);
+            labelResultStatus.Location = new Point(24, 290);
+            labelResultStatus.Name = "labelResultStatus";
+            labelResultStatus.Size = new Size(384, 55);
+            labelResultStatus.TabIndex = 6;
+            labelResultStatus.TextAlign = ContentAlignment.MiddleCenter;
 
-            // btnCloseX
-            btnCloseX.Cursor = Cursors.Hand;
-            btnCloseX.FlatAppearance.BorderSize = 0;
-            btnCloseX.FlatStyle = FlatStyle.Flat;
-            btnCloseX.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCloseX.ForeColor = Color.White;
-            btnCloseX.Location = new Point(440, 4);
-            btnCloseX.Name = "btnCloseX";
-            btnCloseX.Size = new Size(32, 28);
-            btnCloseX.TabIndex = 0;
-            btnCloseX.Text = "✕";
+            // buttonCloseDialog
+            buttonCloseDialog.Cursor = Cursors.Hand;
+            buttonCloseDialog.FlatAppearance.BorderSize = 0;
+            buttonCloseDialog.FlatStyle = FlatStyle.Flat;
+            buttonCloseDialog.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            buttonCloseDialog.ForeColor = Color.White;
+            buttonCloseDialog.Location = new Point(440, 4);
+            buttonCloseDialog.Name = "buttonCloseDialog";
+            buttonCloseDialog.Size = new Size(32, 28);
+            buttonCloseDialog.TabIndex = 0;
+            buttonCloseDialog.Text = "✕";
 
             // Form Properties
             BackColor = Color.FromArgb(15, 23, 42);
             ClientSize = new Size(480, 420);
-            Controls.Add(btnCloseX);
-            Controls.Add(pnlCard);
+            Controls.Add(buttonCloseDialog);
+            Controls.Add(panelCard);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormRecoverPassword";
             StartPosition = FormStartPosition.CenterParent;
-            pnlCard.ResumeLayout(false);
-            pnlCard.PerformLayout();
+            panelCard.ResumeLayout(false);
+            panelCard.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlCard;
-        private System.Windows.Forms.Label lblHeaderIcon, lblMainTitle, lblInstruct, lblResult;
-        private System.Windows.Forms.TextBox txtIdentity;
-        private System.Windows.Forms.Button btnSend, btnCancel, btnCloseX;
+        private System.Windows.Forms.Panel panelCard;
+        private System.Windows.Forms.Label labelHeaderIcon, labelMainTitle, labelInstructions, labelResultStatus;
+        private System.Windows.Forms.TextBox textBoxIdentity;
+        private System.Windows.Forms.Button buttonSendRecovery, buttonCancel, buttonCloseDialog;
     }
 }

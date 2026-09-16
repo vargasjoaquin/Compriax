@@ -7,7 +7,7 @@ namespace CompriaxSystem.WinFormsUI
     public partial class FormCategories : Form
     {
         private readonly ICatalogService _catalogService;
-        private int? _selectedCategoryId = null;
+        private int? _selectedCategoryIdentifier = null;
 
         public FormCategories(ICatalogService catalogService)
         {
@@ -15,57 +15,69 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlCard);
+            UIThemeHelper.ApplyCardStyle(panelCard);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
-            this.btnCancel.Click += (s, e) => ResetUI();
+            this.Load += async (s, e) => await InitializeCategoriesFormAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveCategoryAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteDeleteCategoryAsync();
+            this.buttonCancel.Click += (s, e) => ResetFormInputFields();
 
-            this.dgvCategories.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvCategories, e);
+            this.dataGridViewCategories.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewCategories, e);
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeCategoriesFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvCategories, SyncEntityToFields, ResetUI);
+                await RefreshCategoriesGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewCategories, SynchronizeSelectedCategoryToFormFields, ResetFormInputFields);
             }
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshCategoriesGridAsync()
         {
-            var categories = await _catalogService.GetActiveCategoriesAsync();
-            dgvCategories.DataSource = null;
-            dgvCategories.DataSource = categories.ToList();
-            DataGridViewHelper.ApplyStyle(dgvCategories);
+            var activeCategories = await _catalogService.GetActiveCategoriesAsync();
+            dataGridViewCategories.DataSource = null;
+            dataGridViewCategories.DataSource = activeCategories.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewCategories);
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveCategory.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction()
+        private async Task ExecuteSaveCategoryAsync()
         {
-            var dto = new CategoryDto
+            var category = new CategoryDto
             {
-                Id = _selectedCategoryId ?? 0,
-                Name = txtName.Text.Trim(),
-                Description = txtDescription.Text.Trim(),
+                Id = _selectedCategoryIdentifier ?? 0,
+                Name = textBoxCategoryName.Text.Trim(),
+                Description = textBoxDescription.Text.Trim(),
                 IsActive = true
             };
 
-            var result = dto.Id == 0
-                ? await _catalogService.CreateCategoryAsync(dto)
-                : await _catalogService.UpdateCategoryAsync(dto);
+            var operationResult = category.Id == 0
+                ? await _catalogService.CreateCategoryAsync(category)
+                : await _catalogService.UpdateCategoryAsync(category);
 
-            UIHelper.ShowResult(result, "Categorías", async () =>
+            UIHelper.ShowResult(operationResult, "Categorías", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshCategoriesGridAsync();
+                ResetFormInputFields();
             });
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DeleteCategory.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDeleteAction()
+        private async Task ExecuteDeleteCategoryAsync()
         {
-            if (_selectedCategoryId == null)
+            if (_selectedCategoryIdentifier == null)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una categoría de la lista para poder eliminarla.", "Selección Requerida");
                 return;
@@ -73,36 +85,39 @@ namespace CompriaxSystem.WinFormsUI
 
             if (UIHelper.ConfirmMessage("¿Desea eliminar esta categoría? El sistema verificará que no tenga productos activos asociados.", "Eliminar Categoría"))
             {
-                var result = await _catalogService.DeleteCategoryAsync(_selectedCategoryId.Value);
-                UIHelper.ShowResult(result, "Gestión de Categorías", async () =>
+                var operationResult = await _catalogService.DeleteCategoryAsync(_selectedCategoryIdentifier.Value);
+                UIHelper.ShowResult(operationResult, "Gestión de Categorías", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshCategoriesGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedCategoryToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedCategoryToFormFields()
         {
-            if (dgvCategories.CurrentRow == null)
+            if (dataGridViewCategories.CurrentRow == null)
                 return;
 
-            var category = (CategoryDto)dgvCategories.CurrentRow.DataBoundItem;
+            var selectedCategory = (CategoryDto)dataGridViewCategories.CurrentRow.DataBoundItem;
 
-            _selectedCategoryId = category.Id;
-            txtName.Text = category.Name;
-            txtDescription.Text = category.Description ?? string.Empty;
-            btnDelete.Visible = true;
-            btnSave.Text = "ACTUALIZAR";
+            _selectedCategoryIdentifier = selectedCategory.Id;
+            textBoxCategoryName.Text = selectedCategory.Name;
+            textBoxDescription.Text = selectedCategory.Description ?? string.Empty;
+            buttonDelete.Visible = true;
+            buttonSave.Text = "ACTUALIZAR";
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedCategoryId = null;
-            UIHelper.CleanControls(pnlCard);
-            btnDelete.Visible = false;
-            btnSave.Text = "GUARDAR";
-            txtName.Focus();
+            _selectedCategoryIdentifier = null;
+            UIHelper.CleanControls(panelCard);
+            buttonDelete.Visible = false;
+            buttonSave.Text = "GUARDAR";
+            textBoxCategoryName.Focus();
         }
     }
 }

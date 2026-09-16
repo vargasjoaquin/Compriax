@@ -17,109 +17,109 @@ namespace CompriaxSystem.WinFormsUI
 
         private void InitializeComponent()
         {
-            this.pnlTopCards = new System.Windows.Forms.TableLayoutPanel();
-            this.cardSalesToday = new System.Windows.Forms.Panel();
-            this.lblTitle1 = new System.Windows.Forms.Label();
-            this.lblSalesAmount = new System.Windows.Forms.Label();
-            this.cardWeekly = new System.Windows.Forms.Panel();
-            this.lblTitle2 = new System.Windows.Forms.Label();
-            this.lblWeeklyAmount = new System.Windows.Forms.Label();
-            this.cardTickets = new System.Windows.Forms.Panel();
-            this.lblTitle3 = new System.Windows.Forms.Label();
-            this.lblSalesCount = new System.Windows.Forms.Label();
-            this.cardStockAlert = new System.Windows.Forms.Panel();
-            this.lblTitle4 = new System.Windows.Forms.Label();
-            this.lblLowStockCount = new System.Windows.Forms.Label();
-            this.pnlBottomContent = new System.Windows.Forms.TableLayoutPanel();
-            this.pnlTopProducts = new System.Windows.Forms.Panel();
-            this.lblTopProdTitle = new System.Windows.Forms.Label();
-            this.dgvTopProducts = new System.Windows.Forms.DataGridView();
-            this.pnlCriticalStock = new System.Windows.Forms.Panel();
-            this.lblCriticalTitle = new System.Windows.Forms.Label();
-            this.dgvCriticalStock = new System.Windows.Forms.DataGridView();
+            this.tableLayoutPanelTopCards = new System.Windows.Forms.TableLayoutPanel();
+            this.panelCardSalesToday = new System.Windows.Forms.Panel();
+            this.labelTitleSalesToday = new System.Windows.Forms.Label();
+            this.labelSalesAmountToday = new System.Windows.Forms.Label();
+            this.panelCardWeekly = new System.Windows.Forms.Panel();
+            this.labelTitleWeekly = new System.Windows.Forms.Label();
+            this.labelWeeklyAmount = new System.Windows.Forms.Label();
+            this.panelCardTickets = new System.Windows.Forms.Panel();
+            this.labelTitleTickets = new System.Windows.Forms.Label();
+            this.labelSalesCountToday = new System.Windows.Forms.Label();
+            this.panelCardStockAlert = new System.Windows.Forms.Panel();
+            this.labelTitleStockAlert = new System.Windows.Forms.Label();
+            this.labelLowStockCount = new System.Windows.Forms.Label();
+            this.tableLayoutPanelBottomContent = new System.Windows.Forms.TableLayoutPanel();
+            this.panelTopProductsContainer = new System.Windows.Forms.Panel();
+            this.labelTopProductsTitle = new System.Windows.Forms.Label();
+            this.dataGridViewTopProducts = new System.Windows.Forms.DataGridView();
+            this.panelCriticalStockContainer = new System.Windows.Forms.Panel();
+            this.labelCriticalStockTitle = new System.Windows.Forms.Label();
+            this.dataGridViewCriticalStock = new System.Windows.Forms.DataGridView();
 
-            this.pnlTopCards.SuspendLayout();
-            this.cardSalesToday.SuspendLayout();
-            this.cardWeekly.SuspendLayout();
-            this.cardTickets.SuspendLayout();
-            this.cardStockAlert.SuspendLayout();
-            this.pnlBottomContent.SuspendLayout();
-            this.pnlTopProducts.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopProducts)).BeginInit();
-            this.pnlCriticalStock.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCriticalStock)).BeginInit();
+            this.tableLayoutPanelTopCards.SuspendLayout();
+            this.panelCardSalesToday.SuspendLayout();
+            this.panelCardWeekly.SuspendLayout();
+            this.panelCardTickets.SuspendLayout();
+            this.panelCardStockAlert.SuspendLayout();
+            this.tableLayoutPanelBottomContent.SuspendLayout();
+            this.panelTopProductsContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTopProducts)).BeginInit();
+            this.panelCriticalStockContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCriticalStock)).BeginInit();
             this.SuspendLayout();
 
             // ==================== TARJETAS SUPERIORES (KPIs) ====================
-            this.pnlTopCards.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pnlTopCards.Height = 110;
-            this.pnlTopCards.ColumnCount = 4;
-            this.pnlTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
-            this.pnlTopCards.Padding = new System.Windows.Forms.Padding(16, 12, 16, 8);
+            this.tableLayoutPanelTopCards.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tableLayoutPanelTopCards.Height = 110;
+            this.tableLayoutPanelTopCards.ColumnCount = 4;
+            this.tableLayoutPanelTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelTopCards.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 25F));
+            this.tableLayoutPanelTopCards.Padding = new System.Windows.Forms.Padding(16, 12, 16, 8);
 
-            this.pnlTopCards.Controls.Add(this.cardSalesToday, 0, 0);
-            this.pnlTopCards.Controls.Add(this.cardWeekly, 1, 0);
-            this.pnlTopCards.Controls.Add(this.cardTickets, 2, 0);
-            this.pnlTopCards.Controls.Add(this.cardStockAlert, 3, 0);
+            this.tableLayoutPanelTopCards.Controls.Add(this.panelCardSalesToday, 0, 0);
+            this.tableLayoutPanelTopCards.Controls.Add(this.panelCardWeekly, 1, 0);
+            this.tableLayoutPanelTopCards.Controls.Add(this.panelCardTickets, 2, 0);
+            this.tableLayoutPanelTopCards.Controls.Add(this.panelCardStockAlert, 3, 0);
 
             // Card 1: Ventas Hoy
-            SetupKpiCard(this.cardSalesToday, this.lblTitle1, "VENTAS DE HOY", this.lblSalesAmount, "$ 0,00", UIThemeHelper.Primary);
+            SetupKpiCard(this.panelCardSalesToday, this.labelTitleSalesToday, "VENTAS DE HOY", this.labelSalesAmountToday, "$ 0,00", UIThemeHelper.Primary);
 
             // Card 2: Ventas Semana
-            SetupKpiCard(this.cardWeekly, this.lblTitle2, "INGRESOS SEMANALES", this.lblWeeklyAmount, "$ 0,00", Color.FromArgb(79, 70, 229));
+            SetupKpiCard(this.panelCardWeekly, this.labelTitleWeekly, "INGRESOS SEMANALES", this.labelWeeklyAmount, "$ 0,00", Color.FromArgb(79, 70, 229));
 
             // Card 3: Tickets
-            SetupKpiCard(this.cardTickets, this.lblTitle3, "TICKETS DE HOY", this.lblSalesCount, "0", Color.FromArgb(15, 118, 110));
+            SetupKpiCard(this.panelCardTickets, this.labelTitleTickets, "TICKETS DE HOY", this.labelSalesCountToday, "0", Color.FromArgb(15, 118, 110));
 
             // Card 4: Alerta Stock
-            SetupKpiCard(this.cardStockAlert, this.lblTitle4, "PRODUCTOS STOCK BAJO", this.lblLowStockCount, "0", UIThemeHelper.Danger);
+            SetupKpiCard(this.panelCardStockAlert, this.labelTitleStockAlert, "PRODUCTOS STOCK BAJO", this.labelLowStockCount, "0", UIThemeHelper.Danger);
 
             // ==================== TABLAS INFERIORES ====================
-            this.pnlBottomContent.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlBottomContent.ColumnCount = 2;
-            this.pnlBottomContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pnlBottomContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.pnlBottomContent.Padding = new System.Windows.Forms.Padding(16, 8, 16, 16);
-            this.pnlBottomContent.Controls.Add(this.pnlTopProducts, 0, 0);
-            this.pnlBottomContent.Controls.Add(this.pnlCriticalStock, 1, 0);
+            this.tableLayoutPanelBottomContent.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanelBottomContent.ColumnCount = 2;
+            this.tableLayoutPanelBottomContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelBottomContent.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanelBottomContent.Padding = new System.Windows.Forms.Padding(16, 8, 16, 16);
+            this.tableLayoutPanelBottomContent.Controls.Add(this.panelTopProductsContainer, 0, 0);
+            this.tableLayoutPanelBottomContent.Controls.Add(this.panelCriticalStockContainer, 1, 0);
 
             // Top Productos
-            this.pnlTopProducts.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlTopProducts.Controls.AddRange(new System.Windows.Forms.Control[] { this.dgvTopProducts, this.lblTopProdTitle });
-            this.lblTopProdTitle.Text = "Artículos Más Vendidos de Hoy";
-            this.lblTopProdTitle.Font = UIThemeHelper.FontHeader;
-            this.lblTopProdTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblTopProdTitle.Height = 36;
-            this.dgvTopProducts.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTopProductsContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelTopProductsContainer.Controls.AddRange(new System.Windows.Forms.Control[] { this.dataGridViewTopProducts, this.labelTopProductsTitle });
+            this.labelTopProductsTitle.Text = "Artículos Más Vendidos de Hoy";
+            this.labelTopProductsTitle.Font = UIThemeHelper.FontHeader;
+            this.labelTopProductsTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelTopProductsTitle.Height = 36;
+            this.dataGridViewTopProducts.Dock = System.Windows.Forms.DockStyle.Fill;
 
             // Stock Crítico
-            this.pnlCriticalStock.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlCriticalStock.Controls.AddRange(new System.Windows.Forms.Control[] { this.dgvCriticalStock, this.lblCriticalTitle });
-            this.lblCriticalTitle.Text = "Reposición Inmediata de Stock";
-            this.lblCriticalTitle.Font = UIThemeHelper.FontHeader;
-            this.lblCriticalTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblCriticalTitle.Height = 36;
-            this.dgvCriticalStock.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCriticalStockContainer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCriticalStockContainer.Controls.AddRange(new System.Windows.Forms.Control[] { this.dataGridViewCriticalStock, this.labelCriticalStockTitle });
+            this.labelCriticalStockTitle.Text = "Reposición Inmediata de Stock";
+            this.labelCriticalStockTitle.Font = UIThemeHelper.FontHeader;
+            this.labelCriticalStockTitle.Dock = System.Windows.Forms.DockStyle.Top;
+            this.labelCriticalStockTitle.Height = 36;
+            this.dataGridViewCriticalStock.Dock = System.Windows.Forms.DockStyle.Fill;
 
             // Form Properties
             this.ClientSize = new System.Drawing.Size(1200, 700);
-            this.Controls.AddRange(new System.Windows.Forms.Control[] { this.pnlBottomContent, this.pnlTopCards });
+            this.Controls.AddRange(new System.Windows.Forms.Control[] { this.tableLayoutPanelBottomContent, this.tableLayoutPanelTopCards });
             this.BackColor = UIThemeHelper.Background;
             this.Text = "Dashboard de Control";
 
-            this.pnlTopCards.ResumeLayout(false);
-            this.cardSalesToday.ResumeLayout(false);
-            this.cardWeekly.ResumeLayout(false);
-            this.cardTickets.ResumeLayout(false);
-            this.cardStockAlert.ResumeLayout(false);
-            this.pnlBottomContent.ResumeLayout(false);
-            this.pnlTopProducts.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvTopProducts)).EndInit();
-            this.pnlCriticalStock.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvCriticalStock)).EndInit();
+            this.tableLayoutPanelTopCards.ResumeLayout(false);
+            this.panelCardSalesToday.ResumeLayout(false);
+            this.panelCardWeekly.ResumeLayout(false);
+            this.panelCardTickets.ResumeLayout(false);
+            this.panelCardStockAlert.ResumeLayout(false);
+            this.tableLayoutPanelBottomContent.ResumeLayout(false);
+            this.panelTopProductsContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTopProducts)).EndInit();
+            this.panelCriticalStockContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewCriticalStock)).EndInit();
             this.ResumeLayout(false);
         }
 
@@ -145,11 +145,11 @@ namespace CompriaxSystem.WinFormsUI
             card.Controls.AddRange(new System.Windows.Forms.Control[] { title, value });
         }
 
-        private System.Windows.Forms.TableLayoutPanel pnlTopCards, pnlBottomContent;
-        private System.Windows.Forms.Panel cardSalesToday, cardWeekly, cardTickets, cardStockAlert, pnlTopProducts, pnlCriticalStock;
-        private System.Windows.Forms.Label lblTitle1, lblTitle2, lblTitle3, lblTitle4, lblSalesAmount, lblWeeklyAmount, lblSalesCount, lblLowStockCount;
-        private System.Windows.Forms.Label lblTopProdTitle, lblCriticalTitle;
-        private System.Windows.Forms.DataGridView dgvTopProducts, dgvCriticalStock;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanelTopCards, tableLayoutPanelBottomContent;
+        private System.Windows.Forms.Panel panelCardSalesToday, panelCardWeekly, panelCardTickets, panelCardStockAlert, panelTopProductsContainer, panelCriticalStockContainer;
+        private System.Windows.Forms.Label labelTitleSalesToday, labelTitleWeekly, labelTitleTickets, labelTitleStockAlert, labelSalesAmountToday, labelWeeklyAmount, labelSalesCountToday, labelLowStockCount;
+        private System.Windows.Forms.Label labelTopProductsTitle, labelCriticalStockTitle;
+        private System.Windows.Forms.DataGridView dataGridViewTopProducts, dataGridViewCriticalStock;
 
         #endregion
     }

@@ -10,7 +10,6 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ISupplyChainService _supplyService;
         private readonly IExcelService _excelService;
         private List<PurchaseReportDto> _fullHistory = new();
-
         public FormPurchaseReport(IReportService reportService, ISupplyChainService supplyService, IExcelService excelService)
         {
             _reportService = reportService;
@@ -19,66 +18,70 @@ namespace CompriaxSystem.WinFormsUI
             InitializeComponent();
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlFilters);
+            UIThemeHelper.ApplyCardStyle(panelFiltersCard);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSearch.Click += async (s, e) => await ExecuteSearchAction();
-            this.btnExport.Click += (s, e) => ExecuteExportExcelAction();
+            this.Load += async (s, e) => await InitializePurchaseReportFormAsync();
+            this.buttonSearch.Click += async (s, e) => await ExecuteSearchPurchaseHistoryAsync();
+            this.buttonExportExcel.Click += (s, e) => ExecuteExportPurchasesReportToExcelAsync();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePurchaseReportFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var suppliers = (await _supplyService.GetSuppliersAsync()).ToList();
-                suppliers.Insert(0, new SupplierDto { Id = 0, CompanyName = "[ TODOS ]" });
+                var suppliersFilterList = (await _supplyService.GetSuppliersAsync()).ToList();
+                suppliersFilterList.Insert(0, new SupplierDto { Id = 0, CompanyName = "[ TODOS ]" });
 
-                cboSupplierFilter.DataSource = suppliers;
-                cboSupplierFilter.DisplayMember = nameof(SupplierDto.CompanyName);
-                cboSupplierFilter.ValueMember = nameof(SupplierDto.Id);
+                comboBoxSupplierFilter.DataSource = suppliersFilterList;
+                comboBoxSupplierFilter.DisplayMember = nameof(SupplierDto.CompanyName);
+                comboBoxSupplierFilter.ValueMember = nameof(SupplierDto.Id);
 
-                cboSearchBy.DataSource = UIHelper.GetSearchableCriteria(
+                comboBoxSearchCriteria.DataSource = UIHelper.GetSearchableCriteria(
                     nameof(PurchaseReportDto.DocumentNumber),
                     nameof(PurchaseReportDto.SupplierName),
                     nameof(PurchaseReportDto.SupplierTaxId)
                 );
-                cboSearchBy.DisplayMember = "Name";
-                cboSearchBy.ValueMember = "Id";
+                comboBoxSearchCriteria.DisplayMember = "Name";
+                comboBoxSearchCriteria.ValueMember = "Id";
 
-                await ExecuteSearchAction();
+                await ExecuteSearchPurchaseHistoryAsync();
             }
         }
 
-        public async Task ExecuteSearchAction()
+        public async Task ExecuteSearchPurchaseHistoryAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                int? supId = (cboSupplierFilter.SelectedValue is int id && id > 0) ? id : null;
-                var data = await _reportService.GetPurchaseHistoryAsync(dtpStart.Value, dtpEnd.Value, supId);
-                _fullHistory = data.ToList();
-                ExecuteFilterAction();
+                int? supplierId = (comboBoxSupplierFilter.SelectedValue is int id && id > 0) ? id : null;
+                var purchaseHistoryDataList = await _reportService.GetPurchaseHistoryAsync(dateTimePickerStartDate.Value, dateTimePickerEndDate.Value, supplierId);
+                _fullHistory = purchaseHistoryDataList.ToList();
+                ExecuteFilterPurchaseReportData();
             }
         }
 
-        private void ExecuteFilterAction()
+        private void ExecuteFilterPurchaseReportData()
         {
-            string filterText = txtSearchText.Text.Trim().ToLower();
-            string criteria = cboSearchBy.SelectedValue?.ToString() ?? nameof(PurchaseReportDto.DocumentNumber);
+            string FilterText = textBoxSearchValue.Text.Trim().ToLower();
+            string criteria = comboBoxSearchCriteria.SelectedValue?.ToString() ?? nameof(PurchaseReportDto.DocumentNumber);
 
-            var filtered = _fullHistory.Where(x =>
+            var filteredPurchaseReportsList = _fullHistory.Where(x =>
             {
                 var prop = x.GetType().GetProperty(criteria);
                 var value = prop?.GetValue(x, null)?.ToString()?.ToLower() ?? "";
-                return value.Contains(filterText);
+                return value.Contains(FilterText);
             }).ToList();
 
-            dgvData.DataSource = filtered;
-            DataGridViewHelper.ApplyStyle(dgvData);
+            dataGridViewPurchaseData.DataSource = filteredPurchaseReportsList;
+            DataGridViewHelper.ApplyStyle(dataGridViewPurchaseData);
         }
 
-        private async void ExecuteExportExcelAction()
+        private async void ExecuteExportPurchasesReportToExcelAsync()
         {
-            if (dgvData.Rows.Count == 0 || !_fullHistory.Any())
+            if (dataGridViewPurchaseData.Rows.Count == 0 || !_fullHistory.Any())
             {
                 UIHelper.WarnMessage(this, "No hay registros de compras en el período seleccionado para exportar a Excel.", "Sin Datos");
                 return;
@@ -86,9 +89,9 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                byte[] fileBytes = _excelService.ExportToExcel((List<PurchaseReportDto>)dgvData.DataSource, "Compras");
+                byte[] generatedExcelFileBytes = _excelService.ExportToExcel((List<PurchaseReportDto>)dataGridViewPurchaseData.DataSource, "Compras");
                 string fileName = $"Compras_{DateTime.Now:yyyyMMdd_HHmm}.xlsx";
-                await FileExportHelper.SaveAndOpenExcelAsync(this, fileBytes, fileName, "Exportar Reporte de Compras");
+                await FileExportHelper.SaveAndOpenExcelAsync(this, generatedExcelFileBytes, fileName, "Exportar Reporte de Compras");
             }
         }
     }
