@@ -66,8 +66,6 @@ namespace CompriaxSystem.WinFormsUI
             this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
             this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
             this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
-            this.btnToggleCam.Click += (s, e) => ToggleCamera();
-            this.FormClosing += (s, e) => StopCamera();
 
             this.txtProductCode.KeyDown += async (s, e) =>
             {
@@ -437,74 +435,6 @@ namespace CompriaxSystem.WinFormsUI
             txtPriceBuy.Clear();
             numQuantity.Value = 1;
             txtProductCode.Focus();
-        }
-
-        private void ToggleCamera()
-        {
-            if (!_isCameraActive)
-            {
-                _cameraService.StartStreaming(0, OnFrameCaptured);
-                _isCameraActive = true;
-                btnToggleCam.Text = "APAGAR CÁMARA";
-                btnToggleCam.BackColor = Color.Firebrick;
-            }
-            else
-            {
-                StopCamera();
-            }
-        }
-
-        private void StopCamera()
-        {
-            if (_isCameraActive)
-            {
-                _cameraService.StopStreaming();
-                _isCameraActive = false;
-                if (picWebcam.Image != null)
-                {
-                    picWebcam.Image.Dispose();
-                    picWebcam.Image = null;
-                }
-
-                btnToggleCam.Text = "CÁMARA";
-                btnToggleCam.BackColor = Color.Navy;
-            }
-        }
-
-        private void OnFrameCaptured(Bitmap frame)
-        {
-            if (!this.IsDisposed && picWebcam.InvokeRequired)
-            {
-                this.Invoke(new Action(() =>
-                {
-                    picWebcam.Image?.Dispose();
-                    picWebcam.Image = (Bitmap)frame.Clone();
-                }));
-            }
-
-            string? decodedText = _barcodeService.DecodeBarcode(frame);
-
-            if (!string.IsNullOrEmpty(decodedText))
-            {
-                if (decodedText == _lastScannedBarcode && (DateTime.Now - _lastScanTime).TotalSeconds < 2.5)
-                {
-                    frame.Dispose();
-                    return;
-                }
-
-                _lastScannedBarcode = decodedText;
-                _lastScanTime = DateTime.Now;
-
-                if (!this.IsDisposed)
-                {
-                    this.Invoke(new Action(async () =>
-                    {
-                        await ProcessScannedBarcodeAsync(decodedText);
-                    }));
-                }
-            }
-
-            frame.Dispose();
         }
     }
 }

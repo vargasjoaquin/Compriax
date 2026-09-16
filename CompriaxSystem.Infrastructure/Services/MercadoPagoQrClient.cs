@@ -25,7 +25,7 @@ namespace CompriaxSystem.Infrastructure.Services
         public async Task<MercadoPagoQrOrderResponseDto> CreateQrOrderAsync(int saleId, decimal amount, string description, string? baseUrl = null)
         {
             string serviceBaseUrl = (BASE_URL).TrimEnd('/');
-            string paymentEndpoint = $"{url}/api/mercadopago/payments";
+            string paymentEndpoint = $"{serviceBaseUrl}/api/mercadopago/payments";
 
             try
             {
