@@ -55,11 +55,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 3. CAJA / TERMINAL
             // =========================================================================
-            CashRegister? defaultRegister = await context.CashRegisters.FirstOrDefaultAsync(cr => cr.Number == 1);
+            CashRegister? defaultCashRegister = await context.CashRegisters.FirstOrDefaultAsync(cr => cr.Number == 1);
             
-            if (defaultRegister == null)
+            if (defaultCashRegister == null)
             {
-                defaultRegister = new CashRegister
+                defaultCashRegister = new CashRegister
                 {
                     Number = 1,
                     Name = "Caja 01 - Principal",
@@ -69,20 +69,20 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     IsDeleted = false
                 };
 
-                await context.CashRegisters.AddAsync(defaultRegister);
+                await context.CashRegisters.AddAsync(defaultCashRegister);
                 await context.SaveChangesAsync();
             }
 
             // =========================================================================
             // 4. MÉTODOS DE PAGO
             // =========================================================================
-            PaymentMethod? defaultPayment = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == PaymentMethodConstants.CASH);
+            PaymentMethod? defaultPaymentMethod = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == PaymentMethodConstants.CASH);
             
-            if (defaultPayment == null)
+            if (defaultPaymentMethod == null)
             {
-                defaultPayment = new PaymentMethod { Name = PaymentMethodConstants.CASH, IsActive = true };
+                defaultPaymentMethod = new PaymentMethod { Name = PaymentMethodConstants.CASH, IsActive = true };
                 await context.PaymentMethods.AddRangeAsync(
-                    defaultPayment,
+                    defaultPaymentMethod,
                     new PaymentMethod { Name = PaymentMethodConstants.DEBIT_CARD, IsActive = true },
                     new PaymentMethod { Name = PaymentMethodConstants.CREDIT_CARD, IsActive = true },
                     new PaymentMethod { Name = PaymentMethodConstants.BANK_TRANSFER, IsActive = true },
@@ -97,6 +97,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             if (!await context.DocumentTypes.AnyAsync())
             {
                 using var documentTypesTransaction = await context.Database.BeginTransactionAsync();
+                
                 try
                 {
                     await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[DocumentTypes] ON;");
@@ -165,6 +166,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             if (defaultTaxCondition == null)
             {
                 defaultTaxCondition = new TaxCondition { Name = "IVA Responsable Inscripto" };
+                
                 await context.TaxConditions.AddRangeAsync(
                     defaultTaxCondition,
                     new TaxCondition { Name = "IVA Sujeto Exento" },
@@ -179,13 +181,14 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 8. UNIDADES DE MEDIDA
             // =========================================================================
-            UnitsOfMeasure? defaultUnit = await context.UnitsOfMeasure.FirstOrDefaultAsync(u => u.Abbreviation == "UN");
+            UnitsOfMeasure? defaultUnitOfMeasure = await context.UnitsOfMeasure.FirstOrDefaultAsync(u => u.Abbreviation == "UN");
             
-            if (defaultUnit == null)
+            if (defaultUnitOfMeasure == null)
             {
-                defaultUnit = new UnitsOfMeasure { Name = "Unidades", Abbreviation = "UN" };
+                defaultUnitOfMeasure = new UnitsOfMeasure { Name = "Unidades", Abbreviation = "UN" };
+                
                 await context.UnitsOfMeasure.AddRangeAsync(
-                    defaultUnit,
+                    defaultUnitOfMeasure,
                     new UnitsOfMeasure { Name = "Kilogramos", Abbreviation = "KG" },
                     new UnitsOfMeasure { Name = "Litros", Abbreviation = "LT" },
                     new UnitsOfMeasure { Name = "Gramos", Abbreviation = "GR" },
@@ -202,6 +205,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             if (defaultCategory == null)
             {
                 defaultCategory = new Category { Name = "Bebidas y Gaseosas", Description = "Aguas, gaseosas y jugos", IsActive = true, CreatedAt = DateTime.UtcNow };
+                
                 await context.Categories.AddRangeAsync(
                     defaultCategory,
                     new Category { Name = "Almacén y Comestibles", Description = "Alimentos no perecederos de góndola", IsActive = true, CreatedAt = DateTime.UtcNow },
@@ -216,6 +220,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             if (defaultBrand == null)
             {
                 defaultBrand = new Brand { Name = "Coca-Cola", CreatedAt = DateTime.UtcNow };
+                
                 await context.Brands.AddRangeAsync(
                     defaultBrand,
                     new Brand { Name = "General / Sin Marca", CreatedAt = DateTime.UtcNow },
@@ -284,7 +289,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     Description = "Gaseosa Coca-Cola botella descartable 1.5 Litros",
                     CategoryId = defaultCategory.Id,
                     BrandId = defaultBrand.Id,
-                    UnitOfMeasureId = defaultUnit.Id,
+                    UnitOfMeasureId = defaultUnitOfMeasure.Id,
                     BuyPrice = 1200.00m,
                     SellPrice = 1850.00m,
                     CurrentStock = 49,
@@ -318,7 +323,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 var sampleShift = new CashShift
                 {
                     UserId = administratorUser.Id,
-                    CashRegisterId = defaultRegister.Id,
+                    CashRegisterId = defaultCashRegister.Id,
                     OpeningDate = DateTime.UtcNow.AddHours(-1),
                     ClosingDate = DateTime.UtcNow.AddMinutes(-5),
                     InitialCash = 10000.00m,
@@ -346,7 +351,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 {
                     UserId = administratorUser.Id,
                     CustomerId = null,
-                    CashRegisterId = defaultRegister.Id,
+                    CashRegisterId = defaultCashRegister.Id,
                     CashShiftId = sampleShift.Id,
                     DocumentTypeId = documentType.Id,
                     DocumentNumber = "00000001",
@@ -355,7 +360,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     TotalAmount = 1850.00m,
                     PaymentReceived = 2000.00m,
                     PaymentChange = 150.00m,
-                    PaymentMethodId = defaultPayment.Id,
+                    PaymentMethodId = defaultPaymentMethod.Id,
                     PointOfSale = 1,
                     FiscalStatus = FiscalStatuses.DIGITAL_VOUCHER,
                     CreatedAt = DateTime.UtcNow.AddMinutes(-30),

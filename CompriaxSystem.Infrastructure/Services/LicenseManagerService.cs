@@ -22,35 +22,35 @@ namespace CompriaxSystem.Infrastructure.Services
 
         public LicenseInformationDto? CurrentLicense { get; private set; }
 
-        public LicenseManagerService(IConfiguration config, IHttpClientFactory httpClientFactory)
+        public LicenseManagerService(IConfiguration configuration, IHttpClientFactory httpClientFactory)
         {
-            var handler = new HttpClientHandler
+            var httpClientHandler = new HttpClientHandler
             {
                 ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
             };
 
-            _httpClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
-            _serverUrl = config["Licensing:ServerUrl"] ?? "http://licensekeysadminstrator.runasp.net";
+            _httpClient = new HttpClient(httpClientHandler) { Timeout = TimeSpan.FromSeconds(15) };
+            _serverUrl = configuration["Licensing:ServerUrl"] ?? "http://licensekeysadminstrator.runasp.net";
 
-            string? keyFromConfig = config["Licensing:RsaPublicKeyPem"];
-            string keyFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "rsa_public_key.txt");
+            string? configuredPublicKey = configuration["Licensing:RsaPublicKeyPem"];
+            string publicKeyFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "rsa_public_key.txt");
 
-            if (string.IsNullOrWhiteSpace(keyFromConfig) && File.Exists(keyFilePath))
+            if (string.IsNullOrWhiteSpace(configuredPublicKey) && File.Exists(publicKeyFilePath))
             {
-                keyFromConfig = File.ReadAllText(keyFilePath);
+                configuredPublicKey = File.ReadAllText(publicKeyFilePath);
             }
 
-            _rsaPublicKeyPem = !string.IsNullOrWhiteSpace(keyFromConfig)
-                ? keyFromConfig
+            _rsaPublicKeyPem = !string.IsNullOrWhiteSpace(configuredPublicKey)
+                ? configuredPublicKey
                 : throw new InvalidOperationException("Public Key de licenciamiento no configurada.");
 
-            string commonFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "CompriaxSystem");
-            EnsureFolderPermissions(commonFolder);
-            _primaryLicensePath = Path.Combine(commonFolder, "license.dat");
+            string commonApplicationDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "CompriaxSystem");
+            EnsureFolderPermissions(commonApplicationDataPath);
+            _primaryLicensePath = Path.Combine(commonApplicationDataPath, "license.dat");
 
-            string localFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CompriaxSystem");
-            Directory.CreateDirectory(localFolder);
-            _fallbackLicensePath = Path.Combine(localFolder, "license.dat");
+            string localApplicationDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "CompriaxSystem");
+            Directory.CreateDirectory(localApplicationDataPath);
+            _fallbackLicensePath = Path.Combine(localApplicationDataPath, "license.dat");
         }
 
         /// <summary>
@@ -59,50 +59,50 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <returns>Resultado de la operación indicando si la licencia es válida y autorizada para este equipo.</returns>
         public async Task<OperationResult> ValidateInstalledLicenseAsync()
         {
-            string? activePath = null;
+            string? activeLicensePath = null;
 
             if (File.Exists(_primaryLicensePath))
-                activePath = _primaryLicensePath;
+                activeLicensePath = _primaryLicensePath;
             else if (File.Exists(_fallbackLicensePath))
-                activePath = _fallbackLicensePath;
+                activeLicensePath = _fallbackLicensePath;
 
-            if (activePath == null)
+            if (activeLicensePath == null)
                 return OperationResult.Failure("El sistema no se encuentra activado en esta computadora.");
 
             try
             {
-                byte[] encryptedBytes = await File.ReadAllBytesAsync(activePath);
-                byte[] rawTokenBytes = ProtectedData.Unprotect(encryptedBytes, null, DataProtectionScope.LocalMachine);
+                byte[] encryptedTokenBytes = await File.ReadAllBytesAsync(activeLicensePath);
+                byte[] rawTokenBytes = ProtectedData.Unprotect(encryptedTokenBytes, null, DataProtectionScope.LocalMachine);
                 string tokenString = Encoding.UTF8.GetString(rawTokenBytes);
 
-                var (isValidSignature, payload) = VerifyTokenSignature(tokenString);
+                var (isValidSignature, licensePayload) = VerifyTokenSignature(tokenString);
                 
-                if (!isValidSignature || payload == null)
+                if (!isValidSignature || licensePayload == null)
                     return OperationResult.Failure("La credencial de activación está corrupta o fue alterada.");
 
-                string currentHwid = HardwareFingerprint.GetMachineHardwareId();
+                string currentHardwareId = HardwareFingerprint.GetMachineHardwareId();
                 
-                if (payload.HardwareId != currentHwid)
+                if (licensePayload.HardwareId != currentHardwareId)
                     return OperationResult.Failure("Esta instalación fue copiada a otro equipo y no coincide con el hardware autorizado.");
 
-                if (payload.ExpiresAt.HasValue && payload.ExpiresAt.Value < DateTime.UtcNow)
+                if (licensePayload.ExpiresAt.HasValue && licensePayload.ExpiresAt.Value < DateTime.UtcNow)
                     return OperationResult.Failure("La licencia ha expirado.");
 
                 CurrentLicense = new LicenseInformationDto
                 {
-                    LicenseKey = payload.LicenseKey,
-                    Cuit = payload.Cuit,
-                    BusinessName = payload.BusinessName,
-                    ExpiresAt = payload.ExpiresAt,
+                    LicenseKey = licensePayload.LicenseKey,
+                    Cuit = licensePayload.Cuit,
+                    BusinessName = licensePayload.BusinessName,
+                    ExpiresAt = licensePayload.ExpiresAt,
                     IsValid = true
                 };
 
-                if (DateTime.UtcNow > payload.ValidationGraceUntil)
+                if (DateTime.UtcNow > licensePayload.ValidationGraceUntil)
                 {
-                    _ = Task.Run(async () => await RevalidateWithServerAsync(payload.LicenseKey, payload.Cuit, currentHwid));
+                    _ = Task.Run(async () => await RevalidateWithServerAsync(licensePayload.LicenseKey, licensePayload.Cuit, currentHardwareId));
                 }
 
-                return OperationResult.Ok($"Licencia válida: {payload.BusinessName}");
+                return OperationResult.Ok($"Licencia válida: {licensePayload.BusinessName}");
             }
             catch (Exception ex)
             {
@@ -120,14 +120,14 @@ namespace CompriaxSystem.Infrastructure.Services
         {
             try
             {
-                string hwid = HardwareFingerprint.GetMachineHardwareId();
+                string hardwareId = HardwareFingerprint.GetMachineHardwareId();
                 string machineName = Environment.MachineName;
 
                 var response = await _httpClient.PostAsJsonAsync($"{_serverUrl.TrimEnd('/')}/api/licenses/activate", new
                 {
                     LicenseKey = licenseKey.Trim().ToUpper(),
                     Cuit = cuit.Trim(),
-                    HardwareId = hwid,
+                    HardwareId = hardwareId,
                     MachineName = machineName,
                     OsVersion = Environment.OSVersion.ToString()
                 });
@@ -136,9 +136,9 @@ namespace CompriaxSystem.Infrastructure.Services
                 {
                     try
                     {
-                        var error = await response.Content.ReadFromJsonAsync<JsonElement>();
-                        string msg = error.TryGetProperty("message", out var m) ? m.GetString()! : "Activación rechazada por el servidor.";
-                        return OperationResult.Failure(msg);
+                        var errorResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+                        string errorMessage = errorResponse.TryGetProperty("message", out var m) ? m.GetString()! : "Activación rechazada por el servidor.";
+                        return OperationResult.Failure(errorMessage);
                     }
                     catch
                     {
@@ -146,30 +146,29 @@ namespace CompriaxSystem.Infrastructure.Services
                     }
                 }
 
-                var result = await response.Content.ReadFromJsonAsync<JsonElement>();
-                string token = result.GetProperty("signedToken").GetString()!;
+                var validationResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+                string signedToken = validationResponse.GetProperty("signedToken").GetString()!;
 
-                byte[] rawBytes = Encoding.UTF8.GetBytes(token);
-                byte[] encryptedBytes = ProtectedData.Protect(rawBytes, null, DataProtectionScope.LocalMachine);
+                byte[] rawTokenBytes = Encoding.UTF8.GetBytes(signedToken);
+                byte[] encryptedTokenBytes = ProtectedData.Protect(rawTokenBytes, null, DataProtectionScope.LocalMachine);
 
                 // Guardado seguro con manejo de permisos y fallback
-                await SafeWriteLicenseFileAsync(encryptedBytes);
+                await SafeWriteLicenseFileAsync(encryptedTokenBytes);
 
                 return await ValidateInstalledLicenseAsync();
             }
             catch (Exception ex)
             {
-                string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                return OperationResult.Failure("Error en la activación: " + realError);
+                return OperationResult.Failure("Error en la activación: " + ex.Message);
             }
         }
 
         /// <summary>
         /// Escribe de forma segura el archivo de licencia encriptado, manejando alternativas de rutas si los permisos de sistema están restringidos.
         /// </summary>
-        /// <param name="data">Datos encriptados de la licencia.</param>
+        /// <param name="encryptedLicenseData">Datos encriptados de la licencia.</param>
         /// <returns>Tarea que representa la escritura del archivo.</returns>
-        private async Task SafeWriteLicenseFileAsync(byte[] data)
+        private async Task SafeWriteLicenseFileAsync(byte[] encryptedLicenseData)
         {
             try
             {
@@ -177,7 +176,7 @@ namespace CompriaxSystem.Infrastructure.Services
                 {
                     File.SetAttributes(_primaryLicensePath, FileAttributes.Normal);
                 }
-                await File.WriteAllBytesAsync(_primaryLicensePath, data);
+                await File.WriteAllBytesAsync(_primaryLicensePath, encryptedLicenseData);
             }
             catch
             {
@@ -186,7 +185,7 @@ namespace CompriaxSystem.Infrastructure.Services
                 {
                     File.SetAttributes(_fallbackLicensePath, FileAttributes.Normal);
                 }
-                await File.WriteAllBytesAsync(_fallbackLicensePath, data);
+                await File.WriteAllBytesAsync(_fallbackLicensePath, encryptedLicenseData);
             }
         }
 
@@ -204,20 +203,22 @@ namespace CompriaxSystem.Infrastructure.Services
                 }
 
                 // Otorgar permisos de escritura a usuarios locales
-                var dInfo = new DirectoryInfo(folderPath);
-                var dSecurity = dInfo.GetAccessControl();
-                var usersSid = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
+                var directoryInfo = new DirectoryInfo(folderPath);
+                var directorySecurity = directoryInfo.GetAccessControl();
+                var usersSecurityIdentifier = new SecurityIdentifier(WellKnownSidType.BuiltinUsersSid, null);
 
-                dSecurity.AddAccessRule(new FileSystemAccessRule(
-                    usersSid,
+                directorySecurity.AddAccessRule(new FileSystemAccessRule(
+                    usersSecurityIdentifier,
                     FileSystemRights.Modify | FileSystemRights.Synchronize,
                     InheritanceFlags.ContainerInherit | InheritanceFlags.ObjectInherit,
                     PropagationFlags.None,
                     AccessControlType.Allow));
 
-                dInfo.SetAccessControl(dSecurity);
+                directoryInfo.SetAccessControl(directorySecurity);
             }
-            catch { }
+            catch 
+            {
+            }
         }
 
         /// <summary>
@@ -225,9 +226,9 @@ namespace CompriaxSystem.Infrastructure.Services
         /// </summary>
         /// <param name="licenseKey">Clave de licencia.</param>
         /// <param name="cuit">CUIT del titular.</param>
-        /// <param name="hwid">Identificador único de hardware.</param>
+        /// <param name="hardwareId">Identificador único de hardware.</param>
         /// <returns>Tarea de fondo.</returns>
-        private async Task RevalidateWithServerAsync(string licenseKey, string cuit, string hwid)
+        private async Task RevalidateWithServerAsync(string licenseKey, string cuit, string hardwareId)
         {
             try
             {
@@ -235,16 +236,16 @@ namespace CompriaxSystem.Infrastructure.Services
                 {
                     LicenseKey = licenseKey,
                     Cuit = cuit,
-                    HardwareId = hwid
+                    HardwareId = hardwareId
                 });
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = await response.Content.ReadFromJsonAsync<JsonElement>();
-                    string newToken = result.GetProperty("signedToken").GetString()!;
-                    byte[] encrypted = ProtectedData.Protect(Encoding.UTF8.GetBytes(newToken), null, DataProtectionScope.LocalMachine);
+                    var validationResponse = await response.Content.ReadFromJsonAsync<JsonElement>();
+                    string refreshedSignedToken = validationResponse.GetProperty("signedToken").GetString()!;
+                    byte[] encryptedTokenBytes = ProtectedData.Protect(Encoding.UTF8.GetBytes(refreshedSignedToken), null, DataProtectionScope.LocalMachine);
                     
-                    await SafeWriteLicenseFileAsync(encrypted);
+                    await SafeWriteLicenseFileAsync(encryptedTokenBytes);
                 }
             }
             catch 
@@ -253,37 +254,37 @@ namespace CompriaxSystem.Infrastructure.Services
         }
 
         /// <summary>
-        /// Verifica la integridad y firma RSA de un token de licencia.
+        /// Verifica la integridad y firma RSA de un signedToken de licencia.
         /// </summary>
-        /// <param name="token">Token firmado en formato Base64.</param>
-        /// <returns>Una tupla indicando si la firma es válida y el payload de la licencia.</returns>
-        private (bool IsValid, LicenseTokenPayload? Payload) VerifyTokenSignature(string token)
+        /// <param name="signedToken">Token firmado en formato Base64.</param>
+        /// <returns>Una tupla indicando si la firma es válida y el licensePayload de la licencia.</returns>
+        private (bool IsValid, LicenseTokenPayload? Payload) VerifyTokenSignature(string signedToken)
         {
             try
             {
-                var parts = token.Split('.');
+                var tokenParts = signedToken.Split('.');
                 
-                if (parts.Length != 2)
+                if (tokenParts.Length != 2)
                     return (false, null);
 
-                byte[] payloadBytes = Convert.FromBase64String(parts[0]);
-                byte[] signatureBytes = Convert.FromBase64String(parts[1]);
+                byte[] payloadBytes = Convert.FromBase64String(tokenParts[0]);
+                byte[] signatureBytes = Convert.FromBase64String(tokenParts[1]);
 
                 using var rsa = RSA.Create();
                 rsa.ImportFromPem(_rsaPublicKeyPem);
 
-                bool validSignature = rsa.VerifyData(payloadBytes, signatureBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
+                bool isSignatureValid = rsa.VerifyData(payloadBytes, signatureBytes, HashAlgorithmName.SHA256, RSASignaturePadding.Pkcs1);
                 
-                if (!validSignature)
+                if (!isSignatureValid)
                 {
                     return (false, null);
                 }
 
                 string json = Encoding.UTF8.GetString(payloadBytes);
                 var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-                var payload = JsonSerializer.Deserialize<LicenseTokenPayload>(json, options);
+                var licensePayload = JsonSerializer.Deserialize<LicenseTokenPayload>(json, options);
 
-                return (payload != null, payload);
+                return (licensePayload != null, licensePayload);
             }
             catch (Exception ex)
             {

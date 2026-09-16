@@ -12,9 +12,10 @@ namespace CompriaxSystem.Infrastructure.Services
 
         public CloudinaryStorageService(IOptions<CloudinarySettings> options)
         {
-            var settings = options.Value;
-            var account = new Account(settings.CloudName, settings.ApiKey, settings.ApiSecret);
-            _cloudinary = new Cloudinary(account);
+            var cloudinarySettings = options.Value;
+            var cloudinaryAccount = new Account(cloudinarySettings.CloudName, cloudinarySettings.ApiKey, cloudinarySettings.ApiSecret);
+            
+            _cloudinary = new Cloudinary(cloudinaryAccount);
         }
 
         /// <summary>
@@ -25,11 +26,11 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <returns>URL pública del archivo almacenado.</returns>
         public async Task<string> UploadFileAsync(byte[] fileBytes, string fileName)
         {
-            using (var stream = new MemoryStream(fileBytes))
+            using (var fileStream = new MemoryStream(fileBytes))
             {
-                var uploadParams = new RawUploadParams
+                var uploadParameters = new RawUploadParams
                 {
-                    File = new FileDescription(fileName, stream),
+                    File = new FileDescription(fileName, fileStream),
                     PublicId = $"facturas/{Path.GetFileNameWithoutExtension(fileName)}",
                     AccessMode = "public",
                     Overwrite = true,
@@ -37,7 +38,7 @@ namespace CompriaxSystem.Infrastructure.Services
                     UniqueFilename = false
                 };
 
-                var uploadResult = await _cloudinary.UploadAsync(uploadParams);
+                var uploadResult = await _cloudinary.UploadAsync(uploadParameters);
 
                 if (uploadResult.Error != null)
                     throw new Exception("Error Cloudinary: " + uploadResult.Error.Message);
