@@ -16,13 +16,13 @@ namespace CompriaxSystem.SetupActivator
             if (args.Length >= 4 && args[0] == "--activate")
             {
                 string cuit = args[1];
-                string key = args[2];
-                string serverUrl = args[3];
-                string errorFilePath = args.Length >= 5 ? args[4] : Path.Combine(Path.GetTempPath(), "activation_error.txt");
+                string licenseKey = args[2];
+                string licenseServerUrl = args[3];
+                string activationErrorFilePath = args.Length >= 5 ? args[4] : Path.Combine(Path.GetTempPath(), "activation_error.txt");
 
-                var (success, message) = ExecuteActivationAsync(cuit, key, serverUrl).GetAwaiter().GetResult();
+                var (activationSucceeded, activationMessage) = ExecuteActivationAsync(cuit, licenseKey, licenseServerUrl).GetAwaiter().GetResult();
 
-                if (success)
+                if (activationSucceeded)
                 {
                     Environment.Exit(0); // Código 0 = Éxito para el instalador
                 }
@@ -30,7 +30,7 @@ namespace CompriaxSystem.SetupActivator
                 {
                     try
                     {
-                        File.WriteAllText(errorFilePath, message, Encoding.UTF8);
+                        File.WriteAllText(activationErrorFilePath, activationMessage, Encoding.UTF8);
                     }
                     catch { }
 
@@ -43,100 +43,115 @@ namespace CompriaxSystem.SetupActivator
                 "Compriax POS Setup", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private static async Task<(bool Success, string Message)> ExecuteActivationAsync(string cuit, string licenseKey, string serverUrl)
+        private static async Task<(bool Success, string Message)> ExecuteActivationAsync(string cuit, string licenseKey, string licenseServerUrl)
         {
             try
             {
-                string hwid = GetMachineHardwareId();
+                string hardwareId = GetMachineHardwareId();
                 string machineName = Environment.MachineName;
 
                 var handler = new HttpClientHandler
                 {
-                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                    ServerCertificateCustomValidationCallback = (activationMessage, cert, chain, errors) => true
                 };
 
-                using var httpClient = new HttpClient(handler) { Timeout = TimeSpan.FromSeconds(15) };
+                using var httpClientHandler = new HttpClient(handler) 
+                { 
+                    Timeout = TimeSpan.FromSeconds(15) 
+                };
 
-                string requestUrl = $"{serverUrl.TrimEnd('/')}/api/licenses/activate";
+                string activationRequestUrl = $"{licenseServerUrl.TrimEnd('/')}/api/licenses/activate";
 
-                var response = await httpClient.PostAsJsonAsync(requestUrl, new
+                var activationResponse = await httpClientHandler.PostAsJsonAsync(activationRequestUrl, new
                 {
                     LicenseKey = licenseKey.Trim().ToUpper(),
                     Cuit = cuit.Trim(),
-                    HardwareId = hwid,
+                    HardwareId = hardwareId,
                     MachineName = machineName,
                     OsVersion = Environment.OSVersion.ToString()
                 });
 
-                if (!response.IsSuccessStatusCode)
+                if (!activationResponse.IsSuccessStatusCode)
                 {
                     try
                     {
-                        var errorObj = await response.Content.ReadFromJsonAsync<JsonElement>();
-                        string msg = errorObj.TryGetProperty("message", out var m) ? m.GetString()! :
-                                     errorObj.TryGetProperty("error", out var e) ? e.GetString()! :
-                                     $"La activación fue rechazada (HTTP {(int)response.StatusCode}).";
-                        return (false, msg);
+                        var errorResponse = await activationResponse.Content.ReadFromJsonAsync<JsonElement>();
+                        
+                        string errorMessage = errorResponse.TryGetProperty("activationMessage", out var m) ? m.GetString()! :
+                                     errorResponse.TryGetProperty("error", out var e) ? e.GetString()! :
+                                     $"La activación fue rechazada (HTTP {(int)activationResponse.StatusCode}).";
+                        
+                        return (false, errorMessage);
                     }
                     catch
                     {
-                        return (false, $"Error de respuesta del servidor (HTTP {(int)response.StatusCode})");
+                        return (false, $"Error de respuesta del servidor (HTTP {(int)activationResponse.StatusCode})");
                     }
                 }
 
-                var result = await response.Content.ReadFromJsonAsync<JsonElement>();
-                string token = result.GetProperty("signedToken").GetString()!;
+                var activationResult = await activationResponse.Content.ReadFromJsonAsync<JsonElement>();
+                
+                string signedToken = activationResult.GetProperty("signedToken").GetString()!;
 
-                // Guardar token cifrado con Windows DPAPI a nivel máquina
+                // Guardar signedToken cifrado con Windows DPAPI a nivel máquina
                 string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-                string targetFolder = Path.Combine(commonAppData, "CompriaxPOS");
-                Directory.CreateDirectory(targetFolder);
+                string licenseDirectoryPath = Path.Combine(commonAppData, "CompriaxPOS");
+                
+                Directory.CreateDirectory(licenseDirectoryPath);
 
-                string licensePath = Path.Combine(targetFolder, "license.dat");
-                byte[] rawTokenBytes = Encoding.UTF8.GetBytes(token);
+                string licenseFilePath = Path.Combine(licenseDirectoryPath, "license.dat");
+                
+                byte[] rawTokenBytes = Encoding.UTF8.GetBytes(signedToken);
+                
                 byte[] encryptedBytes = ProtectedData.Protect(rawTokenBytes, null, DataProtectionScope.LocalMachine);
 
-                await File.WriteAllBytesAsync(licensePath, encryptedBytes);
+                await File.WriteAllBytesAsync(licenseFilePath, encryptedBytes);
 
                 return (true, "Activación aprobada exitosamente.");
             }
             catch (Exception ex)
             {
-                string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                return (false, $"No se pudo comunicar con el servidor de licencias ({serverUrl}):\n{realError}");
+                return (false, $"No se pudo comunicar con el servidor de licencias ({licenseServerUrl}):\n{ex.Message}");
             }
         }
 
         private static string GetMachineHardwareId()
         {
-            var sb = new StringBuilder();
-            sb.Append(GetWmiProperty("Win32_Processor", "ProcessorId"));
-            sb.Append(GetWmiProperty("Win32_BaseBoard", "SerialNumber"));
-            sb.Append(GetWmiProperty("Win32_DiskDrive", "SerialNumber"));
+            var hardwareIdentifierBuilder = new StringBuilder();
 
-            string raw = sb.ToString();
-            if (string.IsNullOrWhiteSpace(raw))
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_Processor", "ProcessorId"));
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_BaseBoard", "SerialNumber"));
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_DiskDrive", "SerialNumber"));
+
+            string hardwareIdentifierSource = hardwareIdentifierBuilder.ToString();
+            
+            if (string.IsNullOrWhiteSpace(hardwareIdentifierSource))
             {
-                raw = Environment.MachineName + Environment.UserName + Environment.OSVersion;
+                hardwareIdentifierSource = Environment.MachineName + Environment.UserName + Environment.OSVersion;
             }
 
-            byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(raw));
-            return Convert.ToHexString(hash);
+            byte[] hardwareHash = SHA256.HashData(Encoding.UTF8.GetBytes(hardwareIdentifierSource));
+            
+            return Convert.ToHexString(hardwareHash);
         }
 
-        private static string GetWmiProperty(string wmiClass, string propertyName)
+        private static string GetWmiProperty(string wmiClassName, string wmiPropertyName)
         {
             try
             {
-                using var searcher = new ManagementObjectSearcher($"SELECT {propertyName} FROM {wmiClass}");
-                foreach (var item in searcher.Get())
+                using var managementObjectSearcher = new ManagementObjectSearcher($"SELECT {wmiPropertyName} FROM {wmiClassName}");
+                
+                foreach (var managementObject in managementObjectSearcher.Get())
                 {
-                    var val = item[propertyName]?.ToString();
-                    if (!string.IsNullOrWhiteSpace(val))
-                        return val.Trim();
+                    var propertyValue = managementObject[wmiPropertyName]?.ToString();
+                    
+                    if (!string.IsNullOrWhiteSpace(propertyValue))
+                        return propertyValue.Trim();
                 }
             }
-            catch { }
+            catch 
+            {
+            }
             return string.Empty;
         }
     }
