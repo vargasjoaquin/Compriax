@@ -30,33 +30,6 @@ namespace CompriaxSystem.WinFormsUI
             {
                 var services = startupScope.ServiceProvider;
 
-#if !DEBUG
-                //Verificación de Licencia Criptográfica (Solo en Release / Instalador)
-                try
-                {
-                    var licenseService = services.GetRequiredService<ILicenseManagerService>();
-                    var validation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
-
-                    if (!validation.Success)
-                    {
-                        var activationForm = services.GetRequiredService<FormActivation>();
-                        if (activationForm.ShowDialog() != DialogResult.OK)
-                        {
-                            MessageBox.Show(
-                                $"El sistema no puede iniciar sin una licencia activa:\n\n{validation.Message}",
-                                "Licencia Requerida",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Stop);
-                            return;
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error en el módulo de licencias:\n\n{ex.Message}", "Fallo de Licenciamiento", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-#endif
-
                 try
                 {
                     var db = services.GetRequiredService<ApplicationDbContext>();
@@ -176,7 +149,6 @@ namespace CompriaxSystem.WinFormsUI
                     services.AddScoped<ITicketDataBuilder, TicketDataBuilder>();
 
                     // 6. Formularios WinForms
-                    services.AddTransient<FormActivation>();
                     services.AddTransient<FormLogin>();
                     services.AddTransient<FormPanelControl>();
                     services.AddTransient<FormSelectCashRegister>();
