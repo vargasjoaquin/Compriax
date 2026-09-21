@@ -6,7 +6,8 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
-	</PropertyGroup>
+	  <UserSecretsId>compriax-system-secrets-f92b09d3-7612-44ca-b5a6-bac9e96daa94</UserSecretsId>
+  </PropertyGroup>
 
 	<ItemGroup>
 		<PackageReference Include="AutoMapper" Version="13.0.1" />

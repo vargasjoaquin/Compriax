@@ -13,6 +13,7 @@ using CompriaxSystem.Infrastructure.Persistence;
 using CompriaxSystem.Infrastructure.Repositories;
 using CompriaxSystem.Infrastructure.Security;
 using CompriaxSystem.Infrastructure.Services;
+using System.Diagnostics;
 
 namespace CompriaxSystem.WinFormsUI
 {
@@ -98,6 +99,13 @@ namespace CompriaxSystem.WinFormsUI
 
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
+            .ConfigureAppConfiguration((host, config) =>
+            {
+                if (host.HostingEnvironment.IsDevelopment() || Debugger.IsAttached)
+                {
+                    config.AddUserSecrets<FormLogin>();
+                }
+            })
                 .ConfigureServices((context, services) =>
                 {
                     services.AddAutoMapper(typeof(MappingProfile).Assembly);
