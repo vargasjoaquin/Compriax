@@ -469,46 +469,27 @@ namespace CompriaxSystem.WinFormsUI
 
                             int registeredSaleId = saleProcessingResult.EntityId.Value;
 
-                            var httpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>().CreateClient();
-                            
-                            string idempotencyKey = Guid.NewGuid().ToString();
+                            var qrOrderResult = await _mercadoPagoQrClient.CreateQrOrderAsync(
+                                registeredSaleId,
+                                _currentCalculation.FinalTotal,
+                                $"Venta POS #{registeredSaleId}");
 
-                            var paymentRequest = new
+                            if (!qrOrderResult.Success)
                             {
-                                registeredSaleId = registeredSaleId,
-                                amount = _currentCalculation.FinalTotal,
-                                description = $"Venta POS #{registeredSaleId}"
-                            };
-
-                            var paymentRequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://localhost:7133/api/mercadopago/payments")
-                            {
-                                Content = new StringContent(JsonSerializer.Serialize(paymentRequest), System.Text.Encoding.UTF8, "application/json")
-                            };
-
-                            paymentRequestMessage.Headers.Add("X-Idempotency-Key", idempotencyKey);
-
-                            var paymentApiResponse = await httpClientFactory.SendAsync(paymentRequestMessage);
-
-                            if (!paymentApiResponse.IsSuccessStatusCode)
-                            {
-                                var errorResponseContent = await paymentApiResponse.Content.ReadAsStringAsync();
-                                UIHelper.ErrorMessage(this, $"Detalle de error devuelto por la API:\n{errorResponseContent}", "Error");
+                                UIHelper.ErrorMessage(this, $"Error de pasarela de pago:\n{qrOrderResult.ErrorMessage}", "Mercado Pago");
                                 return;
                             }
 
-                            var responseContent = await paymentApiResponse.Content.ReadAsStringAsync();
-
-                            using var responseDocument = JsonDocument.Parse(responseContent);
-
-                            string mercadoPagoOrderId = responseDocument.RootElement.GetProperty("mercadoPagoOrderId").GetString() ?? string.Empty;
-
-                            string mercadoPagoRawQrData = responseDocument.RootElement.GetProperty("mercadoPagoRawQrData").GetString() ?? string.Empty;
-
                             var barcodeService = _serviceProvider.GetRequiredService<IBarcodeService>();
-
+                            
                             var qrHttpClientFactory = _serviceProvider.GetRequiredService<IHttpClientFactory>();
 
-                            using var mercadoPagoQrPaymentDialog = new FormMercadoPagoQrPayment(barcodeService, qrHttpClientFactory, mercadoPagoOrderId, _currentCalculation.FinalTotal, mercadoPagoRawQrData);
+                            using var mercadoPagoQrPaymentDialog = new FormMercadoPagoQrPayment(
+                                barcodeService,
+                                qrHttpClientFactory,
+                                qrOrderResult.OrderId,
+                                _currentCalculation.FinalTotal,
+                                qrOrderResult.QrData);
 
                             if (mercadoPagoQrPaymentDialog.ShowDialog(this) != DialogResult.OK || !mercadoPagoQrPaymentDialog.IsPaymentApproved)
                             {
@@ -518,8 +499,8 @@ namespace CompriaxSystem.WinFormsUI
 
                             string saleDocumentNumber = saleTransaction.DocumentNumber ?? "00000001";
 
-                            var ticketPreviewFormInstance =  new FormTicketPreview(_documentService, _whatsappService, _storageService);
-                            
+                            var ticketPreviewFormInstance = new FormTicketPreview(_documentService, _whatsappService, _storageService);
+
                             _ = ticketPreviewFormInstance.LoadSaleTicketAndRenderPreviewAsync(
                                 saleTransaction,
                                 saleDocumentNumber,

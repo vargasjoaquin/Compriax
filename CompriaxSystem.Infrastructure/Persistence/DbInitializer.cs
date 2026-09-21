@@ -42,7 +42,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     FirstName = "Administrador",
                     LastName = "Principal",
                     Email = "admin@supermarket.com",
-                    RoleId = administratorUser.Id,
+                    RoleId = administratorRole.Id,
                     IsActive = true,
                     CreatedAt = DateTime.UtcNow,
                     IsDeleted = false

@@ -142,7 +142,7 @@ namespace CompriaxSystem.Application.Services
             var activePromotions = (await unitOfWork.Promotions.GetActivePromotionsAsync(date)).ToList();
 
             int currentDayOfWeekNumber = (int)date.DayOfWeek;
-            
+
             if (currentDayOfWeekNumber == 0)
                 currentDayOfWeekNumber = 7;
 
@@ -154,19 +154,19 @@ namespace CompriaxSystem.Application.Services
             foreach (var promotion in validPromotions.Where(promotion => promotion.PromotionType == PromotionType.BuyXPayY && promotion.ProductId.HasValue))
             {
                 var saleItem = saleItems.FirstOrDefault(item => item.ProductId == promotion.ProductId.Value);
-                
+
                 if (saleItem != null && promotion.RequiredQuantity > 0 && promotion.PayQuantity > 0)
                 {
                     int promotionGroups = saleItem.Quantity / promotion.RequiredQuantity.Value;
-                    
+
                     if (promotionGroups > 0)
                     {
                         int freeItemsPerGroup = promotion.RequiredQuantity.Value - promotion.PayQuantity.Value;
-                        
+
                         decimal discountAmount = promotionGroups * freeItemsPerGroup * saleItem.UnitPrice;
 
                         saleItem.DiscountAmount += discountAmount;
-                        
+
                         appliedDiscounts.Add(new AppliedDiscountDto
                         {
                             PromotionId = promotion.Id,
@@ -182,11 +182,11 @@ namespace CompriaxSystem.Application.Services
             foreach (var promotion in validPromotions.Where(promotion => promotion.PromotionType == PromotionType.PercentageOnProduct && promotion.ProductId.HasValue && promotion.DiscountPercentage.HasValue))
             {
                 var saleItem = saleItems.FirstOrDefault(i => i.ProductId == promotion.ProductId.Value);
-                
+
                 if (saleItem != null && saleItem.DiscountAmount == 0)
                 {
                     decimal discountAmount = (saleItem.Quantity * saleItem.UnitPrice) * (promotion.DiscountPercentage.Value / 100m);
-                    
+
                     saleItem.DiscountAmount += discountAmount;
 
                     appliedDiscounts.Add(new AppliedDiscountDto
@@ -207,7 +207,7 @@ namespace CompriaxSystem.Application.Services
                 foreach (var saleItem in categoryItems)
                 {
                     decimal discountAmount = (saleItem.Quantity * saleItem.UnitPrice) * (promotion.DiscountPercentage.Value / 100m);
-                    
+
                     saleItem.DiscountAmount += discountAmount;
 
                     appliedDiscounts.Add(new AppliedDiscountDto
@@ -222,15 +222,15 @@ namespace CompriaxSystem.Application.Services
 
             // 4. Promoción Porcentual al Total de la Compra
             decimal intermediateTotal = saleItems.Sum(x => x.SubTotal);
-            
+
             var cartPromotion = validPromotions.FirstOrDefault(promotion => promotion.PromotionType == PromotionType.PercentageOnTotal && promotion.DiscountPercentage.HasValue);
 
             decimal cartDiscountAmount = 0;
-            
-            if (cartDiscountAmount != null && intermediateTotal > 0)
+
+            if (cartPromotion != null && intermediateTotal > 0)
             {
                 cartDiscountAmount = intermediateTotal * (cartPromotion.DiscountPercentage.Value / 100m);
-                
+
                 appliedDiscounts.Add(new AppliedDiscountDto
                 {
                     PromotionId = cartPromotion.Id,

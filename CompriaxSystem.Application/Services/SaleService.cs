@@ -20,40 +20,41 @@ namespace CompriaxSystem.Application.Services
         public async Task<OperationResult> ProcessSaleAsync(SaleDto saleDto)
         {
             var validation = await saleValidator.ValidateAsync(saleDto);
-            
+
             if (!validation.IsValid)
                 return validation.ToResult();
 
             int currentUserId = currentUser.CurrentUser!.UserId;
 
             string currentUsername = currentUser.CurrentUser!.Username;
-            
+
             int cashRegisterId = currentUser.OperationalContext!.CashRegisterId;
 
             var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
 
-            var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
-            string newDocumentNumber = GenerateNextNumber(lastDocumentNumber);
-            
-            saleDto.DocumentNumber = newDocumentNumber;
-
-            AfipAuthorizeResultDto fiscalResult;
-            
-            try
-            {
-                fiscalResult = await afipService.AuthorizeInvoiceAsync(saleDto);
-            }
-            catch (Exception ex)
-            {
-                return OperationResult.Failure($"Fallo de comunicación con servicio fiscal: {ex.Message}");
-            }
-
             await unitOfWork.BeginTransactionAsync();
-            
+
             try
             {
+                var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
+                string newDocumentNumber = GenerateNextNumber(lastDocumentNumber);
+
+                saleDto.DocumentNumber = newDocumentNumber;
+
+                AfipAuthorizeResultDto fiscalResult;
+
+                try
+                {
+                    fiscalResult = await afipService.AuthorizeInvoiceAsync(saleDto);
+                }
+                catch (Exception ex)
+                {
+                    await unitOfWork.RollbackAsync();
+                    return OperationResult.Failure($"Fallo de comunicación con servicio fiscal: {ex.Message}");
+                }
+
                 var sale = mapper.Map<Sale>(saleDto);
-                
+
                 sale.DocumentNumber = newDocumentNumber;
                 sale.DocumentTypeId = saleDto.DocumentTypeId;
                 sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : 1;
@@ -131,7 +132,7 @@ namespace CompriaxSystem.Application.Services
                 }
 
                 await unitOfWork.Sales.AddAsync(sale);
-                
+
                 bool operationSucceeded = await unitOfWork.CompleteAsync();
 
                 if (!operationSucceeded)

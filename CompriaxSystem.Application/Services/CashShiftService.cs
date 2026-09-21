@@ -166,15 +166,13 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("El monto contado en caja no puede ser negativo.");
 
             var cashShift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(dto.ShiftId);
-            
-            if (cashShift == null || cashShift.Status != "Abierta")
+
+            if (cashShift == null || cashShift.Status != CashShiftStatuses.OPEN)
                 return OperationResult.Failure("El turno especificado no existe o ya fue cerrado.");
 
-            var shiftSales = new List<Sale>();
-            
-            var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
+            var shiftSales = cashShift.Sales?.ToList() ?? new List<Sale>();
 
-            var summary = await GetCurrentShiftSummaryAsync();
+            var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
 
             decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
             decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
