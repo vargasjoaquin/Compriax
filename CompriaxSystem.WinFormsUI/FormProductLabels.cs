@@ -38,6 +38,13 @@ namespace CompriaxSystem.WinFormsUI
             _labelValidator = labelValidator;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonAddLabelToQueue, this.picIconAddLabelToQueue);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRemoveSelectedFromQueue, this.picIconRemoveSelected);
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearQueue, this.picIconClearQueue);
+            ButtonIconOverlayHelper.BindEvents(this.buttonPrintSheet, this.picIconPrintSheet);
+            ButtonIconOverlayHelper.BindEvents(this.buttonExportSheetPng, this.picIconExportSheetPng);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelLeftConfiguration);
@@ -455,3 +462,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

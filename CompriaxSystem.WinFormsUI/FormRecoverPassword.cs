@@ -11,6 +11,10 @@ namespace CompriaxSystem.WinFormsUI
         {
             _authService = authService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSendRecovery, this.picIconSendRecovery);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
+            
 
             this.BackColor = UIThemeHelper.SidebarBackground;
             UIThemeHelper.ApplyCardStyle(panelCard);
@@ -67,3 +71,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

@@ -17,6 +17,8 @@
 
         private void InitializeComponent()
         {
+            this.picIconSearch = new System.Windows.Forms.PictureBox();
+            this.picIconExportExcel = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelFiltersCard = new Panel();
@@ -26,6 +28,31 @@
             dateTimePickerEndDate = new DateTimePicker();
             labelSupplierFilter = new Label();
             comboBoxSupplierFilter = new ComboBox();
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch = new Button();
             labelSearchCriteriaPrompt = new Label();
             comboBoxSearchCriteria = new ComboBox();
@@ -67,10 +94,12 @@
             panelFiltersCard.Controls.Add(dateTimePickerEndDate);
             panelFiltersCard.Controls.Add(labelSupplierFilter);
             panelFiltersCard.Controls.Add(comboBoxSupplierFilter);
+panelFiltersCard.Controls.Add(this.picIconSearch);
             panelFiltersCard.Controls.Add(buttonSearch);
             panelFiltersCard.Controls.Add(labelSearchCriteriaPrompt);
             panelFiltersCard.Controls.Add(comboBoxSearchCriteria);
             panelFiltersCard.Controls.Add(textBoxSearchValue);
+panelFiltersCard.Controls.Add(this.picIconExportExcel);
             panelFiltersCard.Controls.Add(buttonExportExcel);
             panelFiltersCard.Location = new Point(16, 72);
             panelFiltersCard.Name = "panelFiltersCard";
@@ -134,18 +163,323 @@
             comboBoxSupplierFilter.Size = new Size(180, 31);
             comboBoxSupplierFilter.TabIndex = 5;
             // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
+
+
+
+
+
+            // 
             // buttonSearch
             // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
+            // 
             buttonSearch.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.ForeColor = Color.White;
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.Location = new Point(460, 14);
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.Name = "buttonSearch";
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.Size = new Size(132, 54);
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.TabIndex = 6;
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.Text = "🔍 FILTRAR";
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(470, 31);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconExportExcel
+            // 
+            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
+            this.picIconExportExcel.Location = new System.Drawing.Point(1032, 34);
+            this.picIconExportExcel.Name = "picIconExportExcel";
+            this.picIconExportExcel.Size = new System.Drawing.Size(20, 20);
+            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconExportExcel.TabIndex = 99;
+            this.picIconExportExcel.TabStop = false;
             buttonSearch.UseVisualStyleBackColor = false;
             // 
             // labelSearchCriteriaPrompt
@@ -201,6 +535,11 @@
             dataGridViewPurchaseData.RowHeadersWidth = 51;
             dataGridViewPurchaseData.Size = new Size(1242, 467);
             dataGridViewPurchaseData.TabIndex = 2;
+
+
+
+
+
             // 
             // FormPurchaseReport
             // 
@@ -214,11 +553,12 @@
             Name = "FormPurchaseReport";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Reporte de Compras";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelFiltersCard.ResumeLayout(false);
+ResumeLayout(false);
             panelFiltersCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseData).EndInit();
+
             ResumeLayout(false);
         }
 
@@ -239,5 +579,7 @@
         private System.Windows.Forms.TextBox textBoxSearchValue;
         private System.Windows.Forms.Button buttonExportExcel;
         private System.Windows.Forms.DataGridView dataGridViewPurchaseData;
+        private System.Windows.Forms.PictureBox picIconSearch;
+        private System.Windows.Forms.PictureBox picIconExportExcel;
     }
 }

@@ -14,11 +14,38 @@
 
         private void InitializeComponent()
         {
+            this.picIconSendRecovery = new System.Windows.Forms.PictureBox();
+            this.picIconCancel = new System.Windows.Forms.PictureBox();
             panelCard = new Panel();
             labelHeaderIcon = new Label();
             labelMainTitle = new Label();
             labelInstructions = new Label();
             textBoxIdentity = new TextBox();
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery = new Button();
             buttonCancel = new Button();
             labelResultStatus = new Label();
@@ -32,7 +59,9 @@
             panelCard.Controls.Add(labelMainTitle);
             panelCard.Controls.Add(labelInstructions);
             panelCard.Controls.Add(textBoxIdentity);
+panelCard.Controls.Add(this.picIconSendRecovery);
             panelCard.Controls.Add(buttonSendRecovery);
+panelCard.Controls.Add(this.picIconCancel);
             panelCard.Controls.Add(buttonCancel);
             panelCard.Controls.Add(labelResultStatus);
             panelCard.Location = new Point(24, 32);
@@ -75,18 +104,318 @@
             textBoxIdentity.PlaceholderText = "Usuario o email...";
             textBoxIdentity.Size = new Size(384, 32);
             textBoxIdentity.TabIndex = 3;
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
 
             // buttonSendRecovery
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.ForeColor = Color.White;
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.Location = new Point(24, 190);
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.Name = "buttonSendRecovery";
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.Size = new Size(384, 44);
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.TabIndex = 4;
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.Text = "ENVIAR";
+            // 
+            // picIconSendRecovery
+            // 
+            this.picIconSendRecovery.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSendRecovery.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSendRecovery.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
+            this.picIconSendRecovery.Location = new System.Drawing.Point(36, 202);
+            this.picIconSendRecovery.Name = "picIconSendRecovery";
+            this.picIconSendRecovery.Size = new System.Drawing.Size(20, 20);
+            this.picIconSendRecovery.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSendRecovery.TabIndex = 99;
+            this.picIconSendRecovery.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(36, 250);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonSendRecovery.UseVisualStyleBackColor = false;
 
             // buttonCancel
@@ -126,8 +455,9 @@
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormRecoverPassword";
             StartPosition = FormStartPosition.CenterParent;
-            panelCard.ResumeLayout(false);
+ResumeLayout(false);
             panelCard.PerformLayout();
+
             ResumeLayout(false);
         }
 
@@ -137,5 +467,7 @@
         private System.Windows.Forms.Label labelHeaderIcon, labelMainTitle, labelInstructions, labelResultStatus;
         private System.Windows.Forms.TextBox textBoxIdentity;
         private System.Windows.Forms.Button buttonSendRecovery, buttonCancel, buttonCloseDialog;
+        private System.Windows.Forms.PictureBox picIconSendRecovery;
+        private System.Windows.Forms.PictureBox picIconCancel;
     }
 }

@@ -33,6 +33,11 @@ namespace CompriaxSystem.WinFormsUI
             _ticketPrinter = ticketPrinter;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonPrintTicket, this.picIconPrintTicket);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSendWhatsapp, this.picIconSendWhatsapp);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSavePdf, this.picIconSavePdf);
+            
 
             this.radioButtonWidth80mm.CheckedChanged += async (s, e) => { if (radioButtonWidth80mm.Checked) await RenderThermalTicketPreviewPdfAsync(); };
             this.radioButtonWidth58mm.CheckedChanged += async (s, e) => { if (radioButtonWidth58mm.Checked) await RenderThermalTicketPreviewPdfAsync(); };
@@ -199,3 +204,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

@@ -17,8 +17,49 @@
 
         private void InitializeComponent()
         {
+            this.picIconDownloadPdf = new System.Windows.Forms.PictureBox();
+            this.picIconSearch = new System.Windows.Forms.PictureBox();
+            this.picIconClearSearch = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf = new Button();
             panelSearchCard = new Panel();
             labelDocumentNumberPrompt = new Label();
@@ -57,6 +98,7 @@
             // 
             panelHeader.BackColor = Color.FromArgb(15, 23, 42);
             panelHeader.Controls.Add(labelTitle);
+panelHeader.Controls.Add(this.picIconDownloadPdf);
             panelHeader.Controls.Add(buttonDownloadPdf);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -75,19 +117,518 @@
             labelTitle.TabIndex = 0;
             labelTitle.Text = "AUDITORÍA Y CONSULTA DE COMPROBANTE";
             // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+
+
+
+
+            // 
             // buttonDownloadPdf
             // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+            // 
             buttonDownloadPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.ForeColor = Color.White;
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.Location = new Point(911, 12);
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.Name = "buttonDownloadPdf";
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.Size = new Size(184, 60);
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.TabIndex = 1;
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.Text = "REIMPRIMIR PDF";
+            // 
+            // picIconDownloadPdf
+            // 
+            this.picIconDownloadPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconDownloadPdf.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconDownloadPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
+            this.picIconDownloadPdf.Location = new System.Drawing.Point(921, 31);
+            this.picIconDownloadPdf.Name = "picIconDownloadPdf";
+            this.picIconDownloadPdf.Size = new System.Drawing.Size(22, 22);
+            this.picIconDownloadPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconDownloadPdf.TabIndex = 99;
+            this.picIconDownloadPdf.TabStop = false;
+
+            // 
+            // picIconSearch
+            // 
+            this.picIconSearch.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearch.Location = new System.Drawing.Point(542, 13);
+            this.picIconSearch.Name = "picIconSearch";
+            this.picIconSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearch.TabIndex = 99;
+            this.picIconSearch.TabStop = false;
+
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(678, 13);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(18, 18);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
             buttonDownloadPdf.UseVisualStyleBackColor = false;
             // 
             // panelSearchCard
@@ -95,7 +636,9 @@
             panelSearchCard.BackColor = Color.White;
             panelSearchCard.Controls.Add(labelDocumentNumberPrompt);
             panelSearchCard.Controls.Add(textBoxSearchDocumentNumber);
+panelSearchCard.Controls.Add(this.picIconSearch);
             panelSearchCard.Controls.Add(buttonSearch);
+panelSearchCard.Controls.Add(this.picIconClearSearch);
             panelSearchCard.Controls.Add(buttonClearSearch);
             panelSearchCard.Location = new Point(16, 93);
             panelSearchCard.Name = "panelSearchCard";
@@ -376,6 +919,11 @@
             textBoxChangeAmount.Size = new Size(150, 30);
             textBoxChangeAmount.TabIndex = 5;
             textBoxChangeAmount.Text = "$ 0,00";
+
+
+
+
+
             // 
             // FormSaleDetail
             // 
@@ -391,15 +939,16 @@
             Name = "FormSaleDetail";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Detalle de Venta";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelSearchCard.ResumeLayout(false);
+ResumeLayout(false);
             panelSearchCard.PerformLayout();
-            panelVoucherInfoCard.ResumeLayout(false);
+ResumeLayout(false);
             panelVoucherInfoCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSaleItems).EndInit();
-            panelTotalsCard.ResumeLayout(false);
+ResumeLayout(false);
             panelTotalsCard.PerformLayout();
+
             ResumeLayout(false);
         }
 
@@ -434,5 +983,8 @@
         private System.Windows.Forms.TextBox textBoxAmountPaid;
         private System.Windows.Forms.Label labelChangePrompt;
         private System.Windows.Forms.TextBox textBoxChangeAmount;
+        private System.Windows.Forms.PictureBox picIconDownloadPdf;
+        private System.Windows.Forms.PictureBox picIconSearch;
+        private System.Windows.Forms.PictureBox picIconClearSearch;
     }
 }

@@ -17,11 +17,52 @@
 
         private void InitializeComponent()
         {
+            this.picIconGenerateLabel = new System.Windows.Forms.PictureBox();
+            this.picIconPrintLabel = new System.Windows.Forms.PictureBox();
+            this.picIconSaveLabelImage = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelHeaderTitle = new Label();
             panelLabelGeneratorCard = new Panel();
             pictureBoxBarcodePreview = new PictureBox();
             labelSelectedProductName = new Label();
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel = new Button();
             buttonPrintLabel = new Button();
             buttonSaveLabelImage = new Button();
@@ -85,18 +126,479 @@
             labelSelectedProductName.TabIndex = 1;
             labelSelectedProductName.Text = "Ningún producto seleccionado";
             // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
+
+
+
+
+
+            // 
             // buttonGenerateLabel
             // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
+            // 
             buttonGenerateLabel.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.ForeColor = Color.White;
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.Location = new Point(695, 72);
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.Name = "buttonGenerateLabel";
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.Size = new Size(351, 82);
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.TabIndex = 2;
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.Text = "GENERAR CODIGO DE BARRAS";
+            // 
+            // picIconGenerateLabel
+            // 
+            this.picIconGenerateLabel.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconGenerateLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconGenerateLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
+            this.picIconGenerateLabel.Location = new System.Drawing.Point(710, 103);
+            this.picIconGenerateLabel.Name = "picIconGenerateLabel";
+            this.picIconGenerateLabel.Size = new System.Drawing.Size(20, 20);
+            this.picIconGenerateLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconGenerateLabel.TabIndex = 99;
+            this.picIconGenerateLabel.TabStop = false;
+
+            // 
+            // picIconPrintLabel
+            // 
+            this.picIconPrintLabel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconPrintLabel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconPrintLabel.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
+            this.picIconPrintLabel.Location = new System.Drawing.Point(710, 197);
+            this.picIconPrintLabel.Name = "picIconPrintLabel";
+            this.picIconPrintLabel.Size = new System.Drawing.Size(22, 22);
+            this.picIconPrintLabel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconPrintLabel.TabIndex = 99;
+            this.picIconPrintLabel.TabStop = false;
+
+            // 
+            // picIconSaveLabelImage
+            // 
+            this.picIconSaveLabelImage.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSaveLabelImage.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveLabelImage.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveLabelImage.Location = new System.Drawing.Point(710, 292);
+            this.picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            this.picIconSaveLabelImage.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveLabelImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveLabelImage.TabIndex = 99;
+            this.picIconSaveLabelImage.TabStop = false;
             buttonGenerateLabel.UseVisualStyleBackColor = false;
             // 
             // buttonPrintLabel
@@ -135,6 +637,11 @@
             dataGridViewProducts.RowHeadersWidth = 51;
             dataGridViewProducts.Size = new Size(1030, 315);
             dataGridViewProducts.TabIndex = 5;
+
+
+
+
+
             // 
             // FormPrintPrices
             // 
@@ -143,20 +650,24 @@
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1065, 679);
             Controls.Add(dataGridViewProducts);
+Controls.Add(this.picIconSaveLabelImage);
             Controls.Add(buttonSaveLabelImage);
+Controls.Add(this.picIconPrintLabel);
             Controls.Add(buttonPrintLabel);
+Controls.Add(this.picIconGenerateLabel);
             Controls.Add(buttonGenerateLabel);
             Controls.Add(panelLabelGeneratorCard);
             Controls.Add(panelHeader);
             Name = "FormPrintPrices";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Etiquetas de Precio";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelLabelGeneratorCard.ResumeLayout(false);
+ResumeLayout(false);
             panelLabelGeneratorCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxBarcodePreview).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewProducts).EndInit();
+
             ResumeLayout(false);
         }
 
@@ -171,5 +682,8 @@
         private System.Windows.Forms.Button buttonPrintLabel;
         private System.Windows.Forms.Button buttonSaveLabelImage;
         private System.Windows.Forms.DataGridView dataGridViewProducts;
+        private System.Windows.Forms.PictureBox picIconGenerateLabel;
+        private System.Windows.Forms.PictureBox picIconPrintLabel;
+        private System.Windows.Forms.PictureBox picIconSaveLabelImage;
     }
 }

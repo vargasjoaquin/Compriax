@@ -16,6 +16,9 @@ namespace CompriaxSystem.WinFormsUI
             _serviceProvider = serviceProvider;
             _currentUserService = currentUserService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonLogin, this.picIconLogin);
+            
 
             this.BackColor = UIThemeHelper.SidebarBackground;
             UIThemeHelper.ApplyCardStyle(panelLoginCard);
@@ -102,3 +105,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

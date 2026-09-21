@@ -13,6 +13,11 @@ namespace CompriaxSystem.WinFormsUI
         {
             _catalogService = catalogService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelCard);
@@ -121,3 +126,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

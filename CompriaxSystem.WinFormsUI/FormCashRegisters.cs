@@ -13,6 +13,11 @@ namespace CompriaxSystem.WinFormsUI
         {
             _registerService = registerService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleStatus, this.picIconToggleStatus);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
+            
 
             this.Load += async (s, e) => await RefreshCashRegistersGridAsync();
             this.buttonSave.Click += async (s, e) => await ExecuteSaveCashRegisterAsync();
@@ -109,3 +114,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

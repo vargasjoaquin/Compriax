@@ -21,6 +21,10 @@ namespace CompriaxSystem.WinFormsUI
             _excelService = excelService;
             _serviceProvider = serviceProvider;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonFilterDates, this.picIconFilterDates);
+            ButtonIconOverlayHelper.BindEvents(this.buttonExportExcel, this.picIconExportExcel);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelFiltersCard);
@@ -109,3 +113,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

@@ -13,6 +13,10 @@ namespace CompriaxSystem.WinFormsUI
         {
             _productService = productService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearSearch, this.picIconClearSearch);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCloseDialog, this.picIconCloseDialog);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelSearchCard);
@@ -118,3 +122,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

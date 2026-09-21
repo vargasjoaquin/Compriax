@@ -43,6 +43,14 @@ namespace CompriaxSystem.WinFormsUI
             _currentUser = currentUser;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearchSupplier, this.picIconSearchSupplier);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearchProduct, this.picIconSearchProduct);
+            ButtonIconOverlayHelper.BindEvents(this.buttonAddPurchaseItem, this.picIconAddPurchaseItem);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRemovePurchaseItem, this.picIconRemovePurchaseItem);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRegisterPurchase, this.picIconRegisterPurchase);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleScannerCamera, this.picIconToggleScannerCamera);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelPurchaseHeaderInfo);
@@ -454,3 +462,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

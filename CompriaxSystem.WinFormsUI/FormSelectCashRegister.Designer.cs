@@ -17,12 +17,39 @@
 
         private void InitializeComponent()
         {
+            this.picIconConfirmSelection = new System.Windows.Forms.PictureBox();
+            this.picIconCancel = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelSelectionCard = new Panel();
             labelRegisterPrompt = new Label();
             comboBoxRegisterSelection = new ComboBox();
             labelRegisterStatusInfo = new Label();
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection = new Button();
             buttonCancel = new Button();
             panelHeader.SuspendLayout();
@@ -53,7 +80,9 @@
             panelSelectionCard.Controls.Add(labelRegisterPrompt);
             panelSelectionCard.Controls.Add(comboBoxRegisterSelection);
             panelSelectionCard.Controls.Add(labelRegisterStatusInfo);
+panelSelectionCard.Controls.Add(this.picIconConfirmSelection);
             panelSelectionCard.Controls.Add(buttonConfirmSelection);
+panelSelectionCard.Controls.Add(this.picIconCancel);
             panelSelectionCard.Controls.Add(buttonCancel);
             panelSelectionCard.Location = new Point(20, 72);
             panelSelectionCard.Name = "panelSelectionCard";
@@ -85,18 +114,318 @@
             labelRegisterStatusInfo.Size = new Size(360, 22);
             labelRegisterStatusInfo.TabIndex = 2;
             labelRegisterStatusInfo.Text = "Caja disponible";
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
 
             // buttonConfirmSelection
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.BackColor = Color.FromArgb(16, 185, 129);
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.ForeColor = Color.White;
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.Location = new Point(20, 115);
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.Name = "buttonConfirmSelection";
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.Size = new Size(360, 44);
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.TabIndex = 3;
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.Text = "INGRESAR A LA CAJA";
+            // 
+            // picIconConfirmSelection
+            // 
+            this.picIconConfirmSelection.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconConfirmSelection.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconConfirmSelection.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconConfirmSelection.Location = new System.Drawing.Point(32, 127);
+            this.picIconConfirmSelection.Name = "picIconConfirmSelection";
+            this.picIconConfirmSelection.Size = new System.Drawing.Size(20, 20);
+            this.picIconConfirmSelection.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconConfirmSelection.TabIndex = 99;
+            this.picIconConfirmSelection.TabStop = false;
+
+            // 
+            // picIconCancel
+            // 
+            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCancel.Location = new System.Drawing.Point(32, 175);
+            this.picIconCancel.Name = "picIconCancel";
+            this.picIconCancel.Size = new System.Drawing.Size(18, 18);
+            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCancel.TabIndex = 99;
+            this.picIconCancel.TabStop = false;
             buttonConfirmSelection.UseVisualStyleBackColor = false;
 
             // buttonCancel
@@ -120,10 +449,11 @@
             Name = "FormSelectCashRegister";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Selección de Caja";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelSelectionCard.ResumeLayout(false);
+ResumeLayout(false);
             panelSelectionCard.PerformLayout();
+
             ResumeLayout(false);
         }
 
@@ -137,5 +467,7 @@
         private System.Windows.Forms.Label labelRegisterStatusInfo;
         private System.Windows.Forms.Button buttonConfirmSelection;
         private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.PictureBox picIconConfirmSelection;
+        private System.Windows.Forms.PictureBox picIconCancel;
     }
 }

@@ -16,6 +16,11 @@ namespace CompriaxSystem.WinFormsUI
             _reportService = reportService;
             _documentService = documentService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonDownloadPdf, this.picIconDownloadPdf);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearch, this.picIconSearch);
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearSearch, this.picIconClearSearch);
+            
 
             this.buttonSearch.Click += async (s, e) => await ExecuteSearchSaleByDocumentNumberAsync();
             this.buttonClearSearch.Click += (s, e) => ResetSaleDetailFormFields();
@@ -145,3 +150,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

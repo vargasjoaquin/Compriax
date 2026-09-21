@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            this.picIconSaveSettings = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelHeaderTitle = new Label();
             panelStoreProfileForm = new Panel();
@@ -31,6 +32,18 @@
             labelEmail = new Label();
             textBoxEmail = new TextBox();
             pictureBoxStoreLogo = new PictureBox();
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings = new Button();
             panelHeader.SuspendLayout();
             panelStoreProfileForm.SuspendLayout();
@@ -72,6 +85,7 @@
             panelStoreProfileForm.Controls.Add(labelEmail);
             panelStoreProfileForm.Controls.Add(textBoxEmail);
             panelStoreProfileForm.Controls.Add(pictureBoxStoreLogo);
+panelStoreProfileForm.Controls.Add(this.picIconSaveSettings);
             panelStoreProfileForm.Controls.Add(buttonSaveSettings);
             panelStoreProfileForm.Location = new Point(24, 76);
             panelStoreProfileForm.Name = "panelStoreProfileForm";
@@ -184,19 +198,173 @@
             pictureBoxStoreLogo.TabIndex = 11;
             pictureBoxStoreLogo.TabStop = false;
             // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
+
+
+
+
+
+            // 
             // buttonSaveSettings
             // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
+            // 
             buttonSaveSettings.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.ForeColor = Color.White;
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.Location = new Point(24, 380);
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.Name = "buttonSaveSettings";
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.Size = new Size(876, 52);
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.TabIndex = 13;
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.Text = "GUARDAR CONFIGURACIÓN";
+            // 
+            // picIconSaveSettings
+            // 
+            this.picIconSaveSettings.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveSettings.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveSettings.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveSettings.Location = new System.Drawing.Point(38, 396);
+            this.picIconSaveSettings.Name = "picIconSaveSettings";
+            this.picIconSaveSettings.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveSettings.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveSettings.TabIndex = 99;
+            this.picIconSaveSettings.TabStop = false;
             buttonSaveSettings.UseVisualStyleBackColor = false;
+
+
+
+
+
             // 
             // FormSettings
             // 
@@ -209,11 +377,12 @@
             Name = "FormSettings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Perfil de la Empresa";
-            panelHeader.ResumeLayout(false);
+            ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelStoreProfileForm.ResumeLayout(false);
+            ResumeLayout(false);
             panelStoreProfileForm.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxStoreLogo).EndInit();
+
             ResumeLayout(false);
         }
 
@@ -234,5 +403,6 @@
         private System.Windows.Forms.TextBox textBoxEmail;
         private System.Windows.Forms.PictureBox pictureBoxStoreLogo;
         private System.Windows.Forms.Button buttonSaveSettings;
+        private System.Windows.Forms.PictureBox picIconSaveSettings;
     }
 }

@@ -17,6 +17,9 @@ namespace CompriaxSystem.WinFormsUI
         {
             _restoreService = restoreService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonRestoreRecord, this.picIconRestoreRecord);
+            
 
             this.Load += async (s, e) => await InitializeRestoreRecordsFormAsync();
             this.comboBoxEntityType.SelectedIndexChanged += async (s, e) =>
@@ -149,3 +152,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

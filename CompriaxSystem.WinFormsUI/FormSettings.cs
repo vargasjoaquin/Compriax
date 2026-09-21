@@ -12,6 +12,9 @@ namespace CompriaxSystem.WinFormsUI
         {
             _storeService = storeService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSaveSettings, this.picIconSaveSettings);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelStoreProfileForm);
@@ -79,3 +82,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

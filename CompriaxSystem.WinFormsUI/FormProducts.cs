@@ -21,6 +21,15 @@ namespace CompriaxSystem.WinFormsUI
             _documentService = documentService;
             _serviceProvider = serviceProvider;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonOpenLabelDesigner, this.picIconOpenLabelDesigner);
+            ButtonIconOverlayHelper.BindEvents(this.buttonExportPdf, this.picIconExportPdf);
+            ButtonIconOverlayHelper.BindEvents(this.buttonBrowsePhoto, this.picIconBrowsePhoto);
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearPhoto, this.picIconClearPhoto);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonEdit, this.picIconEdit);
+            ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelProductForm);
@@ -247,3 +256,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

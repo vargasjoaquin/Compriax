@@ -14,6 +14,12 @@
 
         private void InitializeComponent()
         {
+            this.picIconSearchSupplier = new System.Windows.Forms.PictureBox();
+            this.picIconSearchProduct = new System.Windows.Forms.PictureBox();
+            this.picIconAddPurchaseItem = new System.Windows.Forms.PictureBox();
+            this.picIconRemovePurchaseItem = new System.Windows.Forms.PictureBox();
+            this.picIconRegisterPurchase = new System.Windows.Forms.PictureBox();
+            this.picIconToggleScannerCamera = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelLeftWork = new Panel();
@@ -39,6 +45,83 @@
             textBoxInvoiceNumber = new TextBox();
             labelSupplierTaxId = new Label();
             textBoxSupplierTaxId = new TextBox();
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier = new Button();
             labelSupplierName = new Label();
             textBoxSupplierName = new TextBox();
@@ -113,6 +196,7 @@
             panelScannerItemBar.BackColor = Color.White;
             panelScannerItemBar.Controls.Add(labelBarcodePrompt);
             panelScannerItemBar.Controls.Add(textBoxProductBarcode);
+panelScannerItemBar.Controls.Add(this.picIconSearchProduct);
             panelScannerItemBar.Controls.Add(buttonSearchProduct);
             panelScannerItemBar.Controls.Add(labelProductName);
             panelScannerItemBar.Controls.Add(textBoxProductName);
@@ -120,7 +204,9 @@
             panelScannerItemBar.Controls.Add(textBoxBuyPrice);
             panelScannerItemBar.Controls.Add(labelQuantityPrompt);
             panelScannerItemBar.Controls.Add(numericUpDownQuantity);
+panelScannerItemBar.Controls.Add(this.picIconAddPurchaseItem);
             panelScannerItemBar.Controls.Add(buttonAddPurchaseItem);
+panelScannerItemBar.Controls.Add(this.picIconRemovePurchaseItem);
             panelScannerItemBar.Controls.Add(buttonRemovePurchaseItem);
             panelScannerItemBar.Dock = DockStyle.Top;
             panelScannerItemBar.Location = new Point(16, 97);
@@ -256,6 +342,7 @@
             panelPurchaseHeaderInfo.Controls.Add(textBoxInvoiceNumber);
             panelPurchaseHeaderInfo.Controls.Add(labelSupplierTaxId);
             panelPurchaseHeaderInfo.Controls.Add(textBoxSupplierTaxId);
+panelPurchaseHeaderInfo.Controls.Add(this.picIconSearchSupplier);
             panelPurchaseHeaderInfo.Controls.Add(buttonSearchSupplier);
             panelPurchaseHeaderInfo.Controls.Add(labelSupplierName);
             panelPurchaseHeaderInfo.Controls.Add(textBoxSupplierName);
@@ -343,14 +430,635 @@
             textBoxSupplierTaxId.Size = new Size(130, 30);
             textBoxSupplierTaxId.TabIndex = 7;
             // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
+
+
+
+
+
+            // 
             // buttonSearchSupplier
             // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
+            // 
             buttonSearchSupplier.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.Location = new Point(531, 26);
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.Name = "buttonSearchSupplier";
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.Size = new Size(76, 43);
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.TabIndex = 8;
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.Text = "";
+            // 
+            // picIconSearchSupplier
+            // 
+            this.picIconSearchSupplier.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchSupplier.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchSupplier.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchSupplier.Location = new System.Drawing.Point(557, 37);
+            this.picIconSearchSupplier.Name = "picIconSearchSupplier";
+            this.picIconSearchSupplier.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchSupplier.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchSupplier.TabIndex = 99;
+            this.picIconSearchSupplier.TabStop = false;
+
+            // 
+            // picIconSearchProduct
+            // 
+            this.picIconSearchProduct.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconSearchProduct.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSearchProduct.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
+            this.picIconSearchProduct.Location = new System.Drawing.Point(178, 48);
+            this.picIconSearchProduct.Name = "picIconSearchProduct";
+            this.picIconSearchProduct.Size = new System.Drawing.Size(22, 22);
+            this.picIconSearchProduct.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSearchProduct.TabIndex = 99;
+            this.picIconSearchProduct.TabStop = false;
+
+            // 
+            // picIconAddPurchaseItem
+            // 
+            this.picIconAddPurchaseItem.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconAddPurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconAddPurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconAddPurchaseItem.Location = new System.Drawing.Point(673, 42);
+            this.picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            this.picIconAddPurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconAddPurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconAddPurchaseItem.TabIndex = 99;
+            this.picIconAddPurchaseItem.TabStop = false;
+
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            this.picIconRemovePurchaseItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconRemovePurchaseItem.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRemovePurchaseItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconRemovePurchaseItem.Location = new System.Drawing.Point(815, 42);
+            this.picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            this.picIconRemovePurchaseItem.Size = new System.Drawing.Size(22, 22);
+            this.picIconRemovePurchaseItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRemovePurchaseItem.TabIndex = 99;
+            this.picIconRemovePurchaseItem.TabStop = false;
+
+            // 
+            // picIconRegisterPurchase
+            // 
+            this.picIconRegisterPurchase.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
+            this.picIconRegisterPurchase.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconRegisterPurchase.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
+            this.picIconRegisterPurchase.Location = new System.Drawing.Point(28, 219);
+            this.picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            this.picIconRegisterPurchase.Size = new System.Drawing.Size(22, 22);
+            this.picIconRegisterPurchase.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconRegisterPurchase.TabIndex = 99;
+            this.picIconRegisterPurchase.TabStop = false;
+
+            // 
+            // picIconToggleScannerCamera
+            // 
+            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 458);
+            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
+            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleScannerCamera.TabIndex = 99;
+            this.picIconToggleScannerCamera.TabStop = false;
             buttonSearchSupplier.UseVisualStyleBackColor = true;
             // 
             // labelSupplierName
@@ -389,8 +1097,10 @@
             panelRightSummary.Controls.Add(comboBoxPaymentMethod);
             panelRightSummary.Controls.Add(labelTotalPrompt);
             panelRightSummary.Controls.Add(textBoxTotalAmount);
+panelRightSummary.Controls.Add(this.picIconRegisterPurchase);
             panelRightSummary.Controls.Add(buttonRegisterPurchase);
             panelRightSummary.Controls.Add(pictureBoxWebcamPreview);
+panelRightSummary.Controls.Add(this.picIconToggleScannerCamera);
             panelRightSummary.Controls.Add(buttonToggleScannerCamera);
             panelRightSummary.Dock = DockStyle.Right;
             panelRightSummary.Location = new Point(990, 56);
@@ -487,6 +1197,11 @@
             buttonToggleScannerCamera.TabIndex = 7;
             buttonToggleScannerCamera.Text = "ENCENDER CÁMARA";
             buttonToggleScannerCamera.UseVisualStyleBackColor = true;
+
+
+
+
+
             // 
             // FormPurchases
             // 
@@ -500,18 +1215,19 @@
             Name = "FormPurchases";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Registro de Compras";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelLeftWork.ResumeLayout(false);
+ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseCart).EndInit();
-            panelScannerItemBar.ResumeLayout(false);
+ResumeLayout(false);
             panelScannerItemBar.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
-            panelPurchaseHeaderInfo.ResumeLayout(false);
+ResumeLayout(false);
             panelPurchaseHeaderInfo.PerformLayout();
-            panelRightSummary.ResumeLayout(false);
+ResumeLayout(false);
             panelRightSummary.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).EndInit();
+
             ResumeLayout(false);
         }
 
@@ -555,5 +1271,11 @@
         private System.Windows.Forms.Button buttonRegisterPurchase;
         private System.Windows.Forms.PictureBox pictureBoxWebcamPreview;
         private System.Windows.Forms.Button buttonToggleScannerCamera;
+        private System.Windows.Forms.PictureBox picIconSearchSupplier;
+        private System.Windows.Forms.PictureBox picIconSearchProduct;
+        private System.Windows.Forms.PictureBox picIconAddPurchaseItem;
+        private System.Windows.Forms.PictureBox picIconRemovePurchaseItem;
+        private System.Windows.Forms.PictureBox picIconRegisterPurchase;
+        private System.Windows.Forms.PictureBox picIconToggleScannerCamera;
     }
 }

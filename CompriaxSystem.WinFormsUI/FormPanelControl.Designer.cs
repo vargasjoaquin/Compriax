@@ -17,6 +17,7 @@
 
         private void InitializeComponent()
         {
+            this.picIconLogout = new System.Windows.Forms.PictureBox();
             this.components = new System.ComponentModel.Container();
             this.panelTopNavigation = new System.Windows.Forms.Panel();
             this.flowLayoutPanelNavigationButtons = new System.Windows.Forms.FlowLayoutPanel();
@@ -42,6 +43,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserIcon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRoleIcon)).BeginInit();
+
+
+
+
+
             this.SuspendLayout();
 
             // ==================== panelTopNavigation ====================
@@ -86,6 +92,7 @@
             this.panelStatusFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
             this.panelStatusFooter.Controls.Add(this.flowLayoutPanelStatusLeft);
             this.panelStatusFooter.Controls.Add(this.labelClockTime);
+panelStatusFooter.Controls.Add(this.picIconLogout);
             this.panelStatusFooter.Controls.Add(this.buttonLogout);
             this.panelStatusFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panelStatusFooter.Location = new System.Drawing.Point(0, 752);
@@ -164,6 +171,18 @@
             this.labelClockTime.TabIndex = 5;
             this.labelClockTime.Text = "00:00:00";
             this.labelClockTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // picIconLogout
+            // 
+            this.picIconLogout.BackColor = System.Drawing.Color.FromArgb(192, 0, 0);
+            this.picIconLogout.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconLogout.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconLogout.Location = new System.Drawing.Point(1142, 14);
+            this.picIconLogout.Name = "picIconLogout";
+            this.picIconLogout.Size = new System.Drawing.Size(20, 20);
+            this.picIconLogout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconLogout.TabIndex = 99;
+            this.picIconLogout.TabStop = false;
 
             // buttonLogout
             this.buttonLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -203,16 +222,18 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CompriaxSystem - Panel de Control";
 
-            this.panelTopNavigation.ResumeLayout(false);
-            this.panelBrand.ResumeLayout(false);
+            this.ResumeLayout(false);
+            this.ResumeLayout(false);
             this.panelBrand.PerformLayout();
-            this.panelStatusFooter.ResumeLayout(false);
+            this.ResumeLayout(false);
             this.panelStatusFooter.PerformLayout();
-            this.flowLayoutPanelStatusLeft.ResumeLayout(false);
+            this.ResumeLayout(false);
             this.flowLayoutPanelStatusLeft.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserIcon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRoleIcon)).EndInit();
+
+
             this.ResumeLayout(false);
         }
 
@@ -234,5 +255,6 @@
         private System.Windows.Forms.Button buttonLogout;
         private System.Windows.Forms.Panel panelMainContainer;
         private System.Windows.Forms.Timer timerSystemClock;
+        private System.Windows.Forms.PictureBox picIconLogout;
     }
 }

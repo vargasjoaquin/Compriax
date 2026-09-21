@@ -14,6 +14,9 @@ namespace CompriaxSystem.WinFormsUI
             _userService = userService;
             _currentUserService = currentUserService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSaveChanges, this.picIconSaveChanges);
+            
 
             this.Load += (s, e) => LoadAuthenticatedUserProfileData();
             this.buttonSaveChanges.Click += async (s, e) => await ExecuteUpdateUserProfileAndCredentialsAsync();
@@ -86,3 +89,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

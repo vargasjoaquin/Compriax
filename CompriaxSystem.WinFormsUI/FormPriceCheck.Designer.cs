@@ -17,12 +17,39 @@
 
         private void InitializeComponent()
         {
+            this.picIconClearSearch = new System.Windows.Forms.PictureBox();
+            this.picIconCloseDialog = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelHeaderTitle = new Label();
             labelHeaderSubtitle = new Label();
             panelSearchCard = new Panel();
             labelSearchPrompt = new Label();
             quickSearchBox = new Controls.QuickSearchProductBox();
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch = new Button();
             panelDetailsCard = new Panel();
             pictureBoxProduct = new PictureBox();
@@ -88,6 +115,7 @@
             panelSearchCard.BackColor = Color.White;
             panelSearchCard.Controls.Add(labelSearchPrompt);
             panelSearchCard.Controls.Add(quickSearchBox);
+panelSearchCard.Controls.Add(this.picIconClearSearch);
             panelSearchCard.Controls.Add(buttonClearSearch);
             panelSearchCard.Location = new Point(20, 80);
             panelSearchCard.Name = "panelSearchCard";
@@ -116,15 +144,245 @@
             quickSearchBox.Size = new Size(650, 54);
             quickSearchBox.TabIndex = 1;
             // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
+
+
+
+
+
+            // 
             // buttonClearSearch
             // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
+            // 
             buttonClearSearch.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.Location = new Point(676, 32);
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.Name = "buttonClearSearch";
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.Size = new Size(146, 54);
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.TabIndex = 2;
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.Text = "LIMPIAR";
+            // 
+            // picIconClearSearch
+            // 
+            this.picIconClearSearch.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconClearSearch.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconClearSearch.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
+            this.picIconClearSearch.Location = new System.Drawing.Point(688, 49);
+            this.picIconClearSearch.Name = "picIconClearSearch";
+            this.picIconClearSearch.Size = new System.Drawing.Size(20, 20);
+            this.picIconClearSearch.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconClearSearch.TabIndex = 99;
+            this.picIconClearSearch.TabStop = false;
+
+            // 
+            // picIconCloseDialog
+            // 
+            this.picIconCloseDialog.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCloseDialog.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCloseDialog.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
+            this.picIconCloseDialog.Location = new System.Drawing.Point(772, 17);
+            this.picIconCloseDialog.Name = "picIconCloseDialog";
+            this.picIconCloseDialog.Size = new System.Drawing.Size(16, 16);
+            this.picIconCloseDialog.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCloseDialog.TabIndex = 99;
+            this.picIconCloseDialog.TabStop = false;
             buttonClearSearch.UseVisualStyleBackColor = true;
             // 
             // panelDetailsCard
@@ -309,6 +567,7 @@
             // 
             panelFooter.BackColor = Color.FromArgb(241, 245, 249);
             panelFooter.Controls.Add(labelHelpShortcuts);
+panelFooter.Controls.Add(this.picIconCloseDialog);
             panelFooter.Controls.Add(buttonCloseDialog);
             panelFooter.Dock = DockStyle.Bottom;
             panelFooter.Location = new Point(0, 695);
@@ -339,6 +598,11 @@
             buttonCloseDialog.TabIndex = 1;
             buttonCloseDialog.Text = "CERRAR";
             buttonCloseDialog.UseVisualStyleBackColor = true;
+
+
+
+
+
             // 
             // FormPriceCheck
             // 
@@ -356,17 +620,18 @@
             Name = "FormPriceCheck";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Ver Precio de Artículo";
-            panelHeader.ResumeLayout(false);
+ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelSearchCard.ResumeLayout(false);
+ResumeLayout(false);
             panelSearchCard.PerformLayout();
-            panelDetailsCard.ResumeLayout(false);
+ResumeLayout(false);
             panelDetailsCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
-            tableLayoutPanelInfoGrid.ResumeLayout(false);
+ResumeLayout(false);
             tableLayoutPanelInfoGrid.PerformLayout();
-            panelFooter.ResumeLayout(false);
+ResumeLayout(false);
             panelFooter.PerformLayout();
+
             ResumeLayout(false);
         }
 
@@ -397,5 +662,7 @@
         private Panel panelFooter;
         private Label labelHelpShortcuts;
         private Button buttonCloseDialog;
+        private System.Windows.Forms.PictureBox picIconClearSearch;
+        private System.Windows.Forms.PictureBox picIconCloseDialog;
     }
 }

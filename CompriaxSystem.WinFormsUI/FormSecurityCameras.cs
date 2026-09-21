@@ -14,6 +14,11 @@ namespace CompriaxSystem.WinFormsUI
             _cameraService = cameraService;
             _recordingService = recordingService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleLiveView, this.picIconToggleLiveView);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCaptureSnapshot, this.picIconCaptureSnapshot);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleAutoRecording, this.picIconToggleAutoRecording);
+            
 
             this.Load += (s, e) => InitializeSecurityCamerasForm();
             this.buttonToggleLiveView.Click += (s, e) => ExecuteToggleCameraLiveStreaming();
@@ -104,3 +109,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

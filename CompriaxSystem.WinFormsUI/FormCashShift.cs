@@ -25,6 +25,13 @@ namespace CompriaxSystem.WinFormsUI
             _serviceProvider = serviceProvider;
             _currentUserService = currentUserService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonOpenShift, this.picIconOpenShift);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRegisterCashIn, this.picIconRegisterCashIn);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRegisterCashOut, this.picIconRegisterCashOut);
+            ButtonIconOverlayHelper.BindEvents(this.buttonPrintPartialCloseX, this.picIconPrintPartialCloseX);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCloseShiftZ, this.picIconCloseShiftZ);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelOpenShift);
@@ -237,3 +244,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

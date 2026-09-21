@@ -17,6 +17,13 @@ namespace CompriaxSystem.WinFormsUI
             _lookupService = lookupService;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonExportPdf, this.picIconExportPdf);
+            ButtonIconOverlayHelper.BindEvents(this.buttonBrowsePhoto, this.picIconBrowsePhoto);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonEdit, this.picIconEdit);
+            ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelEmployeeForm);
@@ -239,3 +246,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

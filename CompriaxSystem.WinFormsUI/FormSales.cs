@@ -66,6 +66,12 @@ namespace CompriaxSystem.WinFormsUI
             _mercadoPagoQrClient = mercadoPagoQrClient;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonRemoveItem, this.picIconRemoveItem);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSelectCustomer, this.picIconSelectCustomer);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRegisterSale, this.picIconRegisterSale);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleScannerCamera, this.picIconToggleScannerCamera);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelBarcodeBar);
@@ -560,3 +566,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

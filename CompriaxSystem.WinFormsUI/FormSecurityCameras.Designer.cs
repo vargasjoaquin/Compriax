@@ -17,6 +17,9 @@
 
         private void InitializeComponent()
         {
+            this.picIconToggleLiveView = new System.Windows.Forms.PictureBox();
+            this.picIconCaptureSnapshot = new System.Windows.Forms.PictureBox();
+            this.picIconToggleAutoRecording = new System.Windows.Forms.PictureBox();
             this.panelHeader = new System.Windows.Forms.Panel();
             this.labelTitle = new System.Windows.Forms.Label();
             this.panelToolbar = new System.Windows.Forms.Panel();
@@ -41,6 +44,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).BeginInit();
             this.panelCaptureContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).BeginInit();
+
+
+
+
+
             this.SuspendLayout();
 
             // panelHeader
@@ -66,9 +74,12 @@
             this.panelToolbar.BackColor = System.Drawing.Color.White;
             this.panelToolbar.Controls.Add(this.labelCameraDevicePrompt);
             this.panelToolbar.Controls.Add(this.comboBoxCameraDevices);
+panelToolbar.Controls.Add(this.picIconToggleLiveView);
             this.panelToolbar.Controls.Add(this.buttonToggleLiveView);
+panelToolbar.Controls.Add(this.picIconCaptureSnapshot);
             this.panelToolbar.Controls.Add(this.buttonCaptureSnapshot);
             this.panelToolbar.Controls.Add(this.labelRecordingStatus);
+panelToolbar.Controls.Add(this.picIconToggleAutoRecording);
             this.panelToolbar.Controls.Add(this.buttonToggleAutoRecording);
             this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelToolbar.Location = new System.Drawing.Point(0, 56);
@@ -93,6 +104,44 @@
             this.comboBoxCameraDevices.Name = "comboBoxCameraDevices";
             this.comboBoxCameraDevices.Size = new System.Drawing.Size(200, 25);
             this.comboBoxCameraDevices.TabIndex = 1;
+            // 
+            // picIconToggleLiveView
+            // 
+            this.picIconToggleLiveView.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconToggleLiveView.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleLiveView.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
+            this.picIconToggleLiveView.Location = new System.Drawing.Point(238, 32);
+            this.picIconToggleLiveView.Name = "picIconToggleLiveView";
+            this.picIconToggleLiveView.Size = new System.Drawing.Size(20, 20);
+            this.picIconToggleLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleLiveView.TabIndex = 99;
+            this.picIconToggleLiveView.TabStop = false;
+
+            // 
+            // picIconCaptureSnapshot
+            // 
+            this.picIconCaptureSnapshot.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
+            this.picIconCaptureSnapshot.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconCaptureSnapshot.Image = global::CompriaxSystem.WinFormsUI.Resources._086_capturar_foto;
+            this.picIconCaptureSnapshot.Location = new System.Drawing.Point(428, 32);
+            this.picIconCaptureSnapshot.Name = "picIconCaptureSnapshot";
+            this.picIconCaptureSnapshot.Size = new System.Drawing.Size(20, 20);
+            this.picIconCaptureSnapshot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconCaptureSnapshot.TabIndex = 99;
+            this.picIconCaptureSnapshot.TabStop = false;
+
+            // 
+            // picIconToggleAutoRecording
+            // 
+            this.picIconToggleAutoRecording.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
+            this.picIconToggleAutoRecording.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconToggleAutoRecording.Image = global::CompriaxSystem.WinFormsUI.Resources._095_bloqueo_operativo;
+            this.picIconToggleAutoRecording.Location = new System.Drawing.Point(910, 33);
+            this.picIconToggleAutoRecording.Name = "picIconToggleAutoRecording";
+            this.picIconToggleAutoRecording.Size = new System.Drawing.Size(20, 20);
+            this.picIconToggleAutoRecording.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconToggleAutoRecording.TabIndex = 99;
+            this.picIconToggleAutoRecording.TabStop = false;
 
             // buttonToggleLiveView
             this.buttonToggleLiveView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
@@ -223,15 +272,17 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Cámaras CCTV";
 
-            this.panelHeader.ResumeLayout(false);
+            ResumeLayout(false);
             this.panelHeader.PerformLayout();
-            this.panelToolbar.ResumeLayout(false);
+            ResumeLayout(false);
             this.panelToolbar.PerformLayout();
-            this.tableLayoutPanelFeeds.ResumeLayout(false);
-            this.panelLiveContainer.ResumeLayout(false);
+            ResumeLayout(false);
+            ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).EndInit();
-            this.panelCaptureContainer.ResumeLayout(false);
+            ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).EndInit();
+
+
             this.ResumeLayout(false);
         }
 
@@ -253,5 +304,8 @@
         private System.Windows.Forms.Panel panelCaptureContainer;
         private System.Windows.Forms.Label labelCaptureTitle;
         private System.Windows.Forms.PictureBox pictureBoxLastCapture;
+        private System.Windows.Forms.PictureBox picIconToggleLiveView;
+        private System.Windows.Forms.PictureBox picIconCaptureSnapshot;
+        private System.Windows.Forms.PictureBox picIconToggleAutoRecording;
     }
 }

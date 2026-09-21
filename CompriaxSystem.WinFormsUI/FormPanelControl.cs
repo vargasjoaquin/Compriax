@@ -30,6 +30,9 @@ namespace CompriaxSystem.WinFormsUI
             _cashShiftService = cashShiftService;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonLogout, this.picIconLogout);
+            
 
             labelClockTime.Text = DateTime.Now.ToString("HH:mm:ss");
             timerSystemClock.Interval = 1000;
@@ -356,3 +359,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

@@ -18,6 +18,11 @@ namespace CompriaxSystem.WinFormsUI
             _productService = productService;
             _barcodeService = barcodeService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonGenerateLabel, this.picIconGenerateLabel);
+            ButtonIconOverlayHelper.BindEvents(this.buttonPrintLabel, this.picIconPrintLabel);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSaveLabelImage, this.picIconSaveLabelImage);
+            
 
             this.Load += async (s, e) => await InitializePriceLabelsCatalogAsync();
             this.dataGridViewProducts.CellClick += (s, e) => SynchronizeSelectedProductToLabelFields();
@@ -193,3 +198,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

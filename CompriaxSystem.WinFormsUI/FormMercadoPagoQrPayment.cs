@@ -29,6 +29,9 @@ namespace CompriaxSystem.WinFormsUI
             _apiBaseUrl = apiBaseUrl.TrimEnd('/');
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancelPayment, this.picIconCancelPayment);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelPaymentCard);
@@ -180,3 +183,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

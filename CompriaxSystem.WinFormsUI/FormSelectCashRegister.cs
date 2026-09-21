@@ -16,6 +16,10 @@ namespace CompriaxSystem.WinFormsUI
             _registerService = registerService;
             _currentUserService = currentUserService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonConfirmSelection, this.picIconConfirmSelection);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelSelectionCard);
@@ -108,3 +112,13 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

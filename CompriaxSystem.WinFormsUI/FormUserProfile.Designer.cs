@@ -15,6 +15,7 @@
 
         private void InitializeComponent()
         {
+            this.picIconSaveChanges = new System.Windows.Forms.PictureBox();
             panelHeader = new Panel();
             labelHeaderTitle = new Label();
             panelProfileSummaryCard = new Panel();
@@ -37,6 +38,18 @@
             textBoxNewPassword = new TextBox();
             labelConfirmPassword = new Label();
             textBoxConfirmPassword = new TextBox();
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges = new Button();
             panelHeader.SuspendLayout();
             panelProfileSummaryCard.SuspendLayout();
@@ -145,6 +158,7 @@
             panelEditProfileCard.Controls.Add(textBoxNewPassword);
             panelEditProfileCard.Controls.Add(labelConfirmPassword);
             panelEditProfileCard.Controls.Add(textBoxConfirmPassword);
+panelEditProfileCard.Controls.Add(this.picIconSaveChanges);
             panelEditProfileCard.Controls.Add(buttonSaveChanges);
             panelEditProfileCard.Location = new Point(364, 76);
             panelEditProfileCard.Name = "panelEditProfileCard";
@@ -278,19 +292,173 @@
             textBoxConfirmPassword.Size = new Size(240, 31);
             textBoxConfirmPassword.TabIndex = 12;
             // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
+
+
+
+
+
+            // 
             // buttonSaveChanges
             // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
+            // 
             buttonSaveChanges.BackColor = Color.FromArgb(2, 132, 199);
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.FlatAppearance.BorderSize = 0;
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.FlatStyle = FlatStyle.Flat;
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.ForeColor = Color.White;
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.Location = new Point(24, 400);
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.Name = "buttonSaveChanges";
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.Size = new Size(506, 48);
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.TabIndex = 13;
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.Text = "GUARDAR CAMBIOS";
+            // 
+            // picIconSaveChanges
+            // 
+            this.picIconSaveChanges.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
+            this.picIconSaveChanges.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.picIconSaveChanges.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
+            this.picIconSaveChanges.Location = new System.Drawing.Point(36, 414);
+            this.picIconSaveChanges.Name = "picIconSaveChanges";
+            this.picIconSaveChanges.Size = new System.Drawing.Size(20, 20);
+            this.picIconSaveChanges.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.picIconSaveChanges.TabIndex = 99;
+            this.picIconSaveChanges.TabStop = false;
             buttonSaveChanges.UseVisualStyleBackColor = false;
+
+
+
+
+
             // 
             // FormUserProfile
             // 
@@ -304,12 +472,13 @@
             Name = "FormUserProfile";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Mi Perfil";
-            panelHeader.ResumeLayout(false);
+            ResumeLayout(false);
             panelHeader.PerformLayout();
-            panelProfileSummaryCard.ResumeLayout(false);
+            ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)pictureBoxAvatar).EndInit();
-            panelEditProfileCard.ResumeLayout(false);
+            ResumeLayout(false);
             panelEditProfileCard.PerformLayout();
+
             ResumeLayout(false);
         }
 
@@ -319,5 +488,6 @@
         private System.Windows.Forms.TextBox textBoxFirstName, textBoxLastName, textBoxEmail, textBoxNewPassword, textBoxConfirmPassword, textBoxCurrentPassword;
         private System.Windows.Forms.PictureBox pictureBoxAvatar;
         private System.Windows.Forms.Button buttonSaveChanges;
+        private System.Windows.Forms.PictureBox picIconSaveChanges;
     }
 }
