@@ -95,7 +95,7 @@ namespace CompriaxSystem.SetupActivator
 
                 // Guardar signedToken cifrado con Windows DPAPI a nivel máquina
                 string commonAppData = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData);
-                string licenseDirectoryPath = Path.Combine(commonAppData, "CompriaxPOS");
+                string licenseDirectoryPath = Path.Combine(commonAppData, "CompriaxSystem");
                 
                 Directory.CreateDirectory(licenseDirectoryPath);
 
