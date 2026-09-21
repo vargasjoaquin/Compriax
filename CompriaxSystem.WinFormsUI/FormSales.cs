@@ -25,6 +25,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ICashShiftService _cashShiftService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IMercadoPagoQrClient _mercadoPagoQrClient;
+        private readonly SemaphoreSlim _calculationLock = new(1, 1);
 
         private readonly List<SaleItemDto> _cart = new();
         private CustomerDto? _selectedCustomer;
@@ -79,7 +80,7 @@ namespace CompriaxSystem.WinFormsUI
                 barcode => _ = ProcessScannedProductBarcodeAsync(barcode, (int)numericUpDownQuantity.Value));
 
             this.Load += async (s, e) => await InitializePointOfSaleFormAsync();
-            this.buttonRemoveItem.Click += (s, e) => RemoveSelectedItemFromSaleCart();
+            this.buttonRemoveItem.Click += async (s, e) => await RemoveSelectedItemFromSaleCart();
             this.buttonSelectCustomer.Click += async (s, e) => await PromptSelectCustomerDialogAsync();
             this.buttonRegisterSale.Click += async (s, e) => await ExecuteSaleCheckoutAndPaymentAsync();
 
@@ -97,7 +98,7 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             this.KeyDown += async (s, e) => await HandleKeyboardShortcutsAsync(e);
-            this.dataGridViewCart.CellDoubleClick += (s, e) => RemoveSelectedItemFromSaleCart();
+            this.dataGridViewCart.CellDoubleClick += async (s, e) => await RemoveSelectedItemFromSaleCart();
         }
         /// <summary>
         /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
@@ -182,7 +183,7 @@ namespace CompriaxSystem.WinFormsUI
                 _isInitializing = false;
 
                 await UpdateVoucherContextAndSequenceNumberAsync();
-                ResetPointOfSaleSession();
+                await ResetPointOfSaleSession();
             }
         }
 
@@ -208,7 +209,7 @@ namespace CompriaxSystem.WinFormsUI
                     await ExecuteSaleCheckoutAndPaymentAsync();
                     break;
                 case UIThemeHelper.Shortcuts.DeleteItem:
-                    RemoveSelectedItemFromSaleCart();
+                    await RemoveSelectedItemFromSaleCart();
                     break;
                 case UIThemeHelper.Shortcuts.ClearOrCancel:
                     ResetProductScannerInputBar();
@@ -276,13 +277,13 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private void ResetPointOfSaleSession()
+        private async Task ResetPointOfSaleSession()
         {
             _cart.Clear();
             _selectedCustomer = null;
             ResetProductScannerInputBar();
-            _ = UpdateVoucherContextAndSequenceNumberAsync();
-            RefreshSaleCartGridAndCalculateDiscountsAsync();
+            await UpdateVoucherContextAndSequenceNumberAsync();
+            await RefreshSaleCartGridAndCalculateDiscountsAsync();
         }
 
         private void ResetProductScannerInputBar()
@@ -346,24 +347,33 @@ namespace CompriaxSystem.WinFormsUI
             }
 
             ResetProductScannerInputBar();
-            RefreshSaleCartGridAndCalculateDiscountsAsync();
+            await RefreshSaleCartGridAndCalculateDiscountsAsync();
         }
 
-        private async void RefreshSaleCartGridAndCalculateDiscountsAsync()
+        private async Task RefreshSaleCartGridAndCalculateDiscountsAsync()
         {
-            _currentCalculation = await _promotionService.CalculateSaleDiscountsAsync(_cart, DateTime.Now);
+            await _calculationLock.WaitAsync();
+            
+            try
+            {
+                _currentCalculation = await _promotionService.CalculateSaleDiscountsAsync(_cart, DateTime.Now);
 
-            dataGridViewCart.DataSource = null;
-            dataGridViewCart.DataSource = _currentCalculation.CalculatedItems.ToList();
-            DataGridViewHelper.ApplyStyle(dataGridViewCart);
+                dataGridViewCart.DataSource = null;
+                dataGridViewCart.DataSource = _currentCalculation.CalculatedItems.ToList();
+                DataGridViewHelper.ApplyStyle(dataGridViewCart);
 
-            labelSubTotalValue.Text = $"Subtotal: {_currentCalculation.SubTotal:C2}";
-            labelDiscountValue.Text = $"Descuentos: -{_currentCalculation.TotalDiscount:C2}";
-            labelTotalDisplay.Text = _currentCalculation.FinalTotal.ToString("C2");
-            buttonRegisterSale.Text = $"COBRAR {_currentCalculation.FinalTotal:C2} (F8)";
+                labelSubTotalValue.Text = $"Subtotal: {_currentCalculation.SubTotal:C2}";
+                labelDiscountValue.Text = $"Descuentos: -{_currentCalculation.TotalDiscount:C2}";
+                labelTotalDisplay.Text = _currentCalculation.FinalTotal.ToString("C2");
+                buttonRegisterSale.Text = $"COBRAR {_currentCalculation.FinalTotal:C2} (F8)";
+            }
+            finally
+            {
+                _calculationLock.Release();
+            }
         }
 
-        private void RemoveSelectedItemFromSaleCart()
+        private async Task RemoveSelectedItemFromSaleCart()
         {
             if (dataGridViewCart.CurrentRow == null || dataGridViewCart.CurrentRow.DataBoundItem is not SaleItemDto item)
             {
@@ -372,7 +382,7 @@ namespace CompriaxSystem.WinFormsUI
             }
 
             _cart.RemoveAll(x => x.ProductId == item.ProductId);
-            RefreshSaleCartGridAndCalculateDiscountsAsync();
+            await RefreshSaleCartGridAndCalculateDiscountsAsync();
             ResetProductScannerInputBar();
         }
 
@@ -540,7 +550,7 @@ namespace CompriaxSystem.WinFormsUI
                         _selectedCustomer?.FirstName);
 
                     ticketPreviewFormInstance.Show();
-                    ResetPointOfSaleSession();
+                    await ResetPointOfSaleSession();
                 }
                 else
                 {
