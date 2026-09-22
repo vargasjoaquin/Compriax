@@ -9,7 +9,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
     {
         /// <summary>
         /// Realiza la siembra inicial de la base de datos (Seed), creando roles, usuario administrador, 
-        /// configuraciones de tienda, métodos de pago y datos de prueba esenciales.
+        /// configuraciones de tienda, métodos de pago, catálogos auxiliares y datos de prueba esenciales.
         /// </summary>
         /// <param name="context">Contexto de la base de datos de la aplicación.</param>
         public static async Task SeedAsync(ApplicationDbContext context)
@@ -18,7 +18,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 1. ROLES DEL SISTEMA
             // =========================================================================
             Role? administratorRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == RoleConstants.ADMINISTRATOR);
-            
+
             if (administratorRole == null)
             {
                 administratorRole = new Role { Name = RoleConstants.ADMINISTRATOR };
@@ -32,7 +32,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 2. USUARIO ADMINISTRADOR
             // =========================================================================
             User? administratorUser = await context.Users.FirstOrDefaultAsync(u => u.Username == RoleConstants.DEFAULT_ADMIN_USERNAME);
-            
+
             if (administratorUser == null)
             {
                 administratorUser = new User
@@ -56,7 +56,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 3. CAJA / TERMINAL
             // =========================================================================
             CashRegister? defaultCashRegister = await context.CashRegisters.FirstOrDefaultAsync(cr => cr.Number == 1);
-            
+
             if (defaultCashRegister == null)
             {
                 defaultCashRegister = new CashRegister
@@ -77,7 +77,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 4. MÉTODOS DE PAGO
             // =========================================================================
             PaymentMethod? defaultPaymentMethod = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == PaymentMethodConstants.CASH);
-            
+
             if (defaultPaymentMethod == null)
             {
                 defaultPaymentMethod = new PaymentMethod { Name = PaymentMethodConstants.CASH, IsActive = true };
@@ -97,7 +97,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             if (!await context.DocumentTypes.AnyAsync())
             {
                 using var documentTypesTransaction = await context.Database.BeginTransactionAsync();
-                
+
                 try
                 {
                     await context.Database.ExecuteSqlRawAsync("SET IDENTITY_INSERT [dbo].[DocumentTypes] ON;");
@@ -158,15 +158,37 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 await context.SaveChangesAsync();
             }
 
+            if (!await context.Genders.AnyAsync())
+            {
+                await context.Genders.AddRangeAsync(
+                    new Gender { Name = "Masculino" },
+                    new Gender { Name = "Femenino" },
+                    new Gender { Name = "Otro / No especifica" }
+                );
+                await context.SaveChangesAsync();
+            }
+
+            if (!await context.CivilStatuses.AnyAsync())
+            {
+                await context.CivilStatuses.AddRangeAsync(
+                    new CivilStatus { Name = "Soltero/a" },
+                    new CivilStatus { Name = "Casado/a" },
+                    new CivilStatus { Name = "Divorciado/a" },
+                    new CivilStatus { Name = "Viudo/a" },
+                    new CivilStatus { Name = "Unión Convivencial" }
+                );
+                await context.SaveChangesAsync();
+            }
+
             // =========================================================================
             // 7. CONDICIONES FISCALES ANTE EL IVA 
             // =========================================================================
             TaxCondition? defaultTaxCondition = await context.TaxConditions.FirstOrDefaultAsync(t => t.Name == "IVA Responsable Inscripto");
-            
+
             if (defaultTaxCondition == null)
             {
                 defaultTaxCondition = new TaxCondition { Name = "IVA Responsable Inscripto" };
-                
+
                 await context.TaxConditions.AddRangeAsync(
                     defaultTaxCondition,
                     new TaxCondition { Name = "IVA Sujeto Exento" },
@@ -182,11 +204,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 8. UNIDADES DE MEDIDA
             // =========================================================================
             UnitsOfMeasure? defaultUnitOfMeasure = await context.UnitsOfMeasure.FirstOrDefaultAsync(u => u.Abbreviation == "UN");
-            
+
             if (defaultUnitOfMeasure == null)
             {
                 defaultUnitOfMeasure = new UnitsOfMeasure { Name = "Unidades", Abbreviation = "UN" };
-                
+
                 await context.UnitsOfMeasure.AddRangeAsync(
                     defaultUnitOfMeasure,
                     new UnitsOfMeasure { Name = "Kilogramos", Abbreviation = "KG" },
@@ -201,11 +223,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 9. CATEGORÍAS Y MARCAS POR DEFECTO
             // =========================================================================
             Category? defaultCategory = await context.Categories.FirstOrDefaultAsync(c => c.Name == "Bebidas y Gaseosas");
-            
+
             if (defaultCategory == null)
             {
                 defaultCategory = new Category { Name = "Bebidas y Gaseosas", Description = "Aguas, gaseosas y jugos", IsActive = true, CreatedAt = DateTime.UtcNow };
-                
+
                 await context.Categories.AddRangeAsync(
                     defaultCategory,
                     new Category { Name = "Almacén y Comestibles", Description = "Alimentos no perecederos de góndola", IsActive = true, CreatedAt = DateTime.UtcNow },
@@ -216,11 +238,11 @@ namespace CompriaxSystem.Infrastructure.Persistence
             }
 
             Brand? defaultBrand = await context.Brands.FirstOrDefaultAsync(b => b.Name == "Coca-Cola");
-            
+
             if (defaultBrand == null)
             {
                 defaultBrand = new Brand { Name = "Coca-Cola", CreatedAt = DateTime.UtcNow };
-                
+
                 await context.Brands.AddRangeAsync(
                     defaultBrand,
                     new Brand { Name = "General / Sin Marca", CreatedAt = DateTime.UtcNow },
@@ -279,7 +301,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // 12. PRODUCTO DE MUESTRA
             // =========================================================================
             Product? sampleProduct = await context.Products.FirstOrDefaultAsync(p => p.Barcode == "7790895000997");
-            
+
             if (sampleProduct == null)
             {
                 sampleProduct = new Product
@@ -344,7 +366,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                 await context.CashShifts.AddAsync(sampleShift);
                 await context.SaveChangesAsync();
 
-                var documentType = await context.DocumentTypes.FirstOrDefaultAsync(d => d.Id == 82 || d.Name.Contains("Factura B"))
+                var documentType = await context.DocumentTypes.FirstOrDefaultAsync(d => d.Id == 6 || d.Name.Contains("Factura B"))
                               ?? await context.DocumentTypes.FirstAsync();
 
                 var sampleSale = new Sale
@@ -395,7 +417,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             }
 
             // =========================================================================
-            // 14.TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
+            // 14. TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
             // =========================================================================
             if (!await context.MercadoPagoPaymentStatuses.AnyAsync())
             {

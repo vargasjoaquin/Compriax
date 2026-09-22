@@ -94,7 +94,7 @@
             picIconRegisterSale.BackColor = Color.FromArgb(16, 185, 129);
             picIconRegisterSale.Cursor = Cursors.Hand;
             picIconRegisterSale.Image = Resources._052_registrar_venta;
-            picIconRegisterSale.Location = new Point(120, 378);
+            picIconRegisterSale.Location = new Point(111, 378);
             picIconRegisterSale.Name = "picIconRegisterSale";
             picIconRegisterSale.Size = new Size(50, 64);
             picIconRegisterSale.SizeMode = PictureBoxSizeMode.Zoom;
@@ -194,7 +194,7 @@
             panelBarcodeBar.Dock = DockStyle.Top;
             panelBarcodeBar.Location = new Point(16, 12);
             panelBarcodeBar.Name = "panelBarcodeBar";
-            panelBarcodeBar.Size = new Size(1005, 83);
+            panelBarcodeBar.Size = new Size(1015, 83);
             panelBarcodeBar.TabIndex = 0;
             // 
             // quickSearchBox
@@ -206,14 +206,14 @@
             quickSearchBox.Name = "quickSearchBox";
             quickSearchBox.Padding = new Padding(8, 6, 8, 6);
             quickSearchBox.PlaceholderText = "Buscar por nombre, código de barras o descripción [F2]...";
-            quickSearchBox.Size = new Size(735, 61);
+            quickSearchBox.Size = new Size(745, 61);
             quickSearchBox.TabIndex = 0;
             // 
             // numericUpDownQuantity
             // 
             numericUpDownQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             numericUpDownQuantity.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            numericUpDownQuantity.Location = new Point(757, 26);
+            numericUpDownQuantity.Location = new Point(767, 26);
             numericUpDownQuantity.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
             numericUpDownQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDownQuantity.Name = "numericUpDownQuantity";
@@ -229,7 +229,7 @@
             buttonRemoveItem.FlatStyle = FlatStyle.Flat;
             buttonRemoveItem.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             buttonRemoveItem.ForeColor = Color.White;
-            buttonRemoveItem.Location = new Point(848, 21);
+            buttonRemoveItem.Location = new Point(858, 21);
             buttonRemoveItem.Name = "buttonRemoveItem";
             buttonRemoveItem.Size = new Size(148, 47);
             buttonRemoveItem.TabIndex = 2;
@@ -242,7 +242,7 @@
             panelShortcutsFooter.Dock = DockStyle.Bottom;
             panelShortcutsFooter.Location = new Point(16, 648);
             panelShortcutsFooter.Name = "panelShortcutsFooter";
-            panelShortcutsFooter.Size = new Size(1005, 36);
+            panelShortcutsFooter.Size = new Size(1015, 36);
             panelShortcutsFooter.TabIndex = 2;
             // 
             // labelShortcutsGuide
@@ -252,7 +252,7 @@
             labelShortcutsGuide.ForeColor = Color.FromArgb(100, 116, 139);
             labelShortcutsGuide.Location = new Point(0, 0);
             labelShortcutsGuide.Name = "labelShortcutsGuide";
-            labelShortcutsGuide.Size = new Size(1005, 36);
+            labelShortcutsGuide.Size = new Size(1015, 36);
             labelShortcutsGuide.TabIndex = 0;
             labelShortcutsGuide.Text = "ATAJOS: [F2] Buscar | [F3] Cliente | [F4] Cantidad | [F6] Ver Precio | [F8] Cobrar | [SUPR] Quitar | [ESC] Cancelar";
             labelShortcutsGuide.TextAlign = ContentAlignment.MiddleLeft;

@@ -160,7 +160,7 @@ namespace CompriaxSystem.WinFormsUI
                         ? currentActiveCashShiftDto.OpeningDate.ToLocalTime()
                         : currentActiveCashShiftDto.OpeningDate;
 
-                    labelShiftBadge.Text = $"TURNO #{currentActiveCashShiftDto.Id} ACTIVO ({localOpeningDateTime:HH:mm})";
+                    labelShiftBadge.Text = $"TURNO #{currentActiveCashShiftDto.Id} ACTIVO (APERTURA: {localOpeningDateTime:HH:mm})";
                     labelShiftBadge.ImageAlign = ContentAlignment.MiddleLeft;
                     labelShiftBadge.ForeColor = UIThemeHelper.Success;
                 }
