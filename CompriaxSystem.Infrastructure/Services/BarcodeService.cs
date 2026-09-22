@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using SkiaSharp;
 using System.Drawing;
 using ZXing;
@@ -20,7 +21,7 @@ namespace CompriaxSystem.Infrastructure.Services
             try
             {
                 if (string.IsNullOrWhiteSpace(barcodeData))
-                    barcodeData = "0000000000000";
+                    barcodeData = ProductConstants.EMPTY_BARCODE_FALLBACK;
 
                 var barcodeGenerator = new BarcodeStandard.Barcode();
                 barcodeGenerator.IncludeLabel = true;

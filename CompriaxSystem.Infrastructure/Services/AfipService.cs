@@ -169,7 +169,7 @@ namespace CompriaxSystem.Infrastructure.Services
                 PointOfSale = pointOfSaleNumber,
                 InvoiceNumber = invoiceNumber,
                 QrUrl = qrUrl,
-                FiscalStatus = _settings.Enabled ? FiscalStatuses.APPROVED : FiscalStatuses.DIGITAL_VOUCHER
+                FiscalStatus = _settings.Enabled ? FiscalStatusesContstans.APPROVED : FiscalStatusesContstans.DIGITAL_VOUCHER
             };
         }
 

@@ -20,7 +20,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .Include(cs => cs.CashMovements)
                 .Include(cs => cs.Sales)
                 .ThenInclude(s => s.PaymentMethod)
-                .FirstOrDefaultAsync(cs => cs.UserId == userId && cs.Status == CashShiftStatuses.OPEN);
+                .FirstOrDefaultAsync(cs => cs.UserId == userId && cs.Status == CashShiftStatusesConstants.OPEN);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
             return await context.CashShifts
                 .Include(cs => cs.User)
                 .Include(cs => cs.CashRegister)
-                .FirstOrDefaultAsync(cs => cs.CashRegisterId == registerId && cs.Status == CashShiftStatuses.OPEN);
+                .FirstOrDefaultAsync(cs => cs.CashRegisterId == registerId && cs.Status == CashShiftStatusesConstants.OPEN);
         }
 
         /// <summary>

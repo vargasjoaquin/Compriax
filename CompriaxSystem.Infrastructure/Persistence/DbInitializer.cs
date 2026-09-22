@@ -183,19 +183,19 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 7. CONDICIONES FISCALES ANTE EL IVA 
             // =========================================================================
-            TaxCondition? defaultTaxCondition = await context.TaxConditions.FirstOrDefaultAsync(t => t.Name == "IVA Responsable Inscripto");
+            TaxCondition? defaultTaxCondition = await context.TaxConditions.FirstOrDefaultAsync(t => t.Name == TaxConstants.REGISTERED_TAXPAYER);
 
             if (defaultTaxCondition == null)
             {
-                defaultTaxCondition = new TaxCondition { Name = "IVA Responsable Inscripto" };
+                defaultTaxCondition = new TaxCondition { Name = TaxConstants.REGISTERED_TAXPAYER };
 
                 await context.TaxConditions.AddRangeAsync(
                     defaultTaxCondition,
-                    new TaxCondition { Name = "IVA Sujeto Exento" },
-                    new TaxCondition { Name = "Consumidor Final" },
-                    new TaxCondition { Name = "Responsable Monotributo" },
-                    new TaxCondition { Name = "Proveedor del Exterior" },
-                    new TaxCondition { Name = "Cliente del Exterior" }
+                    new TaxCondition { Name = TaxConstants.TAX_EXEMPT },
+                    new TaxCondition { Name = TaxConstants.FINAL_CONSUMER },
+                    new TaxCondition { Name = TaxConstants.SIMPLIFIED_REGIME },
+                    new TaxCondition { Name = TaxConstants.FOREIGN_SUPPLIER },
+                    new TaxCondition { Name = TaxConstants.FOREIGN_CUSTOMER }
                 );
                 await context.SaveChangesAsync();
             }
@@ -284,7 +284,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     Phone = "0800-444-7873",
                     Email = "contacto@compriax.com",
                     Logo = null,
-                    TicketFormat = "80mm",
+                    TicketFormat = ThermalPrinterConstants.FORMAT_80MM,
                     TicketFooterMessage = "¡Muchas gracias por su compra! Vuelva pronto.",
                     ShowLogoOnTicket = true,
                     ShowBarcodeOnTicket = true,
@@ -300,13 +300,13 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 12. PRODUCTO DE MUESTRA
             // =========================================================================
-            Product? sampleProduct = await context.Products.FirstOrDefaultAsync(p => p.Barcode == "7790895000997");
+            Product? sampleProduct = await context.Products.FirstOrDefaultAsync(p => p.Barcode == ProductConstants.DEFAULT_SAMPLE_BARCODE);
 
             if (sampleProduct == null)
             {
                 sampleProduct = new Product
                 {
-                    Barcode = "7790895000997",
+                    Barcode = ProductConstants.DEFAULT_SAMPLE_BARCODE,
                     Name = "Coca-Cola Original 1.5L",
                     Description = "Gaseosa Coca-Cola botella descartable 1.5 Litros",
                     CategoryId = defaultCategory.Id,
@@ -359,7 +359,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     ExpectedCash = 11850.00m,
                     RealCash = 11850.00m,
                     Difference = 0,
-                    Status = CashShiftStatuses.CLOSED,
+                    Status = CashShiftStatusesConstants.CLOSED,
                     ClosingNotes = "Turno inicial de verificación (Caja Cuadrada)"
                 };
 
@@ -384,7 +384,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
                     PaymentChange = 150.00m,
                     PaymentMethodId = defaultPaymentMethod.Id,
                     PointOfSale = 1,
-                    FiscalStatus = FiscalStatuses.DIGITAL_VOUCHER,
+                    FiscalStatus = FiscalStatusesContstans.DIGITAL_VOUCHER,
                     CreatedAt = DateTime.UtcNow.AddMinutes(-30),
                     SaleItems = new List<SaleItem>
                     {

@@ -53,7 +53,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
         public async Task<bool> HasOpenShiftAsync(int cashRegisterId)
         {
             return await context.CashShifts
-                .AnyAsync(cs => cs.CashRegisterId == cashRegisterId && cs.Status == CashShiftStatuses.OPEN);
+                .AnyAsync(cs => cs.CashRegisterId == cashRegisterId && cs.Status == CashShiftStatusesConstants.OPEN);
         }
 
         /// <summary>

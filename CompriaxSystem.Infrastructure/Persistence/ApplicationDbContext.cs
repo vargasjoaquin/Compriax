@@ -93,7 +93,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 entity.HasIndex(u => u.RoleId)
                       .IsUnique()
-                      .HasFilter("[RoleId] = 1 AND [IsDeleted] = 0")
+                      .HasFilter($"[RoleId] = {RoleConstants.ADMINISTRATOR_ROLE_ID} AND [IsDeleted] = 0")
                       .HasDatabaseName("UQ_Users_SingleActiveAdmin");
 
                 entity.HasOne(u => u.Role)
@@ -436,7 +436,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 entity.HasIndex(cs => cs.CashRegisterId)
                       .IsUnique()
-                      .HasFilter($"[Status] = '{CashShiftStatuses.OPEN}'")
+                      .HasFilter($"[Status] = '{CashShiftStatusesConstants.OPEN}'")
                       .HasDatabaseName("UQ_CashShifts_SingleActiveShiftPerRegister");
 
                 entity.Property(cs => cs.InitialCash).HasPrecision(18, 2);
