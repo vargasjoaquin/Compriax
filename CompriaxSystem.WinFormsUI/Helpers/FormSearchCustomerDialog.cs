@@ -18,6 +18,7 @@
         public FormSearchCustomerDialog()
         {
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
 
             ButtonIconOverlayHelper.BindEvents(this.buttonSearch, this.picIconSearch);
             ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
@@ -67,3 +68,4 @@
         }
     }
 }
+

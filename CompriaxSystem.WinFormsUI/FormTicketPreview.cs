@@ -33,6 +33,7 @@ namespace CompriaxSystem.WinFormsUI
             _ticketPrinter = ticketPrinter;
 
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonPrintTicket, this.picIconPrintTicket);
             ButtonIconOverlayHelper.BindEvents(this.buttonSendWhatsapp, this.picIconSendWhatsapp);
@@ -204,6 +205,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

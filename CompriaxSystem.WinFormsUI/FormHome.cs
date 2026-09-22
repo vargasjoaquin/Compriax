@@ -12,6 +12,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             _reportService = reportService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
 
             this.Load += async (s, e) => await RefreshDashboardMetricsAndTablesAsync();
         }

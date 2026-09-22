@@ -30,6 +30,7 @@ namespace CompriaxSystem.WinFormsUI
             _cashShiftService = cashShiftService;
 
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonLogout, this.picIconLogout);
             
@@ -359,6 +360,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

@@ -14,6 +14,7 @@ namespace CompriaxSystem.WinFormsUI
             _cameraService = cameraService;
             _recordingService = recordingService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonToggleLiveView, this.picIconToggleLiveView);
             ButtonIconOverlayHelper.BindEvents(this.buttonCaptureSnapshot, this.picIconCaptureSnapshot);
@@ -109,6 +110,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

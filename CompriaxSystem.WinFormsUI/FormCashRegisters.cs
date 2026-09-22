@@ -13,6 +13,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             _registerService = registerService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
             ButtonIconOverlayHelper.BindEvents(this.buttonToggleStatus, this.picIconToggleStatus);
@@ -114,6 +115,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

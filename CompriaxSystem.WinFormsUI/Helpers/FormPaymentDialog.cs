@@ -49,6 +49,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         public FormPaymentDialog(decimal totalAmount, IEnumerable<PaymentMethod> paymentMethods)
         {
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             TotalAmount = totalAmount;
 
             ButtonIconOverlayHelper.BindEvents(this.buttonConfirmPayment, this.picIconConfirmPayment);
@@ -121,3 +122,4 @@ namespace CompriaxSystem.WinFormsUI.Helpers
         }
     }
 }
+

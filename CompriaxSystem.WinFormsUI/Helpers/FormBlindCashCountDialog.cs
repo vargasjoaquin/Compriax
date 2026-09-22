@@ -26,6 +26,7 @@
         public FormBlindCashCountDialog(decimal expectedSystemCash)
         {
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
 
             ButtonIconOverlayHelper.BindEvents(this.buttonConfirmClose, this.picIconConfirmClose);
             ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
@@ -144,3 +145,4 @@
         }
     }
 }
+

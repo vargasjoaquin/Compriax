@@ -17,6 +17,7 @@ namespace CompriaxSystem.WinFormsUI
         {
             _restoreService = restoreService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonRestoreRecord, this.picIconRestoreRecord);
             
@@ -152,6 +153,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

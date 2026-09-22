@@ -16,6 +16,7 @@ namespace CompriaxSystem.WinFormsUI
             _reportService = reportService;
             _documentService = documentService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonDownloadPdf, this.picIconDownloadPdf);
             ButtonIconOverlayHelper.BindEvents(this.buttonSearch, this.picIconSearch);
@@ -150,6 +151,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

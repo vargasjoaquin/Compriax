@@ -18,6 +18,7 @@ namespace CompriaxSystem.WinFormsUI
             _productService = productService;
             _barcodeService = barcodeService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonGenerateLabel, this.picIconGenerateLabel);
             ButtonIconOverlayHelper.BindEvents(this.buttonPrintLabel, this.picIconPrintLabel);
@@ -198,6 +199,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 

@@ -14,6 +14,7 @@ namespace CompriaxSystem.WinFormsUI
             _userService = userService;
             _currentUserService = currentUserService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             
             ButtonIconOverlayHelper.BindEvents(this.buttonSaveChanges, this.picIconSaveChanges);
             
@@ -89,6 +90,7 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
 
 
 
