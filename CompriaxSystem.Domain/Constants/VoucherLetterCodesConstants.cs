@@ -1,6 +1,6 @@
 ﻿namespace CompriaxSystem.Domain.Constants
 {
-    public static class VoucherLetterCodes
+    public static class VoucherLetterCodesConstants
     {
         public const string LETTER_A = "A";
         public const string LETTER_B = "B";

@@ -1,6 +1,6 @@
 ﻿namespace CompriaxSystem.Domain.Constants
 {
-    public static class PurchaseStatuses
+    public static class PurchaseStatusesConstants
     {
         public const string COMPLETED = "Completada";
         public const string CANCELLED = "Cancelada";
