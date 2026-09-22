@@ -8,14 +8,13 @@
 
         private void InitializeComponent()
         {
-            this.picIconAddLabelToQueue = new System.Windows.Forms.PictureBox();
-            this.picIconRemoveSelected = new System.Windows.Forms.PictureBox();
-            this.picIconClearQueue = new System.Windows.Forms.PictureBox();
-            this.picIconPrintSheet = new System.Windows.Forms.PictureBox();
-            this.picIconExportSheetPng = new System.Windows.Forms.PictureBox();
+            picIconAddLabelToQueue = new PictureBox();
+            picIconRemoveSelected = new PictureBox();
+            picIconClearQueue = new PictureBox();
+            picIconPrintSheet = new PictureBox();
+            picIconExportSheetPng = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
-            labelSubtitle = new Label();
             panelLeftConfiguration = new Panel();
             labelSearchPrompt = new Label();
             quickSearchBox = new CompriaxSystem.WinFormsUI.Controls.QuickSearchProductBox();
@@ -26,70 +25,6 @@
             numericUpDownPrice = new NumericUpDown();
             labelQuantityPrompt = new Label();
             numericUpDownQuantity = new NumericUpDown();
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
             buttonAddLabelToQueue = new Button();
             labelQueueTitle = new Label();
             dataGridViewLabelQueue = new DataGridView();
@@ -105,6 +40,11 @@
             buttonNextPage = new Button();
             buttonPrintSheet = new Button();
             buttonExportSheetPng = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconAddLabelToQueue).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRemoveSelected).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconClearQueue).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconPrintSheet).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportSheetPng).BeginInit();
             panelHeader.SuspendLayout();
             panelLeftConfiguration.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).BeginInit();
@@ -115,11 +55,71 @@
             panelPagination.SuspendLayout();
             SuspendLayout();
             // 
+            // picIconAddLabelToQueue
+            // 
+            picIconAddLabelToQueue.BackColor = Color.FromArgb(2, 132, 199);
+            picIconAddLabelToQueue.Cursor = Cursors.Hand;
+            picIconAddLabelToQueue.Image = Resources._075_ingreso_manual;
+            picIconAddLabelToQueue.Location = new Point(355, 199);
+            picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
+            picIconAddLabelToQueue.Size = new Size(42, 38);
+            picIconAddLabelToQueue.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconAddLabelToQueue.TabIndex = 99;
+            picIconAddLabelToQueue.TabStop = false;
+            picIconAddLabelToQueue.Click += picIconAddLabelToQueue_Click;
+            // 
+            // picIconRemoveSelected
+            // 
+            picIconRemoveSelected.BackColor = Color.FromArgb(239, 68, 68);
+            picIconRemoveSelected.Cursor = Cursors.Hand;
+            picIconRemoveSelected.Image = Resources._079_eliminar;
+            picIconRemoveSelected.Location = new Point(24, 654);
+            picIconRemoveSelected.Name = "picIconRemoveSelected";
+            picIconRemoveSelected.Size = new Size(41, 32);
+            picIconRemoveSelected.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRemoveSelected.TabIndex = 99;
+            picIconRemoveSelected.TabStop = false;
+            // 
+            // picIconClearQueue
+            // 
+            picIconClearQueue.BackColor = Color.FromArgb(255, 255, 255);
+            picIconClearQueue.Cursor = Cursors.Hand;
+            picIconClearQueue.Image = Resources._093_error;
+            picIconClearQueue.Location = new Point(187, 655);
+            picIconClearQueue.Name = "picIconClearQueue";
+            picIconClearQueue.Size = new Size(31, 31);
+            picIconClearQueue.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconClearQueue.TabIndex = 99;
+            picIconClearQueue.TabStop = false;
+            // 
+            // picIconPrintSheet
+            // 
+            picIconPrintSheet.BackColor = Color.FromArgb(16, 185, 129);
+            picIconPrintSheet.Cursor = Cursors.Hand;
+            picIconPrintSheet.Image = Resources._082_imprimir;
+            picIconPrintSheet.Location = new Point(51, 640);
+            picIconPrintSheet.Name = "picIconPrintSheet";
+            picIconPrintSheet.Size = new Size(45, 46);
+            picIconPrintSheet.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconPrintSheet.TabIndex = 99;
+            picIconPrintSheet.TabStop = false;
+            // 
+            // picIconExportSheetPng
+            // 
+            picIconExportSheetPng.BackColor = Color.FromArgb(255, 255, 255);
+            picIconExportSheetPng.Cursor = Cursors.Hand;
+            picIconExportSheetPng.Image = Resources._085_exportar_pdf;
+            picIconExportSheetPng.Location = new Point(431, 642);
+            picIconExportSheetPng.Name = "picIconExportSheetPng";
+            picIconExportSheetPng.Size = new Size(36, 44);
+            picIconExportSheetPng.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconExportSheetPng.TabIndex = 99;
+            picIconExportSheetPng.TabStop = false;
+            // 
             // panelHeader
             // 
             panelHeader.BackColor = Color.FromArgb(15, 23, 42);
             panelHeader.Controls.Add(labelTitle);
-            panelHeader.Controls.Add(labelSubtitle);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
             panelHeader.Name = "panelHeader";
@@ -131,22 +131,11 @@
             labelTitle.AutoSize = true;
             labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             labelTitle.ForeColor = Color.White;
-            labelTitle.Location = new Point(20, 12);
+            labelTitle.Location = new Point(20, 19);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(438, 30);
+            labelTitle.Size = new Size(432, 30);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "IMPRESIÓN DE ETIQUETAS DE GÓNDOLA";
-            // 
-            // labelSubtitle
-            // 
-            labelSubtitle.AutoSize = true;
-            labelSubtitle.Font = new Font("Segoe UI", 8.5F);
-            labelSubtitle.ForeColor = Color.FromArgb(148, 163, 184);
-            labelSubtitle.Location = new Point(22, 40);
-            labelSubtitle.Name = "labelSubtitle";
-            labelSubtitle.Size = new Size(578, 20);
-            labelSubtitle.TabIndex = 1;
-            labelSubtitle.Text = "Agregue múltiples productos e imprima todas las etiquetas en una sola hoja continua.";
+            labelTitle.Text = "GENERADOR/IMPRESIÓN DE ETIQUETAS";
             // 
             // panelLeftConfiguration
             // 
@@ -160,13 +149,13 @@
             panelLeftConfiguration.Controls.Add(numericUpDownPrice);
             panelLeftConfiguration.Controls.Add(labelQuantityPrompt);
             panelLeftConfiguration.Controls.Add(numericUpDownQuantity);
-panelLeftConfiguration.Controls.Add(this.picIconAddLabelToQueue);
+            panelLeftConfiguration.Controls.Add(picIconAddLabelToQueue);
             panelLeftConfiguration.Controls.Add(buttonAddLabelToQueue);
             panelLeftConfiguration.Controls.Add(labelQueueTitle);
             panelLeftConfiguration.Controls.Add(dataGridViewLabelQueue);
-panelLeftConfiguration.Controls.Add(this.picIconRemoveSelected);
+            panelLeftConfiguration.Controls.Add(picIconRemoveSelected);
             panelLeftConfiguration.Controls.Add(buttonRemoveSelectedFromQueue);
-panelLeftConfiguration.Controls.Add(this.picIconClearQueue);
+            panelLeftConfiguration.Controls.Add(picIconClearQueue);
             panelLeftConfiguration.Controls.Add(buttonClearQueue);
             panelLeftConfiguration.Controls.Add(labelTotalSummary);
             panelLeftConfiguration.Location = new Point(20, 80);
@@ -267,791 +256,18 @@ panelLeftConfiguration.Controls.Add(this.picIconClearQueue);
             numericUpDownQuantity.TabIndex = 8;
             numericUpDownQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
-
-
-
-
-
-            // 
             // buttonAddLabelToQueue
             // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
-            // 
             buttonAddLabelToQueue.BackColor = Color.FromArgb(2, 132, 199);
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
             buttonAddLabelToQueue.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
             buttonAddLabelToQueue.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
             buttonAddLabelToQueue.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
             buttonAddLabelToQueue.ForeColor = Color.White;
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
-            buttonAddLabelToQueue.Location = new Point(300, 199);
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
+            buttonAddLabelToQueue.Location = new Point(325, 199);
             buttonAddLabelToQueue.Name = "buttonAddLabelToQueue";
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
-            buttonAddLabelToQueue.Size = new Size(284, 38);
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
+            buttonAddLabelToQueue.Size = new Size(221, 38);
             buttonAddLabelToQueue.TabIndex = 9;
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
-            buttonAddLabelToQueue.Text = "+ AGREGAR A LA PLANTILLA";
-            // 
-            // picIconAddLabelToQueue
-            // 
-            this.picIconAddLabelToQueue.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconAddLabelToQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconAddLabelToQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._088_generar_codigo;
-            this.picIconAddLabelToQueue.Location = new System.Drawing.Point(310, 208);
-            this.picIconAddLabelToQueue.Name = "picIconAddLabelToQueue";
-            this.picIconAddLabelToQueue.Size = new System.Drawing.Size(20, 20);
-            this.picIconAddLabelToQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconAddLabelToQueue.TabIndex = 99;
-            this.picIconAddLabelToQueue.TabStop = false;
-
-            // 
-            // picIconRemoveSelected
-            // 
-            this.picIconRemoveSelected.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveSelected.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveSelected.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveSelected.Location = new System.Drawing.Point(24, 660);
-            this.picIconRemoveSelected.Name = "picIconRemoveSelected";
-            this.picIconRemoveSelected.Size = new System.Drawing.Size(18, 18);
-            this.picIconRemoveSelected.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveSelected.TabIndex = 99;
-            this.picIconRemoveSelected.TabStop = false;
-
-            // 
-            // picIconClearQueue
-            // 
-            this.picIconClearQueue.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconClearQueue.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconClearQueue.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconClearQueue.Location = new System.Drawing.Point(190, 660);
-            this.picIconClearQueue.Name = "picIconClearQueue";
-            this.picIconClearQueue.Size = new System.Drawing.Size(18, 18);
-            this.picIconClearQueue.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconClearQueue.TabIndex = 99;
-            this.picIconClearQueue.TabStop = false;
-
-            // 
-            // picIconPrintSheet
-            // 
-            this.picIconPrintSheet.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconPrintSheet.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintSheet.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintSheet.Location = new System.Drawing.Point(32, 653);
-            this.picIconPrintSheet.Name = "picIconPrintSheet";
-            this.picIconPrintSheet.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintSheet.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintSheet.TabIndex = 99;
-            this.picIconPrintSheet.TabStop = false;
-
-            // 
-            // picIconExportSheetPng
-            // 
-            this.picIconExportSheetPng.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconExportSheetPng.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportSheetPng.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportSheetPng.Location = new System.Drawing.Point(416, 653);
-            this.picIconExportSheetPng.Name = "picIconExportSheetPng";
-            this.picIconExportSheetPng.Size = new System.Drawing.Size(20, 20);
-            this.picIconExportSheetPng.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportSheetPng.TabIndex = 99;
-            this.picIconExportSheetPng.TabStop = false;
+            buttonAddLabelToQueue.Text = "AGREGAR";
             buttonAddLabelToQueue.UseVisualStyleBackColor = false;
             // 
             // labelQueueTitle
@@ -1084,18 +300,18 @@ panelLeftConfiguration.Controls.Add(this.picIconClearQueue);
             buttonRemoveSelectedFromQueue.ForeColor = Color.White;
             buttonRemoveSelectedFromQueue.Location = new Point(16, 654);
             buttonRemoveSelectedFromQueue.Name = "buttonRemoveSelectedFromQueue";
-            buttonRemoveSelectedFromQueue.Size = new Size(160, 32);
+            buttonRemoveSelectedFromQueue.Size = new Size(165, 32);
             buttonRemoveSelectedFromQueue.TabIndex = 12;
-            buttonRemoveSelectedFromQueue.Text = "QUITAR SELECCIÓN";
+            buttonRemoveSelectedFromQueue.Text = "QUITAR";
             buttonRemoveSelectedFromQueue.UseVisualStyleBackColor = false;
             // 
             // buttonClearQueue
             // 
             buttonClearQueue.FlatStyle = FlatStyle.Flat;
             buttonClearQueue.Font = new Font("Segoe UI", 8.5F, FontStyle.Bold);
-            buttonClearQueue.Location = new Point(182, 654);
+            buttonClearQueue.Location = new Point(187, 654);
             buttonClearQueue.Name = "buttonClearQueue";
-            buttonClearQueue.Size = new Size(140, 32);
+            buttonClearQueue.Size = new Size(166, 32);
             buttonClearQueue.TabIndex = 13;
             buttonClearQueue.Text = "VACIAR LISTA";
             buttonClearQueue.UseVisualStyleBackColor = true;
@@ -1105,7 +321,7 @@ panelLeftConfiguration.Controls.Add(this.picIconClearQueue);
             labelTotalSummary.AutoEllipsis = true;
             labelTotalSummary.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             labelTotalSummary.ForeColor = Color.FromArgb(2, 132, 199);
-            labelTotalSummary.Location = new Point(16, 694);
+            labelTotalSummary.Location = new Point(13, 694);
             labelTotalSummary.Name = "labelTotalSummary";
             labelTotalSummary.Size = new Size(568, 22);
             labelTotalSummary.TabIndex = 14;
@@ -1117,9 +333,9 @@ panelLeftConfiguration.Controls.Add(this.picIconClearQueue);
             panelRightPreviewCard.Controls.Add(labelPreviewHeader);
             panelRightPreviewCard.Controls.Add(pictureBoxSheetPreview);
             panelRightPreviewCard.Controls.Add(panelPagination);
-panelRightPreviewCard.Controls.Add(this.picIconPrintSheet);
+            panelRightPreviewCard.Controls.Add(picIconPrintSheet);
             panelRightPreviewCard.Controls.Add(buttonPrintSheet);
-panelRightPreviewCard.Controls.Add(this.picIconExportSheetPng);
+            panelRightPreviewCard.Controls.Add(picIconExportSheetPng);
             panelRightPreviewCard.Controls.Add(buttonExportSheetPng);
             panelRightPreviewCard.Location = new Point(640, 80);
             panelRightPreviewCard.Name = "panelRightPreviewCard";
@@ -1214,13 +430,8 @@ panelRightPreviewCard.Controls.Add(this.picIconExportSheetPng);
             buttonExportSheetPng.Name = "buttonExportSheetPng";
             buttonExportSheetPng.Size = new Size(200, 105);
             buttonExportSheetPng.TabIndex = 4;
-            buttonExportSheetPng.Text = "GUARDAR PNG";
+            buttonExportSheetPng.Text = "GUARDAR";
             buttonExportSheetPng.UseVisualStyleBackColor = true;
-
-
-
-
-
             // 
             // FormProductLabels
             // 
@@ -1234,19 +445,23 @@ panelRightPreviewCard.Controls.Add(this.picIconExportSheetPng);
             KeyPreview = true;
             Name = "FormProductLabels";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Generador de Plancha de Etiquetas - CompriaxSystem";
-ResumeLayout(false);
+            Text = "Generador de Etiquetas de Precio";
+            ((System.ComponentModel.ISupportInitialize)picIconAddLabelToQueue).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRemoveSelected).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconClearQueue).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconPrintSheet).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportSheetPng).EndInit();
+            panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-ResumeLayout(false);
+            panelLeftConfiguration.ResumeLayout(false);
             panelLeftConfiguration.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)numericUpDownPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridViewLabelQueue).EndInit();
-ResumeLayout(false);
+            panelRightPreviewCard.ResumeLayout(false);
             panelRightPreviewCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxSheetPreview).EndInit();
-ResumeLayout(false);
-
+            panelPagination.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -1254,7 +469,6 @@ ResumeLayout(false);
 
         private System.Windows.Forms.Panel panelHeader;
         private System.Windows.Forms.Label labelTitle;
-        private System.Windows.Forms.Label labelSubtitle;
         private System.Windows.Forms.Panel panelLeftConfiguration;
         private System.Windows.Forms.Label labelSearchPrompt;
         private Controls.QuickSearchProductBox quickSearchBox;

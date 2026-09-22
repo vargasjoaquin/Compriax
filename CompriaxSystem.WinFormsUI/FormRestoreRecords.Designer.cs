@@ -17,7 +17,7 @@
 
         private void InitializeComponent()
         {
-            this.picIconRestoreRecord = new System.Windows.Forms.PictureBox();
+            picIconRestoreRecord = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelControlsCard = new Panel();
@@ -26,25 +26,26 @@
             labelSearchPrompt = new Label();
             textBoxSearch = new TextBox();
             labelSelectedItemInfo = new Label();
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord = new Button();
             labelRecordCount = new Label();
             dataGridViewDeletedRecords = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)picIconRestoreRecord).BeginInit();
             panelHeader.SuspendLayout();
             panelControlsCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDeletedRecords).BeginInit();
             SuspendLayout();
+            // 
+            // picIconRestoreRecord
+            // 
+            picIconRestoreRecord.BackColor = Color.FromArgb(16, 185, 129);
+            picIconRestoreRecord.Cursor = Cursors.Hand;
+            picIconRestoreRecord.Image = Resources._081_restaurar_seleccion;
+            picIconRestoreRecord.Location = new Point(760, 27);
+            picIconRestoreRecord.Name = "picIconRestoreRecord";
+            picIconRestoreRecord.Size = new Size(42, 57);
+            picIconRestoreRecord.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRestoreRecord.TabIndex = 99;
+            picIconRestoreRecord.TabStop = false;
             // 
             // panelHeader
             // 
@@ -63,7 +64,7 @@
             labelTitle.ForeColor = Color.White;
             labelTitle.Location = new Point(16, 16);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(504, 30);
+            labelTitle.Size = new Size(467, 30);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "PAPELERA Y RECUPERACIÓN DE REGISTROS";
             // 
@@ -75,7 +76,7 @@
             panelControlsCard.Controls.Add(labelSearchPrompt);
             panelControlsCard.Controls.Add(textBoxSearch);
             panelControlsCard.Controls.Add(labelSelectedItemInfo);
-panelControlsCard.Controls.Add(this.picIconRestoreRecord);
+            panelControlsCard.Controls.Add(picIconRestoreRecord);
             panelControlsCard.Controls.Add(buttonRestoreRecord);
             panelControlsCard.Location = new Point(16, 72);
             panelControlsCard.Name = "panelControlsCard";
@@ -131,180 +132,19 @@ panelControlsCard.Controls.Add(this.picIconRestoreRecord);
             labelSelectedItemInfo.TabIndex = 4;
             labelSelectedItemInfo.Text = "Ningún registro seleccionado";
             // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
-
-
-
-
-
-            // 
             // buttonRestoreRecord
             // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
-            // 
             buttonRestoreRecord.BackColor = Color.FromArgb(16, 185, 129);
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Enabled = false;
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.ForeColor = Color.White;
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Location = new Point(732, 14);
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Name = "buttonRestoreRecord";
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Size = new Size(348, 85);
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.TabIndex = 5;
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.Text = "RESTAURAR SELECCIÓN";
-            // 
-            // picIconRestoreRecord
-            // 
-            this.picIconRestoreRecord.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRestoreRecord.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRestoreRecord.Image = global::CompriaxSystem.WinFormsUI.Resources._081_restaurar_seleccion;
-            this.picIconRestoreRecord.Location = new System.Drawing.Point(744, 45);
-            this.picIconRestoreRecord.Name = "picIconRestoreRecord";
-            this.picIconRestoreRecord.Size = new System.Drawing.Size(24, 24);
-            this.picIconRestoreRecord.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRestoreRecord.TabIndex = 99;
-            this.picIconRestoreRecord.TabStop = false;
             buttonRestoreRecord.UseVisualStyleBackColor = false;
             // 
             // labelRecordCount
@@ -328,11 +168,6 @@ panelControlsCard.Controls.Add(this.picIconRestoreRecord);
             dataGridViewDeletedRecords.RowHeadersWidth = 51;
             dataGridViewDeletedRecords.Size = new Size(1100, 440);
             dataGridViewDeletedRecords.TabIndex = 3;
-
-
-
-
-
             // 
             // FormRestoreRecords
             // 
@@ -347,12 +182,12 @@ panelControlsCard.Controls.Add(this.picIconRestoreRecord);
             Name = "FormRestoreRecords";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Papelera y Restauración";
-            ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picIconRestoreRecord).EndInit();
+            panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            ResumeLayout(false);
+            panelControlsCard.ResumeLayout(false);
             panelControlsCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewDeletedRecords).EndInit();
-
             ResumeLayout(false);
             PerformLayout();
         }

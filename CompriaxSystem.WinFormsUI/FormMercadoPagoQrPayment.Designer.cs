@@ -17,7 +17,7 @@
 
         private void InitializeComponent()
         {
-            this.picIconCancelPayment = new System.Windows.Forms.PictureBox();
+            picIconCancelPayment = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelPaymentCard = new Panel();
@@ -25,23 +25,24 @@
             labelAmountToPay = new Label();
             pictureBoxQrCode = new PictureBox();
             labelPaymentStatus = new Label();
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconCancelPayment).BeginInit();
             panelHeader.SuspendLayout();
             panelPaymentCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxQrCode).BeginInit();
             SuspendLayout();
+            // 
+            // picIconCancelPayment
+            // 
+            picIconCancelPayment.BackColor = Color.FromArgb(239, 68, 68);
+            picIconCancelPayment.Cursor = Cursors.Hand;
+            picIconCancelPayment.Image = Resources._093_error;
+            picIconCancelPayment.Location = new Point(133, 539);
+            picIconCancelPayment.Name = "picIconCancelPayment";
+            picIconCancelPayment.Size = new Size(37, 45);
+            picIconCancelPayment.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconCancelPayment.TabIndex = 99;
+            picIconCancelPayment.TabStop = false;
             // 
             // panelHeader
             // 
@@ -71,7 +72,7 @@
             panelPaymentCard.Controls.Add(labelAmountToPay);
             panelPaymentCard.Controls.Add(pictureBoxQrCode);
             panelPaymentCard.Controls.Add(labelPaymentStatus);
-panelPaymentCard.Controls.Add(this.picIconCancelPayment);
+            panelPaymentCard.Controls.Add(picIconCancelPayment);
             panelPaymentCard.Controls.Add(buttonCancelPayment);
             panelPaymentCard.Location = new Point(24, 80);
             panelPaymentCard.Name = "panelPaymentCard";
@@ -122,173 +123,19 @@ panelPaymentCard.Controls.Add(this.picIconCancelPayment);
             labelPaymentStatus.Text = "Esperando pago...";
             labelPaymentStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
-
-
-
-
-
-            // 
             // buttonCancelPayment
             // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
-            // 
             buttonCancelPayment.BackColor = Color.FromArgb(239, 68, 68);
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.ForeColor = Color.White;
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.Location = new Point(90, 539);
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.Name = "buttonCancelPayment";
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.Size = new Size(352, 45);
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.TabIndex = 4;
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.Text = "CANCELAR OPERACIÓN";
-            // 
-            // picIconCancelPayment
-            // 
-            this.picIconCancelPayment.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCancelPayment.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancelPayment.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancelPayment.Location = new System.Drawing.Point(105, 551);
-            this.picIconCancelPayment.Name = "picIconCancelPayment";
-            this.picIconCancelPayment.Size = new System.Drawing.Size(20, 20);
-            this.picIconCancelPayment.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancelPayment.TabIndex = 99;
-            this.picIconCancelPayment.TabStop = false;
             buttonCancelPayment.UseVisualStyleBackColor = false;
-
-
-
-
-
             // 
             // FormMercadoPagoQrPayment
             // 
@@ -302,12 +149,12 @@ panelPaymentCard.Controls.Add(this.picIconCancelPayment);
             Name = "FormMercadoPagoQrPayment";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cobro con Mercado Pago QR";
-            ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picIconCancelPayment).EndInit();
+            panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-            ResumeLayout(false);
+            panelPaymentCard.ResumeLayout(false);
             panelPaymentCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxQrCode).EndInit();
-
             ResumeLayout(false);
         }
 

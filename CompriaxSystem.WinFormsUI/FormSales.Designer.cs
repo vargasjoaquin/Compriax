@@ -17,10 +17,10 @@
 
         private void InitializeComponent()
         {
-            this.picIconRemoveItem = new System.Windows.Forms.PictureBox();
-            this.picIconSelectCustomer = new System.Windows.Forms.PictureBox();
-            this.picIconRegisterSale = new System.Windows.Forms.PictureBox();
-            this.picIconToggleScannerCamera = new System.Windows.Forms.PictureBox();
+            picIconRemoveItem = new PictureBox();
+            picIconSelectCustomer = new PictureBox();
+            picIconRegisterSale = new PictureBox();
+            picIconToggleScannerCamera = new PictureBox();
             panelTopStatusBar = new Panel();
             labelPosTitle = new Label();
             labelCashierBadge = new Label();
@@ -30,57 +30,6 @@
             panelBarcodeBar = new Panel();
             quickSearchBox = new CompriaxSystem.WinFormsUI.Controls.QuickSearchProductBox();
             numericUpDownQuantity = new NumericUpDown();
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem = new Button();
             panelShortcutsFooter = new Panel();
             labelShortcutsGuide = new Label();
@@ -101,6 +50,10 @@
             buttonRegisterSale = new Button();
             pictureBoxWebcamPreview = new PictureBox();
             buttonToggleScannerCamera = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconRemoveItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSelectCustomer).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRegisterSale).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleScannerCamera).BeginInit();
             panelTopStatusBar.SuspendLayout();
             panelLeftWork.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewCart).BeginInit();
@@ -112,6 +65,54 @@
             ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).BeginInit();
             SuspendLayout();
             // 
+            // picIconRemoveItem
+            // 
+            picIconRemoveItem.BackColor = Color.FromArgb(239, 68, 68);
+            picIconRemoveItem.Cursor = Cursors.Hand;
+            picIconRemoveItem.Image = Resources._076_retiro_egreso;
+            picIconRemoveItem.Location = new Point(856, 21);
+            picIconRemoveItem.Name = "picIconRemoveItem";
+            picIconRemoveItem.Size = new Size(35, 47);
+            picIconRemoveItem.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRemoveItem.TabIndex = 99;
+            picIconRemoveItem.TabStop = false;
+            // 
+            // picIconSelectCustomer
+            // 
+            picIconSelectCustomer.BackColor = Color.FromArgb(255, 255, 255);
+            picIconSelectCustomer.Cursor = Cursors.Hand;
+            picIconSelectCustomer.Image = Resources._080_buscar;
+            picIconSelectCustomer.Location = new Point(246, 112);
+            picIconSelectCustomer.Name = "picIconSelectCustomer";
+            picIconSelectCustomer.Size = new Size(29, 59);
+            picIconSelectCustomer.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSelectCustomer.TabIndex = 99;
+            picIconSelectCustomer.TabStop = false;
+            // 
+            // picIconRegisterSale
+            // 
+            picIconRegisterSale.BackColor = Color.FromArgb(16, 185, 129);
+            picIconRegisterSale.Cursor = Cursors.Hand;
+            picIconRegisterSale.Image = Resources._052_registrar_venta;
+            picIconRegisterSale.Location = new Point(120, 378);
+            picIconRegisterSale.Name = "picIconRegisterSale";
+            picIconRegisterSale.Size = new Size(50, 64);
+            picIconRegisterSale.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRegisterSale.TabIndex = 99;
+            picIconRegisterSale.TabStop = false;
+            // 
+            // picIconToggleScannerCamera
+            // 
+            picIconToggleScannerCamera.BackColor = Color.FromArgb(255, 255, 255);
+            picIconToggleScannerCamera.Cursor = Cursors.Hand;
+            picIconToggleScannerCamera.Image = Resources._087_camara_encender;
+            picIconToggleScannerCamera.Location = new Point(128, 625);
+            picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            picIconToggleScannerCamera.Size = new Size(50, 52);
+            picIconToggleScannerCamera.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconToggleScannerCamera.TabIndex = 99;
+            picIconToggleScannerCamera.TabStop = false;
+            // 
             // panelTopStatusBar
             // 
             panelTopStatusBar.BackColor = Color.FromArgb(15, 23, 42);
@@ -121,7 +122,7 @@
             panelTopStatusBar.Dock = DockStyle.Top;
             panelTopStatusBar.Location = new Point(0, 0);
             panelTopStatusBar.Name = "panelTopStatusBar";
-            panelTopStatusBar.Size = new Size(1409, 58);
+            panelTopStatusBar.Size = new Size(1508, 58);
             panelTopStatusBar.TabIndex = 0;
             // 
             // labelPosTitle
@@ -131,9 +132,9 @@
             labelPosTitle.ForeColor = Color.White;
             labelPosTitle.Location = new Point(16, 14);
             labelPosTitle.Name = "labelPosTitle";
-            labelPosTitle.Size = new Size(310, 30);
+            labelPosTitle.Size = new Size(211, 30);
             labelPosTitle.TabIndex = 0;
-            labelPosTitle.Text = "TERMINAL DE VENTAS";
+            labelPosTitle.Text = "PUNTO DE VENTAS";
             // 
             // labelCashierBadge
             // 
@@ -152,7 +153,7 @@
             labelShiftBadge.AutoSize = true;
             labelShiftBadge.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelShiftBadge.ForeColor = Color.FromArgb(16, 185, 129);
-            labelShiftBadge.Location = new Point(1171, 18);
+            labelShiftBadge.Location = new Point(1292, 18);
             labelShiftBadge.Name = "labelShiftBadge";
             labelShiftBadge.Size = new Size(197, 21);
             labelShiftBadge.TabIndex = 2;
@@ -168,7 +169,7 @@
             panelLeftWork.Location = new Point(0, 58);
             panelLeftWork.Name = "panelLeftWork";
             panelLeftWork.Padding = new Padding(16, 12, 8, 12);
-            panelLeftWork.Size = new Size(1029, 696);
+            panelLeftWork.Size = new Size(1039, 696);
             panelLeftWork.TabIndex = 1;
             // 
             // dataGridViewCart
@@ -177,10 +178,10 @@
             dataGridViewCart.BackgroundColor = Color.White;
             dataGridViewCart.BorderStyle = BorderStyle.None;
             dataGridViewCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCart.Location = new Point(16, 90);
+            dataGridViewCart.Location = new Point(16, 101);
             dataGridViewCart.Name = "dataGridViewCart";
             dataGridViewCart.RowHeadersWidth = 51;
-            dataGridViewCart.Size = new Size(1005, 548);
+            dataGridViewCart.Size = new Size(996, 537);
             dataGridViewCart.TabIndex = 1;
             // 
             // panelBarcodeBar
@@ -188,12 +189,12 @@
             panelBarcodeBar.BackColor = Color.White;
             panelBarcodeBar.Controls.Add(quickSearchBox);
             panelBarcodeBar.Controls.Add(numericUpDownQuantity);
-panelBarcodeBar.Controls.Add(this.picIconRemoveItem);
+            panelBarcodeBar.Controls.Add(picIconRemoveItem);
             panelBarcodeBar.Controls.Add(buttonRemoveItem);
             panelBarcodeBar.Dock = DockStyle.Top;
             panelBarcodeBar.Location = new Point(16, 12);
             panelBarcodeBar.Name = "panelBarcodeBar";
-            panelBarcodeBar.Size = new Size(1005, 72);
+            panelBarcodeBar.Size = new Size(1005, 83);
             panelBarcodeBar.TabIndex = 0;
             // 
             // quickSearchBox
@@ -201,706 +202,38 @@ panelBarcodeBar.Controls.Add(this.picIconRemoveItem);
             quickSearchBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             quickSearchBox.BackColor = Color.White;
             quickSearchBox.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            quickSearchBox.Location = new Point(8, 8);
+            quickSearchBox.Location = new Point(16, 13);
             quickSearchBox.Name = "quickSearchBox";
             quickSearchBox.Padding = new Padding(8, 6, 8, 6);
             quickSearchBox.PlaceholderText = "Buscar por nombre, código de barras o descripción [F2]...";
-            quickSearchBox.Size = new Size(735, 53);
+            quickSearchBox.Size = new Size(735, 61);
             quickSearchBox.TabIndex = 0;
             // 
             // numericUpDownQuantity
             // 
             numericUpDownQuantity.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             numericUpDownQuantity.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            numericUpDownQuantity.Location = new Point(757, 18);
+            numericUpDownQuantity.Location = new Point(757, 26);
             numericUpDownQuantity.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
             numericUpDownQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             numericUpDownQuantity.Name = "numericUpDownQuantity";
-            numericUpDownQuantity.Size = new Size(85, 34);
+            numericUpDownQuantity.Size = new Size(77, 34);
             numericUpDownQuantity.TabIndex = 1;
             numericUpDownQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
-
-
-
-
-
-            // 
             // buttonRemoveItem
             // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
-            // 
             buttonRemoveItem.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.BackColor = Color.FromArgb(239, 68, 68);
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.ForeColor = Color.White;
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
-            buttonRemoveItem.Location = new Point(848, 14);
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
+            buttonRemoveItem.Location = new Point(848, 21);
             buttonRemoveItem.Name = "buttonRemoveItem";
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.Size = new Size(148, 47);
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
             buttonRemoveItem.TabIndex = 2;
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
-            buttonRemoveItem.Text = "QUITAR [SUPR]";
-            // 
-            // picIconRemoveItem
-            // 
-            this.picIconRemoveItem.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconRemoveItem.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRemoveItem.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconRemoveItem.Location = new System.Drawing.Point(856, 26);
-            this.picIconRemoveItem.Name = "picIconRemoveItem";
-            this.picIconRemoveItem.Size = new System.Drawing.Size(22, 22);
-            this.picIconRemoveItem.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRemoveItem.TabIndex = 99;
-            this.picIconRemoveItem.TabStop = false;
-
-            // 
-            // picIconSelectCustomer
-            // 
-            this.picIconSelectCustomer.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSelectCustomer.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSelectCustomer.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconSelectCustomer.Location = new System.Drawing.Point(254, 131);
-            this.picIconSelectCustomer.Name = "picIconSelectCustomer";
-            this.picIconSelectCustomer.Size = new System.Drawing.Size(20, 20);
-            this.picIconSelectCustomer.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSelectCustomer.TabIndex = 99;
-            this.picIconSelectCustomer.TabStop = false;
-
-            // 
-            // picIconRegisterSale
-            // 
-            this.picIconRegisterSale.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconRegisterSale.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterSale.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconRegisterSale.Location = new System.Drawing.Point(28, 396);
-            this.picIconRegisterSale.Name = "picIconRegisterSale";
-            this.picIconRegisterSale.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterSale.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterSale.TabIndex = 99;
-            this.picIconRegisterSale.TabStop = false;
-
-            // 
-            // picIconToggleScannerCamera
-            // 
-            this.picIconToggleScannerCamera.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconToggleScannerCamera.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleScannerCamera.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleScannerCamera.Location = new System.Drawing.Point(26, 587);
-            this.picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
-            this.picIconToggleScannerCamera.Size = new System.Drawing.Size(18, 18);
-            this.picIconToggleScannerCamera.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleScannerCamera.TabIndex = 99;
-            this.picIconToggleScannerCamera.TabStop = false;
+            buttonRemoveItem.Text = "QUITAR";
             buttonRemoveItem.UseVisualStyleBackColor = false;
             // 
             // panelShortcutsFooter
@@ -932,16 +265,16 @@ panelBarcodeBar.Controls.Add(this.picIconRemoveItem);
             panelRightSummary.Controls.Add(labelDiscountValue);
             panelRightSummary.Controls.Add(labelTotalTitle);
             panelRightSummary.Controls.Add(labelTotalDisplay);
-panelRightSummary.Controls.Add(this.picIconRegisterSale);
+            panelRightSummary.Controls.Add(picIconRegisterSale);
             panelRightSummary.Controls.Add(buttonRegisterSale);
             panelRightSummary.Controls.Add(pictureBoxWebcamPreview);
-panelRightSummary.Controls.Add(this.picIconToggleScannerCamera);
+            panelRightSummary.Controls.Add(picIconToggleScannerCamera);
             panelRightSummary.Controls.Add(buttonToggleScannerCamera);
             panelRightSummary.Dock = DockStyle.Right;
-            panelRightSummary.Location = new Point(1029, 58);
+            panelRightSummary.Location = new Point(1039, 58);
             panelRightSummary.Name = "panelRightSummary";
             panelRightSummary.Padding = new Padding(16);
-            panelRightSummary.Size = new Size(380, 696);
+            panelRightSummary.Size = new Size(469, 696);
             panelRightSummary.TabIndex = 2;
             // 
             // panelVoucherCard
@@ -954,12 +287,12 @@ panelRightSummary.Controls.Add(this.picIconToggleScannerCamera);
             panelVoucherCard.Controls.Add(labelClientNameValue);
             panelVoucherCard.Controls.Add(labelClientDocValue);
             panelVoucherCard.Controls.Add(labelClientTaxValue);
-panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
+            panelVoucherCard.Controls.Add(picIconSelectCustomer);
             panelVoucherCard.Controls.Add(buttonSelectCustomer);
             panelVoucherCard.Location = new Point(16, 12);
             panelVoucherCard.Name = "panelVoucherCard";
             panelVoucherCard.Padding = new Padding(10);
-            panelVoucherCard.Size = new Size(348, 198);
+            panelVoucherCard.Size = new Size(434, 198);
             panelVoucherCard.TabIndex = 0;
             // 
             // labelVoucherHeader
@@ -978,9 +311,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             labelVoucherLetter.BackColor = Color.FromArgb(15, 23, 42);
             labelVoucherLetter.Font = new Font("Segoe UI", 16F, FontStyle.Bold);
             labelVoucherLetter.ForeColor = Color.White;
-            labelVoucherLetter.Location = new Point(10, 34);
+            labelVoucherLetter.Location = new Point(14, 39);
             labelVoucherLetter.Name = "labelVoucherLetter";
-            labelVoucherLetter.Size = new Size(42, 40);
+            labelVoucherLetter.Size = new Size(45, 44);
             labelVoucherLetter.TabIndex = 1;
             labelVoucherLetter.Text = "B";
             labelVoucherLetter.TextAlign = ContentAlignment.MiddleCenter;
@@ -989,9 +322,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             comboBoxDocumentType.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxDocumentType.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            comboBoxDocumentType.Location = new Point(58, 38);
+            comboBoxDocumentType.Location = new Point(75, 43);
             comboBoxDocumentType.Name = "comboBoxDocumentType";
-            comboBoxDocumentType.Size = new Size(280, 31);
+            comboBoxDocumentType.Size = new Size(345, 31);
             comboBoxDocumentType.TabIndex = 2;
             // 
             // labelVoucherNumber
@@ -999,7 +332,7 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             labelVoucherNumber.AutoSize = true;
             labelVoucherNumber.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             labelVoucherNumber.ForeColor = Color.FromArgb(2, 132, 199);
-            labelVoucherNumber.Location = new Point(10, 78);
+            labelVoucherNumber.Location = new Point(10, 89);
             labelVoucherNumber.Name = "labelVoucherNumber";
             labelVoucherNumber.Size = new Size(192, 20);
             labelVoucherNumber.TabIndex = 3;
@@ -1042,19 +375,20 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             buttonSelectCustomer.FlatStyle = FlatStyle.Flat;
             buttonSelectCustomer.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
+            buttonSelectCustomer.ImageAlign = ContentAlignment.TopRight;
             buttonSelectCustomer.Location = new Point(246, 112);
             buttonSelectCustomer.Name = "buttonSelectCustomer";
-            buttonSelectCustomer.Size = new Size(92, 60);
+            buttonSelectCustomer.Size = new Size(174, 60);
             buttonSelectCustomer.TabIndex = 7;
-            buttonSelectCustomer.Text = "CLIENTE\r\n[F3]";
+            buttonSelectCustomer.Text = "BUSCAR CLIENTE\r\n";
             buttonSelectCustomer.UseVisualStyleBackColor = true;
             // 
             // labelSubTotalValue
             // 
             labelSubTotalValue.Font = new Font("Segoe UI", 10.5F);
-            labelSubTotalValue.Location = new Point(16, 222);
+            labelSubTotalValue.Location = new Point(30, 225);
             labelSubTotalValue.Name = "labelSubTotalValue";
-            labelSubTotalValue.Size = new Size(348, 25);
+            labelSubTotalValue.Size = new Size(420, 25);
             labelSubTotalValue.TabIndex = 1;
             labelSubTotalValue.Text = "Subtotal: $ 0,00";
             labelSubTotalValue.TextAlign = ContentAlignment.MiddleRight;
@@ -1063,9 +397,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             labelDiscountValue.Font = new Font("Segoe UI", 10.5F);
             labelDiscountValue.ForeColor = Color.FromArgb(239, 68, 68);
-            labelDiscountValue.Location = new Point(16, 250);
+            labelDiscountValue.Location = new Point(30, 253);
             labelDiscountValue.Name = "labelDiscountValue";
-            labelDiscountValue.Size = new Size(348, 25);
+            labelDiscountValue.Size = new Size(420, 25);
             labelDiscountValue.TabIndex = 2;
             labelDiscountValue.Text = "Descuentos: -$ 0,00";
             labelDiscountValue.TextAlign = ContentAlignment.MiddleRight;
@@ -1085,9 +419,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             labelTotalDisplay.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
             labelTotalDisplay.ForeColor = Color.FromArgb(16, 185, 129);
-            labelTotalDisplay.Location = new Point(16, 312);
+            labelTotalDisplay.Location = new Point(30, 315);
             labelTotalDisplay.Name = "labelTotalDisplay";
-            labelTotalDisplay.Size = new Size(348, 55);
+            labelTotalDisplay.Size = new Size(420, 55);
             labelTotalDisplay.TabIndex = 4;
             labelTotalDisplay.Text = "$ 0,00";
             labelTotalDisplay.TextAlign = ContentAlignment.MiddleRight;
@@ -1099,9 +433,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             buttonRegisterSale.FlatStyle = FlatStyle.Flat;
             buttonRegisterSale.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             buttonRegisterSale.ForeColor = Color.White;
-            buttonRegisterSale.Location = new Point(16, 375);
+            buttonRegisterSale.Location = new Point(30, 378);
             buttonRegisterSale.Name = "buttonRegisterSale";
-            buttonRegisterSale.Size = new Size(348, 64);
+            buttonRegisterSale.Size = new Size(420, 64);
             buttonRegisterSale.TabIndex = 5;
             buttonRegisterSale.Text = "COBRAR (F8)";
             buttonRegisterSale.UseVisualStyleBackColor = false;
@@ -1110,9 +444,9 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             pictureBoxWebcamPreview.BackColor = Color.Black;
             pictureBoxWebcamPreview.BorderStyle = BorderStyle.FixedSingle;
-            pictureBoxWebcamPreview.Location = new Point(16, 452);
+            pictureBoxWebcamPreview.Location = new Point(30, 455);
             pictureBoxWebcamPreview.Name = "pictureBoxWebcamPreview";
-            pictureBoxWebcamPreview.Size = new Size(348, 120);
+            pictureBoxWebcamPreview.Size = new Size(420, 155);
             pictureBoxWebcamPreview.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBoxWebcamPreview.TabIndex = 6;
             pictureBoxWebcamPreview.TabStop = false;
@@ -1121,44 +455,42 @@ panelVoucherCard.Controls.Add(this.picIconSelectCustomer);
             // 
             buttonToggleScannerCamera.FlatStyle = FlatStyle.Flat;
             buttonToggleScannerCamera.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            buttonToggleScannerCamera.Location = new Point(16, 580);
+            buttonToggleScannerCamera.Location = new Point(74, 625);
             buttonToggleScannerCamera.Name = "buttonToggleScannerCamera";
-            buttonToggleScannerCamera.Size = new Size(348, 34);
+            buttonToggleScannerCamera.Size = new Size(348, 52);
             buttonToggleScannerCamera.TabIndex = 7;
             buttonToggleScannerCamera.Text = "CÁMARA ESCÁNER";
             buttonToggleScannerCamera.UseVisualStyleBackColor = true;
-
-
-
-
-
             // 
             // FormSales
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
-            ClientSize = new Size(1409, 754);
+            ClientSize = new Size(1508, 754);
             Controls.Add(panelLeftWork);
             Controls.Add(panelRightSummary);
             Controls.Add(panelTopStatusBar);
             KeyPreview = true;
             Name = "FormSales";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Punto de Venta POS - CompriaxSystem";
-ResumeLayout(false);
+            Text = "Punto de Venta";
+            ((System.ComponentModel.ISupportInitialize)picIconRemoveItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSelectCustomer).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRegisterSale).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleScannerCamera).EndInit();
+            panelTopStatusBar.ResumeLayout(false);
             panelTopStatusBar.PerformLayout();
-ResumeLayout(false);
+            panelLeftWork.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridViewCart).EndInit();
-ResumeLayout(false);
+            panelBarcodeBar.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
-ResumeLayout(false);
-ResumeLayout(false);
+            panelShortcutsFooter.ResumeLayout(false);
+            panelRightSummary.ResumeLayout(false);
             panelRightSummary.PerformLayout();
-ResumeLayout(false);
+            panelVoucherCard.ResumeLayout(false);
             panelVoucherCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).EndInit();
-
             ResumeLayout(false);
         }
 

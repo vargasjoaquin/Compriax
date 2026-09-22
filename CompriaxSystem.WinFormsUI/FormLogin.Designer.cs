@@ -17,7 +17,7 @@
 
         private void InitializeComponent()
         {
-            this.picIconLogin = new System.Windows.Forms.PictureBox();
+            picIconLogin = new PictureBox();
             panelLoginCard = new Panel();
             labelBrandTitle = new Label();
             labelSubtitle = new Label();
@@ -25,26 +25,28 @@
             textBoxUsername = new TextBox();
             labelPassword = new Label();
             textBoxPassword = new TextBox();
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin = new Button();
             linkLabelForgotPassword = new LinkLabel();
             labelErrorMessage = new Label();
             buttonCloseApplication = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconLogin).BeginInit();
             panelLoginCard.SuspendLayout();
             SuspendLayout();
-
+            // 
+            // picIconLogin
+            // 
+            picIconLogin.BackColor = Color.FromArgb(2, 132, 199);
+            picIconLogin.Cursor = Cursors.Hand;
+            picIconLogin.Image = Resources._096_bloqueo_cierre;
+            picIconLogin.Location = new Point(120, 285);
+            picIconLogin.Name = "picIconLogin";
+            picIconLogin.Size = new Size(39, 48);
+            picIconLogin.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconLogin.TabIndex = 99;
+            picIconLogin.TabStop = false;
+            // 
             // panelLoginCard
+            // 
             panelLoginCard.BackColor = Color.White;
             panelLoginCard.Controls.Add(labelBrandTitle);
             panelLoginCard.Controls.Add(labelSubtitle);
@@ -52,7 +54,7 @@
             panelLoginCard.Controls.Add(textBoxUsername);
             panelLoginCard.Controls.Add(labelPassword);
             panelLoginCard.Controls.Add(textBoxPassword);
-panelLoginCard.Controls.Add(this.picIconLogin);
+            panelLoginCard.Controls.Add(picIconLogin);
             panelLoginCard.Controls.Add(buttonLogin);
             panelLoginCard.Controls.Add(linkLabelForgotPassword);
             panelLoginCard.Controls.Add(labelErrorMessage);
@@ -60,8 +62,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             panelLoginCard.Name = "panelLoginCard";
             panelLoginCard.Size = new Size(400, 460);
             panelLoginCard.TabIndex = 0;
-
+            // 
             // labelBrandTitle
+            // 
             labelBrandTitle.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
             labelBrandTitle.ForeColor = Color.FromArgb(2, 132, 199);
             labelBrandTitle.Location = new Point(20, 25);
@@ -70,8 +73,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             labelBrandTitle.TabIndex = 0;
             labelBrandTitle.Text = "COMPRIAX SYSTEM";
             labelBrandTitle.TextAlign = ContentAlignment.MiddleCenter;
-
+            // 
             // labelSubtitle
+            // 
             labelSubtitle.Font = new Font("Segoe UI", 8.5F);
             labelSubtitle.ForeColor = Color.FromArgb(100, 116, 139);
             labelSubtitle.Location = new Point(20, 60);
@@ -80,8 +84,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             labelSubtitle.TabIndex = 1;
             labelSubtitle.Text = "Punto de Venta y Gestión de Supermercado";
             labelSubtitle.TextAlign = ContentAlignment.MiddleCenter;
-
+            // 
             // labelUsername
+            // 
             labelUsername.AutoSize = true;
             labelUsername.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelUsername.ForeColor = Color.FromArgb(15, 23, 42);
@@ -90,16 +95,18 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             labelUsername.Size = new Size(73, 21);
             labelUsername.TabIndex = 2;
             labelUsername.Text = "Usuario:";
-
+            // 
             // textBoxUsername
+            // 
             textBoxUsername.BorderStyle = BorderStyle.FixedSingle;
             textBoxUsername.Font = new Font("Segoe UI", 11F);
             textBoxUsername.Location = new Point(30, 125);
             textBoxUsername.Name = "textBoxUsername";
             textBoxUsername.Size = new Size(340, 32);
             textBoxUsername.TabIndex = 3;
-
+            // 
             // labelPassword
+            // 
             labelPassword.AutoSize = true;
             labelPassword.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelPassword.ForeColor = Color.FromArgb(15, 23, 42);
@@ -108,8 +115,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             labelPassword.Size = new Size(100, 21);
             labelPassword.TabIndex = 4;
             labelPassword.Text = "Contraseña:";
-
+            // 
             // textBoxPassword
+            // 
             textBoxPassword.BorderStyle = BorderStyle.FixedSingle;
             textBoxPassword.Font = new Font("Segoe UI", 11F);
             textBoxPassword.Location = new Point(30, 200);
@@ -118,164 +126,22 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             textBoxPassword.Size = new Size(340, 32);
             textBoxPassword.TabIndex = 5;
             // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
-
             // buttonLogin
             // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.BackColor = Color.FromArgb(2, 132, 199);
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.ForeColor = Color.White;
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.Location = new Point(30, 285);
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.Name = "buttonLogin";
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.Size = new Size(340, 48);
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.TabIndex = 7;
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.Text = "INGRESAR";
-            // 
-            // picIconLogin
-            // 
-            this.picIconLogin.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconLogin.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogin.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconLogin.Location = new System.Drawing.Point(45, 299);
-            this.picIconLogin.Name = "picIconLogin";
-            this.picIconLogin.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogin.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogin.TabIndex = 99;
-            this.picIconLogin.TabStop = false;
             buttonLogin.UseVisualStyleBackColor = false;
-
+            // 
             // linkLabelForgotPassword
+            // 
             linkLabelForgotPassword.Font = new Font("Segoe UI", 8.5F);
             linkLabelForgotPassword.LinkColor = Color.FromArgb(2, 132, 199);
             linkLabelForgotPassword.Location = new Point(30, 350);
@@ -285,8 +151,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             linkLabelForgotPassword.TabStop = true;
             linkLabelForgotPassword.Text = "¿Olvidó su contraseña?";
             linkLabelForgotPassword.TextAlign = ContentAlignment.MiddleCenter;
-
+            // 
             // labelErrorMessage
+            // 
             labelErrorMessage.Font = new Font("Segoe UI", 8.5F);
             labelErrorMessage.ForeColor = Color.FromArgb(239, 68, 68);
             labelErrorMessage.Location = new Point(30, 240);
@@ -294,8 +161,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             labelErrorMessage.Size = new Size(340, 35);
             labelErrorMessage.TabIndex = 6;
             labelErrorMessage.Visible = false;
-
+            // 
             // buttonCloseApplication
+            // 
             buttonCloseApplication.Cursor = Cursors.Hand;
             buttonCloseApplication.FlatAppearance.BorderSize = 0;
             buttonCloseApplication.FlatStyle = FlatStyle.Flat;
@@ -307,8 +175,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             buttonCloseApplication.TabIndex = 1;
             buttonCloseApplication.Text = "✕";
             buttonCloseApplication.UseVisualStyleBackColor = true;
-
+            // 
             // FormLogin
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(15, 23, 42);
@@ -319,9 +188,9 @@ panelLoginCard.Controls.Add(this.picIconLogin);
             Name = "FormLogin";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Iniciar Sesión";
-            ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picIconLogin).EndInit();
+            panelLoginCard.ResumeLayout(false);
             panelLoginCard.PerformLayout();
-
             ResumeLayout(false);
         }
 

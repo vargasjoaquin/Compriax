@@ -17,9 +17,9 @@
 
         private void InitializeComponent()
         {
-            this.picIconSave = new System.Windows.Forms.PictureBox();
-            this.picIconDelete = new System.Windows.Forms.PictureBox();
-            this.picIconCancel = new System.Windows.Forms.PictureBox();
+            picIconSave = new PictureBox();
+            picIconDelete = new PictureBox();
+            picIconCancel = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelCard = new Panel();
@@ -27,54 +27,56 @@
             textBoxCategoryName = new TextBox();
             labelDescription = new Label();
             textBoxDescription = new TextBox();
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave = new Button();
             buttonDelete = new Button();
             buttonCancel = new Button();
             dataGridViewCategories = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)picIconSave).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconDelete).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCancel).BeginInit();
             panelHeader.SuspendLayout();
             panelCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewCategories).BeginInit();
             SuspendLayout();
-
+            // 
+            // picIconSave
+            // 
+            picIconSave.BackColor = Color.FromArgb(16, 185, 129);
+            picIconSave.Cursor = Cursors.Hand;
+            picIconSave.Image = Resources._077_guardar;
+            picIconSave.Location = new Point(76, 280);
+            picIconSave.Name = "picIconSave";
+            picIconSave.Size = new Size(44, 50);
+            picIconSave.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSave.TabIndex = 99;
+            picIconSave.TabStop = false;
+            // 
+            // picIconDelete
+            // 
+            picIconDelete.BackColor = Color.FromArgb(239, 68, 68);
+            picIconDelete.Cursor = Cursors.Hand;
+            picIconDelete.Image = Resources._079_eliminar;
+            picIconDelete.Location = new Point(90, 381);
+            picIconDelete.Name = "picIconDelete";
+            picIconDelete.Size = new Size(41, 43);
+            picIconDelete.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconDelete.TabIndex = 99;
+            picIconDelete.TabStop = false;
+            // 
+            // picIconCancel
+            // 
+            picIconCancel.BackColor = Color.FromArgb(255, 255, 255);
+            picIconCancel.Cursor = Cursors.Hand;
+            picIconCancel.Image = Resources._093_error;
+            picIconCancel.Location = new Point(90, 475);
+            picIconCancel.Name = "picIconCancel";
+            picIconCancel.Size = new Size(30, 42);
+            picIconCancel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconCancel.TabIndex = 99;
+            picIconCancel.TabStop = false;
+            // 
             // panelHeader
+            // 
             panelHeader.BackColor = Color.FromArgb(15, 23, 42);
             panelHeader.Controls.Add(labelTitle);
             panelHeader.Dock = DockStyle.Top;
@@ -82,36 +84,39 @@
             panelHeader.Name = "panelHeader";
             panelHeader.Size = new Size(1167, 56);
             panelHeader.TabIndex = 0;
-
+            // 
             // labelTitle
+            // 
             labelTitle.AutoSize = true;
             labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
             labelTitle.ForeColor = Color.White;
             labelTitle.Location = new Point(16, 16);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(478, 30);
+            labelTitle.Size = new Size(318, 30);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "CATEGORÍAS Y FAMILIAS DE PRODUCTOS";
-
+            labelTitle.Text = "CATEGORÍAS DE PRODUCTOS";
+            // 
             // panelCard
+            // 
             panelCard.BackColor = Color.White;
             panelCard.Controls.Add(labelCategoryName);
             panelCard.Controls.Add(textBoxCategoryName);
             panelCard.Controls.Add(labelDescription);
             panelCard.Controls.Add(textBoxDescription);
-panelCard.Controls.Add(this.picIconSave);
+            panelCard.Controls.Add(picIconSave);
             panelCard.Controls.Add(buttonSave);
-panelCard.Controls.Add(this.picIconDelete);
+            panelCard.Controls.Add(picIconDelete);
             panelCard.Controls.Add(buttonDelete);
-panelCard.Controls.Add(this.picIconCancel);
+            panelCard.Controls.Add(picIconCancel);
             panelCard.Controls.Add(buttonCancel);
             panelCard.Location = new Point(16, 72);
             panelCard.Name = "panelCard";
             panelCard.Padding = new Padding(16);
             panelCard.Size = new Size(340, 562);
             panelCard.TabIndex = 1;
-
+            // 
             // labelCategoryName
+            // 
             labelCategoryName.AutoSize = true;
             labelCategoryName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelCategoryName.Location = new Point(16, 20);
@@ -119,16 +124,18 @@ panelCard.Controls.Add(this.picIconCancel);
             labelCategoryName.Size = new Size(196, 21);
             labelCategoryName.TabIndex = 0;
             labelCategoryName.Text = "Nombre de la Categoría:";
-
+            // 
             // textBoxCategoryName
+            // 
             textBoxCategoryName.BorderStyle = BorderStyle.FixedSingle;
             textBoxCategoryName.Font = new Font("Segoe UI", 10F);
             textBoxCategoryName.Location = new Point(16, 45);
             textBoxCategoryName.Name = "textBoxCategoryName";
             textBoxCategoryName.Size = new Size(306, 30);
             textBoxCategoryName.TabIndex = 1;
-
+            // 
             // labelDescription
+            // 
             labelDescription.AutoSize = true;
             labelDescription.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelDescription.Location = new Point(16, 90);
@@ -136,8 +143,9 @@ panelCard.Controls.Add(this.picIconCancel);
             labelDescription.Size = new Size(104, 21);
             labelDescription.TabIndex = 2;
             labelDescription.Text = "Descripción:";
-
+            // 
             // textBoxDescription
+            // 
             textBoxDescription.BorderStyle = BorderStyle.FixedSingle;
             textBoxDescription.Font = new Font("Segoe UI", 10F);
             textBoxDescription.Location = new Point(16, 115);
@@ -146,476 +154,22 @@ panelCard.Controls.Add(this.picIconCancel);
             textBoxDescription.Size = new Size(306, 120);
             textBoxDescription.TabIndex = 3;
             // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
-
             // buttonSave
             // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.BackColor = Color.FromArgb(16, 185, 129);
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.ForeColor = Color.White;
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.Location = new Point(16, 260);
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.Name = "buttonSave";
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.Size = new Size(306, 92);
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.TabIndex = 4;
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.Text = "GUARDAR";
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(28, 294);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(24, 24);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(28, 388);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(24, 24);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
-            // picIconCancel
-            // 
-            this.picIconCancel.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCancel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCancel.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconCancel.Location = new System.Drawing.Point(28, 484);
-            this.picIconCancel.Name = "picIconCancel";
-            this.picIconCancel.Size = new System.Drawing.Size(24, 24);
-            this.picIconCancel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCancel.TabIndex = 99;
-            this.picIconCancel.TabStop = false;
             buttonSave.UseVisualStyleBackColor = false;
-
+            // 
             // buttonDelete
+            // 
             buttonDelete.BackColor = Color.FromArgb(239, 68, 68);
             buttonDelete.FlatAppearance.BorderSize = 0;
             buttonDelete.FlatStyle = FlatStyle.Flat;
@@ -628,8 +182,9 @@ panelCard.Controls.Add(this.picIconCancel);
             buttonDelete.Text = "ELIMINAR";
             buttonDelete.UseVisualStyleBackColor = false;
             buttonDelete.Visible = false;
-
+            // 
             // buttonCancel
+            // 
             buttonCancel.FlatStyle = FlatStyle.Flat;
             buttonCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             buttonCancel.Location = new Point(15, 449);
@@ -638,8 +193,9 @@ panelCard.Controls.Add(this.picIconCancel);
             buttonCancel.TabIndex = 6;
             buttonCancel.Text = "CANCELAR";
             buttonCancel.UseVisualStyleBackColor = true;
-
+            // 
             // dataGridViewCategories
+            // 
             dataGridViewCategories.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dataGridViewCategories.BackgroundColor = Color.White;
             dataGridViewCategories.BorderStyle = BorderStyle.None;
@@ -649,8 +205,9 @@ panelCard.Controls.Add(this.picIconCancel);
             dataGridViewCategories.RowHeadersWidth = 51;
             dataGridViewCategories.Size = new Size(767, 562);
             dataGridViewCategories.TabIndex = 2;
-
+            // 
             // FormCategories
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
@@ -660,13 +217,15 @@ panelCard.Controls.Add(this.picIconCancel);
             Controls.Add(panelHeader);
             Name = "FormCategories";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Administración de Categorías";
-ResumeLayout(false);
+            Text = "Gestión de Categorías";
+            ((System.ComponentModel.ISupportInitialize)picIconSave).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconDelete).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCancel).EndInit();
+            panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-ResumeLayout(false);
+            panelCard.ResumeLayout(false);
             panelCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewCategories).EndInit();
-
             ResumeLayout(false);
         }
 

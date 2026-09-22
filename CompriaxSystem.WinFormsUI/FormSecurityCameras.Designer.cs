@@ -17,273 +17,285 @@
 
         private void InitializeComponent()
         {
-            this.picIconToggleLiveView = new System.Windows.Forms.PictureBox();
-            this.picIconCaptureSnapshot = new System.Windows.Forms.PictureBox();
-            this.picIconToggleAutoRecording = new System.Windows.Forms.PictureBox();
-            this.panelHeader = new System.Windows.Forms.Panel();
-            this.labelTitle = new System.Windows.Forms.Label();
-            this.panelToolbar = new System.Windows.Forms.Panel();
-            this.labelCameraDevicePrompt = new System.Windows.Forms.Label();
-            this.comboBoxCameraDevices = new System.Windows.Forms.ComboBox();
-            this.buttonToggleLiveView = new System.Windows.Forms.Button();
-            this.buttonCaptureSnapshot = new System.Windows.Forms.Button();
-            this.labelRecordingStatus = new System.Windows.Forms.Label();
-            this.buttonToggleAutoRecording = new System.Windows.Forms.Button();
-            this.tableLayoutPanelFeeds = new System.Windows.Forms.TableLayoutPanel();
-            this.panelLiveContainer = new System.Windows.Forms.Panel();
-            this.labelLiveTitle = new System.Windows.Forms.Label();
-            this.pictureBoxLiveFeed = new System.Windows.Forms.PictureBox();
-            this.panelCaptureContainer = new System.Windows.Forms.Panel();
-            this.labelCaptureTitle = new System.Windows.Forms.Label();
-            this.pictureBoxLastCapture = new System.Windows.Forms.PictureBox();
-
-            this.panelHeader.SuspendLayout();
-            this.panelToolbar.SuspendLayout();
-            this.tableLayoutPanelFeeds.SuspendLayout();
-            this.panelLiveContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).BeginInit();
-            this.panelCaptureContainer.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).BeginInit();
-
-
-
-
-
-            this.SuspendLayout();
-
-            // panelHeader
-            this.panelHeader.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(23)))), ((int)(((byte)(42)))));
-            this.panelHeader.Controls.Add(this.labelTitle);
-            this.panelHeader.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelHeader.Location = new System.Drawing.Point(0, 0);
-            this.panelHeader.Name = "panelHeader";
-            this.panelHeader.Size = new System.Drawing.Size(1080, 56);
-            this.panelHeader.TabIndex = 0;
-
-            // labelTitle
-            this.labelTitle.AutoSize = true;
-            this.labelTitle.Font = new System.Drawing.Font("Segoe UI", 13F, System.Drawing.FontStyle.Bold);
-            this.labelTitle.ForeColor = System.Drawing.Color.White;
-            this.labelTitle.Location = new System.Drawing.Point(16, 16);
-            this.labelTitle.Name = "labelTitle";
-            this.labelTitle.Size = new System.Drawing.Size(445, 25);
-            this.labelTitle.TabIndex = 0;
-            this.labelTitle.Text = "MONITOREO Y CÁMARAS DE SEGURIDAD (CCTV)";
-
-            // panelToolbar
-            this.panelToolbar.BackColor = System.Drawing.Color.White;
-            this.panelToolbar.Controls.Add(this.labelCameraDevicePrompt);
-            this.panelToolbar.Controls.Add(this.comboBoxCameraDevices);
-panelToolbar.Controls.Add(this.picIconToggleLiveView);
-            this.panelToolbar.Controls.Add(this.buttonToggleLiveView);
-panelToolbar.Controls.Add(this.picIconCaptureSnapshot);
-            this.panelToolbar.Controls.Add(this.buttonCaptureSnapshot);
-            this.panelToolbar.Controls.Add(this.labelRecordingStatus);
-panelToolbar.Controls.Add(this.picIconToggleAutoRecording);
-            this.panelToolbar.Controls.Add(this.buttonToggleAutoRecording);
-            this.panelToolbar.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelToolbar.Location = new System.Drawing.Point(0, 56);
-            this.panelToolbar.Name = "panelToolbar";
-            this.panelToolbar.Padding = new System.Windows.Forms.Padding(16, 12, 16, 12);
-            this.panelToolbar.Size = new System.Drawing.Size(1080, 70);
-            this.panelToolbar.TabIndex = 1;
-
-            // labelCameraDevicePrompt
-            this.labelCameraDevicePrompt.AutoSize = true;
-            this.labelCameraDevicePrompt.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelCameraDevicePrompt.Location = new System.Drawing.Point(16, 12);
-            this.labelCameraDevicePrompt.Name = "labelCameraDevicePrompt";
-            this.labelCameraDevicePrompt.Size = new System.Drawing.Size(74, 15);
-            this.labelCameraDevicePrompt.TabIndex = 0;
-            this.labelCameraDevicePrompt.Text = "Dispositivo:";
-
-            // comboBoxCameraDevices
-            this.comboBoxCameraDevices.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxCameraDevices.Font = new System.Drawing.Font("Segoe UI", 10F);
-            this.comboBoxCameraDevices.Location = new System.Drawing.Point(16, 32);
-            this.comboBoxCameraDevices.Name = "comboBoxCameraDevices";
-            this.comboBoxCameraDevices.Size = new System.Drawing.Size(200, 25);
-            this.comboBoxCameraDevices.TabIndex = 1;
+            picIconToggleLiveView = new PictureBox();
+            picIconCaptureSnapshot = new PictureBox();
+            picIconToggleAutoRecording = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            panelToolbar = new Panel();
+            labelCameraDevicePrompt = new Label();
+            comboBoxCameraDevices = new ComboBox();
+            buttonToggleLiveView = new Button();
+            buttonCaptureSnapshot = new Button();
+            labelRecordingStatus = new Label();
+            buttonToggleAutoRecording = new Button();
+            tableLayoutPanelFeeds = new TableLayoutPanel();
+            panelLiveContainer = new Panel();
+            pictureBoxLiveFeed = new PictureBox();
+            labelLiveTitle = new Label();
+            panelCaptureContainer = new Panel();
+            pictureBoxLastCapture = new PictureBox();
+            labelCaptureTitle = new Label();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleLiveView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCaptureSnapshot).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleAutoRecording).BeginInit();
+            panelHeader.SuspendLayout();
+            panelToolbar.SuspendLayout();
+            tableLayoutPanelFeeds.SuspendLayout();
+            panelLiveContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLiveFeed).BeginInit();
+            panelCaptureContainer.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLastCapture).BeginInit();
+            SuspendLayout();
             // 
             // picIconToggleLiveView
             // 
-            this.picIconToggleLiveView.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconToggleLiveView.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleLiveView.Image = global::CompriaxSystem.WinFormsUI.Resources._087_camara_encender;
-            this.picIconToggleLiveView.Location = new System.Drawing.Point(238, 32);
-            this.picIconToggleLiveView.Name = "picIconToggleLiveView";
-            this.picIconToggleLiveView.Size = new System.Drawing.Size(20, 20);
-            this.picIconToggleLiveView.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleLiveView.TabIndex = 99;
-            this.picIconToggleLiveView.TabStop = false;
-
+            picIconToggleLiveView.BackColor = Color.FromArgb(2, 132, 199);
+            picIconToggleLiveView.Cursor = Cursors.Hand;
+            picIconToggleLiveView.Image = Resources._087_camara_encender;
+            picIconToggleLiveView.Location = new Point(230, 24);
+            picIconToggleLiveView.Name = "picIconToggleLiveView";
+            picIconToggleLiveView.Size = new Size(32, 38);
+            picIconToggleLiveView.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconToggleLiveView.TabIndex = 99;
+            picIconToggleLiveView.TabStop = false;
             // 
             // picIconCaptureSnapshot
             // 
-            this.picIconCaptureSnapshot.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconCaptureSnapshot.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCaptureSnapshot.Image = global::CompriaxSystem.WinFormsUI.Resources._086_capturar_foto;
-            this.picIconCaptureSnapshot.Location = new System.Drawing.Point(428, 32);
-            this.picIconCaptureSnapshot.Name = "picIconCaptureSnapshot";
-            this.picIconCaptureSnapshot.Size = new System.Drawing.Size(20, 20);
-            this.picIconCaptureSnapshot.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCaptureSnapshot.TabIndex = 99;
-            this.picIconCaptureSnapshot.TabStop = false;
-
+            picIconCaptureSnapshot.BackColor = Color.FromArgb(255, 255, 255);
+            picIconCaptureSnapshot.Cursor = Cursors.Hand;
+            picIconCaptureSnapshot.Image = Resources._086_capturar_foto;
+            picIconCaptureSnapshot.Location = new Point(435, 24);
+            picIconCaptureSnapshot.Name = "picIconCaptureSnapshot";
+            picIconCaptureSnapshot.Size = new Size(32, 38);
+            picIconCaptureSnapshot.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconCaptureSnapshot.TabIndex = 99;
+            picIconCaptureSnapshot.TabStop = false;
             // 
             // picIconToggleAutoRecording
             // 
-            this.picIconToggleAutoRecording.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconToggleAutoRecording.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconToggleAutoRecording.Image = global::CompriaxSystem.WinFormsUI.Resources._095_bloqueo_operativo;
-            this.picIconToggleAutoRecording.Location = new System.Drawing.Point(910, 33);
-            this.picIconToggleAutoRecording.Name = "picIconToggleAutoRecording";
-            this.picIconToggleAutoRecording.Size = new System.Drawing.Size(20, 20);
-            this.picIconToggleAutoRecording.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconToggleAutoRecording.TabIndex = 99;
-            this.picIconToggleAutoRecording.TabStop = false;
-
+            picIconToggleAutoRecording.BackColor = Color.FromArgb(239, 68, 68);
+            picIconToggleAutoRecording.Cursor = Cursors.Hand;
+            picIconToggleAutoRecording.Image = Resources._095_bloqueo_operativo;
+            picIconToggleAutoRecording.Location = new Point(947, 25);
+            picIconToggleAutoRecording.Name = "picIconToggleAutoRecording";
+            picIconToggleAutoRecording.Size = new Size(30, 37);
+            picIconToggleAutoRecording.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconToggleAutoRecording.TabIndex = 99;
+            picIconToggleAutoRecording.TabStop = false;
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1131, 56);
+            panelHeader.TabIndex = 0;
+            // 
+            // labelTitle
+            // 
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(442, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "MONITOREO Y CÁMARAS DE SEGURIDAD";
+            // 
+            // panelToolbar
+            // 
+            panelToolbar.BackColor = Color.White;
+            panelToolbar.Controls.Add(labelCameraDevicePrompt);
+            panelToolbar.Controls.Add(comboBoxCameraDevices);
+            panelToolbar.Controls.Add(picIconToggleLiveView);
+            panelToolbar.Controls.Add(buttonToggleLiveView);
+            panelToolbar.Controls.Add(picIconCaptureSnapshot);
+            panelToolbar.Controls.Add(buttonCaptureSnapshot);
+            panelToolbar.Controls.Add(labelRecordingStatus);
+            panelToolbar.Controls.Add(picIconToggleAutoRecording);
+            panelToolbar.Controls.Add(buttonToggleAutoRecording);
+            panelToolbar.Dock = DockStyle.Top;
+            panelToolbar.Location = new Point(0, 56);
+            panelToolbar.Name = "panelToolbar";
+            panelToolbar.Padding = new Padding(16, 12, 16, 12);
+            panelToolbar.Size = new Size(1131, 70);
+            panelToolbar.TabIndex = 1;
+            // 
+            // labelCameraDevicePrompt
+            // 
+            labelCameraDevicePrompt.AutoSize = true;
+            labelCameraDevicePrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelCameraDevicePrompt.Location = new Point(16, 12);
+            labelCameraDevicePrompt.Name = "labelCameraDevicePrompt";
+            labelCameraDevicePrompt.Size = new Size(91, 20);
+            labelCameraDevicePrompt.TabIndex = 0;
+            labelCameraDevicePrompt.Text = "Dispositivo:";
+            // 
+            // comboBoxCameraDevices
+            // 
+            comboBoxCameraDevices.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxCameraDevices.Font = new Font("Segoe UI", 10F);
+            comboBoxCameraDevices.Location = new Point(16, 32);
+            comboBoxCameraDevices.Name = "comboBoxCameraDevices";
+            comboBoxCameraDevices.Size = new Size(200, 31);
+            comboBoxCameraDevices.TabIndex = 1;
+            // 
             // buttonToggleLiveView
-            this.buttonToggleLiveView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(2)))), ((int)(((byte)(132)))), ((int)(((byte)(199)))));
-            this.buttonToggleLiveView.FlatAppearance.BorderSize = 0;
-            this.buttonToggleLiveView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonToggleLiveView.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonToggleLiveView.ForeColor = System.Drawing.Color.White;
-            this.buttonToggleLiveView.Location = new System.Drawing.Point(230, 24);
-            this.buttonToggleLiveView.Name = "buttonToggleLiveView";
-            this.buttonToggleLiveView.Size = new System.Drawing.Size(180, 38);
-            this.buttonToggleLiveView.TabIndex = 2;
-            this.buttonToggleLiveView.Text = "ACTIVAR CÁMARA";
-            this.buttonToggleLiveView.UseVisualStyleBackColor = false;
-
+            // 
+            buttonToggleLiveView.BackColor = Color.FromArgb(2, 132, 199);
+            buttonToggleLiveView.FlatAppearance.BorderSize = 0;
+            buttonToggleLiveView.FlatStyle = FlatStyle.Flat;
+            buttonToggleLiveView.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonToggleLiveView.ForeColor = Color.White;
+            buttonToggleLiveView.Location = new Point(230, 24);
+            buttonToggleLiveView.Name = "buttonToggleLiveView";
+            buttonToggleLiveView.Size = new Size(199, 38);
+            buttonToggleLiveView.TabIndex = 2;
+            buttonToggleLiveView.Text = "ACTIVAR CÁMARA";
+            buttonToggleLiveView.UseVisualStyleBackColor = false;
+            // 
             // buttonCaptureSnapshot
-            this.buttonCaptureSnapshot.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonCaptureSnapshot.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonCaptureSnapshot.Location = new System.Drawing.Point(420, 24);
-            this.buttonCaptureSnapshot.Name = "buttonCaptureSnapshot";
-            this.buttonCaptureSnapshot.Size = new System.Drawing.Size(170, 38);
-            this.buttonCaptureSnapshot.TabIndex = 3;
-            this.buttonCaptureSnapshot.Text = "CAPTURAR FOTO";
-            this.buttonCaptureSnapshot.UseVisualStyleBackColor = true;
-
+            // 
+            buttonCaptureSnapshot.FlatStyle = FlatStyle.Flat;
+            buttonCaptureSnapshot.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonCaptureSnapshot.Location = new Point(435, 24);
+            buttonCaptureSnapshot.Name = "buttonCaptureSnapshot";
+            buttonCaptureSnapshot.Size = new Size(187, 38);
+            buttonCaptureSnapshot.TabIndex = 3;
+            buttonCaptureSnapshot.Text = "CAPTURAR FOTO";
+            buttonCaptureSnapshot.UseVisualStyleBackColor = true;
+            // 
             // labelRecordingStatus
-            this.labelRecordingStatus.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.labelRecordingStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
-            this.labelRecordingStatus.Location = new System.Drawing.Point(610, 32);
-            this.labelRecordingStatus.Name = "labelRecordingStatus";
-            this.labelRecordingStatus.Size = new System.Drawing.Size(280, 22);
-            this.labelRecordingStatus.TabIndex = 4;
-            this.labelRecordingStatus.Text = "ESTADO: AUTO-GRABACIÓN ACTIVA";
-
+            // 
+            labelRecordingStatus.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelRecordingStatus.ForeColor = Color.FromArgb(16, 185, 129);
+            labelRecordingStatus.Location = new Point(644, 32);
+            labelRecordingStatus.Name = "labelRecordingStatus";
+            labelRecordingStatus.Size = new Size(280, 22);
+            labelRecordingStatus.TabIndex = 4;
+            labelRecordingStatus.Text = "ESTADO: AUTO-GRABACIÓN ACTIVA";
+            // 
             // buttonToggleAutoRecording
-            this.buttonToggleAutoRecording.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(239)))), ((int)(((byte)(68)))), ((int)(((byte)(68)))));
-            this.buttonToggleAutoRecording.FlatAppearance.BorderSize = 0;
-            this.buttonToggleAutoRecording.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonToggleAutoRecording.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold);
-            this.buttonToggleAutoRecording.ForeColor = System.Drawing.Color.White;
-            this.buttonToggleAutoRecording.Location = new System.Drawing.Point(900, 24);
-            this.buttonToggleAutoRecording.Name = "buttonToggleAutoRecording";
-            this.buttonToggleAutoRecording.Size = new System.Drawing.Size(150, 38);
-            this.buttonToggleAutoRecording.TabIndex = 5;
-            this.buttonToggleAutoRecording.Text = "PAUSAR AUTO";
-            this.buttonToggleAutoRecording.UseVisualStyleBackColor = false;
-
+            // 
+            buttonToggleAutoRecording.BackColor = Color.FromArgb(239, 68, 68);
+            buttonToggleAutoRecording.FlatAppearance.BorderSize = 0;
+            buttonToggleAutoRecording.FlatStyle = FlatStyle.Flat;
+            buttonToggleAutoRecording.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonToggleAutoRecording.ForeColor = Color.White;
+            buttonToggleAutoRecording.Location = new Point(947, 25);
+            buttonToggleAutoRecording.Name = "buttonToggleAutoRecording";
+            buttonToggleAutoRecording.Size = new Size(165, 38);
+            buttonToggleAutoRecording.TabIndex = 5;
+            buttonToggleAutoRecording.Text = "PAUSAR AUTO";
+            buttonToggleAutoRecording.UseVisualStyleBackColor = false;
+            // 
             // tableLayoutPanelFeeds
-            this.tableLayoutPanelFeeds.ColumnCount = 2;
-            this.tableLayoutPanelFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelFeeds.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanelFeeds.Controls.Add(this.panelLiveContainer, 0, 0);
-            this.tableLayoutPanelFeeds.Controls.Add(this.panelCaptureContainer, 1, 0);
-            this.tableLayoutPanelFeeds.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanelFeeds.Location = new System.Drawing.Point(0, 126);
-            this.tableLayoutPanelFeeds.Name = "tableLayoutPanelFeeds";
-            this.tableLayoutPanelFeeds.Padding = new System.Windows.Forms.Padding(16);
-            this.tableLayoutPanelFeeds.RowCount = 1;
-            this.tableLayoutPanelFeeds.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanelFeeds.Size = new System.Drawing.Size(1080, 554);
-            this.tableLayoutPanelFeeds.TabIndex = 2;
-
+            // 
+            tableLayoutPanelFeeds.ColumnCount = 2;
+            tableLayoutPanelFeeds.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelFeeds.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanelFeeds.Controls.Add(panelLiveContainer, 0, 0);
+            tableLayoutPanelFeeds.Controls.Add(panelCaptureContainer, 1, 0);
+            tableLayoutPanelFeeds.Dock = DockStyle.Fill;
+            tableLayoutPanelFeeds.Location = new Point(0, 126);
+            tableLayoutPanelFeeds.Name = "tableLayoutPanelFeeds";
+            tableLayoutPanelFeeds.Padding = new Padding(16);
+            tableLayoutPanelFeeds.RowCount = 1;
+            tableLayoutPanelFeeds.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tableLayoutPanelFeeds.Size = new Size(1131, 554);
+            tableLayoutPanelFeeds.TabIndex = 2;
+            // 
             // panelLiveContainer
-            this.panelLiveContainer.Controls.Add(this.pictureBoxLiveFeed);
-            this.panelLiveContainer.Controls.Add(this.labelLiveTitle);
-            this.panelLiveContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelLiveContainer.Location = new System.Drawing.Point(19, 19);
-            this.panelLiveContainer.Name = "panelLiveContainer";
-            this.panelLiveContainer.Size = new System.Drawing.Size(518, 516);
-            this.panelLiveContainer.TabIndex = 0;
-
-            // labelLiveTitle
-            this.labelLiveTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelLiveTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.labelLiveTitle.Location = new System.Drawing.Point(0, 0);
-            this.labelLiveTitle.Name = "labelLiveTitle";
-            this.labelLiveTitle.Size = new System.Drawing.Size(518, 28);
-            this.labelLiveTitle.TabIndex = 0;
-            this.labelLiveTitle.Text = "Transmisión en Vivo";
-
+            // 
+            panelLiveContainer.Controls.Add(pictureBoxLiveFeed);
+            panelLiveContainer.Controls.Add(labelLiveTitle);
+            panelLiveContainer.Dock = DockStyle.Fill;
+            panelLiveContainer.Location = new Point(19, 19);
+            panelLiveContainer.Name = "panelLiveContainer";
+            panelLiveContainer.Size = new Size(518, 516);
+            panelLiveContainer.TabIndex = 0;
+            // 
             // pictureBoxLiveFeed
-            this.pictureBoxLiveFeed.BackColor = System.Drawing.Color.Black;
-            this.pictureBoxLiveFeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxLiveFeed.Location = new System.Drawing.Point(0, 28);
-            this.pictureBoxLiveFeed.Name = "pictureBoxLiveFeed";
-            this.pictureBoxLiveFeed.Size = new System.Drawing.Size(518, 488);
-            this.pictureBoxLiveFeed.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLiveFeed.TabIndex = 1;
-            this.pictureBoxLiveFeed.TabStop = false;
-
+            // 
+            pictureBoxLiveFeed.BackColor = Color.Black;
+            pictureBoxLiveFeed.Dock = DockStyle.Fill;
+            pictureBoxLiveFeed.Location = new Point(0, 28);
+            pictureBoxLiveFeed.Name = "pictureBoxLiveFeed";
+            pictureBoxLiveFeed.Size = new Size(518, 488);
+            pictureBoxLiveFeed.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLiveFeed.TabIndex = 1;
+            pictureBoxLiveFeed.TabStop = false;
+            // 
+            // labelLiveTitle
+            // 
+            labelLiveTitle.Dock = DockStyle.Top;
+            labelLiveTitle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelLiveTitle.Location = new Point(0, 0);
+            labelLiveTitle.Name = "labelLiveTitle";
+            labelLiveTitle.Size = new Size(518, 28);
+            labelLiveTitle.TabIndex = 0;
+            labelLiveTitle.Text = "Transmisión en Vivo";
+            // 
             // panelCaptureContainer
-            this.panelCaptureContainer.Controls.Add(this.pictureBoxLastCapture);
-            this.panelCaptureContainer.Controls.Add(this.labelCaptureTitle);
-            this.panelCaptureContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelCaptureContainer.Location = new System.Drawing.Point(543, 19);
-            this.panelCaptureContainer.Name = "panelCaptureContainer";
-            this.panelCaptureContainer.Size = new System.Drawing.Size(518, 516);
-            this.panelCaptureContainer.TabIndex = 1;
-
-            // labelCaptureTitle
-            this.labelCaptureTitle.Dock = System.Windows.Forms.DockStyle.Top;
-            this.labelCaptureTitle.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.labelCaptureTitle.Location = new System.Drawing.Point(0, 0);
-            this.labelCaptureTitle.Name = "labelCaptureTitle";
-            this.labelCaptureTitle.Size = new System.Drawing.Size(518, 28);
-            this.labelCaptureTitle.TabIndex = 0;
-            this.labelCaptureTitle.Text = "Última Instantánea de Seguridad";
-
+            // 
+            panelCaptureContainer.Controls.Add(pictureBoxLastCapture);
+            panelCaptureContainer.Controls.Add(labelCaptureTitle);
+            panelCaptureContainer.Dock = DockStyle.Fill;
+            panelCaptureContainer.Location = new Point(543, 19);
+            panelCaptureContainer.Name = "panelCaptureContainer";
+            panelCaptureContainer.Size = new Size(518, 516);
+            panelCaptureContainer.TabIndex = 1;
+            // 
             // pictureBoxLastCapture
-            this.pictureBoxLastCapture.BackColor = System.Drawing.Color.White;
-            this.pictureBoxLastCapture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pictureBoxLastCapture.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pictureBoxLastCapture.Location = new System.Drawing.Point(0, 28);
-            this.pictureBoxLastCapture.Name = "pictureBoxLastCapture";
-            this.pictureBoxLastCapture.Size = new System.Drawing.Size(518, 488);
-            this.pictureBoxLastCapture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLastCapture.TabIndex = 1;
-            this.pictureBoxLastCapture.TabStop = false;
-
-            // Form Properties
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(248)))), ((int)(((byte)(250)))), ((int)(((byte)(252)))));
-            this.ClientSize = new System.Drawing.Size(1080, 680);
-            this.Controls.Add(this.tableLayoutPanelFeeds);
-            this.Controls.Add(this.panelToolbar);
-            this.Controls.Add(this.panelHeader);
-            this.Name = "FormSecurityCameras";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Cámaras CCTV";
-
+            // 
+            pictureBoxLastCapture.BackColor = Color.White;
+            pictureBoxLastCapture.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxLastCapture.Dock = DockStyle.Fill;
+            pictureBoxLastCapture.Location = new Point(0, 28);
+            pictureBoxLastCapture.Name = "pictureBoxLastCapture";
+            pictureBoxLastCapture.Size = new Size(518, 488);
+            pictureBoxLastCapture.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLastCapture.TabIndex = 1;
+            pictureBoxLastCapture.TabStop = false;
+            // 
+            // labelCaptureTitle
+            // 
+            labelCaptureTitle.Dock = DockStyle.Top;
+            labelCaptureTitle.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCaptureTitle.Location = new Point(0, 0);
+            labelCaptureTitle.Name = "labelCaptureTitle";
+            labelCaptureTitle.Size = new Size(518, 28);
+            labelCaptureTitle.TabIndex = 0;
+            labelCaptureTitle.Text = "Última Instantánea de Seguridad";
+            // 
+            // FormSecurityCameras
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            BackColor = Color.FromArgb(248, 250, 252);
+            ClientSize = new Size(1131, 680);
+            Controls.Add(tableLayoutPanelFeeds);
+            Controls.Add(panelToolbar);
+            Controls.Add(panelHeader);
+            Name = "FormSecurityCameras";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Cámaras de Seguridad";
+            ((System.ComponentModel.ISupportInitialize)picIconToggleLiveView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCaptureSnapshot).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleAutoRecording).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelToolbar.ResumeLayout(false);
+            panelToolbar.PerformLayout();
+            tableLayoutPanelFeeds.ResumeLayout(false);
+            panelLiveContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLiveFeed).EndInit();
+            panelCaptureContainer.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLastCapture).EndInit();
             ResumeLayout(false);
-            this.panelHeader.PerformLayout();
-            ResumeLayout(false);
-            this.panelToolbar.PerformLayout();
-            ResumeLayout(false);
-            ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLiveFeed)).EndInit();
-            ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLastCapture)).EndInit();
-
-
-            this.ResumeLayout(false);
         }
 
         #endregion

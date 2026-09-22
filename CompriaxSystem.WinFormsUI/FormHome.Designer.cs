@@ -108,7 +108,7 @@ namespace CompriaxSystem.WinFormsUI
             this.ClientSize = new System.Drawing.Size(1200, 700);
             this.Controls.AddRange(new System.Windows.Forms.Control[] { this.tableLayoutPanelBottomContent, this.tableLayoutPanelTopCards });
             this.BackColor = UIThemeHelper.Background;
-            this.Text = "Dashboard de Control";
+            this.Text = "Dashboard";
 
             this.tableLayoutPanelTopCards.ResumeLayout(false);
             this.panelCardSalesToday.ResumeLayout(false);

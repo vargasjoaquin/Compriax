@@ -15,12 +15,12 @@ namespace CompriaxSystem.WinFormsUI
             _supplyChainService = supplyChainService;
             _documentService = documentService;
             InitializeComponent();
-            
+
             ButtonIconOverlayHelper.BindEvents(this.buttonExportPdf, this.picIconExportPdf);
             ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
             ButtonIconOverlayHelper.BindEvents(this.buttonEdit, this.picIconEdit);
             ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
-            
+
 
             UIThemeHelper.ApplyFormStyle(this);
             UIThemeHelper.ApplyCardStyle(panelSupplierForm);
@@ -178,6 +178,11 @@ namespace CompriaxSystem.WinFormsUI
 
                 await FileExportHelper.SaveAndOpenPdfAsync(this, suppliersReportPdfBytes, reportPdfFileName, "Exportar Reporte de Proveedores");
             }
+        }
+
+        private void labelTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

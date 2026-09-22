@@ -17,75 +17,76 @@
 
         private void InitializeComponent()
         {
-            this.picIconPrintTicket = new System.Windows.Forms.PictureBox();
-            this.picIconSendWhatsapp = new System.Windows.Forms.PictureBox();
-            this.picIconSavePdf = new System.Windows.Forms.PictureBox();
+            picIconPrintTicket = new PictureBox();
+            picIconSendWhatsapp = new PictureBox();
+            picIconSavePdf = new PictureBox();
             panelTopBar = new Panel();
             labelTicketTitle = new Label();
             groupBoxPaperSize = new GroupBox();
             radioButtonWidth80mm = new RadioButton();
             radioButtonWidth58mm = new RadioButton();
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket = new Button();
             buttonSendWhatsapp = new Button();
             buttonSavePdf = new Button();
             webBrowserPdfViewer = new WebBrowser();
+            ((System.ComponentModel.ISupportInitialize)picIconPrintTicket).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSendWhatsapp).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSavePdf).BeginInit();
             panelTopBar.SuspendLayout();
             groupBoxPaperSize.SuspendLayout();
             SuspendLayout();
+            // 
+            // picIconPrintTicket
+            // 
+            picIconPrintTicket.BackColor = Color.FromArgb(2, 132, 199);
+            picIconPrintTicket.Cursor = Cursors.Hand;
+            picIconPrintTicket.Image = Resources._082_imprimir;
+            picIconPrintTicket.Location = new Point(445, 17);
+            picIconPrintTicket.Name = "picIconPrintTicket";
+            picIconPrintTicket.Size = new Size(36, 50);
+            picIconPrintTicket.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconPrintTicket.TabIndex = 99;
+            picIconPrintTicket.TabStop = false;
+            // 
+            // picIconSendWhatsapp
+            // 
+            picIconSendWhatsapp.BackColor = Color.FromArgb(16, 185, 129);
+            picIconSendWhatsapp.Cursor = Cursors.Hand;
+            picIconSendWhatsapp.Image = Resources._083_enviar_mensaje;
+            picIconSendWhatsapp.Location = new Point(607, 17);
+            picIconSendWhatsapp.Name = "picIconSendWhatsapp";
+            picIconSendWhatsapp.Size = new Size(30, 50);
+            picIconSendWhatsapp.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSendWhatsapp.TabIndex = 99;
+            picIconSendWhatsapp.TabStop = false;
+            // 
+            // picIconSavePdf
+            // 
+            picIconSavePdf.BackColor = Color.FromArgb(15, 23, 42);
+            picIconSavePdf.Cursor = Cursors.Hand;
+            picIconSavePdf.Image = Resources._085_exportar_pdf;
+            picIconSavePdf.Location = new Point(765, 17);
+            picIconSavePdf.Name = "picIconSavePdf";
+            picIconSavePdf.Size = new Size(37, 52);
+            picIconSavePdf.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSavePdf.TabIndex = 99;
+            picIconSavePdf.TabStop = false;
             // 
             // panelTopBar
             // 
             panelTopBar.BackColor = Color.FromArgb(15, 23, 42);
             panelTopBar.Controls.Add(labelTicketTitle);
             panelTopBar.Controls.Add(groupBoxPaperSize);
-panelTopBar.Controls.Add(this.picIconPrintTicket);
+            panelTopBar.Controls.Add(picIconPrintTicket);
             panelTopBar.Controls.Add(buttonPrintTicket);
-panelTopBar.Controls.Add(this.picIconSendWhatsapp);
+            panelTopBar.Controls.Add(picIconSendWhatsapp);
             panelTopBar.Controls.Add(buttonSendWhatsapp);
-panelTopBar.Controls.Add(this.picIconSavePdf);
+            panelTopBar.Controls.Add(picIconSavePdf);
             panelTopBar.Controls.Add(buttonSavePdf);
             panelTopBar.Dock = DockStyle.Top;
             panelTopBar.Location = new Point(0, 0);
             panelTopBar.Name = "panelTopBar";
-            panelTopBar.Size = new Size(1006, 70);
+            panelTopBar.Size = new Size(1006, 82);
             panelTopBar.TabIndex = 0;
             // 
             // labelTicketTitle
@@ -104,7 +105,7 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             groupBoxPaperSize.Controls.Add(radioButtonWidth58mm);
             groupBoxPaperSize.Font = new Font("Segoe UI", 8.5F);
             groupBoxPaperSize.ForeColor = Color.FromArgb(226, 232, 240);
-            groupBoxPaperSize.Location = new Point(231, 12);
+            groupBoxPaperSize.Location = new Point(237, 12);
             groupBoxPaperSize.Name = "groupBoxPaperSize";
             groupBoxPaperSize.Size = new Size(180, 52);
             groupBoxPaperSize.TabIndex = 1;
@@ -135,479 +136,18 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             radioButtonWidth58mm.Text = "58 mm";
             radioButtonWidth58mm.UseVisualStyleBackColor = true;
             // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
-
-
-
-
-
-            // 
             // buttonPrintTicket
             // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
-            // 
             buttonPrintTicket.BackColor = Color.FromArgb(2, 132, 199);
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.ForeColor = Color.White;
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
-            buttonPrintTicket.Location = new Point(430, 16);
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
+            buttonPrintTicket.Location = new Point(445, 17);
             buttonPrintTicket.Name = "buttonPrintTicket";
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
-            buttonPrintTicket.Size = new Size(130, 42);
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
+            buttonPrintTicket.Size = new Size(148, 52);
             buttonPrintTicket.TabIndex = 2;
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.Text = "IMPRIMIR";
-            // 
-            // picIconPrintTicket
-            // 
-            this.picIconPrintTicket.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconPrintTicket.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintTicket.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintTicket.Location = new System.Drawing.Point(440, 27);
-            this.picIconPrintTicket.Name = "picIconPrintTicket";
-            this.picIconPrintTicket.Size = new System.Drawing.Size(20, 20);
-            this.picIconPrintTicket.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintTicket.TabIndex = 99;
-            this.picIconPrintTicket.TabStop = false;
-
-            // 
-            // picIconSendWhatsapp
-            // 
-            this.picIconSendWhatsapp.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSendWhatsapp.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSendWhatsapp.Image = global::CompriaxSystem.WinFormsUI.Resources._083_enviar_mensaje;
-            this.picIconSendWhatsapp.Location = new System.Drawing.Point(594, 27);
-            this.picIconSendWhatsapp.Name = "picIconSendWhatsapp";
-            this.picIconSendWhatsapp.Size = new System.Drawing.Size(20, 20);
-            this.picIconSendWhatsapp.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSendWhatsapp.TabIndex = 99;
-            this.picIconSendWhatsapp.TabStop = false;
-
-            // 
-            // picIconSavePdf
-            // 
-            this.picIconSavePdf.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconSavePdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSavePdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconSavePdf.Location = new System.Drawing.Point(760, 27);
-            this.picIconSavePdf.Name = "picIconSavePdf";
-            this.picIconSavePdf.Size = new System.Drawing.Size(20, 20);
-            this.picIconSavePdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSavePdf.TabIndex = 99;
-            this.picIconSavePdf.TabStop = false;
             buttonPrintTicket.UseVisualStyleBackColor = false;
             // 
             // buttonSendWhatsapp
@@ -617,9 +157,9 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             buttonSendWhatsapp.FlatStyle = FlatStyle.Flat;
             buttonSendWhatsapp.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             buttonSendWhatsapp.ForeColor = Color.White;
-            buttonSendWhatsapp.Location = new Point(584, 16);
+            buttonSendWhatsapp.Location = new Point(607, 17);
             buttonSendWhatsapp.Name = "buttonSendWhatsapp";
-            buttonSendWhatsapp.Size = new Size(140, 42);
+            buttonSendWhatsapp.Size = new Size(152, 52);
             buttonSendWhatsapp.TabIndex = 3;
             buttonSendWhatsapp.Text = "WHATSAPP";
             buttonSendWhatsapp.UseVisualStyleBackColor = false;
@@ -629,9 +169,9 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             buttonSavePdf.FlatStyle = FlatStyle.Flat;
             buttonSavePdf.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             buttonSavePdf.ForeColor = Color.White;
-            buttonSavePdf.Location = new Point(750, 16);
+            buttonSavePdf.Location = new Point(765, 17);
             buttonSavePdf.Name = "buttonSavePdf";
-            buttonSavePdf.Size = new Size(130, 42);
+            buttonSavePdf.Size = new Size(150, 52);
             buttonSavePdf.TabIndex = 4;
             buttonSavePdf.Text = "GUARDAR";
             buttonSavePdf.UseVisualStyleBackColor = true;
@@ -639,16 +179,11 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             // webBrowserPdfViewer
             // 
             webBrowserPdfViewer.Dock = DockStyle.Fill;
-            webBrowserPdfViewer.Location = new Point(0, 70);
+            webBrowserPdfViewer.Location = new Point(0, 82);
             webBrowserPdfViewer.MinimumSize = new Size(20, 20);
             webBrowserPdfViewer.Name = "webBrowserPdfViewer";
-            webBrowserPdfViewer.Size = new Size(1006, 680);
+            webBrowserPdfViewer.Size = new Size(1006, 668);
             webBrowserPdfViewer.TabIndex = 1;
-
-
-
-
-
             // 
             // FormTicketPreview
             // 
@@ -660,12 +195,14 @@ panelTopBar.Controls.Add(this.picIconSavePdf);
             Controls.Add(panelTopBar);
             Name = "FormTicketPreview";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Comprobante Fiscal Digital - Ticket Térmico";
-ResumeLayout(false);
+            Text = "Comprobante de Ticket Digital";
+            ((System.ComponentModel.ISupportInitialize)picIconPrintTicket).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSendWhatsapp).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSavePdf).EndInit();
+            panelTopBar.ResumeLayout(false);
             panelTopBar.PerformLayout();
-ResumeLayout(false);
+            groupBoxPaperSize.ResumeLayout(false);
             groupBoxPaperSize.PerformLayout();
-
             ResumeLayout(false);
         }
 

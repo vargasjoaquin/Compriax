@@ -14,67 +14,12 @@
 
         private void InitializeComponent()
         {
-            this.picIconExportPdf = new System.Windows.Forms.PictureBox();
-            this.picIconSave = new System.Windows.Forms.PictureBox();
-            this.picIconEdit = new System.Windows.Forms.PictureBox();
-            this.picIconDelete = new System.Windows.Forms.PictureBox();
             picIconExportPdf = new PictureBox();
             picIconSave = new PictureBox();
             picIconEdit = new PictureBox();
             picIconDelete = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf = new Button();
             panelMain = new Panel();
             dataGridViewCustomers = new DataGridView();
@@ -127,9 +72,9 @@
             picIconSave.BackColor = Color.FromArgb(16, 185, 129);
             picIconSave.Cursor = Cursors.Hand;
             picIconSave.Image = Resources._077_guardar;
-            picIconSave.Location = new Point(830, 16);
+            picIconSave.Location = new Point(881, 27);
             picIconSave.Name = "picIconSave";
-            picIconSave.Size = new Size(58, 66);
+            picIconSave.Size = new Size(43, 45);
             picIconSave.SizeMode = PictureBoxSizeMode.Zoom;
             picIconSave.TabIndex = 99;
             picIconSave.TabStop = false;
@@ -139,9 +84,9 @@
             picIconEdit.BackColor = Color.FromArgb(255, 255, 255);
             picIconEdit.Cursor = Cursors.Hand;
             picIconEdit.Image = Resources._078_editar;
-            picIconEdit.Location = new Point(845, 106);
+            picIconEdit.Location = new Point(904, 89);
             picIconEdit.Name = "picIconEdit";
-            picIconEdit.Size = new Size(20, 20);
+            picIconEdit.Size = new Size(40, 55);
             picIconEdit.SizeMode = PictureBoxSizeMode.Zoom;
             picIconEdit.TabIndex = 99;
             picIconEdit.TabStop = false;
@@ -151,9 +96,9 @@
             picIconDelete.BackColor = Color.FromArgb(239, 68, 68);
             picIconDelete.Cursor = Cursors.Hand;
             picIconDelete.Image = Resources._079_eliminar;
-            picIconDelete.Location = new Point(845, 171);
+            picIconDelete.Location = new Point(895, 150);
             picIconDelete.Name = "picIconDelete";
-            picIconDelete.Size = new Size(20, 20);
+            picIconDelete.Size = new Size(39, 62);
             picIconDelete.SizeMode = PictureBoxSizeMode.Zoom;
             picIconDelete.TabIndex = 99;
             picIconDelete.TabStop = false;
@@ -162,7 +107,7 @@
             // 
             panelHeader.BackColor = Color.FromArgb(15, 23, 42);
             panelHeader.Controls.Add(labelTitle);
-panelHeader.Controls.Add(this.picIconExportPdf);
+            panelHeader.Controls.Add(picIconExportPdf);
             panelHeader.Controls.Add(buttonExportPdf);
             panelHeader.Dock = DockStyle.Top;
             panelHeader.Location = new Point(0, 0);
@@ -181,683 +126,19 @@ panelHeader.Controls.Add(this.picIconExportPdf);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "GESTIÓN DE CLIENTES";
             // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-
-            // 
             // buttonExportPdf
             // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
-            // 
             buttonExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.BackColor = Color.FromArgb(2, 132, 199);
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.ForeColor = Color.White;
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.Location = new Point(936, 12);
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.Name = "buttonExportPdf";
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.Size = new Size(211, 55);
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.TabIndex = 1;
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.Text = "EXPORTAR PDF";
-            // 
-            // picIconExportPdf
-            // 
-            this.picIconExportPdf.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconExportPdf.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportPdf.Image = global::CompriaxSystem.WinFormsUI.Resources._085_exportar_pdf;
-            this.picIconExportPdf.Location = new System.Drawing.Point(950, 29);
-            this.picIconExportPdf.Name = "picIconExportPdf";
-            this.picIconExportPdf.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportPdf.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportPdf.TabIndex = 99;
-            this.picIconExportPdf.TabStop = false;
-
-            // 
-            // picIconSave
-            // 
-            this.picIconSave.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconSave.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconSave.Image = global::CompriaxSystem.WinFormsUI.Resources._077_guardar;
-            this.picIconSave.Location = new System.Drawing.Point(845, 39);
-            this.picIconSave.Name = "picIconSave";
-            this.picIconSave.Size = new System.Drawing.Size(22, 22);
-            this.picIconSave.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconSave.TabIndex = 99;
-            this.picIconSave.TabStop = false;
-
-            // 
-            // picIconEdit
-            // 
-            this.picIconEdit.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconEdit.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconEdit.Image = global::CompriaxSystem.WinFormsUI.Resources._078_editar;
-            this.picIconEdit.Location = new System.Drawing.Point(845, 106);
-            this.picIconEdit.Name = "picIconEdit";
-            this.picIconEdit.Size = new System.Drawing.Size(20, 20);
-            this.picIconEdit.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconEdit.TabIndex = 99;
-            this.picIconEdit.TabStop = false;
-
-            // 
-            // picIconDelete
-            // 
-            this.picIconDelete.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconDelete.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconDelete.Image = global::CompriaxSystem.WinFormsUI.Resources._079_eliminar;
-            this.picIconDelete.Location = new System.Drawing.Point(845, 171);
-            this.picIconDelete.Name = "picIconDelete";
-            this.picIconDelete.Size = new System.Drawing.Size(20, 20);
-            this.picIconDelete.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconDelete.TabIndex = 99;
-            this.picIconDelete.TabStop = false;
             buttonExportPdf.UseVisualStyleBackColor = false;
             // 
             // panelMain
@@ -905,11 +186,11 @@ panelHeader.Controls.Add(this.picIconExportPdf);
             panelCustomerForm.Controls.Add(textBoxCity);
             panelCustomerForm.Controls.Add(labelEmail);
             panelCustomerForm.Controls.Add(textBoxEmail);
-panelCustomerForm.Controls.Add(this.picIconSave);
+            panelCustomerForm.Controls.Add(picIconSave);
             panelCustomerForm.Controls.Add(buttonSave);
-panelCustomerForm.Controls.Add(this.picIconEdit);
+            panelCustomerForm.Controls.Add(picIconEdit);
             panelCustomerForm.Controls.Add(buttonEdit);
-panelCustomerForm.Controls.Add(this.picIconDelete);
+            panelCustomerForm.Controls.Add(picIconDelete);
             panelCustomerForm.Controls.Add(buttonDelete);
             panelCustomerForm.Dock = DockStyle.Top;
             panelCustomerForm.Location = new Point(16, 12);
@@ -1099,7 +380,7 @@ panelCustomerForm.Controls.Add(this.picIconDelete);
             buttonSave.Name = "buttonSave";
             buttonSave.Size = new Size(286, 66);
             buttonSave.TabIndex = 18;
-            buttonSave.Text = "GUARDAR CLIENTE";
+            buttonSave.Text = "GUARDAR";
             buttonSave.UseVisualStyleBackColor = false;
             // 
             // buttonEdit
@@ -1110,7 +391,7 @@ panelCustomerForm.Controls.Add(this.picIconDelete);
             buttonEdit.Name = "buttonEdit";
             buttonEdit.Size = new Size(286, 56);
             buttonEdit.TabIndex = 19;
-            buttonEdit.Text = "EDITAR CLIENTE";
+            buttonEdit.Text = "EDITAR";
             buttonEdit.UseVisualStyleBackColor = true;
             // 
             // buttonDelete
@@ -1124,7 +405,7 @@ panelCustomerForm.Controls.Add(this.picIconDelete);
             buttonDelete.Name = "buttonDelete";
             buttonDelete.Size = new Size(286, 62);
             buttonDelete.TabIndex = 20;
-            buttonDelete.Text = "ELIMINAR CLIENTE";
+            buttonDelete.Text = "ELIMINAR";
             buttonDelete.UseVisualStyleBackColor = false;
             // 
             // FormCustomers
@@ -1137,7 +418,7 @@ panelCustomerForm.Controls.Add(this.picIconDelete);
             Controls.Add(panelHeader);
             Name = "FormCustomers";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Registro de Clientes";
+            Text = "Gestión de Clientes";
             ((System.ComponentModel.ISupportInitialize)picIconExportPdf).EndInit();
             ((System.ComponentModel.ISupportInitialize)picIconSave).EndInit();
             ((System.ComponentModel.ISupportInitialize)picIconEdit).EndInit();

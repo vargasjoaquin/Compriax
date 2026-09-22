@@ -17,8 +17,8 @@
 
         private void InitializeComponent()
         {
-            this.picIconFilterDates = new System.Windows.Forms.PictureBox();
-            this.picIconExportExcel = new System.Windows.Forms.PictureBox();
+            picIconFilterDates = new PictureBox();
+            picIconExportExcel = new PictureBox();
             panelHeader = new Panel();
             labelTitle = new Label();
             panelFiltersCard = new Panel();
@@ -26,41 +26,42 @@
             dateTimePickerStartDate = new DateTimePicker();
             labelEndDate = new Label();
             dateTimePickerEndDate = new DateTimePicker();
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates = new Button();
             labelSearchCriteriaPrompt = new Label();
             comboBoxSearchCriteria = new ComboBox();
             textBoxSearchValue = new TextBox();
             buttonExportExcel = new Button();
             dataGridViewSalesData = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)picIconFilterDates).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportExcel).BeginInit();
             panelHeader.SuspendLayout();
             panelFiltersCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSalesData).BeginInit();
             SuspendLayout();
+            // 
+            // picIconFilterDates
+            // 
+            picIconFilterDates.BackColor = Color.FromArgb(2, 132, 199);
+            picIconFilterDates.Cursor = Cursors.Hand;
+            picIconFilterDates.Image = Resources._080_buscar;
+            picIconFilterDates.Location = new Point(275, 32);
+            picIconFilterDates.Name = "picIconFilterDates";
+            picIconFilterDates.Size = new Size(25, 34);
+            picIconFilterDates.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconFilterDates.TabIndex = 99;
+            picIconFilterDates.TabStop = false;
+            // 
+            // picIconExportExcel
+            // 
+            picIconExportExcel.BackColor = Color.FromArgb(16, 185, 129);
+            picIconExportExcel.Cursor = Cursors.Hand;
+            picIconExportExcel.Image = Resources._084_exportar_excel;
+            picIconExportExcel.Location = new Point(831, 23);
+            picIconExportExcel.Name = "picIconExportExcel";
+            picIconExportExcel.Size = new Size(45, 59);
+            picIconExportExcel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconExportExcel.TabIndex = 99;
+            picIconExportExcel.TabStop = false;
             // 
             // panelHeader
             // 
@@ -79,7 +80,7 @@
             labelTitle.ForeColor = Color.White;
             labelTitle.Location = new Point(16, 16);
             labelTitle.Name = "labelTitle";
-            labelTitle.Size = new Size(508, 30);
+            labelTitle.Size = new Size(471, 30);
             labelTitle.TabIndex = 0;
             labelTitle.Text = "HISTORIAL GENERAL Y REPORTE DE VENTAS";
             // 
@@ -90,12 +91,12 @@
             panelFiltersCard.Controls.Add(dateTimePickerStartDate);
             panelFiltersCard.Controls.Add(labelEndDate);
             panelFiltersCard.Controls.Add(dateTimePickerEndDate);
-panelFiltersCard.Controls.Add(this.picIconFilterDates);
+            panelFiltersCard.Controls.Add(picIconFilterDates);
             panelFiltersCard.Controls.Add(buttonFilterDates);
             panelFiltersCard.Controls.Add(labelSearchCriteriaPrompt);
             panelFiltersCard.Controls.Add(comboBoxSearchCriteria);
             panelFiltersCard.Controls.Add(textBoxSearchValue);
-panelFiltersCard.Controls.Add(this.picIconExportExcel);
+            panelFiltersCard.Controls.Add(picIconExportExcel);
             panelFiltersCard.Controls.Add(buttonExportExcel);
             panelFiltersCard.Location = new Point(16, 72);
             panelFiltersCard.Name = "panelFiltersCard";
@@ -140,323 +141,18 @@ panelFiltersCard.Controls.Add(this.picIconExportExcel);
             dateTimePickerEndDate.Size = new Size(120, 30);
             dateTimePickerEndDate.TabIndex = 3;
             // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
-
-
-
-
-
-            // 
             // buttonFilterDates
             // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
-            // 
             buttonFilterDates.BackColor = Color.FromArgb(2, 132, 199);
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.ForeColor = Color.White;
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.Location = new Point(275, 32);
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.Name = "buttonFilterDates";
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
-            buttonFilterDates.Size = new Size(105, 34);
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
+            buttonFilterDates.Size = new Size(119, 34);
             buttonFilterDates.TabIndex = 4;
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.Text = "FILTRAR";
-            // 
-            // picIconFilterDates
-            // 
-            this.picIconFilterDates.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconFilterDates.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconFilterDates.Image = global::CompriaxSystem.WinFormsUI.Resources._080_buscar;
-            this.picIconFilterDates.Location = new System.Drawing.Point(282, 39);
-            this.picIconFilterDates.Name = "picIconFilterDates";
-            this.picIconFilterDates.Size = new System.Drawing.Size(18, 18);
-            this.picIconFilterDates.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconFilterDates.TabIndex = 99;
-            this.picIconFilterDates.TabStop = false;
-
-            // 
-            // picIconExportExcel
-            // 
-            this.picIconExportExcel.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconExportExcel.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconExportExcel.Image = global::CompriaxSystem.WinFormsUI.Resources._084_exportar_excel;
-            this.picIconExportExcel.Location = new System.Drawing.Point(819, 40);
-            this.picIconExportExcel.Name = "picIconExportExcel";
-            this.picIconExportExcel.Size = new System.Drawing.Size(22, 22);
-            this.picIconExportExcel.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconExportExcel.TabIndex = 99;
-            this.picIconExportExcel.TabStop = false;
             buttonFilterDates.UseVisualStyleBackColor = false;
             // 
             // labelSearchCriteriaPrompt
@@ -512,11 +208,6 @@ panelFiltersCard.Controls.Add(this.picIconExportExcel);
             dataGridViewSalesData.RowHeadersWidth = 51;
             dataGridViewSalesData.Size = new Size(1100, 468);
             dataGridViewSalesData.TabIndex = 2;
-
-
-
-
-
             // 
             // FormSalesReport
             // 
@@ -530,12 +221,13 @@ panelFiltersCard.Controls.Add(this.picIconExportExcel);
             Name = "FormSalesReport";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Reporte de Ventas";
-ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)picIconFilterDates).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportExcel).EndInit();
+            panelHeader.ResumeLayout(false);
             panelHeader.PerformLayout();
-ResumeLayout(false);
+            panelFiltersCard.ResumeLayout(false);
             panelFiltersCard.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewSalesData).EndInit();
-
             ResumeLayout(false);
         }
 

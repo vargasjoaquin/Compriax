@@ -17,224 +17,237 @@
 
         private void InitializeComponent()
         {
-            this.picIconLogout = new System.Windows.Forms.PictureBox();
-            this.components = new System.ComponentModel.Container();
-            this.panelTopNavigation = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelNavigationButtons = new System.Windows.Forms.FlowLayoutPanel();
-            this.panelBrand = new System.Windows.Forms.Panel();
-            this.pictureBoxLogo = new System.Windows.Forms.PictureBox();
-            this.labelSystemName = new System.Windows.Forms.Label();
-            this.panelStatusFooter = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelStatusLeft = new System.Windows.Forms.FlowLayoutPanel();
-            this.pictureBoxUserIcon = new System.Windows.Forms.PictureBox();
-            this.labelSessionUser = new System.Windows.Forms.Label();
-            this.pictureBoxRoleIcon = new System.Windows.Forms.PictureBox();
-            this.labelRoleName = new System.Windows.Forms.Label();
-            this.labelShiftStatus = new System.Windows.Forms.Label();
-            this.labelClockTime = new System.Windows.Forms.Label();
-            this.buttonLogout = new System.Windows.Forms.Button();
-            this.panelMainContainer = new System.Windows.Forms.Panel();
-            this.timerSystemClock = new System.Windows.Forms.Timer(this.components);
-
-            this.panelTopNavigation.SuspendLayout();
-            this.panelBrand.SuspendLayout();
-            this.panelStatusFooter.SuspendLayout();
-            this.flowLayoutPanelStatusLeft.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserIcon)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRoleIcon)).BeginInit();
-
-
-
-
-
-            this.SuspendLayout();
-
-            // ==================== panelTopNavigation ====================
-            this.panelTopNavigation.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(235)))), ((int)(((byte)(235)))));
-            this.panelTopNavigation.Controls.Add(this.flowLayoutPanelNavigationButtons);
-            this.panelTopNavigation.Controls.Add(this.panelBrand);
-            this.panelTopNavigation.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelTopNavigation.Location = new System.Drawing.Point(0, 0);
-            this.panelTopNavigation.Name = "panelTopNavigation";
-            this.panelTopNavigation.Size = new System.Drawing.Size(1280, 110);
-            this.panelTopNavigation.TabIndex = 0;
-
-            // panelBrand
-            this.panelBrand.Controls.Add(this.pictureBoxLogo);
-            this.panelBrand.Controls.Add(this.labelSystemName);
-            this.panelBrand.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelBrand.Location = new System.Drawing.Point(0, 0);
-            this.panelBrand.Name = "panelBrand";
-            this.panelBrand.Size = new System.Drawing.Size(160, 110);
-            this.panelBrand.TabIndex = 0;
-
-            // pictureBoxLogo
-            this.pictureBoxLogo.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBoxLogo.Location = new System.Drawing.Point(35, 12);
-            this.pictureBoxLogo.Name = "pictureBoxLogo";
-            this.pictureBoxLogo.Size = new System.Drawing.Size(90, 75);
-            this.pictureBoxLogo.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxLogo.TabIndex = 0;
-            this.pictureBoxLogo.TabStop = false;
-
-            // flowLayoutPanelNavigationButtons
-            this.flowLayoutPanelNavigationButtons.AutoScroll = true;
-            this.flowLayoutPanelNavigationButtons.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelNavigationButtons.Location = new System.Drawing.Point(160, 0);
-            this.flowLayoutPanelNavigationButtons.Name = "flowLayoutPanelNavigationButtons";
-            this.flowLayoutPanelNavigationButtons.Padding = new System.Windows.Forms.Padding(10, 8, 10, 0);
-            this.flowLayoutPanelNavigationButtons.Size = new System.Drawing.Size(1120, 110);
-            this.flowLayoutPanelNavigationButtons.TabIndex = 1;
-            this.flowLayoutPanelNavigationButtons.WrapContents = false;
-
-            // ==================== panelStatusFooter ====================
-            this.panelStatusFooter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(80)))), ((int)(((byte)(180)))));
-            this.panelStatusFooter.Controls.Add(this.flowLayoutPanelStatusLeft);
-            this.panelStatusFooter.Controls.Add(this.labelClockTime);
-panelStatusFooter.Controls.Add(this.picIconLogout);
-            this.panelStatusFooter.Controls.Add(this.buttonLogout);
-            this.panelStatusFooter.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panelStatusFooter.Location = new System.Drawing.Point(0, 752);
-            this.panelStatusFooter.Name = "panelStatusFooter";
-            this.panelStatusFooter.Size = new System.Drawing.Size(1280, 48);
-            this.panelStatusFooter.TabIndex = 1;
-
-            // flowLayoutPanelStatusLeft 
-            this.flowLayoutPanelStatusLeft.AutoSize = true;
-            this.flowLayoutPanelStatusLeft.Controls.Add(this.pictureBoxUserIcon);
-            this.flowLayoutPanelStatusLeft.Controls.Add(this.labelSessionUser);
-            this.flowLayoutPanelStatusLeft.Controls.Add(this.pictureBoxRoleIcon);
-            this.flowLayoutPanelStatusLeft.Controls.Add(this.labelRoleName);
-            this.flowLayoutPanelStatusLeft.Controls.Add(this.labelShiftStatus);
-            this.flowLayoutPanelStatusLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.flowLayoutPanelStatusLeft.Location = new System.Drawing.Point(0, 0);
-            this.flowLayoutPanelStatusLeft.Name = "flowLayoutPanelStatusLeft";
-            this.flowLayoutPanelStatusLeft.Padding = new System.Windows.Forms.Padding(12, 10, 10, 0);
-            this.flowLayoutPanelStatusLeft.Size = new System.Drawing.Size(900, 48);
-            this.flowLayoutPanelStatusLeft.TabIndex = 0;
-            this.flowLayoutPanelStatusLeft.WrapContents = false;
-
-            // pictureBoxUserIcon
-            this.pictureBoxUserIcon.Margin = new System.Windows.Forms.Padding(0, 2, 4, 0);
-            this.pictureBoxUserIcon.Name = "pictureBoxUserIcon";
-            this.pictureBoxUserIcon.Size = new System.Drawing.Size(20, 20);
-            this.pictureBoxUserIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxUserIcon.TabIndex = 0;
-            this.pictureBoxUserIcon.TabStop = false;
-
-            // labelSessionUser
-            this.labelSessionUser.AutoSize = true;
-            this.labelSessionUser.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.labelSessionUser.ForeColor = System.Drawing.Color.White;
-            this.labelSessionUser.Margin = new System.Windows.Forms.Padding(0, 2, 20, 0);
-            this.labelSessionUser.Name = "labelSessionUser";
-            this.labelSessionUser.Size = new System.Drawing.Size(77, 17);
-            this.labelSessionUser.TabIndex = 1;
-            this.labelSessionUser.Text = "USUARIO";
-
-            // pictureBoxRoleIcon
-            this.pictureBoxRoleIcon.Margin = new System.Windows.Forms.Padding(0, 2, 4, 0);
-            this.pictureBoxRoleIcon.Name = "pictureBoxRoleIcon";
-            this.pictureBoxRoleIcon.Size = new System.Drawing.Size(20, 20);
-            this.pictureBoxRoleIcon.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBoxRoleIcon.TabIndex = 2;
-            this.pictureBoxRoleIcon.TabStop = false;
-
-            // labelRoleName
-            this.labelRoleName.AutoSize = true;
-            this.labelRoleName.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.labelRoleName.ForeColor = System.Drawing.Color.White;
-            this.labelRoleName.Margin = new System.Windows.Forms.Padding(0, 2, 25, 0);
-            this.labelRoleName.Name = "labelRoleName";
-            this.labelRoleName.Size = new System.Drawing.Size(130, 17);
-            this.labelRoleName.TabIndex = 3;
-            this.labelRoleName.Text = "[ADMINISTRADOR]";
-
-            // labelShiftStatus
-            this.labelShiftStatus.AutoSize = true;
-            this.labelShiftStatus.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.labelShiftStatus.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(185)))), ((int)(((byte)(129)))));
-            this.labelShiftStatus.Margin = new System.Windows.Forms.Padding(0, 2, 0, 0);
-            this.labelShiftStatus.Name = "labelShiftStatus";
-            this.labelShiftStatus.Size = new System.Drawing.Size(135, 17);
-            this.labelShiftStatus.TabIndex = 4;
-            this.labelShiftStatus.Text = "Caja 01 - Abierta";
-
-            // labelClockTime
-            this.labelClockTime.Dock = System.Windows.Forms.DockStyle.Right;
-            this.labelClockTime.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold);
-            this.labelClockTime.ForeColor = System.Drawing.Color.White;
-            this.labelClockTime.Location = new System.Drawing.Point(980, 0);
-            this.labelClockTime.Name = "labelClockTime";
-            this.labelClockTime.Size = new System.Drawing.Size(150, 48);
-            this.labelClockTime.TabIndex = 5;
-            this.labelClockTime.Text = "00:00:00";
-            this.labelClockTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            components = new System.ComponentModel.Container();
+            picIconLogout = new PictureBox();
+            panelTopNavigation = new Panel();
+            flowLayoutPanelNavigationButtons = new FlowLayoutPanel();
+            panelBrand = new Panel();
+            pictureBoxLogo = new PictureBox();
+            labelSystemName = new Label();
+            panelStatusFooter = new Panel();
+            panelStatusLeft = new Panel();
+            pictureBoxUserIcon = new PictureBox();
+            labelSessionUser = new Label();
+            pictureBoxRoleIcon = new PictureBox();
+            labelRoleName = new Label();
+            labelShiftStatus = new Label();
+            labelClockTime = new Label();
+            buttonLogout = new Button();
+            panelMainContainer = new Panel();
+            timerSystemClock = new System.Windows.Forms.Timer(components);
+            ((System.ComponentModel.ISupportInitialize)picIconLogout).BeginInit();
+            panelTopNavigation.SuspendLayout();
+            panelBrand.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).BeginInit();
+            panelStatusFooter.SuspendLayout();
+            panelStatusLeft.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxUserIcon).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRoleIcon).BeginInit();
+            SuspendLayout();
             // 
             // picIconLogout
             // 
-            this.picIconLogout.BackColor = System.Drawing.Color.FromArgb(192, 0, 0);
-            this.picIconLogout.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconLogout.Image = global::CompriaxSystem.WinFormsUI.Resources._093_error;
-            this.picIconLogout.Location = new System.Drawing.Point(1142, 14);
-            this.picIconLogout.Name = "picIconLogout";
-            this.picIconLogout.Size = new System.Drawing.Size(20, 20);
-            this.picIconLogout.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconLogout.TabIndex = 99;
-            this.picIconLogout.TabStop = false;
-
+            picIconLogout.BackColor = Color.FromArgb(192, 0, 0);
+            picIconLogout.Cursor = Cursors.Hand;
+            picIconLogout.Image = Resources._066_cerrar_sesion;
+            picIconLogout.Location = new Point(1105, 0);
+            picIconLogout.Name = "picIconLogout";
+            picIconLogout.Size = new Size(31, 48);
+            picIconLogout.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconLogout.TabIndex = 99;
+            picIconLogout.TabStop = false;
+            // 
+            // panelTopNavigation
+            // 
+            panelTopNavigation.BackColor = Color.FromArgb(235, 235, 235);
+            panelTopNavigation.Controls.Add(flowLayoutPanelNavigationButtons);
+            panelTopNavigation.Controls.Add(panelBrand);
+            panelTopNavigation.Dock = DockStyle.Top;
+            panelTopNavigation.Location = new Point(0, 0);
+            panelTopNavigation.Name = "panelTopNavigation";
+            panelTopNavigation.Size = new Size(1280, 110);
+            panelTopNavigation.TabIndex = 0;
+            // 
+            // flowLayoutPanelNavigationButtons
+            // 
+            flowLayoutPanelNavigationButtons.AutoScroll = true;
+            flowLayoutPanelNavigationButtons.Dock = DockStyle.Fill;
+            flowLayoutPanelNavigationButtons.Location = new Point(160, 0);
+            flowLayoutPanelNavigationButtons.Name = "flowLayoutPanelNavigationButtons";
+            flowLayoutPanelNavigationButtons.Padding = new Padding(10, 8, 10, 0);
+            flowLayoutPanelNavigationButtons.Size = new Size(1120, 110);
+            flowLayoutPanelNavigationButtons.TabIndex = 1;
+            flowLayoutPanelNavigationButtons.WrapContents = false;
+            // 
+            // panelBrand
+            // 
+            panelBrand.Controls.Add(pictureBoxLogo);
+            panelBrand.Controls.Add(labelSystemName);
+            panelBrand.Dock = DockStyle.Left;
+            panelBrand.Location = new Point(0, 0);
+            panelBrand.Name = "panelBrand";
+            panelBrand.Size = new Size(160, 110);
+            panelBrand.TabIndex = 0;
+            // 
+            // pictureBoxLogo
+            // 
+            pictureBoxLogo.BackColor = Color.Transparent;
+            pictureBoxLogo.Location = new Point(35, 12);
+            pictureBoxLogo.Name = "pictureBoxLogo";
+            pictureBoxLogo.Size = new Size(90, 75);
+            pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxLogo.TabIndex = 0;
+            pictureBoxLogo.TabStop = false;
+            // 
+            // labelSystemName
+            // 
+            labelSystemName.Location = new Point(0, 0);
+            labelSystemName.Name = "labelSystemName";
+            labelSystemName.Size = new Size(100, 23);
+            labelSystemName.TabIndex = 0;
+            // 
+            // panelStatusFooter
+            // 
+            panelStatusFooter.BackColor = Color.FromArgb(0, 80, 180);
+            panelStatusFooter.Controls.Add(panelStatusLeft);
+            panelStatusFooter.Controls.Add(labelClockTime);
+            panelStatusFooter.Controls.Add(picIconLogout);
+            panelStatusFooter.Controls.Add(buttonLogout);
+            panelStatusFooter.Dock = DockStyle.Bottom;
+            panelStatusFooter.Location = new Point(0, 752);
+            panelStatusFooter.Name = "panelStatusFooter";
+            panelStatusFooter.Size = new Size(1280, 48);
+            panelStatusFooter.TabIndex = 1;
+            // 
+            // panelStatusLeft
+            // 
+            panelStatusLeft.Controls.Add(pictureBoxUserIcon);
+            panelStatusLeft.Controls.Add(labelSessionUser);
+            panelStatusLeft.Controls.Add(pictureBoxRoleIcon);
+            panelStatusLeft.Controls.Add(labelRoleName);
+            panelStatusLeft.Controls.Add(labelShiftStatus);
+            panelStatusLeft.Dock = DockStyle.Left;
+            panelStatusLeft.Location = new Point(0, 0);
+            panelStatusLeft.Name = "panelStatusLeft";
+            panelStatusLeft.Size = new Size(900, 48);
+            panelStatusLeft.TabIndex = 0;
+            // 
+            // pictureBoxUserIcon
+            // 
+            pictureBoxUserIcon.Image = Resources._067_rol_de_usuario;
+            pictureBoxUserIcon.Location = new Point(25, 0);
+            pictureBoxUserIcon.Name = "pictureBoxUserIcon";
+            pictureBoxUserIcon.Size = new Size(31, 48);
+            pictureBoxUserIcon.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxUserIcon.TabIndex = 0;
+            pictureBoxUserIcon.TabStop = false;
+            // 
+            // labelSessionUser
+            // 
+            labelSessionUser.AutoSize = true;
+            labelSessionUser.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSessionUser.ForeColor = Color.White;
+            labelSessionUser.Location = new Point(62, 15);
+            labelSessionUser.Name = "labelSessionUser";
+            labelSessionUser.Size = new Size(81, 21);
+            labelSessionUser.TabIndex = 1;
+            labelSessionUser.Text = "USUARIO";
+            // 
+            // pictureBoxRoleIcon
+            // 
+            pictureBoxRoleIcon.Image = Resources._068_avatar_usuario;
+            pictureBoxRoleIcon.Location = new Point(176, 0);
+            pictureBoxRoleIcon.Name = "pictureBoxRoleIcon";
+            pictureBoxRoleIcon.Size = new Size(35, 48);
+            pictureBoxRoleIcon.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxRoleIcon.TabIndex = 2;
+            pictureBoxRoleIcon.TabStop = false;
+            // 
+            // labelRoleName
+            // 
+            labelRoleName.AutoSize = true;
+            labelRoleName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelRoleName.ForeColor = Color.White;
+            labelRoleName.Location = new Point(217, 15);
+            labelRoleName.Name = "labelRoleName";
+            labelRoleName.Size = new Size(156, 21);
+            labelRoleName.TabIndex = 3;
+            labelRoleName.Text = "[ADMINISTRADOR]";
+            // 
+            // labelShiftStatus
+            // 
+            labelShiftStatus.AutoSize = true;
+            labelShiftStatus.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
+            labelShiftStatus.Location = new Point(438, 14);
+            labelShiftStatus.Name = "labelShiftStatus";
+            labelShiftStatus.Size = new Size(135, 21);
+            labelShiftStatus.TabIndex = 4;
+            labelShiftStatus.Text = "Caja 01 - Abierta";
+            // 
+            // labelClockTime
+            // 
+            labelClockTime.Dock = DockStyle.Right;
+            labelClockTime.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            labelClockTime.ForeColor = Color.White;
+            labelClockTime.Location = new Point(934, 0);
+            labelClockTime.Name = "labelClockTime";
+            labelClockTime.Size = new Size(171, 48);
+            labelClockTime.TabIndex = 5;
+            labelClockTime.Text = "00:00:00";
+            labelClockTime.TextAlign = ContentAlignment.MiddleCenter;
+            // 
             // buttonLogout
-            this.buttonLogout.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.buttonLogout.Dock = System.Windows.Forms.DockStyle.Right;
-            this.buttonLogout.FlatAppearance.BorderSize = 0;
-            this.buttonLogout.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.buttonLogout.Font = new System.Drawing.Font("Segoe UI", 9.5F, System.Drawing.FontStyle.Bold);
-            this.buttonLogout.ForeColor = System.Drawing.Color.White;
-            this.buttonLogout.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonLogout.Location = new System.Drawing.Point(1130, 0);
-            this.buttonLogout.Name = "buttonLogout";
-            this.buttonLogout.Padding = new System.Windows.Forms.Padding(12, 0, 0, 0);
-            this.buttonLogout.Size = new System.Drawing.Size(150, 48);
-            this.buttonLogout.TabIndex = 6;
-            this.buttonLogout.Text = "CERRAR";
-            this.buttonLogout.UseVisualStyleBackColor = false;
-
-            // ==================== panelMainContainer ====================
-            this.panelMainContainer.BackColor = System.Drawing.Color.White;
-            this.panelMainContainer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panelMainContainer.Location = new System.Drawing.Point(0, 110);
-            this.panelMainContainer.Name = "panelMainContainer";
-            this.panelMainContainer.Size = new System.Drawing.Size(1280, 642);
-            this.panelMainContainer.TabIndex = 2;
-
+            // 
+            buttonLogout.BackColor = Color.FromArgb(192, 0, 0);
+            buttonLogout.Dock = DockStyle.Right;
+            buttonLogout.FlatAppearance.BorderSize = 0;
+            buttonLogout.FlatStyle = FlatStyle.Flat;
+            buttonLogout.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonLogout.ForeColor = Color.White;
+            buttonLogout.ImageAlign = ContentAlignment.MiddleLeft;
+            buttonLogout.Location = new Point(1105, 0);
+            buttonLogout.Name = "buttonLogout";
+            buttonLogout.Padding = new Padding(12, 0, 0, 0);
+            buttonLogout.Size = new Size(175, 48);
+            buttonLogout.TabIndex = 6;
+            buttonLogout.Text = "CERRAR SESION";
+            buttonLogout.UseVisualStyleBackColor = false;
+            // 
+            // panelMainContainer
+            // 
+            panelMainContainer.BackColor = Color.White;
+            panelMainContainer.Dock = DockStyle.Fill;
+            panelMainContainer.Location = new Point(0, 110);
+            panelMainContainer.Name = "panelMainContainer";
+            panelMainContainer.Size = new Size(1280, 642);
+            panelMainContainer.TabIndex = 2;
+            // 
             // timerSystemClock
-            this.timerSystemClock.Interval = 1000;
-
+            // 
+            timerSystemClock.Interval = 1000;
+            // 
             // FormPanelControl
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1280, 800);
-            this.Controls.Add(this.panelMainContainer);
-            this.Controls.Add(this.panelStatusFooter);
-            this.Controls.Add(this.panelTopNavigation);
-            this.Name = "FormPanelControl";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "CompriaxSystem - Panel de Control";
-
-            this.ResumeLayout(false);
-            this.ResumeLayout(false);
-            this.panelBrand.PerformLayout();
-            this.ResumeLayout(false);
-            this.panelStatusFooter.PerformLayout();
-            this.ResumeLayout(false);
-            this.flowLayoutPanelStatusLeft.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxLogo)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxUserIcon)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxRoleIcon)).EndInit();
-
-
-            this.ResumeLayout(false);
+            // 
+            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1280, 800);
+            Controls.Add(panelMainContainer);
+            Controls.Add(panelStatusFooter);
+            Controls.Add(panelTopNavigation);
+            Name = "FormPanelControl";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Panel de Control";
+            ((System.ComponentModel.ISupportInitialize)picIconLogout).EndInit();
+            panelTopNavigation.ResumeLayout(false);
+            panelBrand.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxLogo).EndInit();
+            panelStatusFooter.ResumeLayout(false);
+            panelStatusLeft.ResumeLayout(false);
+            panelStatusLeft.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxUserIcon).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxRoleIcon).EndInit();
+            ResumeLayout(false);
         }
 
         #endregion
@@ -245,7 +258,7 @@ panelStatusFooter.Controls.Add(this.picIconLogout);
         private System.Windows.Forms.Label labelSystemName;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelNavigationButtons;
         private System.Windows.Forms.Panel panelStatusFooter;
-        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelStatusLeft;
+        private System.Windows.Forms.Panel panelStatusLeft;
         private System.Windows.Forms.PictureBox pictureBoxUserIcon;
         private System.Windows.Forms.Label labelSessionUser;
         private System.Windows.Forms.PictureBox pictureBoxRoleIcon;

@@ -17,11 +17,6 @@
 
         private void InitializeComponent()
         {
-            this.picIconOpenShift = new System.Windows.Forms.PictureBox();
-            this.picIconRegisterCashIn = new System.Windows.Forms.PictureBox();
-            this.picIconRegisterCashOut = new System.Windows.Forms.PictureBox();
-            this.picIconPrintPartialCloseX = new System.Windows.Forms.PictureBox();
-            this.picIconCloseShiftZ = new System.Windows.Forms.PictureBox();
             picIconOpenShift = new PictureBox();
             picIconRegisterCashIn = new PictureBox();
             picIconRegisterCashOut = new PictureBox();
@@ -33,70 +28,6 @@
             labelOpenTitle = new Label();
             labelInitialCash = new Label();
             numericUpDownInitialCash = new NumericUpDown();
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift = new Button();
             panelActiveShift = new Panel();
             labelShiftStatus = new Label();
@@ -142,9 +73,9 @@
             picIconRegisterCashIn.BackColor = Color.FromArgb(2, 132, 199);
             picIconRegisterCashIn.Cursor = Cursors.Hand;
             picIconRegisterCashIn.Image = Resources._075_ingreso_manual;
-            picIconRegisterCashIn.Location = new Point(686, 34);
+            picIconRegisterCashIn.Location = new Point(686, 16);
             picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            picIconRegisterCashIn.Size = new Size(22, 22);
+            picIconRegisterCashIn.Size = new Size(31, 60);
             picIconRegisterCashIn.SizeMode = PictureBoxSizeMode.Zoom;
             picIconRegisterCashIn.TabIndex = 99;
             picIconRegisterCashIn.TabStop = false;
@@ -154,9 +85,9 @@
             picIconRegisterCashOut.BackColor = Color.FromArgb(255, 255, 255);
             picIconRegisterCashOut.Cursor = Cursors.Hand;
             picIconRegisterCashOut.Image = Resources._076_retiro_egreso;
-            picIconRegisterCashOut.Location = new Point(686, 112);
+            picIconRegisterCashOut.Location = new Point(696, 88);
             picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            picIconRegisterCashOut.Size = new Size(22, 22);
+            picIconRegisterCashOut.Size = new Size(31, 69);
             picIconRegisterCashOut.SizeMode = PictureBoxSizeMode.Zoom;
             picIconRegisterCashOut.TabIndex = 99;
             picIconRegisterCashOut.TabStop = false;
@@ -166,9 +97,9 @@
             picIconPrintPartialCloseX.BackColor = Color.FromArgb(255, 255, 255);
             picIconPrintPartialCloseX.Cursor = Cursors.Hand;
             picIconPrintPartialCloseX.Image = Resources._082_imprimir;
-            picIconPrintPartialCloseX.Location = new Point(686, 190);
+            picIconPrintPartialCloseX.Location = new Point(672, 166);
             picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            picIconPrintPartialCloseX.Size = new Size(22, 22);
+            picIconPrintPartialCloseX.Size = new Size(45, 68);
             picIconPrintPartialCloseX.SizeMode = PictureBoxSizeMode.Zoom;
             picIconPrintPartialCloseX.TabIndex = 99;
             picIconPrintPartialCloseX.TabStop = false;
@@ -178,9 +109,9 @@
             picIconCloseShiftZ.BackColor = Color.FromArgb(239, 68, 68);
             picIconCloseShiftZ.Cursor = Cursors.Hand;
             picIconCloseShiftZ.Image = Resources._096_bloqueo_cierre;
-            picIconCloseShiftZ.Location = new Point(945, 111);
+            picIconCloseShiftZ.Location = new Point(948, 88);
             picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            picIconCloseShiftZ.Size = new Size(26, 26);
+            picIconCloseShiftZ.Size = new Size(47, 57);
             picIconCloseShiftZ.SizeMode = PictureBoxSizeMode.Zoom;
             picIconCloseShiftZ.TabIndex = 99;
             picIconCloseShiftZ.TabStop = false;
@@ -212,7 +143,7 @@
             panelOpenShift.Controls.Add(labelOpenTitle);
             panelOpenShift.Controls.Add(labelInitialCash);
             panelOpenShift.Controls.Add(numericUpDownInitialCash);
-panelOpenShift.Controls.Add(this.picIconOpenShift);
+            panelOpenShift.Controls.Add(picIconOpenShift);
             panelOpenShift.Controls.Add(buttonOpenShift);
             panelOpenShift.Location = new Point(16, 72);
             panelOpenShift.Name = "panelOpenShift";
@@ -251,786 +182,18 @@ panelOpenShift.Controls.Add(this.picIconOpenShift);
             numericUpDownInitialCash.Size = new Size(300, 39);
             numericUpDownInitialCash.TabIndex = 2;
             // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
-            // 
             // buttonOpenShift
             // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
-            // 
             buttonOpenShift.BackColor = Color.FromArgb(16, 185, 129);
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.FlatAppearance.BorderSize = 0;
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.FlatStyle = FlatStyle.Flat;
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.ForeColor = Color.White;
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.Location = new Point(340, 80);
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.Name = "buttonOpenShift";
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.Size = new Size(260, 44);
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.TabIndex = 3;
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.Text = "ABRIR TURNO DE CAJA";
-            // 
-            // picIconOpenShift
-            // 
-            this.picIconOpenShift.BackColor = System.Drawing.Color.FromArgb(16, 185, 129);
-            this.picIconOpenShift.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconOpenShift.Image = global::CompriaxSystem.WinFormsUI.Resources._092_exito;
-            this.picIconOpenShift.Location = new System.Drawing.Point(354, 92);
-            this.picIconOpenShift.Name = "picIconOpenShift";
-            this.picIconOpenShift.Size = new System.Drawing.Size(20, 20);
-            this.picIconOpenShift.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconOpenShift.TabIndex = 99;
-            this.picIconOpenShift.TabStop = false;
-
-            // 
-            // picIconRegisterCashIn
-            // 
-            this.picIconRegisterCashIn.BackColor = System.Drawing.Color.FromArgb(2, 132, 199);
-            this.picIconRegisterCashIn.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashIn.Image = global::CompriaxSystem.WinFormsUI.Resources._075_ingreso_manual;
-            this.picIconRegisterCashIn.Location = new System.Drawing.Point(686, 34);
-            this.picIconRegisterCashIn.Name = "picIconRegisterCashIn";
-            this.picIconRegisterCashIn.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashIn.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashIn.TabIndex = 99;
-            this.picIconRegisterCashIn.TabStop = false;
-
-            // 
-            // picIconRegisterCashOut
-            // 
-            this.picIconRegisterCashOut.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconRegisterCashOut.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconRegisterCashOut.Image = global::CompriaxSystem.WinFormsUI.Resources._076_retiro_egreso;
-            this.picIconRegisterCashOut.Location = new System.Drawing.Point(686, 112);
-            this.picIconRegisterCashOut.Name = "picIconRegisterCashOut";
-            this.picIconRegisterCashOut.Size = new System.Drawing.Size(22, 22);
-            this.picIconRegisterCashOut.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconRegisterCashOut.TabIndex = 99;
-            this.picIconRegisterCashOut.TabStop = false;
-
-            // 
-            // picIconPrintPartialCloseX
-            // 
-            this.picIconPrintPartialCloseX.BackColor = System.Drawing.Color.FromArgb(255, 255, 255);
-            this.picIconPrintPartialCloseX.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconPrintPartialCloseX.Image = global::CompriaxSystem.WinFormsUI.Resources._082_imprimir;
-            this.picIconPrintPartialCloseX.Location = new System.Drawing.Point(686, 190);
-            this.picIconPrintPartialCloseX.Name = "picIconPrintPartialCloseX";
-            this.picIconPrintPartialCloseX.Size = new System.Drawing.Size(22, 22);
-            this.picIconPrintPartialCloseX.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconPrintPartialCloseX.TabIndex = 99;
-            this.picIconPrintPartialCloseX.TabStop = false;
-
-            // 
-            // picIconCloseShiftZ
-            // 
-            this.picIconCloseShiftZ.BackColor = System.Drawing.Color.FromArgb(239, 68, 68);
-            this.picIconCloseShiftZ.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.picIconCloseShiftZ.Image = global::CompriaxSystem.WinFormsUI.Resources._096_bloqueo_cierre;
-            this.picIconCloseShiftZ.Location = new System.Drawing.Point(945, 111);
-            this.picIconCloseShiftZ.Name = "picIconCloseShiftZ";
-            this.picIconCloseShiftZ.Size = new System.Drawing.Size(26, 26);
-            this.picIconCloseShiftZ.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.picIconCloseShiftZ.TabIndex = 99;
-            this.picIconCloseShiftZ.TabStop = false;
             buttonOpenShift.UseVisualStyleBackColor = false;
             // 
             // panelActiveShift
@@ -1042,13 +205,13 @@ panelOpenShift.Controls.Add(this.picIconOpenShift);
             panelActiveShift.Controls.Add(labelCardSalesValue);
             panelActiveShift.Controls.Add(labelTotalTurnoverValue);
             panelActiveShift.Controls.Add(labelExpectedCashValue);
-panelActiveShift.Controls.Add(this.picIconRegisterCashIn);
+            panelActiveShift.Controls.Add(picIconRegisterCashIn);
             panelActiveShift.Controls.Add(buttonRegisterCashIn);
-panelActiveShift.Controls.Add(this.picIconRegisterCashOut);
+            panelActiveShift.Controls.Add(picIconRegisterCashOut);
             panelActiveShift.Controls.Add(buttonRegisterCashOut);
-panelActiveShift.Controls.Add(this.picIconPrintPartialCloseX);
+            panelActiveShift.Controls.Add(picIconPrintPartialCloseX);
             panelActiveShift.Controls.Add(buttonPrintPartialCloseX);
-panelActiveShift.Controls.Add(this.picIconCloseShiftZ);
+            panelActiveShift.Controls.Add(picIconCloseShiftZ);
             panelActiveShift.Controls.Add(buttonCloseShiftZ);
             panelActiveShift.Location = new Point(16, 72);
             panelActiveShift.Name = "panelActiveShift";
