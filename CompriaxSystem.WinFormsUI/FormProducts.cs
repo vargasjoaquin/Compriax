@@ -63,6 +63,8 @@ namespace CompriaxSystem.WinFormsUI
                 comboBoxBrand.DisplayMember = "Name";
                 comboBoxBrand.ValueMember = "Id";
                 comboBoxBrand.SelectedIndex = -1;
+                numericUpDownCurrentStock.Value = 0;
+                numericUpDownMinimumStock.Value = 0;
 
                 await RefreshProductsGridAsync();
                 UIHelper.AttachManagedSelection(this, dataGridViewProducts, SynchronizeSelectedProductToFormFields, ResetFormInputFields);
@@ -94,6 +96,7 @@ namespace CompriaxSystem.WinFormsUI
             numericUpDownBuyPrice.Value = selectedProduct.BuyPrice;
             numericUpDownSellPrice.Value = selectedProduct.SellPrice;
             numericUpDownCurrentStock.Value = selectedProduct.CurrentStock;
+            numericUpDownMinimumStock.Value = selectedProduct.MinimumStock;
             comboBoxCategory.SelectedValue = selectedProduct.CategoryId;
             comboBoxBrand.SelectedValue = selectedProduct.BrandId;
 
@@ -114,6 +117,8 @@ namespace CompriaxSystem.WinFormsUI
             UIHelper.CleanControls(panelProductForm);
             comboBoxCategory.SelectedIndex = -1;
             comboBoxBrand.SelectedIndex = -1;
+            numericUpDownCurrentStock.Value = 0;
+            numericUpDownMinimumStock.Value = 0;
 
             UpdateButtonStates(isEditing: false);
             textBoxBarcode.ReadOnly = false;
@@ -247,7 +252,7 @@ namespace CompriaxSystem.WinFormsUI
                 BuyPrice = numericUpDownBuyPrice.Value,
                 SellPrice = numericUpDownSellPrice.Value,
                 InitialStock = (int)numericUpDownCurrentStock.Value,
-                MinimumStock = 0,
+                MinimumStock = (int)numericUpDownMinimumStock.Value,
                 CategoryId = comboBoxCategory.SelectedValue as int? ?? 1,
                 BrandId = comboBoxBrand.SelectedValue as int? ?? 1,
                 UnitOfMeasureId = 1,
@@ -256,13 +261,3 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 
 namespace CompriaxSystem.WinFormsUI
@@ -23,26 +24,33 @@ namespace CompriaxSystem.WinFormsUI
             this.buttonSaveSettings.Click += async (s, e) => await ExecuteSaveStoreProfileSettingsAsync();
             this.textBoxTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxId);
         }
+
         /// <summary>
         /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
         /// </summary>
         /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
+       private StoreSettingsDto? _currentSettings;
 
         public async Task InitializeStoreSettingsFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var currentStoreSettings = await _storeService.GetStoreProfileAsync();
-                textBoxCompanyName.Text = currentStoreSettings.Name;
-                textBoxTaxId.Text = currentStoreSettings.CUIT;
-                textBoxAddress.Text = currentStoreSettings.Address;
-                textBoxPhone.Text = currentStoreSettings.Phone;
-                textBoxEmail.Text = currentStoreSettings.Email;
+                _currentSettings = await _storeService.GetStoreProfileAsync();
+                textBoxCompanyName.Text = _currentSettings.Name;
+                textBoxTaxId.Text = _currentSettings.CUIT;
+                textBoxAddress.Text = _currentSettings.Address;
+                textBoxPhone.Text = _currentSettings.Phone;
+                textBoxEmail.Text = _currentSettings.Email;
 
-                pictureBoxStoreLogo.Image = Resources.logo_compriax;
+                if (_currentSettings.Logo != null && _currentSettings.Logo.Length > 0)
+                    pictureBoxStoreLogo.Image = ImageHelper.LoadFromBytes(_currentSettings.Logo);
+                else
+                    pictureBoxStoreLogo.Image = Resources.logo_compriax;
+                    
                 pictureBoxStoreLogo.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
+
         /// <summary>
         /// Ejecuta de manera asincrona la accion de SaveStoreProfileSettings.
         /// </summary>
@@ -57,7 +65,17 @@ namespace CompriaxSystem.WinFormsUI
                 Address = textBoxAddress.Text.Trim(),
                 Phone = textBoxPhone.Text.Trim(),
                 Email = textBoxEmail.Text.Trim(),
-                Logo = null
+                Logo = _currentSettings?.Logo,
+                GrossIncomeNumber = _currentSettings?.GrossIncomeNumber,
+                ActivityStartDate = _currentSettings?.ActivityStartDate,
+                TaxConditionId = _currentSettings?.TaxConditionId,
+                PointOfSale = _currentSettings?.PointOfSale ?? TaxConstants.DEFAULT_POINT_OF_SALE,
+                TicketFormat = _currentSettings?.TicketFormat ?? ThermalPrinterConstants.FORMAT_80MM,
+                TicketFooterMessage = _currentSettings?.TicketFooterMessage ?? ThermalPrinterConstants.DEFAULT_FOOTER_MESSAGE,
+                ThermalPrinterName = _currentSettings?.ThermalPrinterName,
+                ShowLogoOnTicket = _currentSettings?.ShowLogoOnTicket ?? true,
+                ShowBarcodeOnTicket = _currentSettings?.ShowBarcodeOnTicket ?? true,
+                AutoPrintTicket = _currentSettings?.AutoPrintTicket ?? false
             };
 
             using (new WaitCursorHelper(this))
@@ -82,13 +100,3 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

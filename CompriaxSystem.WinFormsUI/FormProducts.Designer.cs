@@ -49,6 +49,8 @@
             numericUpDownSellPrice = new NumericUpDown();
             labelCurrentStock = new Label();
             numericUpDownCurrentStock = new NumericUpDown();
+            labelMinimumStock = new Label();
+            numericUpDownMinimumStock = new NumericUpDown();
             buttonSave = new Button();
             buttonEdit = new Button();
             buttonDelete = new Button();
@@ -66,6 +68,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownBuyPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSellPrice).BeginInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCurrentStock).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMinimumStock).BeginInit();
             SuspendLayout();
             // 
             // picIconOpenLabelDesigner
@@ -242,6 +245,8 @@
             panelProductForm.Controls.Add(numericUpDownSellPrice);
             panelProductForm.Controls.Add(labelCurrentStock);
             panelProductForm.Controls.Add(numericUpDownCurrentStock);
+            panelProductForm.Controls.Add(labelMinimumStock);
+            panelProductForm.Controls.Add(numericUpDownMinimumStock);
             panelProductForm.Controls.Add(picIconSave);
             panelProductForm.Controls.Add(buttonSave);
             panelProductForm.Controls.Add(picIconEdit);
@@ -445,11 +450,30 @@
             numericUpDownCurrentStock.Location = new Point(740, 178);
             numericUpDownCurrentStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
             numericUpDownCurrentStock.Name = "numericUpDownCurrentStock";
-            numericUpDownCurrentStock.Size = new Size(171, 30);
-            numericUpDownCurrentStock.TabIndex = 18;
+            numericUpDownCurrentStock.Size = new Size(82, 30);
+            numericUpDownCurrentStock.TabIndex = 18;         
+            // 
+            // labelMinimumStock
+            // 
+            labelMinimumStock.AutoSize = true;
+            labelMinimumStock.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelMinimumStock.Location = new Point(828, 154);
+            labelMinimumStock.Name = "labelMinimumStock";
+            labelMinimumStock.Size = new Size(95, 21);
+            labelMinimumStock.TabIndex = 22;
+            labelMinimumStock.Text = "Stock MÃ­n.:";
+            // 
+            // numericUpDownMinimumStock
+            // 
+            numericUpDownMinimumStock.Font = new Font("Segoe UI", 10F);
+            numericUpDownMinimumStock.Location = new Point(828, 178);
+            numericUpDownMinimumStock.Maximum = new decimal(new int[] { 1000000, 0, 0, 0 });
+            numericUpDownMinimumStock.Name = "numericUpDownMinimumStock";
+            numericUpDownMinimumStock.Size = new Size(82, 30);
+            numericUpDownMinimumStock.TabIndex = 23;
             // 
             // buttonSave
-            // 
+            //   
             buttonSave.BackColor = Color.FromArgb(16, 185, 129);
             buttonSave.FlatAppearance.BorderSize = 0;
             buttonSave.FlatStyle = FlatStyle.Flat;
@@ -514,6 +538,7 @@
             ((System.ComponentModel.ISupportInitialize)numericUpDownBuyPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownSellPrice).EndInit();
             ((System.ComponentModel.ISupportInitialize)numericUpDownCurrentStock).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMinimumStock).EndInit();
             ResumeLayout(false);
         }
 
@@ -544,6 +569,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDownSellPrice;
         private System.Windows.Forms.Label labelCurrentStock;
         private System.Windows.Forms.NumericUpDown numericUpDownCurrentStock;
+        private System.Windows.Forms.Label labelMinimumStock;
+        private System.Windows.Forms.NumericUpDown numericUpDownMinimumStock;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonEdit;
         private System.Windows.Forms.Button buttonDelete;
@@ -556,3 +583,4 @@
         private System.Windows.Forms.PictureBox picIconDelete;
     }
 }
+

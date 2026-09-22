@@ -113,13 +113,36 @@ namespace CompriaxSystem.Application.Services
             if (existingBarcodeProduct != null && existingBarcodeProduct.Id != id)
                 return OperationResult.Failure("El nuevo código de barras ya pertenece a otro producto.");
 
+            int previousStock = product.CurrentStock;
+            int updatedStock = dto.InitialStock;
+
             mapper.Map(dto, product);
-            
+
+            product.LastUpdatedAt = DateTime.UtcNow;
+            product.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
+
+            if (previousStock != updatedStock)
+            {
+                int difference = updatedStock - previousStock;
+                await unitOfWork.Products.AddMovementAsync(new StockMovement
+                {
+                    ProductId = product.Id,
+                    UserId = currentUser.CurrentUser?.UserId ?? RoleConstants.ADMINISTRATOR_ROLE_ID,
+                    Quantity = difference,
+                    MovementType = MovementType.Adjustment,
+                    Remarks = $"Ajuste directo en edición de producto ({previousStock} -> {updatedStock})",
+                    CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+
+            unitOfWork.Products.Update(product);
+
             var operationSucceeded = await unitOfWork.CompleteAsync();
 
             return operationSucceeded
-                ? new OperationResult 
-                { 
+                ? new OperationResult
+                {
                     Success = true,
                     Message = "Producto actualizado.",
                     EntityId = product.Id
