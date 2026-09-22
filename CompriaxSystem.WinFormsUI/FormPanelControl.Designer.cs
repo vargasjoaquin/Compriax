@@ -156,7 +156,7 @@
             // pictureBoxRoleIcon
             // 
             pictureBoxRoleIcon.Image = Resources._068_avatar_usuario;
-            pictureBoxRoleIcon.Location = new Point(176, 0);
+            pictureBoxRoleIcon.Location = new Point(257, 0);
             pictureBoxRoleIcon.Name = "pictureBoxRoleIcon";
             pictureBoxRoleIcon.Size = new Size(35, 48);
             pictureBoxRoleIcon.SizeMode = PictureBoxSizeMode.Zoom;
@@ -168,7 +168,7 @@
             labelRoleName.AutoSize = true;
             labelRoleName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelRoleName.ForeColor = Color.White;
-            labelRoleName.Location = new Point(217, 15);
+            labelRoleName.Location = new Point(298, 15);
             labelRoleName.Name = "labelRoleName";
             labelRoleName.Size = new Size(156, 21);
             labelRoleName.TabIndex = 3;
@@ -179,7 +179,7 @@
             labelShiftStatus.AutoSize = true;
             labelShiftStatus.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
             labelShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
-            labelShiftStatus.Location = new Point(438, 14);
+            labelShiftStatus.Location = new Point(539, 14);
             labelShiftStatus.Name = "labelShiftStatus";
             labelShiftStatus.Size = new Size(135, 21);
             labelShiftStatus.TabIndex = 4;

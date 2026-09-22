@@ -66,7 +66,6 @@
             picIconAddLabelToQueue.SizeMode = PictureBoxSizeMode.Zoom;
             picIconAddLabelToQueue.TabIndex = 99;
             picIconAddLabelToQueue.TabStop = false;
-            picIconAddLabelToQueue.Click += picIconAddLabelToQueue_Click;
             // 
             // picIconRemoveSelected
             // 
