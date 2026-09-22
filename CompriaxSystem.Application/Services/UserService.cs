@@ -3,6 +3,7 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using FluentValidation;
 
@@ -42,7 +43,7 @@ namespace CompriaxSystem.Application.Services
                 return validation.ToResult();
 
             var roles = await unitOfWork.Roles.GetAllAsync();
-            var administratorRole = roles.FirstOrDefault(r => r.Name.Equals("Administrador", StringComparison.OrdinalIgnoreCase));
+            var administratorRole = roles.FirstOrDefault(r => r.Name.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase));
             int administratorRoleId = administratorRole!.Id;
 
             if (dto.Id == 0)
@@ -125,7 +126,7 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("Usuario no encontrado.");
 
             if (user.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
-                user.Role?.Name.Equals("Administrador", StringComparison.OrdinalIgnoreCase) == true)
+                user.Role?.Name.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return OperationResult.Failure("El usuario Administrador está protegido por el sistema y no puede ser eliminado.");
             }
@@ -199,7 +200,7 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("Usuario no encontrado.");
 
             if (user.Username.Equals("admin", StringComparison.OrdinalIgnoreCase) ||
-                user.Role?.Name.Equals("Administrador", StringComparison.OrdinalIgnoreCase) == true)
+                user.Role?.Name.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase) == true)
             {
                 return OperationResult.Failure("La cuenta del Administrador principal no puede ser desactivada.");
             }

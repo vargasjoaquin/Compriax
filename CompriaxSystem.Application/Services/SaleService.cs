@@ -57,7 +57,7 @@ namespace CompriaxSystem.Application.Services
 
                 sale.DocumentNumber = newDocumentNumber;
                 sale.DocumentTypeId = saleDto.DocumentTypeId;
-                sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : 1;
+                sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : PaymentMethodConstants.CASH_ID;
                 sale.CustomerId = saleDto.CustomerId;
                 sale.UserId = currentUserId;
                 sale.CashRegisterId = cashRegisterId;
@@ -74,7 +74,7 @@ namespace CompriaxSystem.Application.Services
                 {
                     sale.Cae = fiscalResult.Cae;
                     sale.CaeExpirationDate = fiscalResult.CaeExpirationDate;
-                    sale.PointOfSale = fiscalResult.PointOfSale > 0 ? fiscalResult.PointOfSale : 1;
+                    sale.PointOfSale = fiscalResult.PointOfSale > 0 ? fiscalResult.PointOfSale : TaxConstants.DEFAULT_POINT_OF_SALE;
                     sale.AfipQrUrl = fiscalResult.QrUrl;
                     sale.FiscalStatus = fiscalResult.FiscalStatus;
 
@@ -85,7 +85,7 @@ namespace CompriaxSystem.Application.Services
                 }
                 else
                 {
-                    sale.FiscalStatus = FiscalStatuses.NON_FISCAL;
+                    sale.FiscalStatus = FiscalStatusesContstans.NON_FISCAL;
                 }
 
                 sale.DocumentType = null!;
@@ -193,9 +193,9 @@ namespace CompriaxSystem.Application.Services
         private static string GenerateNextNumber(string? lastDocumentNumber)
         {
             if (!string.IsNullOrWhiteSpace(lastDocumentNumber) && long.TryParse(lastDocumentNumber, out long lastDocumentNumberValue))
-                return (lastDocumentNumberValue + 1).ToString().PadLeft(8, '0');
+                return (lastDocumentNumberValue + 1).ToString().PadLeft(DocumentTypeConstants.DEFAULT_DOCUMENT_PADDING, '0');
 
-            return "00000001";
+            return DocumentTypeConstants.INITIAL_DOCUMENT_NUMBER;
         }
     }
 }

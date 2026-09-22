@@ -50,7 +50,7 @@ namespace CompriaxSystem.Application.Services
                 CashRegisterId = cashRegisterId,
                 OpeningDate = DateTime.UtcNow,
                 InitialCash = dto.InitialCash,
-                Status = CashShiftStatuses.OPEN
+                Status = CashShiftStatusesConstants.OPEN
             };
 
             await unitOfWork.CashShifts.AddAsync(newCashShift);
@@ -128,11 +128,11 @@ namespace CompriaxSystem.Application.Services
             var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
             var shiftSales = cashShift.Sales ?? new List<Sale>();
 
-            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
-            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
-            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount);
-            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount);
-            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount);
+            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount);
+            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount);
+            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount);
 
             decimal totalManualCashIn = cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
             decimal totalManualCashOut = cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
@@ -167,18 +167,18 @@ namespace CompriaxSystem.Application.Services
 
             var cashShift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(dto.ShiftId);
 
-            if (cashShift == null || cashShift.Status != CashShiftStatuses.OPEN)
+            if (cashShift == null || cashShift.Status != CashShiftStatusesConstants.OPEN)
                 return OperationResult.Failure("El turno especificado no existe o ya fue cerrado.");
 
             var shiftSales = cashShift.Sales?.ToList() ?? new List<Sale>();
 
             var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
 
-            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
-            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
-            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount);
-            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount);
-            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount);
+            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount);
+            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount);
+            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount);
 
             decimal totalManualCashIn = cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
             decimal totalManualCashOut = cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
@@ -196,7 +196,7 @@ namespace CompriaxSystem.Application.Services
             cashShift.TotalQrSales = totalQrSales;
             cashShift.TotalManualCashIn = totalManualCashIn;
             cashShift.TotalManualCashOut = totalManualCashOut;
-            cashShift.Status = CashShiftStatuses.CLOSED;
+            cashShift.Status = CashShiftStatusesConstants.CLOSED;
             cashShift.ClosingNotes = dto.ClosingNotes?.Trim();
 
             unitOfWork.CashShifts.Update(cashShift);
@@ -287,7 +287,7 @@ namespace CompriaxSystem.Application.Services
             var cashMovements = (await unitOfWork.CashShifts
                 .GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
 
-            bool isCashShiftClosed = cashShift.Status == CashShiftStatuses.CLOSED;
+            bool isCashShiftClosed = cashShift.Status == CashShiftStatusesConstants.CLOSED;
 
             return new CashShiftDto
             {
@@ -300,11 +300,11 @@ namespace CompriaxSystem.Application.Services
                 RealCash = cashShift.RealCash,
                 ExpectedCash = cashShift.ExpectedCash,
                 Difference = cashShift.Difference,
-                TotalCashSales = isCashShiftClosed ? cashShift.TotalCashSales : shiftSales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount),
-                TotalDebitSales = isCashShiftClosed ? cashShift.TotalDebitSales : shiftSales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount),
-                TotalCreditSales = isCashShiftClosed ? cashShift.TotalCreditSales : shiftSales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount),
-                TotalTransferSales = isCashShiftClosed ? cashShift.TotalTransferSales : shiftSales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount),
-                TotalQrSales = isCashShiftClosed ? cashShift.TotalQrSales : shiftSales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount),
+                TotalCashSales = isCashShiftClosed ? cashShift.TotalCashSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount),
+                TotalDebitSales = isCashShiftClosed ? cashShift.TotalDebitSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount),
+                TotalCreditSales = isCashShiftClosed ? cashShift.TotalCreditSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount),
+                TotalTransferSales = isCashShiftClosed ? cashShift.TotalTransferSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount),
+                TotalQrSales = isCashShiftClosed ? cashShift.TotalQrSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount),
                 TotalManualCashIn = isCashShiftClosed ? cashShift.TotalManualCashIn : cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount),
                 TotalManualCashOut = isCashShiftClosed ? cashShift.TotalManualCashOut : cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount),
                 Status = cashShift.Status,

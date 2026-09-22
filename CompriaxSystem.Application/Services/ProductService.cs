@@ -3,6 +3,7 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 using FluentValidation;
@@ -172,7 +173,7 @@ namespace CompriaxSystem.Application.Services
                  p.Barcode.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase) ||
                  (p.Description != null && p.Description.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase)) ||
                  (p.Brand != null && p.Brand.Name.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase))))
-                .Take(15);
+                .Take(ProductConstants.DEFAULT_CATALOG_SEARCH_LIMIT);
 
             return mapper.Map<IEnumerable<ProductDto>>(matchingProducts);
         }

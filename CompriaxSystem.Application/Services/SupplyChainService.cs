@@ -120,12 +120,12 @@ namespace CompriaxSystem.Application.Services
                 purchase.DocumentTypeId = dto.DocumentTypeId;
                 purchase.SupplierId = dto.SupplierId;
                 purchase.UserId = currentUserId;
-                purchase.PaymentMethodId = dto.PaymentMethodId > 0 ? dto.PaymentMethodId : 1;
+                purchase.PaymentMethodId = dto.PaymentMethodId > 0 ? dto.PaymentMethodId : PaymentMethodConstants.CASH_ID;
                 purchase.DocumentNumber = dto.DocumentNumber.Trim();
                 purchase.TotalAmount = dto.Items.Sum(x => x.Quantity * x.BuyPrice);
                 purchase.SubTotal = purchase.TotalAmount;
                 purchase.TaxAmount = 0;
-                purchase.Status = PurchaseStatuses.COMPLETED;
+                purchase.Status = PurchaseStatusesConstants.COMPLETED;
                 purchase.CreatedAt = DateTime.UtcNow;
 
                 purchase.DocumentType = null!;
@@ -190,75 +190,75 @@ namespace CompriaxSystem.Application.Services
             var getDocumentTypes = await unitOfWork.GetDocumentTypesAsync();
             var documentsType = getDocumentTypes.FirstOrDefault(x => x.Id == documentTypeId);
 
-            string documentPrefix = "FAC-X";
+            string documentPrefix = DocumentPrefixConstants.DEFAULT;
 
             if (documentsType != null)
             {
                 string documentTypeName = documentsType.Name.ToUpperInvariant();
 
                 // 1. Facturas y Comprobantes Directos
-                if (documentTypeName.Contains("CLIENTE CASUAL")) 
-                    documentPrefix = "FAC-CAS";
+                if (documentTypeName.Contains("CLIENTE CASUAL"))
+                    documentPrefix = DocumentPrefixConstants.CASUAL_CUSTOMER;
                 else if (documentTypeName.Contains("FACTURA A") && !documentTypeName.Contains("TICKET"))
-                    documentPrefix = "FAC-A";
-                else if (documentTypeName.Contains("FACTURA B") && !documentTypeName.Contains("TICKET")) 
-                    documentPrefix = "FAC-B";
-                else if (documentTypeName.Contains("FACTURA C")) 
-                    documentPrefix = "FAC-C";
-                else if (documentTypeName.Contains("FACTURA M")) 
-                    documentPrefix = "FAC-M";
+                    documentPrefix = DocumentPrefixConstants.INVOICE_A;
+                else if (documentTypeName.Contains("FACTURA B") && !documentTypeName.Contains("TICKET"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_B;
+                else if (documentTypeName.Contains("FACTURA C"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_C;
+                else if (documentTypeName.Contains("FACTURA M"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_M;
                 else if (documentTypeName.Contains("EXPORTACIÓN") || documentTypeName.Contains("EXPORTACION"))
-                    documentPrefix = "FAC-E";
+                    documentPrefix = DocumentPrefixConstants.EXPORT_INVOICE_E;
 
                 // 2. Tickets
                 else if (documentTypeName.Contains("TICKET FACTURA A"))
-                    documentPrefix = "TKT-A";
-                else if (documentTypeName.Contains("TICKET FACTURA B")) 
-                    documentPrefix = "TKT-B";
-                else if (documentTypeName.Contains("TICKET CONSUMIDOR FINAL")) 
-                    documentPrefix = "TKT-CF";
+                    documentPrefix = DocumentPrefixConstants.TICKET_INVOICE_A;
+                else if (documentTypeName.Contains("TICKET FACTURA B"))
+                    documentPrefix = DocumentPrefixConstants.TICKET_INVOICE_B;
+                else if (documentTypeName.Contains("TICKET CONSUMIDOR FINAL"))
+                    documentPrefix = DocumentPrefixConstants.TICKET_FINAL_CONSUMER;
 
                 // 3. Notas de Débito
                 else if (documentTypeName.Contains("NOTA DE DÉBITO A") || documentTypeName.Contains("NOTA DE DEBITO A"))
-                    documentPrefix = "ND-A";
-                else if (documentTypeName.Contains("NOTA DE DÉBITO B") || documentTypeName.Contains("NOTA DE DEBITO B")) 
-                    documentPrefix = "ND-B";
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_A;
+                else if (documentTypeName.Contains("NOTA DE DÉBITO B") || documentTypeName.Contains("NOTA DE DEBITO B"))
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_B;
                 else if (documentTypeName.Contains("NOTA DE DÉBITO C") || documentTypeName.Contains("NOTA DE DEBITO C"))
-                    documentPrefix = "ND-C";
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_C;
                 else if (documentTypeName.Contains("NOTA DE DÉBITO M") || documentTypeName.Contains("NOTA DE DEBITO M"))
-                    documentPrefix = "ND-M";
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_M;
 
                 // 4. Notas de Crédito
-                else if (documentTypeName.Contains("NOTA DE CRÉDITO A") || documentTypeName.Contains("NOTA DE CREDITO A")) 
-                    documentPrefix = "NC-A";
-                else if (documentTypeName.Contains("NOTA DE CRÉDITO B") || documentTypeName.Contains("NOTA DE CREDITO B")) 
-                    documentPrefix = "NC-B";
-                else if (documentTypeName.Contains("NOTA DE CRÉDITO C") || documentTypeName.Contains("NOTA DE CREDITO C")) 
-                    documentPrefix = "NC-C";
-                else if (documentTypeName.Contains("NOTA DE CRÉDITO M") || documentTypeName.Contains("NOTA DE CREDITO M")) 
-                    documentPrefix = "NC-M";
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO A") || documentTypeName.Contains("NOTA DE CREDITO A"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_A;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO B") || documentTypeName.Contains("NOTA DE CREDITO B"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_B;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO C") || documentTypeName.Contains("NOTA DE CREDITO C"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_C;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO M") || documentTypeName.Contains("NOTA DE CREDITO M"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_M;
 
                 // 5. Recibos
-                else if (documentTypeName.Contains("RECIBO A")) 
-                    documentPrefix = "REC-A";
+                else if (documentTypeName.Contains("RECIBO A"))
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_A;
                 else if (documentTypeName.Contains("RECIBO B"))
-                    documentPrefix = "REC-B";
-                else if (documentTypeName.Contains("RECIBO C")) 
-                    documentPrefix = "REC-C";
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_B;
+                else if (documentTypeName.Contains("RECIBO C"))
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_C;
 
                 // 6. Remitos y Presupuestos
-                else if (documentTypeName.Contains("REMITO R")) 
-                    documentPrefix = "REM-R";
-                else if (documentTypeName.Contains("REMITO X")) 
-                    documentPrefix = "REM-X";
+                else if (documentTypeName.Contains("REMITO R"))
+                    documentPrefix = DocumentPrefixConstants.DELIVERY_NOTE_R;
+                else if (documentTypeName.Contains("REMITO X"))
+                    documentPrefix = DocumentPrefixConstants.DELIVERY_NOTE_X;
                 else if (documentTypeName.Contains("PRESUPUESTO"))
-                    documentPrefix = "PRE";
+                    documentPrefix = DocumentPrefixConstants.QUOTATION;
                 else if (documentTypeName.Contains("COMPROBANTE X"))
-                    documentPrefix = "CMP-X";
+                    documentPrefix = DocumentPrefixConstants.VOUCHER_X;
             }
 
             long nextDocumentNumber = 1;
-            
+
             if (!string.IsNullOrWhiteSpace(lastDocumentNumber))
             {
                 var numberMatch = System.Text.RegularExpressions.Regex.Match(lastDocumentNumber, @"\d+$");

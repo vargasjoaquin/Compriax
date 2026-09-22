@@ -18,8 +18,8 @@ namespace CompriaxSystem.Application.DTOs
         public byte[]? LogoBytes { get; set; }
 
         public string DocumentTypeName { get; set; } = "Ticket";
-        public string DocumentLetter { get; set; } = VoucherLetterCodes.LETTER_B;
-        public string DocumentTypeCode { get; set; } = VoucherLetterCodes.CODE_FACTURA_B;
+        public string DocumentLetter { get; set; } = VoucherLetterCodesConstants.LETTER_B;
+        public string DocumentTypeCode { get; set; } = VoucherLetterCodesConstants.CODE_FACTURA_B;
         public int PointOfSale { get; set; } = 1;
         public string DocumentNumber { get; set; } = null!;
         public DateTime Date { get; set; } = DateTime.Now;

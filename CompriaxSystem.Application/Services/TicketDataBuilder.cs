@@ -25,11 +25,11 @@ namespace CompriaxSystem.Application.Services
             decimal totalDiscountAmount = sale.DiscountAmount;
             decimal finalTotalAmount = sale.TotalAmount > 0 ? sale.TotalAmount : Math.Max(0, saleSubtotal - totalDiscountAmount);
 
-            decimal taxRatePercentage = 21.00m;
+            decimal taxRatePercentage = TaxConstants.STANDARD_VAT_RATE;
             decimal netTaxableAmount = Math.Round(finalTotalAmount / (1 + (taxRatePercentage / 100m)), 2);
             decimal taxAmount = finalTotalAmount - netTaxableAmount;
 
-            int pointOfSaleNumber = sale.PointOfSale > 0 ? sale.PointOfSale : (storeSettings?.PointOfSale > 0 ? storeSettings.PointOfSale : 1);
+            int pointOfSaleNumber = sale.PointOfSale > 0 ? sale.PointOfSale : (storeSettings?.PointOfSale > 0 ? storeSettings.PointOfSale : TaxConstants.DEFAULT_POINT_OF_SALE);
             var (documentLetter, documentTypeCode) = ExtractDocumentLetterAndCode(sale.DocumentTypeName);
 
             byte[]? fiscalQrImageBytes = null;
@@ -142,84 +142,84 @@ namespace CompriaxSystem.Application.Services
         private static (string Letter, string Code) ExtractDocumentLetterAndCode(string? documentTypeName)
         {
             if (string.IsNullOrWhiteSpace(documentTypeName))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_FACTURA_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_FACTURA_B);
 
             string type = documentTypeName.ToUpperInvariant();
 
             if (type.Contains("FACTURA A") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_FACTURA_A);
+                return (VoucherLetterCodesConstants.LETTER_A, VoucherLetterCodesConstants.CODE_FACTURA_A);
 
             if (type.Contains("NOTA DE DÉBITO A") || type.Contains("NOTA DE DEBITO A"))
-                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_NOTA_DEBITO_A);
+                return (VoucherLetterCodesConstants.LETTER_A, VoucherLetterCodesConstants.CODE_NOTA_DEBITO_A);
 
             if (type.Contains("NOTA DE CRÉDITO A") || type.Contains("NOTA DE CREDITO A"))
-                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_NOTA_CREDITO_A);
+                return (VoucherLetterCodesConstants.LETTER_A, VoucherLetterCodesConstants.CODE_NOTA_CREDITO_A);
 
             if (type.Contains("RECIBO A"))
-                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_RECIBO_A);
+                return (VoucherLetterCodesConstants.LETTER_A, VoucherLetterCodesConstants.CODE_RECIBO_A);
 
             if (type.Contains("TICKET FACTURA A"))
-                return (VoucherLetterCodes.LETTER_A, VoucherLetterCodes.CODE_TICKET_FACUTURA_A);
+                return (VoucherLetterCodesConstants.LETTER_A, VoucherLetterCodesConstants.CODE_TICKET_FACUTURA_A);
 
             //
             if (type.Contains("FACTURA B") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_FACTURA_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_FACTURA_B);
 
             if (type.Contains("NOTA DE DÉBITO B") || type.Contains("NOTA DE DEBITO B"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_NOTA_DEBITO_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_NOTA_DEBITO_B);
 
             if (type.Contains("NOTA DE CRÉDITO B") || type.Contains("NOTA DE CREDITO B"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_NOTA_CREDITO_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_NOTA_CREDITO_B);
 
             if (type.Contains("RECIBO B"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_RECIBO_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_RECIBO_B);
 
             if (type.Contains("TICKET FACTURA B"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_TICKET_FACTURA_B);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_TICKET_FACTURA_B);
 
             if (type.Contains("TICKET CONSUMIDOR FINAL") || type.Contains("CLIENTE CASUAL") || type.Contains("TICKET"))
-                return (VoucherLetterCodes.LETTER_B, VoucherLetterCodes.CODE_TICKET_CONSUMIDOR_FINAL);
+                return (VoucherLetterCodesConstants.LETTER_B, VoucherLetterCodesConstants.CODE_TICKET_CONSUMIDOR_FINAL);
 
             //
             if (type.Contains("FACTURA C") && !type.Contains("TICKET"))
-                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_FACTURA_C);
+                return (VoucherLetterCodesConstants.LETTER_C, VoucherLetterCodesConstants.CODE_FACTURA_C);
 
             if (type.Contains("NOTA DE DÉBITO C") || type.Contains("NOTA DE DEBITO C"))
-                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_NOTA_DEBITO_C);
+                return (VoucherLetterCodesConstants.LETTER_C, VoucherLetterCodesConstants.CODE_NOTA_DEBITO_C);
 
             if (type.Contains("NOTA DE CRÉDITO C") || type.Contains("NOTA DE CREDITO C"))
-                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_NOTA_CREDITO_C);
+                return (VoucherLetterCodesConstants.LETTER_C, VoucherLetterCodesConstants.CODE_NOTA_CREDITO_C);
 
             if (type.Contains("RECIBO C"))
-                return (VoucherLetterCodes.LETTER_C, VoucherLetterCodes.CODE_RECIBO_C);
+                return (VoucherLetterCodesConstants.LETTER_C, VoucherLetterCodesConstants.CODE_RECIBO_C);
 
             //
             if (type.Contains("FACTURA M"))
-                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_FACTURA_M);
+                return (VoucherLetterCodesConstants.LETTER_M, VoucherLetterCodesConstants.CODE_FACTURA_M);
 
             if (type.Contains("NOTA DE DÉBITO M") || type.Contains("NOTA DE DEBITO M"))
-                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_NOTA_DEBITO_M);
+                return (VoucherLetterCodesConstants.LETTER_M, VoucherLetterCodesConstants.CODE_NOTA_DEBITO_M);
 
             if (type.Contains("NOTA DE CRÉDITO M") || type.Contains("NOTA DE CREDITO M"))
-                return (VoucherLetterCodes.LETTER_M, VoucherLetterCodes.CODE_NOTA_CREDITO_M);
+                return (VoucherLetterCodesConstants.LETTER_M, VoucherLetterCodesConstants.CODE_NOTA_CREDITO_M);
 
             //
             if (type.Contains("EXPORTACIÓN") || type.Contains("EXPORTACION"))
-                return (VoucherLetterCodes.LETTER_E, VoucherLetterCodes.CODE_EXPORTACION_E);
+                return (VoucherLetterCodesConstants.LETTER_E, VoucherLetterCodesConstants.CODE_EXPORTACION_E);
 
             //
             if (type.Contains("REMITO R"))
-                return (VoucherLetterCodes.LETTER_R, VoucherLetterCodes.CODE_REMITO_R);
+                return (VoucherLetterCodesConstants.LETTER_R, VoucherLetterCodesConstants.CODE_REMITO_R);
 
             //
             if (type.Contains("REMITO X"))
-                return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_REMITO_X);
+                return (VoucherLetterCodesConstants.LETTER_X, VoucherLetterCodesConstants.NON_FISCAL_REMITO_X);
 
             //
             if (type.Contains("PRESUPUESTO"))
-                return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_PRESUPUESTO);
+                return (VoucherLetterCodesConstants.LETTER_X, VoucherLetterCodesConstants.NON_FISCAL_PRESUPUESTO);
 
-            return (VoucherLetterCodes.LETTER_X, VoucherLetterCodes.NON_FISCAL_COMPROBANTE_X);
+            return (VoucherLetterCodesConstants.LETTER_X, VoucherLetterCodesConstants.NON_FISCAL_COMPROBANTE_X);
         }
     }
 }

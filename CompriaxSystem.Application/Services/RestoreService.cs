@@ -2,6 +2,7 @@
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -22,7 +23,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(p => new DeletedItemDto
                     {
                         Id = p.Id,
-                        EntityType = "Productos",
+                        EntityType = EntityNamesConstants.PRODUCTS,
                         Identifier = p.Barcode,
                         Name = p.Name,
                         AdditionalInfo = p.Category?.Name,
@@ -34,7 +35,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(c => new DeletedItemDto
                     {
                         Id = c.Id,
-                        EntityType = "Clientes",
+                        EntityType = EntityNamesConstants.CUSTOMERS,
                         Identifier = c.DocumentNumber,
                         Name = $"{c.LastName} {c.FirstName}",
                         AdditionalInfo = c.TaxCondition?.Name ?? string.Empty,
@@ -46,7 +47,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(s => new DeletedItemDto
                     {
                         Id = s.Id,
-                        EntityType = "Proveedores",
+                        EntityType = EntityNamesConstants.SUPPLIERS,
                         Identifier = s.CUIT,
                         Name = s.CompanyName,
                         AdditionalInfo = s.ContactName,
@@ -58,7 +59,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(u => new DeletedItemDto
                     {
                         Id = u.Id,
-                        EntityType = "Usuarios",
+                        EntityType = EntityNamesConstants.USERS,
                         Identifier = u.Username,
                         Name = $"{u.FirstName} {u.LastName}".Trim(),
                         AdditionalInfo = u.Role?.Name,
@@ -70,7 +71,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(e => new DeletedItemDto
                     {
                         Id = e.Id,
-                        EntityType = "Empleados",
+                        EntityType = EntityNamesConstants.EMPLOYEES,
                         Identifier = e.EmployeeCode,
                         Name = $"{e.LastName} {e.FirstName}".Trim(),
                         AdditionalInfo = e.Position?.Name,
@@ -82,7 +83,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(c => new DeletedItemDto
                     {
                         Id = c.Id,
-                        EntityType = "Categorías",
+                        EntityType = EntityNamesConstants.CATEGORIES,
                         Identifier = c.Id.ToString(),
                         Name = c.Name,
                         AdditionalInfo = c.Description,

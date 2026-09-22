@@ -10,7 +10,7 @@ namespace CompriaxSystem.Application.DTOs
         public int PointOfSale { get; set; }
         public long InvoiceNumber { get; set; }
         public string QrUrl { get; set; } = null!;
-        public string FiscalStatus { get; set; } = FiscalStatuses.APPROVED;
+        public string FiscalStatus { get; set; } = FiscalStatusesContstans.APPROVED;
         public string? ErrorMessage { get; set; }
     }
 }

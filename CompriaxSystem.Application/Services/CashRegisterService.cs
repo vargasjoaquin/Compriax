@@ -19,7 +19,7 @@ namespace CompriaxSystem.Application.Services
 
             return cashRegisters.Select(cashRegister => 
             {
-                var openCashShift = cashRegister.CashShifts.FirstOrDefault(cs => cs.Status == CashShiftStatuses.OPEN);
+                var openCashShift = cashRegister.CashShifts.FirstOrDefault(cs => cs.Status == CashShiftStatusesConstants.OPEN);
 
                 return new CashRegisterDto
                 {
