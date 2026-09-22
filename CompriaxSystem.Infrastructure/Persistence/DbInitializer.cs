@@ -17,7 +17,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 1. ROLES DEL SISTEMA
             // =========================================================================
-            Role? administratorRole = await context.Roles.FirstOrDefaultAsync(r => r.Name == RoleConstants.ADMINISTRATOR);
+            Role? administratorRole = await context.Roles.FirstOrDefaultAsync(r => r.Id == RoleConstants.ADMINISTRATOR_ROLE_ID || r.Name == RoleConstants.ADMINISTRATOR);
 
             if (administratorRole == null)
             {
@@ -31,7 +31,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 2. USUARIO ADMINISTRADOR
             // =========================================================================
-            User? administratorUser = await context.Users.FirstOrDefaultAsync(u => u.Username == RoleConstants.DEFAULT_ADMIN_USERNAME);
+            User? administratorUser = await context.Users.IgnoreQueryFilters().FirstOrDefaultAsync(u => u.Username == RoleConstants.DEFAULT_ADMIN_USERNAME);
 
             if (administratorUser == null)
             {
@@ -55,7 +55,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 3. CAJA / TERMINAL
             // =========================================================================
-            CashRegister? defaultCashRegister = await context.CashRegisters.FirstOrDefaultAsync(cr => cr.Number == 1);
+            CashRegister? defaultCashRegister = await context.CashRegisters.IgnoreQueryFilters().FirstOrDefaultAsync(cr => cr.Number == TaxConstants.DEFAULT_POINT_OF_SALE);
 
             if (defaultCashRegister == null)
             {
@@ -76,7 +76,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 4. MÉTODOS DE PAGO
             // =========================================================================
-            PaymentMethod? defaultPaymentMethod = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Name == PaymentMethodConstants.CASH);
+            PaymentMethod? defaultPaymentMethod = await context.PaymentMethods.FirstOrDefaultAsync(p => p.Id == PaymentMethodConstants.CASH_ID || p.Name == PaymentMethodConstants.CASH);
 
             if (defaultPaymentMethod == null)
             {

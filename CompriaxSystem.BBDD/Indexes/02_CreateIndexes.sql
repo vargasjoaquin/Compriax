@@ -20,8 +20,9 @@ GO
 -- 2. ÍNDICES DE PRODUCTOS E INVENTARIO
 -- =========================================================================
 
-CREATE UNIQUE NONCLUSTERED INDEX [IX_Products_Barcode]
-ON [dbo].[Products] ([Barcode] ASC);
+CREATE UNIQUE NONCLUSTERED INDEX [UQ_Products_ActiveBarcode]
+ON [dbo].[Products] ([Barcode] ASC)
+WHERE ([IsDeleted] = (0));
 GO
 
 CREATE NONCLUSTERED INDEX [IX_Products_BrandId]
@@ -68,8 +69,9 @@ GO
 -- 4. ÍNDICES DE CAJAS, TURNOS Y MOVIMIENTOS
 -- =========================================================================
 
-CREATE UNIQUE NONCLUSTERED INDEX [IX_CashRegisters_Number]
-ON [dbo].[CashRegisters] ([Number] ASC);
+CREATE UNIQUE NONCLUSTERED INDEX [UQ_CashRegisters_ActiveNumber]
+ON [dbo].[CashRegisters] ([Number] ASC)
+WHERE ([IsDeleted] = (0));
 GO
 
 CREATE NONCLUSTERED INDEX [IX_CashShifts_CashRegisterId]

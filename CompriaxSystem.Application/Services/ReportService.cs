@@ -14,13 +14,16 @@ namespace CompriaxSystem.Application.Services
         /// <returns>DTO con las estadísticas generales de gestión.</returns>
         public async Task<DashboardDto> GetDashboardStatsAsync()
         {
-            var todayDate = DateTime.Today;
-            var tomorrowDate = todayDate.AddDays(1);
-            var sevenDaysAgoDate = todayDate.AddDays(-7);
+                        var localNow = DateTime.Now;
+            var localToday = localNow.Date;
 
-            var todaySales = (await unitOfWork.Sales.GetHistoryAsync(todayDate, tomorrowDate)).ToList();
+            var todayUtcStart = localToday.ToUniversalTime();
+            var tomorrowUtcEnd = localToday.AddDays(1).ToUniversalTime();
+            var sevenDaysAgoUtcStart = localToday.AddDays(-7).ToUniversalTime();
 
-            var weekSales = (await unitOfWork.Sales.GetHistoryAsync(sevenDaysAgoDate, tomorrowDate)).ToList();
+            var todaySales = (await unitOfWork.Sales.GetHistoryAsync(todayUtcStart, tomorrowUtcEnd)).ToList();
+
+            var weekSales = (await unitOfWork.Sales.GetHistoryAsync(sevenDaysAgoUtcStart, tomorrowUtcEnd)).ToList();
 
             var product = (await unitOfWork.Products.GetAllWithDetailsAsync()).ToList();
 
@@ -92,7 +95,9 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Colección de reportes de ventas.</returns>
         public async Task<IEnumerable<SalesReportDto>> GetSalesHistoryAsync(DateTime startDate, DateTime endDate, int? cashRegisterId = null)
         {
-            var salesHistory = await unitOfWork.Sales.GetHistoryAsync(startDate.Date, endDate.Date.AddDays(1), cashRegisterId);
+                        var startUtc = startDate.Date.ToUniversalTime();
+            var endUtc = endDate.Date.AddDays(1).ToUniversalTime();
+            var salesHistory = await unitOfWork.Sales.GetHistoryAsync(startUtc, endUtc, cashRegisterId);
 
             return salesHistory
                 .OrderByDescending(sale => sale.CreatedAt)
@@ -154,7 +159,9 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Colección de reportes de compras.</returns>
         public async Task<IEnumerable<PurchaseReportDto>> GetPurchaseHistoryAsync(DateTime startDate, DateTime endDate,int? supplierId)
         {
-            var purchase = await unitOfWork.Purchases.GetHistoryAsync(startDate.Date, endDate.Date.AddDays(1));
+                        var startUtc = startDate.Date.ToUniversalTime();
+            var endUtc = endDate.Date.AddDays(1).ToUniversalTime();
+            var purchase = await unitOfWork.Purchases.GetHistoryAsync(startUtc, endUtc);
 
             if (supplierId.HasValue && supplierId.Value > 0)
             {

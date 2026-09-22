@@ -139,7 +139,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             {
                 entity.ToTable("Products");
                 entity.HasKey(p => p.Id);
-                entity.HasIndex(p => p.Barcode).IsUnique();
+                entity.HasIndex(p => p.Barcode).IsUnique().HasFilter("[IsDeleted] = 0").HasDatabaseName("UQ_Products_ActiveBarcode");
 
                 entity.Property(p => p.Barcode).IsRequired().HasMaxLength(50);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
@@ -491,7 +491,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             {
                 entity.ToTable("CashRegisters");
                 entity.HasKey(cr => cr.Id);
-                entity.HasIndex(cr => cr.Number).IsUnique();
+                entity.HasIndex(cr => cr.Number).IsUnique().HasFilter("[IsDeleted] = 0").HasDatabaseName("UQ_CashRegisters_ActiveNumber");
 
                 entity.Property(cr => cr.Number).IsRequired();
                 entity.Property(cr => cr.Name).IsRequired().HasMaxLength(50);

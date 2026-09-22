@@ -20,42 +20,59 @@ namespace CompriaxSystem.Application.Services
         public async Task<OperationResult> ProcessSaleAsync(SaleDto saleDto)
         {
             var validation = await saleValidator.ValidateAsync(saleDto);
-
+            
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            int currentUserId = currentUser.CurrentUser!.UserId;
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("Operación no autorizada: No hay una sesión de usuario activa.");
 
-            string currentUsername = currentUser.CurrentUser!.Username;
-
-            int cashRegisterId = currentUser.OperationalContext!.CashRegisterId;
+            int currentUserId = currentUser.CurrentUser.UserId;
+            
+            string currentUsername = currentUser.CurrentUser.Username;
+            
+            int cashRegisterId = currentUser.OperationalContext?.CashRegisterId ?? TaxConstants.DEFAULT_POINT_OF_SALE;
 
             var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
+
+            //Pre-chequeo de disponibilidad de stock antes de invocar a AFIP
+            foreach (var saleItemDto in saleDto.Items)
+            {
+                var product = await unitOfWork.Products.GetByIdAsync(saleItemDto.ProductId);
+                
+                if (product == null || !product.IsActive)
+                    return OperationResult.Failure($"El producto con ID {saleItemDto.ProductId} no fue encontrado o está inactivo.");
+
+                if (product.CurrentStock < saleItemDto.Quantity)
+                    return OperationResult.Failure($"Stock insuficiente en '{product.Name}'. Disponible: {product.CurrentStock:N0}, Solicitado: {saleItemDto.Quantity}");
+            }
+
+            var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
+            string newDocumentNumber = GenerateNextNumber(lastDocumentNumber);
+            
+            saleDto.DocumentNumber = newDocumentNumber;
+
+            AfipAuthorizeResultDto fiscalResult;
+            
+            try
+            {
+                fiscalResult = await afipService.AuthorizeInvoiceAsync(saleDto);
+            }
+            catch (Exception ex)
+            {
+                return OperationResult.Failure($"Fallo de comunicación con servicio fiscal: {ex.Message}");
+            }
 
             await unitOfWork.BeginTransactionAsync();
 
             try
             {
-                var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
-                string newDocumentNumber = GenerateNextNumber(lastDocumentNumber);
-
-                saleDto.DocumentNumber = newDocumentNumber;
-
-                AfipAuthorizeResultDto fiscalResult;
-
-                try
-                {
-                    fiscalResult = await afipService.AuthorizeInvoiceAsync(saleDto);
-                }
-                catch (Exception ex)
-                {
-                    await unitOfWork.RollbackAsync();
-                    return OperationResult.Failure($"Fallo de comunicación con servicio fiscal: {ex.Message}");
-                }
+                var currentLastDocNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
+                string documentNumber = GenerateNextNumber(currentLastDocNumber);
 
                 var sale = mapper.Map<Sale>(saleDto);
 
-                sale.DocumentNumber = newDocumentNumber;
+                sale.DocumentNumber = documentNumber;
                 sale.DocumentTypeId = saleDto.DocumentTypeId;
                 sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : PaymentMethodConstants.CASH_ID;
                 sale.CustomerId = saleDto.CustomerId;
@@ -101,7 +118,7 @@ namespace CompriaxSystem.Application.Services
                     saleItem.Sale = null!;
 
                     var product = await unitOfWork.Products.GetByIdAsync(saleItem.ProductId);
-
+                    
                     if (product == null || !product.IsActive)
                     {
                         await unitOfWork.RollbackAsync();
@@ -116,6 +133,8 @@ namespace CompriaxSystem.Application.Services
 
                     saleItem.CostPrice = product.BuyPrice;
                     product.CurrentStock -= saleItem.Quantity;
+                    product.LastUpdatedAt = DateTime.UtcNow;
+                    product.LastUpdatedBy = currentUsername;
 
                     unitOfWork.Products.Update(product);
 
@@ -125,7 +144,7 @@ namespace CompriaxSystem.Application.Services
                         UserId = currentUserId,
                         Quantity = -saleItem.Quantity,
                         MovementType = MovementType.Sale,
-                        Remarks = $"Venta Nro: {newDocumentNumber} [Caja #{cashRegisterId}]",
+                        Remarks = $"Venta Nro: {documentNumber} [Caja #{cashRegisterId}]",
                         CreatedBy = currentUsername,
                         CreatedAt = DateTime.UtcNow
                     });
@@ -140,10 +159,16 @@ namespace CompriaxSystem.Application.Services
 
                 await unitOfWork.CommitAsync();
 
+                saleDto.DocumentNumber = documentNumber;
                 string caeMessage = !string.IsNullOrWhiteSpace(sale.Cae) ? $" [CAE: {sale.Cae}]" : "";
                 string cashShiftMessage = activeCashShift != null ? $" [Turno Caja #{activeCashShift.Id}]" : "";
 
-                return OperationResult.Ok($"Venta procesada exitosamente. Comprobante: {newDocumentNumber}{caeMessage}{cashShiftMessage}");
+                return new OperationResult
+                {
+                    Success = true,
+                    Message = $"Venta procesada exitosamente. Comprobante: {documentNumber}{caeMessage}{cashShiftMessage}",
+                    EntityId = sale.Id
+                };
             }
             catch (Exception ex)
             {
