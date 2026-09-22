@@ -28,7 +28,7 @@ namespace CompriaxSystem.Domain.Entities
         public decimal TotalManualCashIn { get; set; }
         public decimal TotalManualCashOut { get; set; }
 
-        public string? Status { get; set; } = CashShiftStatuses.OPEN;
+        public string? Status { get; set; } = CashShiftStatusesConstants.OPEN;
         public string? ClosingNotes { get; set; }
 
         public virtual ICollection<CashMovement> CashMovements { get; set; } = new List<CashMovement>();
