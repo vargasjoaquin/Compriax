@@ -230,20 +230,20 @@ namespace CompriaxSystem.WinFormsUI
 
             string normalizedDocumentTypeName = selectedDocumentTypeEntity.Name.ToUpperInvariant();
 
-            string voucherClassificationLetter = VoucherLetterCodes.LETTER_B;
+            string voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_B;
 
             if (normalizedDocumentTypeName.Contains("FACTURA A") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO A") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO A") || normalizedDocumentTypeName.Contains("RECIBO A") || normalizedDocumentTypeName.Contains("TICKET FACTURA A"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_A;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_A;
             else if (normalizedDocumentTypeName.Contains("FACTURA C") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO C") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO C") || normalizedDocumentTypeName.Contains("RECIBO C"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_C;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_C;
             else if (normalizedDocumentTypeName.Contains("FACTURA M") || normalizedDocumentTypeName.Contains("NOTA DE DÉBITO M") || normalizedDocumentTypeName.Contains("NOTA DE CRÉDITO M"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_M;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_M;
             else if (normalizedDocumentTypeName.Contains("EXPORTACIÓN") || normalizedDocumentTypeName.Contains("EXPORTACION"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_E;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_E;
             else if (normalizedDocumentTypeName.Contains("REMITO R"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_R;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_R;
             else if (normalizedDocumentTypeName.Contains("REMITO X") || normalizedDocumentTypeName.Contains("PRESUPUESTO") || normalizedDocumentTypeName.Contains("COMPROBANTE X"))
-                voucherClassificationLetter = VoucherLetterCodes.LETTER_X;
+                voucherClassificationLetter = VoucherLetterCodesConstants.LETTER_X;
 
             labelVoucherLetter.Text = voucherClassificationLetter;
 
@@ -261,7 +261,7 @@ namespace CompriaxSystem.WinFormsUI
                 labelClientDocValue.Text = $"DOC: {_selectedCustomer.DocumentNumber} (CUIL: {_selectedCustomer.Cuil ?? "-"})";
                 labelClientTaxValue.Text = $"IVA: {(_selectedCustomer.TaxConditionName ?? "Consumidor Final")}";
 
-                if (voucherClassificationLetter == VoucherLetterCodes.LETTER_A && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
+                if (voucherClassificationLetter == VoucherLetterCodesConstants.LETTER_A && (_selectedCustomer.TaxConditionName == null || !_selectedCustomer.TaxConditionName.Contains("Inscripto", StringComparison.OrdinalIgnoreCase)))
                 {
                     labelClientTaxValue.Text += "  [Requiere Resp. Inscripto]";
                     labelClientTaxValue.ForeColor = UIThemeHelper.Danger;
@@ -276,9 +276,9 @@ namespace CompriaxSystem.WinFormsUI
                 labelClientNameValue.Text = TaxConstants.DEFAULT_TAX_CONDITION_NAME.ToUpper();
                 labelClientDocValue.Text = $"DOC: {TaxConstants.FINAL_CONSUMER_DOCUMENT_PLACEHOLDER}";
                 labelClientTaxValue.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME}";
-                labelClientTaxValue.ForeColor = voucherClassificationLetter == VoucherLetterCodes.LETTER_A ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
+                labelClientTaxValue.ForeColor = voucherClassificationLetter == VoucherLetterCodesConstants.LETTER_A ? UIThemeHelper.Danger : Color.FromArgb(100, 116, 139);
 
-                if (voucherClassificationLetter == VoucherLetterCodes.LETTER_A)
+                if (voucherClassificationLetter == VoucherLetterCodesConstants.LETTER_A)
                     labelClientTaxValue.Text = $"IVA: {TaxConstants.DEFAULT_TAX_CONDITION_NAME} [Requiere Cliente Resp. Inscripto]";
             }
         }
@@ -513,7 +513,7 @@ namespace CompriaxSystem.WinFormsUI
                                 return;
                             }
 
-                            string saleDocumentNumber = saleTransaction.DocumentNumber ?? "00000001";
+                            string saleDocumentNumber = saleTransaction.DocumentNumber ?? DocumentTypeConstants.INITIAL_DOCUMENT_NUMBER;
 
                             var ticketPreviewFormInstance = new FormTicketPreview(_documentService, _whatsappService, _storageService);
 
@@ -544,7 +544,7 @@ namespace CompriaxSystem.WinFormsUI
 
                 if (saleProcessingResult.Success)
                 {
-                    string saleDocumentNumber = saleTransaction.DocumentNumber ?? "00000001";
+                    string saleDocumentNumber = saleTransaction.DocumentNumber ?? DocumentTypeConstants.INITIAL_DOCUMENT_NUMBER;
 
                     var ticketPreviewFormInstance = new FormTicketPreview(_documentService, _whatsappService, _storageService);
 
@@ -566,13 +566,3 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
