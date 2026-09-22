@@ -4,10 +4,11 @@ using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
+using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CashRegisterService(IUnitOfWork unitOfWork) : ICashRegisterService
+    public class CashRegisterService(IUnitOfWork unitOfWork, IValidator<CashRegisterDto> validator) : ICashRegisterService
     {
         /// <summary>
         /// Obtiene el listado de todas las cajas registradoras indicando si poseen turnos abiertos.
@@ -35,15 +36,9 @@ namespace CompriaxSystem.Application.Services
             }).ToList();
         }
 
-        /// <summary>
-        /// Busca los datos de una caja registradora específica por su id.
-        /// </summary>
-        /// <param name="id">ID de la caja a consultar.</param>
-        /// <returns>Los datos de la caja o null si no se encuentra.</returns>
         public async Task<CashRegisterDto?> GetByIdAsync(int id)
         {
             var cashRegister = await unitOfWork.CashRegisters.GetByIdAsync(id);
-            
             if (cashRegister == null) 
                 return null;
 
@@ -64,16 +59,15 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado de la persistencia de datos.</returns>
         public async Task<OperationResult> UpsertCashRegisterAsync(CashRegisterDto dto)
         {
-            if (string.IsNullOrWhiteSpace(dto.Name))
-                return OperationResult.Failure("El nombre de la caja es obligatorio.");
-
-            if (dto.Number <= 0)
-                return OperationResult.Failure("El número de caja debe ser mayor a 0.");
+            var validation = await validator.ValidateAsync(dto);
+            
+            if (!validation.IsValid)
+                return validation.ToResult();
 
             if (dto.Id == 0)
             {
                 var existingCashRegister = await unitOfWork.CashRegisters.GetByNumberAsync(dto.Number);
-                
+
                 if (existingCashRegister != null)
                     return OperationResult.Failure($"Ya existe una caja registrada con el Número {dto.Number}.");
 
@@ -119,7 +113,7 @@ namespace CompriaxSystem.Application.Services
         public async Task<OperationResult> ToggleRegisterStatusAsync(int id)
         {
             var cashRegister = await unitOfWork.CashRegisters.GetByIdAsync(id);
-            
+
             if (cashRegister == null)
                 return OperationResult.Failure("Caja no encontrada.");
 

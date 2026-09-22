@@ -5,10 +5,11 @@ using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
+using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CashShiftService(IUnitOfWork unitOfWork, ICurrentUserService currentUser) : ICashShiftService
+    public class CashShiftService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IValidator<CashShiftOpenDto> openValidator, IValidator<CashMovementCreateDto> movementValidator, IValidator<CashShiftCloseDto> closeValidator) : ICashShiftService
     {
         /// <summary>
         /// Recupera el turno activo correspondiente a la caja configurada en el contexto actual.
@@ -16,13 +17,15 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Datos del turno abierto o null.</returns>
         public async Task<CashShiftDto?> GetCurrentActiveShiftAsync()
         {
-            int cashRegisterId = currentUser.OperationalContext!.CashRegisterId;
-            
+            if (currentUser.OperationalContext == null)
+                return null;
+
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
             var cashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
 
             if (cashShift == null)
                 return null;
-            
+
             return await BuildShiftDtoAsync(cashShift);
         }
 
@@ -33,11 +36,19 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del proceso de apertura.</returns>
         public async Task<OperationResult> OpenShiftAsync(CashShiftOpenDto dto)
         {
-            if (dto.InitialCash < 0)
-                return OperationResult.Failure("El fondo inicial de caja no puede ser negativo.");
+            var validation = await openValidator.ValidateAsync(dto);
+            
+            if (!validation.IsValid)
+                return validation.ToResult();
 
-            int currentUserId = currentUser.CurrentUser!.UserId;
-            int cashRegisterId = currentUser.OperationalContext!.CashRegisterId;
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("OperaciÃ³n no autorizada: No hay una sesiÃ³n de usuario activa.");
+
+            if (currentUser.OperationalContext == null || currentUser.OperationalContext.CashRegisterId <= 0)
+                return OperationResult.Failure("Debe asignar una caja registradora a la terminal antes de abrir un turno.");
+
+            int currentUserId = currentUser.CurrentUser.UserId;
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
 
             var existingCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
             
@@ -54,10 +65,10 @@ namespace CompriaxSystem.Application.Services
             };
 
             await unitOfWork.CashShifts.AddAsync(newCashShift);
-           
+
             bool operationSucceeded = await unitOfWork.CompleteAsync();
 
-            if (operationSucceeded && currentUser.OperationalContext != null)
+            if (operationSucceeded)
                 currentUser.OperationalContext.ActiveShiftId = newCashShift.Id;
 
             return operationSucceeded
@@ -72,14 +83,19 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del registro del movimiento.</returns>
         public async Task<OperationResult> RegisterMovementAsync(CashMovementCreateDto dto)
         {
-            if (dto.Amount <= 0)
-                return OperationResult.Failure("El monto del movimiento debe ser mayor a $ 0.00.");
+            var validation = await movementValidator.ValidateAsync(dto);
+            
+            if (!validation.IsValid)
+                return validation.ToResult();
 
-            if (string.IsNullOrWhiteSpace(dto.Description))
-                return OperationResult.Failure("Debe ingresar una descripción para el movimiento.");
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("OperaciÃ³n no autorizada: No hay una sesiÃ³n de usuario activa.");
 
-            int currentUserId = currentUser.CurrentUser!.UserId;
-            int cashRegisterId = currentUser.OperationalContext!.CashRegisterId;
+            if (currentUser.OperationalContext == null || currentUser.OperationalContext.CashRegisterId <= 0)
+                return OperationResult.Failure("No hay una caja registradora asignada para operar.");
+
+            int currentUserId = currentUser.CurrentUser.UserId;
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
 
             var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
             
@@ -97,7 +113,7 @@ namespace CompriaxSystem.Application.Services
             };
 
             await unitOfWork.CashShifts.AddMovementAsync(cashMovement);
-            
+
             bool operationSucceeded = await unitOfWork.CompleteAsync();
 
             string movementTypeName = dto.MovementType == CashMovementType.CashIn ? "Ingreso de efectivo" : "Retiro de efectivo";
@@ -113,15 +129,14 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Un resumen detallado con el estado financiero actual de la caja.</returns>
         public async Task<CashShiftSummaryDto> GetCurrentShiftSummaryAsync()
         {
-            int registerId = currentUser.OperationalContext?.CashRegisterId ?? 1;
-            
+            int registerId = currentUser.OperationalContext?.CashRegisterId ?? TaxConstants.DEFAULT_POINT_OF_SALE;
             var cashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
 
             if (cashShift == null)
             {
                 return new CashShiftSummaryDto 
                 {
-                    CashierName = currentUser.CurrentUser!.FullName
+                    CashierName = currentUser.CurrentUser?.FullName ?? RoleConstants.CASHIER
                 };
             }
 
@@ -162,16 +177,18 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del cierre del turno.</returns>
         public async Task<OperationResult> CloseShiftAsync(CashShiftCloseDto dto)
         {
-            if (dto.RealCash < 0)
-                return OperationResult.Failure("El monto contado en caja no puede ser negativo.");
+            var validation = await closeValidator.ValidateAsync(dto);
+            
+            if (!validation.IsValid)
+                return validation.ToResult();
 
             var cashShift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(dto.ShiftId);
-
+            
             if (cashShift == null || cashShift.Status != CashShiftStatusesConstants.OPEN)
                 return OperationResult.Failure("El turno especificado no existe o ya fue cerrado.");
 
             var shiftSales = cashShift.Sales?.ToList() ?? new List<Sale>();
-
+            
             var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
 
             decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount);
@@ -250,8 +267,10 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Colección de movimientos (ingresos/egresos).</returns>
         public async Task<IEnumerable<CashMovementDto>> GetCurrentShiftMovementsAsync()
         {
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
-            
+            if (currentUser.OperationalContext == null)
+                return Enumerable.Empty<CashMovementDto>();
+
+            int registerId = currentUser.OperationalContext.CashRegisterId;
             var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
 
             if (activeCashShift == null)
@@ -267,7 +286,7 @@ namespace CompriaxSystem.Application.Services
                 Amount = cashMovement.Amount,
                 Description = cashMovement.Description,
                 CreatedAt = cashMovement.CreatedAt,
-                UserName = cashMovement.User!.Username
+                UserName = cashMovement.User?.Username ?? RoleConstants.CASHIER
             });
         }
 
@@ -283,9 +302,9 @@ namespace CompriaxSystem.Application.Services
                 .GetByIdWithDetailsAsync(cashShift.Id) ?? cashShift;
 
             var shiftSales = shiftWithDetails.Sales ?? new List<Sale>();
-
+            
             var cashMovements = (await unitOfWork.CashShifts
-                .GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
+                .GetMovementsByShiftIdAsync(cashShift.Id)).ToList(); 
 
             bool isCashShiftClosed = cashShift.Status == CashShiftStatusesConstants.CLOSED;
 

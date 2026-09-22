@@ -66,11 +66,11 @@ namespace CompriaxSystem.Application.Services
                 {
                     Product = product,
                     ProductId = product.Id,
-                    UserId = currentUser.CurrentUser!.UserId,
+                    UserId = currentUser.CurrentUser?.UserId ?? RoleConstants.ADMINISTRATOR_ROLE_ID,
                     Quantity = dto.InitialStock,
                     MovementType = MovementType.Initial,
                     Remarks = "Stock inicial",
-                    CreatedBy = currentUser.CurrentUser!.Username
+                    CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME
                 });
 
                 await unitOfWork.CompleteAsync();

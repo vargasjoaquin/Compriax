@@ -103,7 +103,7 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado de la restauración.</returns>
         public async Task<OperationResult> RestoreEntityAsync(string entityType, int id)
         {
-            string currentUsername = currentUserService.CurrentUser!.Username;
+            string currentUsername = currentUserService.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
 
             switch (entityType.ToUpperInvariant())
             {
