@@ -26,6 +26,16 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             this.textBoxCuit.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxCuit);
+
+            this.textBoxKey1.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxKey1, textBoxKey2, textBoxKey1, textBoxKey2, textBoxKey3, textBoxKey4);
+            this.textBoxKey2.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxKey2, textBoxKey3, textBoxKey1, textBoxKey2, textBoxKey3, textBoxKey4);
+            this.textBoxKey3.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxKey3, textBoxKey4, textBoxKey1, textBoxKey2, textBoxKey3, textBoxKey4);
+            this.textBoxKey4.TextChanged += (s, e) => FormatterHelper.HandleLicenseKeyChange(textBoxKey4, null, textBoxKey1, textBoxKey2, textBoxKey3, textBoxKey4);
+
+            this.textBoxKey2.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxKey2, textBoxKey1, e);
+            this.textBoxKey3.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxKey3, textBoxKey2, e);
+            this.textBoxKey4.KeyDown += (s, e) => FormatterHelper.HandleLicenseKeyBackspace(textBoxKey4, textBoxKey3, e);
+
             this.buttonActivate.Click += async (s, e) => await ExecuteOnlineActivationAsync();
             this.buttonExit.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
         }
@@ -33,11 +43,35 @@ namespace CompriaxSystem.WinFormsUI
         private async Task ExecuteOnlineActivationAsync()
         {
             string cuit = textBoxCuit.Text.Trim();
-            string key = textBoxLicenseKey.Text.Trim();
+            string cleanCuitDigits = new string(cuit.Where(char.IsDigit).ToArray());
 
-            if (string.IsNullOrWhiteSpace(cuit) || string.IsNullOrWhiteSpace(key))
+            string key1 = textBoxKey1.Text.Trim().ToUpper();
+            string key2 = textBoxKey2.Text.Trim().ToUpper();
+            string key3 = textBoxKey3.Text.Trim().ToUpper();
+            string key4 = textBoxKey4.Text.Trim().ToUpper();
+
+            string fullKey = $"{key1}-{key2}-{key3}-{key4}";
+            string cleanKeyChars = $"{key1}{key2}{key3}{key4}";
+
+            if (cleanCuitDigits.Length < 11)
             {
-                UIHelper.WarnMessage(this, "Debe ingresar el CUIT y la Clave de Licencia.", "Campos Requeridos");
+                UIHelper.WarnMessage(this, "El CUIT ingresado debe tener 11 dígitos numéricos completos (ej. 30-12345678-9).", "CUIT Inválido");
+                textBoxCuit.Focus();
+                return;
+            }
+
+            if (cleanKeyChars.Length < 16)
+            {
+                UIHelper.WarnMessage(this, "La clave de licencia debe tener 16 caracteres completos (4 casillas de 4 caracteres).", "Clave Incompleta");
+                
+                if (key1.Length < 4)
+                    textBoxKey1.Focus();
+                else if (key2.Length < 4) 
+                    textBoxKey2.Focus();
+                else if (key3.Length < 4) 
+                    textBoxKey3.Focus();
+                else textBoxKey4.Focus();
+
                 return;
             }
 
@@ -48,11 +82,11 @@ namespace CompriaxSystem.WinFormsUI
 
             try
             {
-                var result = await _licenseService.ActivateOnlineAsync(cuit, key);
+                var result = await _licenseService.ActivateOnlineAsync(cuit, fullKey);
 
                 if (result.Success)
                 {
-                    UIHelper.InfoMessage(this, "¡Sistema activado y autorizado exitosamente!", "Activación Exitosa");
+                    UIHelper.InfoMessage(this, "¡Licencia validada y autorizada exitosamente!", "Activación Exitosa");
                     this.DialogResult = DialogResult.OK;
                     this.Close();
                 }

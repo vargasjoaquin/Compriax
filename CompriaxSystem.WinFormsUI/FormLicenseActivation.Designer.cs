@@ -34,11 +34,19 @@
             labelCuit = new Label();
             textBoxCuit = new TextBox();
             labelKey = new Label();
-            textBoxLicenseKey = new TextBox();
+            panelKeyBoxes = new Panel();
+            textBoxKey1 = new TextBox();
+            labelHyphen1 = new Label();
+            textBoxKey2 = new TextBox();
+            labelHyphen2 = new Label();
+            textBoxKey3 = new TextBox();
+            labelHyphen3 = new Label();
+            textBoxKey4 = new TextBox();
             labelStatus = new Label();
             buttonActivate = new Button();
             buttonExit = new Button();
             panelCard.SuspendLayout();
+            panelKeyBoxes.SuspendLayout();
             SuspendLayout();
             // 
             // panelCard
@@ -49,7 +57,7 @@
             panelCard.Controls.Add(labelCuit);
             panelCard.Controls.Add(textBoxCuit);
             panelCard.Controls.Add(labelKey);
-            panelCard.Controls.Add(textBoxLicenseKey);
+            panelCard.Controls.Add(panelKeyBoxes);
             panelCard.Controls.Add(labelStatus);
             panelCard.Controls.Add(buttonActivate);
             panelCard.Controls.Add(buttonExit);
@@ -66,7 +74,7 @@
             labelTitle.Name = "labelTitle";
             labelTitle.Size = new Size(460, 25);
             labelTitle.TabIndex = 0;
-            labelTitle.Text = "COMPRIAX POS — ACTIVACIÓN / RENOVACIÓN";
+            labelTitle.Text = "COMPRIAX — ACTIVACIÓN / RENOVACIÓN";
             labelTitle.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelReason
@@ -92,33 +100,110 @@
             // 
             // textBoxCuit
             // 
-            textBoxCuit.Font = new Font("Segoe UI", 11F);
+            textBoxCuit.Font = new Font("Consolas", 11F);
             textBoxCuit.Location = new Point(30, 120);
             textBoxCuit.MaxLength = 13;
             textBoxCuit.Name = "textBoxCuit";
             textBoxCuit.PlaceholderText = "XX-XXXXXXXX-X";
-            textBoxCuit.Size = new Size(440, 32);
+            textBoxCuit.Size = new Size(440, 29);
             textBoxCuit.TabIndex = 3;
             // 
             // labelKey
             // 
             labelKey.AutoSize = true;
             labelKey.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            labelKey.Location = new Point(30, 165);
+            labelKey.Location = new Point(30, 160);
             labelKey.Name = "labelKey";
-            labelKey.Size = new Size(254, 21);
+            labelKey.Size = new Size(145, 21);
             labelKey.TabIndex = 4;
-            labelKey.Text = "Clave de Licencia (License Key):";
+            labelKey.Text = "Clave de Licencia:";
             // 
-            // textBoxLicenseKey
+            // panelKeyBoxes
             // 
-            textBoxLicenseKey.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            textBoxLicenseKey.Location = new Point(30, 190);
-            textBoxLicenseKey.MaxLength = 25;
-            textBoxLicenseKey.Name = "textBoxLicenseKey";
-            textBoxLicenseKey.PlaceholderText = "XXXX-XXXX-XXXX-XXXX";
-            textBoxLicenseKey.Size = new Size(440, 34);
-            textBoxLicenseKey.TabIndex = 5;
+            panelKeyBoxes.Controls.Add(textBoxKey1);
+            panelKeyBoxes.Controls.Add(labelHyphen1);
+            panelKeyBoxes.Controls.Add(textBoxKey2);
+            panelKeyBoxes.Controls.Add(labelHyphen2);
+            panelKeyBoxes.Controls.Add(textBoxKey3);
+            panelKeyBoxes.Controls.Add(labelHyphen3);
+            panelKeyBoxes.Controls.Add(textBoxKey4);
+            panelKeyBoxes.Location = new Point(30, 185);
+            panelKeyBoxes.Name = "panelKeyBoxes";
+            panelKeyBoxes.Size = new Size(440, 40);
+            panelKeyBoxes.TabIndex = 5;
+            // 
+            // textBoxKey1
+            // 
+            textBoxKey1.Font = new Font("Consolas", 12F, FontStyle.Bold);
+            textBoxKey1.Location = new Point(0, 4);
+            textBoxKey1.MaxLength = 29;
+            textBoxKey1.Name = "textBoxKey1";
+            textBoxKey1.Size = new Size(95, 31);
+            textBoxKey1.TabIndex = 0;
+            textBoxKey1.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelHyphen1
+            // 
+            labelHyphen1.AutoSize = true;
+            labelHyphen1.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labelHyphen1.ForeColor = Color.FromArgb(100, 116, 139);
+            labelHyphen1.Location = new Point(102, 5);
+            labelHyphen1.Name = "labelHyphen1";
+            labelHyphen1.Size = new Size(20, 28);
+            labelHyphen1.TabIndex = 1;
+            labelHyphen1.Text = "-";
+            // 
+            // textBoxKey2
+            // 
+            textBoxKey2.Font = new Font("Consolas", 12F, FontStyle.Bold);
+            textBoxKey2.Location = new Point(125, 4);
+            textBoxKey2.MaxLength = 29;
+            textBoxKey2.Name = "textBoxKey2";
+            textBoxKey2.Size = new Size(95, 31);
+            textBoxKey2.TabIndex = 2;
+            textBoxKey2.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelHyphen2
+            // 
+            labelHyphen2.AutoSize = true;
+            labelHyphen2.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labelHyphen2.ForeColor = Color.FromArgb(100, 116, 139);
+            labelHyphen2.Location = new Point(227, 5);
+            labelHyphen2.Name = "labelHyphen2";
+            labelHyphen2.Size = new Size(20, 28);
+            labelHyphen2.TabIndex = 3;
+            labelHyphen2.Text = "-";
+            // 
+            // textBoxKey3
+            // 
+            textBoxKey3.Font = new Font("Consolas", 12F, FontStyle.Bold);
+            textBoxKey3.Location = new Point(250, 4);
+            textBoxKey3.MaxLength = 29;
+            textBoxKey3.Name = "textBoxKey3";
+            textBoxKey3.Size = new Size(95, 31);
+            textBoxKey3.TabIndex = 4;
+            textBoxKey3.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelHyphen3
+            // 
+            labelHyphen3.AutoSize = true;
+            labelHyphen3.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labelHyphen3.ForeColor = Color.FromArgb(100, 116, 139);
+            labelHyphen3.Location = new Point(352, 5);
+            labelHyphen3.Name = "labelHyphen3";
+            labelHyphen3.Size = new Size(20, 28);
+            labelHyphen3.TabIndex = 5;
+            labelHyphen3.Text = "-";
+            // 
+            // textBoxKey4
+            // 
+            textBoxKey4.Font = new Font("Consolas", 12F, FontStyle.Bold);
+            textBoxKey4.Location = new Point(375, 4);
+            textBoxKey4.MaxLength = 29;
+            textBoxKey4.Name = "textBoxKey4";
+            textBoxKey4.Size = new Size(65, 31);
+            textBoxKey4.TabIndex = 6;
+            textBoxKey4.TextAlign = HorizontalAlignment.Center;
             // 
             // labelStatus
             // 
@@ -170,6 +255,8 @@
             Text = "Activación y Renovación de Licencia";
             panelCard.ResumeLayout(false);
             panelCard.PerformLayout();
+            panelKeyBoxes.ResumeLayout(false);
+            panelKeyBoxes.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -181,7 +268,14 @@
         private System.Windows.Forms.Label labelCuit;
         private System.Windows.Forms.TextBox textBoxCuit;
         private System.Windows.Forms.Label labelKey;
-        private System.Windows.Forms.TextBox textBoxLicenseKey;
+        private System.Windows.Forms.Panel panelKeyBoxes;
+        private System.Windows.Forms.TextBox textBoxKey1;
+        private System.Windows.Forms.Label labelHyphen1;
+        private System.Windows.Forms.TextBox textBoxKey2;
+        private System.Windows.Forms.Label labelHyphen2;
+        private System.Windows.Forms.TextBox textBoxKey3;
+        private System.Windows.Forms.Label labelHyphen3;
+        private System.Windows.Forms.TextBox textBoxKey4;
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Button buttonActivate;
         private System.Windows.Forms.Button buttonExit;
