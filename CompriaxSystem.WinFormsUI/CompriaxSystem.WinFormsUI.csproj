@@ -19,6 +19,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CompriaxSystem.Application\CompriaxSystem.Application.csproj" />
 		<ProjectReference Include="..\CompriaxSystem.Infrastructure\CompriaxSystem.Infrastructure.csproj" />
+		<ProjectReference Include="..\CompriaxSystem.MercadoPago.Api\CompriaxSystem.MercadoPago.Api.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

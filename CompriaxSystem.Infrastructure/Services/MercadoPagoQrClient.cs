@@ -1,13 +1,15 @@
-﻿using CompriaxSystem.Application.DTOs;
+﻿using CompriaxSystem.Application.Configuration;
+using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using Microsoft.Extensions.Options;
 using System.Text;
 using System.Text.Json;
 
 namespace CompriaxSystem.Infrastructure.Services
 {
-    public class MercadoPagoQrClient(IHttpClientFactory httpClientFactory) : IMercadoPagoQrClient
+    public class MercadoPagoQrClient(IHttpClientFactory httpClientFactory, IOptions<MercadoPagoSettings> options) : IMercadoPagoQrClient
     {
-        private const string BASE_URL = "https://localhost:7133";
+        private readonly MercadoPagoSettings _settings = options.Value;
 
         /// <summary>
         /// Crea una orden de pago mediante código QR para una venta determinada.
@@ -24,7 +26,11 @@ namespace CompriaxSystem.Infrastructure.Services
         /// </returns>
         public async Task<MercadoPagoQrOrderResponseDto> CreateQrOrderAsync(int saleId, decimal amount, string description, string? baseUrl = null)
         {
-            string serviceBaseUrl = (BASE_URL).TrimEnd('/');
+            string serviceBaseUrl = (!string.IsNullOrWhiteSpace(baseUrl) ? baseUrl : _settings.BaseUrl).TrimEnd('/');
+
+            if (string.IsNullOrWhiteSpace(serviceBaseUrl))
+                return MercadoPagoQrOrderResponseDto.Failure("La URL base del servicio de Mercado Pago no está configurada en appsettings.json.");
+
             string paymentEndpoint = $"{serviceBaseUrl}/api/mercadopago/payments";
 
             try

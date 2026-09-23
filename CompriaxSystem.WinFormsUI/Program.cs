@@ -58,9 +58,9 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     // Licencia no instalada, alterada o expirada -> Bloqueo y diálogo de activación
                     string failureMessage = licenseValidation.Message;
-                    
+
                     using var activationForm = new FormLicenseActivation(licenseService, failureMessage);
-                    
+
                     if (activationForm.ShowDialog() != DialogResult.OK)
                     {
                         return;
@@ -70,7 +70,7 @@ namespace CompriaxSystem.WinFormsUI
                 {
                     // Licencia válida pero próxima a vencer (<= 7 días) -> Mostrar aviso diario
                     using var warningDialog = new FormLicenseWarningDialog(licenseService.CurrentLicense, licenseService);
-                    
+
                     warningDialog.ShowDialog();
                 }
 
@@ -119,6 +119,7 @@ namespace CompriaxSystem.WinFormsUI
                 services.Configure<CloudinarySettings>(context.Configuration.GetSection("Cloudinary"));
                 services.Configure<DatabaseBackupSettings>(context.Configuration.GetSection("DatabaseBackup"));
                 services.Configure<AfipSettings>(context.Configuration.GetSection("AfipFiscal"));
+                services.Configure<MercadoPagoSettings>(context.Configuration.GetSection("MercadoPago"));
 
                 // 2. Licenciamiento & Seguridad
                 services.AddHttpClient();

@@ -19,7 +19,7 @@ namespace CompriaxSystem.WinFormsUI
 
         public bool IsPaymentApproved { get; private set; } = false;
 
-        public FormMercadoPagoQrPayment(IBarcodeService barcodeService, IHttpClientFactory httpClientFactory, string orderId, decimal totalAmount, string qrData, string apiBaseUrl = "https://localhost:7133")
+        public FormMercadoPagoQrPayment(IBarcodeService barcodeService, IHttpClientFactory httpClientFactory, string orderId, decimal totalAmount, string qrData, string apiBaseUrl)
         {
             _barcodeService = barcodeService;
             _httpClientFactory = httpClientFactory;

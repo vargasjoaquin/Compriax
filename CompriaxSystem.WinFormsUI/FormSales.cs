@@ -1,9 +1,11 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Application.Configuration;
 using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using System.Media;
 using System.Text.Json;
 
@@ -25,13 +27,15 @@ namespace CompriaxSystem.WinFormsUI
         private readonly ICashShiftService _cashShiftService;
         private readonly IServiceProvider _serviceProvider;
         private readonly IMercadoPagoQrClient _mercadoPagoQrClient;
-        private readonly SemaphoreSlim _calculationLock = new(1, 1);
 
+        private readonly SemaphoreSlim _calculationLock = new(1, 1);
         private readonly List<SaleItemDto> _cart = new();
         private CustomerDto? _selectedCustomer;
         private List<PaymentMethod> _paymentMethods = new();
         private SaleCalculationResultDto _currentCalculation = new(); 
         private CameraScannerController? _cameraController;
+        private readonly IOptions<MercadoPagoSettings> _settings;
+
         private bool _isInitializing = false;
 
         public FormSales(
@@ -48,7 +52,8 @@ namespace CompriaxSystem.WinFormsUI
             IPromotionService promotionService,
             ICashShiftService cashShiftService,
             IServiceProvider serviceProvider,
-            IMercadoPagoQrClient mercadoPagoQrClient)
+            IMercadoPagoQrClient mercadoPagoQrClient,
+            IOptions<MercadoPagoSettings> options)
         {
             _saleService = saleService;
             _productService = productService;
@@ -64,6 +69,7 @@ namespace CompriaxSystem.WinFormsUI
             _cashShiftService = cashShiftService;
             _serviceProvider = serviceProvider;
             _mercadoPagoQrClient = mercadoPagoQrClient;
+            _settings = options;
 
             InitializeComponent();
             
@@ -505,7 +511,8 @@ namespace CompriaxSystem.WinFormsUI
                                 qrHttpClientFactory,
                                 qrOrderResult.OrderId,
                                 _currentCalculation.FinalTotal,
-                                qrOrderResult.QrData);
+                                qrOrderResult.QrData,
+                                _settings.Value.BaseUrl);
 
                             if (mercadoPagoQrPaymentDialog.ShowDialog(this) != DialogResult.OK || !mercadoPagoQrPaymentDialog.IsPaymentApproved)
                             {
