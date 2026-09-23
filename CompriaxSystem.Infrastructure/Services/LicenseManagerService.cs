@@ -19,6 +19,8 @@ namespace CompriaxSystem.Infrastructure.Services
         private readonly string _rsaPublicKeyPem;
         private readonly string _primaryLicensePath;
         private readonly string _fallbackLicensePath;
+        private readonly string _primaryLastSeenPath;
+        private readonly string _fallbackLastSeenPath;
 
         public LicenseInformationDto? CurrentLicense { get; private set; }
 
@@ -85,8 +87,32 @@ namespace CompriaxSystem.Infrastructure.Services
                 if (licensePayload.HardwareId != currentHardwareId)
                     return OperationResult.Failure("Esta instalación fue copiada a otro equipo y no coincide con el hardware autorizado.");
 
-                if (licensePayload.ExpiresAt.HasValue && licensePayload.ExpiresAt.Value < DateTime.UtcNow)
-                    return OperationResult.Failure("La licencia ha expirado.");
+                var clockVerification = await VerifyClockIntegrityAsync(licensePayload.IssuedAt);
+
+                if (!clockVerification.Success)
+                    return clockVerification;
+
+                int? daysRemaining = null;
+
+                if (licensePayload.ExpiresAt.HasValue)
+                {
+                    var timeSpan = licensePayload.ExpiresAt.Value - DateTime.UtcNow;
+                    daysRemaining = Math.Max(0, (int)Math.Ceiling(timeSpan.TotalDays));
+
+                    if (licensePayload.ExpiresAt.Value < DateTime.UtcNow)
+                    {
+                        CurrentLicense = new LicenseInformationDto
+                        {
+                            LicenseKey = licensePayload.LicenseKey,
+                            Cuit = licensePayload.Cuit,
+                            BusinessName = licensePayload.BusinessName,
+                            ExpiresAt = licensePayload.ExpiresAt,
+                            DaysRemaining = 0,
+                            IsValid = false
+                        };
+                        return OperationResult.Failure("La licencia ha expirado.");
+                    }
+                }
 
                 CurrentLicense = new LicenseInformationDto
                 {
@@ -94,8 +120,11 @@ namespace CompriaxSystem.Infrastructure.Services
                     Cuit = licensePayload.Cuit,
                     BusinessName = licensePayload.BusinessName,
                     ExpiresAt = licensePayload.ExpiresAt,
+                    DaysRemaining = daysRemaining,
                     IsValid = true
                 };
+
+                await SaveLastSeenTimestampAsync(DateTime.UtcNow);
 
                 if (DateTime.UtcNow > licensePayload.ValidationGraceUntil)
                 {
@@ -154,6 +183,7 @@ namespace CompriaxSystem.Infrastructure.Services
 
                 // Guardado seguro con manejo de permisos y fallback
                 await SafeWriteLicenseFileAsync(encryptedTokenBytes);
+                await SaveLastSeenTimestampAsync(DateTime.UtcNow);
 
                 return await ValidateInstalledLicenseAsync();
             }
@@ -161,6 +191,28 @@ namespace CompriaxSystem.Infrastructure.Services
             {
                 return OperationResult.Failure("Error en la activación: " + ex.Message);
             }
+        }
+
+        /// <summary>
+        /// Verifica la integridad del reloj del equipo para detectar posibles alteracionesen la fecha y hora del sistema.
+        /// </summary>
+        /// <param name="issuedAtUtc">Fecha y hora UTC en la que fue emitida la licencia.</param>
+        /// <returns>
+        /// Un OperationResult exitoso si el reloj del equipo es válido, resultado fallido si se detecta que la fecha del sistema es anterior la emisión de la licencia o al último timestamp registrado.
+        /// </returns>
+        private async Task<OperationResult> VerifyClockIntegrityAsync(DateTime issuedAtUtc)
+        {
+            DateTime currentTime = DateTime.UtcNow;
+
+            if (currentTime < issuedAtUtc.AddMinutes(-5))
+                return OperationResult.Failure("La fecha del equipo es anterior a la emisión de la licencia. Verifique la hora de Windows");
+
+            DateTime? lastSeenTime = await GetLastSeenTimestampAsync();
+
+            if (lastSeenTime.HasValue && currentTime < lastSeenTime.Value.AddMinutes(-5))
+                return OperationResult.Failure("Se detecto una alteración en la fecha del sistema (Causa: Reloj Retrasado). Corrija la hora para continuar.");
+
+            return OperationResult.Ok();
         }
 
         /// <summary>
@@ -291,6 +343,54 @@ namespace CompriaxSystem.Infrastructure.Services
                 System.Diagnostics.Debug.WriteLine($"[Fallo verificación RSA]: {ex.Message}");
                 return (false, null);
             }
+        }
+
+        /// <summary>
+        /// Guarda de forma segura la fecha y hora de la última actividad registrada.
+        /// </summary>
+        /// <param name="timestampUtc">Fecha y hora UTC en la que fue emitida la licencia.</param>
+        private async Task SaveLastSeenTimestampAsync(DateTime timestampUtc)
+        {
+            try
+            {
+                byte[] rawTokenBytes = Encoding.UTF8.GetBytes(timestampUtc.ToString("o"));
+                byte[] encryptedTokenBytes = ProtectedData.Protect(rawTokenBytes, null, DataProtectionScope.LocalMachine);
+
+                string path = Directory.Exists(Path.GetDirectoryName(_primaryLastSeenPath)) ? _primaryLastSeenPath : _fallbackLastSeenPath;
+                await File.WriteAllBytesAsync(path, encryptedTokenBytes);
+            }
+            catch
+            {
+            }
+        }
+
+        /// <summary>
+        /// Recupera de forma segura la fecha y hora de la última actividad registrada.
+        /// </summary>
+        /// <returns>
+        /// La fecha y hora de la última actividad registrada, o null si no existe un registro válido
+        /// o si no es posible recuperar el timestamp almacenado.
+        /// </returns>
+        private async Task<DateTime?> GetLastSeenTimestampAsync()
+        {
+            try
+            {
+                string? path = File.Exists(_primaryLastSeenPath) ? _primaryLastSeenPath : (File.Exists(_fallbackLastSeenPath) ? _fallbackLastSeenPath : null);
+                
+                if (path == null) 
+                    return null;
+
+                byte[] encryptedTokenBytes = await File.ReadAllBytesAsync(path);
+                byte[] rawTokenBytes = ProtectedData.Unprotect(encryptedTokenBytes, null, DataProtectionScope.LocalMachine);
+                string tokenString = Encoding.UTF8.GetString(rawTokenBytes);
+
+                if (DateTime.TryParse(tokenString, null, System.Globalization.DateTimeStyles.RoundtripKind, out DateTime lastSeen))
+                    return lastSeen;
+            }
+            catch
+            {
+            }
+            return null;
         }
     }
 }
