@@ -2,29 +2,31 @@
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
+using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CashShiftService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser) : ICashShiftService
+    public class CashShiftService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IValidator<CashShiftOpenDto> openValidator, IValidator<CashMovementCreateDto> movementValidator, IValidator<CashShiftCloseDto> closeValidator) : ICashShiftService
     {
-
         /// <summary>
         /// Recupera el turno activo correspondiente a la caja configurada en el contexto actual.
         /// </summary>
         /// <returns>Datos del turno abierto o null.</returns>
         public async Task<CashShiftDto?> GetCurrentActiveShiftAsync()
         {
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
-            var shift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
-
-            if (shift == null)
+            if (currentUser.OperationalContext == null)
                 return null;
-            
-            return await BuildShiftDtoAsync(shift);
+
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
+            var cashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
+
+            if (cashShift == null)
+                return null;
+
+            return await BuildShiftDtoAsync(cashShift);
         }
 
         /// <summary>
@@ -34,34 +36,43 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del proceso de apertura.</returns>
         public async Task<OperationResult> OpenShiftAsync(CashShiftOpenDto dto)
         {
-            if (dto.InitialCash < 0)
-                return OperationResult.Failure("El fondo inicial de caja no puede ser negativo.");
-
-            int currentUserId = currentUser.CurrentUser!.UserId;
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
-
-            var existingShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
+            var validation = await openValidator.ValidateAsync(dto);
             
-            if (existingShift != null)
-                return OperationResult.Failure($"La caja actual ya tiene un turno abierto por el cajero '{existingShift.User?.Username}'. Debe cerrarlo antes de abrir uno nuevo.");
+            if (!validation.IsValid)
+                return validation.ToResult();
 
-            var newShift = new CashShift
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("OperaciÃ³n no autorizada: No hay una sesiÃ³n de usuario activa.");
+
+            if (currentUser.OperationalContext == null || currentUser.OperationalContext.CashRegisterId <= 0)
+                return OperationResult.Failure("Debe asignar una caja registradora a la terminal antes de abrir un turno.");
+
+            int currentUserId = currentUser.CurrentUser.UserId;
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
+
+            var existingCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
+            
+            if (existingCashShift != null)
+                return OperationResult.Failure($"La caja actual ya tiene un turno abierto por el cajero '{existingCashShift.User?.Username}'. Debe cerrarlo antes de abrir uno nuevo.");
+
+            var newCashShift = new CashShift
             {
                 UserId = currentUserId,
-                CashRegisterId = registerId,
+                CashRegisterId = cashRegisterId,
                 OpeningDate = DateTime.UtcNow,
                 InitialCash = dto.InitialCash,
-                Status = "Abierta"
+                Status = CashShiftStatusesConstants.OPEN
             };
 
-            await unitOfWork.CashShifts.AddAsync(newShift);
-            bool success = await unitOfWork.CompleteAsync();
+            await unitOfWork.CashShifts.AddAsync(newCashShift);
 
-            if (success && currentUser.OperationalContext != null)
-                currentUser.OperationalContext.ActiveShiftId = newShift.Id;
+            bool operationSucceeded = await unitOfWork.CompleteAsync();
 
-            return success
-                ? OperationResult.Ok($"Turno de caja #{newShift.Id} abierto exitosamente con fondo de {dto.InitialCash:C2}.")
+            if (operationSucceeded)
+                currentUser.OperationalContext.ActiveShiftId = newCashShift.Id;
+
+            return operationSucceeded
+                ? OperationResult.Ok($"Turno de caja #{newCashShift.Id} abierto exitosamente con fondo de {dto.InitialCash:C2}.")
                 : OperationResult.Failure("Error al registrar la apertura de caja.");
         }
 
@@ -72,23 +83,28 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del registro del movimiento.</returns>
         public async Task<OperationResult> RegisterMovementAsync(CashMovementCreateDto dto)
         {
-            if (dto.Amount <= 0)
-                return OperationResult.Failure("El monto del movimiento debe ser mayor a $ 0.00.");
-
-            if (string.IsNullOrWhiteSpace(dto.Description))
-                return OperationResult.Failure("Debe ingresar una descripción para el movimiento.");
-
-            int currentUserId = currentUser.CurrentUser!.UserId;
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
-
-            var activeShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
+            var validation = await movementValidator.ValidateAsync(dto);
             
-            if (activeShift == null)
+            if (!validation.IsValid)
+                return validation.ToResult();
+
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("OperaciÃ³n no autorizada: No hay una sesiÃ³n de usuario activa.");
+
+            if (currentUser.OperationalContext == null || currentUser.OperationalContext.CashRegisterId <= 0)
+                return OperationResult.Failure("No hay una caja registradora asignada para operar.");
+
+            int currentUserId = currentUser.CurrentUser.UserId;
+            int cashRegisterId = currentUser.OperationalContext.CashRegisterId;
+
+            var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
+            
+            if (activeCashShift == null)
                 return OperationResult.Failure("No hay ningún turno de caja abierto en esta terminal para registrar movimientos.");
 
-            var movement = new CashMovement
+            var cashMovement = new CashMovement
             {
-                CashShiftId = activeShift.Id,
+                CashShiftId = activeCashShift.Id,
                 UserId = currentUserId,
                 MovementType = dto.MovementType,
                 Amount = dto.Amount,
@@ -96,12 +112,14 @@ namespace CompriaxSystem.Application.Services
                 CreatedAt = DateTime.UtcNow
             };
 
-            await unitOfWork.CashShifts.AddMovementAsync(movement);
-            bool success = await unitOfWork.CompleteAsync();
+            await unitOfWork.CashShifts.AddMovementAsync(cashMovement);
 
-            string typeName = dto.MovementType == CashMovementType.CashIn ? "Ingreso de efectivo" : "Retiro de efectivo";
-            return success
-                ? OperationResult.Ok($"{typeName} por {dto.Amount:C2} registrado con éxito.")
+            bool operationSucceeded = await unitOfWork.CompleteAsync();
+
+            string movementTypeName = dto.MovementType == CashMovementType.CashIn ? "Ingreso de efectivo" : "Retiro de efectivo";
+            
+            return operationSucceeded
+                ? OperationResult.Ok($"{movementTypeName} por {dto.Amount:C2} registrado con éxito.")
                 : OperationResult.Failure("Error al registrar el movimiento.");
         }
 
@@ -111,39 +129,44 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Un resumen detallado con el estado financiero actual de la caja.</returns>
         public async Task<CashShiftSummaryDto> GetCurrentShiftSummaryAsync()
         {
-            int registerId = currentUser.OperationalContext?.CashRegisterId ?? 1;
-            var shift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
+            int registerId = currentUser.OperationalContext?.CashRegisterId ?? TaxConstants.DEFAULT_POINT_OF_SALE;
+            var cashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
 
-            if (shift == null)
-                return new CashShiftSummaryDto { CashierName = currentUser.CurrentUser!.FullName};
+            if (cashShift == null)
+            {
+                return new CashShiftSummaryDto 
+                {
+                    CashierName = currentUser.CurrentUser?.FullName ?? RoleConstants.CASHIER
+                };
+            }
 
-            var movements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id)).ToList();
-            var sales = shift.Sales ?? new List<Sale>();
+            var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
+            var shiftSales = cashShift.Sales ?? new List<Sale>();
 
-            decimal cashSales = sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
-            decimal debitSales = sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
-            decimal creditSales = sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount);
-            decimal transferSales = sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount);
-            decimal qrSales = sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount);
+            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount);
+            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount);
+            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount);
 
-            decimal manualIn = movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
-            decimal manualOut = movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
+            decimal totalManualCashIn = cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
+            decimal totalManualCashOut = cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
 
             return new CashShiftSummaryDto
             {
-                ShiftId = shift.Id,
-                CashierName = $"{shift.User.LastName} {shift.User.FirstName}".Trim(),
-                OpeningDate = shift.OpeningDate,
+                ShiftId = cashShift.Id,
+                CashierName = $"{cashShift.User.LastName} {cashShift.User.FirstName}".Trim(),
+                OpeningDate = cashShift.OpeningDate,
                 CurrentDate = DateTime.Now,
-                InitialCash = shift.InitialCash,
-                TotalCashSales = cashSales,
-                TotalDebitSales = debitSales,
-                TotalCreditSales = creditSales,
-                TotalTransferSales = transferSales,
-                TotalQrSales = qrSales,
-                TotalManualCashIn = manualIn,
-                TotalManualCashOut = manualOut,
-                SalesCount = sales.Count
+                InitialCash = cashShift.InitialCash,
+                TotalCashSales = totalCashSales,
+                TotalDebitSales = totalDebitSales,
+                TotalCreditSales = totalCreditSales,
+                TotalTransferSales = totalTransferSales,
+                TotalQrSales = totalQrSales,
+                TotalManualCashIn = totalManualCashIn,
+                TotalManualCashOut = totalManualCashOut,
+                SalesCount = shiftSales.Count
             };
         }
 
@@ -154,56 +177,69 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado del cierre del turno.</returns>
         public async Task<OperationResult> CloseShiftAsync(CashShiftCloseDto dto)
         {
-            if (dto.RealCash < 0)
-                return OperationResult.Failure("El monto contado en caja no puede ser negativo.");
-
-            var shift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(dto.ShiftId);
+            var validation = await closeValidator.ValidateAsync(dto);
             
-            if (shift == null || shift.Status != "Abierta")
+            if (!validation.IsValid)
+                return validation.ToResult();
+
+            var cashShift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(dto.ShiftId);
+            
+            if (cashShift == null || cashShift.Status != CashShiftStatusesConstants.OPEN)
                 return OperationResult.Failure("El turno especificado no existe o ya fue cerrado.");
 
-            var sales = new List<Sale>();
-            var movements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id)).ToList();
+            var shiftSales = cashShift.Sales?.ToList() ?? new List<Sale>();
+            
+            var cashMovements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(cashShift.Id)).ToList();
 
-            var summary = await GetCurrentShiftSummaryAsync();
+            decimal totalCashSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount);
+            decimal totalDebitSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalCreditSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount);
+            decimal totalTransferSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount);
+            decimal totalQrSales = shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount);
 
-            decimal cashSales = sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount);
-            decimal debitSales = sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount);
-            decimal creditSales = sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount);
-            decimal transferSales = sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount);
-            decimal qrSales = sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount);
+            decimal totalManualCashIn = cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
+            decimal totalManualCashOut = cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
 
-            decimal manualIn = movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount);
-            decimal manualOut = movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount);
+            decimal expectedCash = cashShift.InitialCash + totalCashSales + totalManualCashIn - totalManualCashOut;
 
-            decimal expectedCashInDrawer = shift.InitialCash + cashSales + manualIn - manualOut;
+            cashShift.ClosingDate = DateTime.UtcNow;
+            cashShift.RealCash = dto.RealCash;
+            cashShift.ExpectedCash = expectedCash;
+            cashShift.Difference = dto.RealCash - expectedCash;
+            cashShift.TotalCashSales = totalCashSales;
+            cashShift.TotalDebitSales = totalDebitSales;
+            cashShift.TotalCreditSales = totalCreditSales;
+            cashShift.TotalTransferSales = totalTransferSales;
+            cashShift.TotalQrSales = totalQrSales;
+            cashShift.TotalManualCashIn = totalManualCashIn;
+            cashShift.TotalManualCashOut = totalManualCashOut;
+            cashShift.Status = CashShiftStatusesConstants.CLOSED;
+            cashShift.ClosingNotes = dto.ClosingNotes?.Trim();
 
-            shift.ClosingDate = DateTime.UtcNow;
-            shift.RealCash = dto.RealCash;
-            shift.ExpectedCash = expectedCashInDrawer;
-            shift.Difference = dto.RealCash - expectedCashInDrawer;
-            shift.TotalCashSales = cashSales;
-            shift.TotalDebitSales = debitSales;
-            shift.TotalCreditSales = creditSales;
-            shift.TotalTransferSales = transferSales;
-            shift.TotalQrSales = qrSales;
-            shift.TotalManualCashIn = manualIn;
-            shift.TotalManualCashOut = manualOut;
-            shift.Status = "Cerrada";
-            shift.ClosingNotes = dto.ClosingNotes?.Trim();
+            unitOfWork.CashShifts.Update(cashShift);
 
-            unitOfWork.CashShifts.Update(shift);
-            bool success = await unitOfWork.CompleteAsync();
+            bool operationSucceeded = await unitOfWork.CompleteAsync();
 
-            if (success && currentUser.OperationalContext?.ActiveShiftId == shift.Id)
+            if (operationSucceeded && currentUser.OperationalContext?.ActiveShiftId == cashShift.Id)
                 currentUser.OperationalContext.ActiveShiftId = null;
 
-            string diffMsg = shift.Difference == 0
-                ? "Caja Cuadrada"
-                : (shift.Difference > 0 ? $"Sobrante: +{shift.Difference:C2}" : $"Faltante: {shift.Difference:C2}");
+            string differenceMessage;
 
-            return success
-                ? OperationResult.Ok($"Turno de caja cerrado exitosamente. Balance: {diffMsg}.")
+            if (cashShift.Difference == 0)
+            {
+                differenceMessage = "Caja Cuadrada";
+            }
+            else if (cashShift.Difference > 0)
+            {
+                differenceMessage = $"Sobrante: +{cashShift.Difference:C2}";
+            }
+            else
+            {
+                differenceMessage = $"Faltante: {cashShift.Difference:C2}";
+            }
+
+            return operationSucceeded
+                ? OperationResult.Ok($"Turno de caja cerrado exitosamente. Balance: {differenceMessage}.")
                 : OperationResult.Failure("Error al persistir el cierre de caja.");
         }
 
@@ -213,15 +249,16 @@ namespace CompriaxSystem.Application.Services
         /// <param name="start">Fecha de inicio.</param>
         /// <param name="end">Fecha de fin.</param>
         /// <returns>Colección de turnos históricos.</returns>
-        public async Task<IEnumerable<CashShiftDto>> GetShiftHistoryAsync(DateTime start, DateTime end)
+        public async Task<IEnumerable<CashShiftDto>> GetShiftHistoryAsync(DateTime startDate, DateTime endDate)
         {
-            var shifts = await unitOfWork.CashShifts.GetHistoryAsync(start, end);
-            var result = new List<CashShiftDto>();
+            var shifts = await unitOfWork.CashShifts.GetHistoryAsync(startDate, endDate);
+            
+            var shiftHistory = new List<CashShiftDto>();
 
-            foreach (var shift in shifts)
-                result.Add(await BuildShiftDtoAsync(shift));
+            foreach (var cashShift in shifts)
+                shiftHistory.Add(await BuildShiftDtoAsync(cashShift));
 
-            return result;
+            return shiftHistory;
         }
 
         /// <summary>
@@ -230,52 +267,67 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Colección de movimientos (ingresos/egresos).</returns>
         public async Task<IEnumerable<CashMovementDto>> GetCurrentShiftMovementsAsync()
         {
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
-            var shift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
-
-            if (shift == null)
+            if (currentUser.OperationalContext == null)
                 return Enumerable.Empty<CashMovementDto>();
 
-            var movements = await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id);
+            int registerId = currentUser.OperationalContext.CashRegisterId;
+            var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
 
-            return movements.Select(m => new CashMovementDto
+            if (activeCashShift == null)
+                return Enumerable.Empty<CashMovementDto>();
+
+            var cashMovements = await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(activeCashShift.Id);
+
+            return cashMovements.Select(cashMovement => new CashMovementDto
             {
-                Id = m.Id,
-                CashShiftId = m.CashShiftId,
-                MovementType = m.MovementType,
-                Amount = m.Amount,
-                Description = m.Description,
-                CreatedAt = m.CreatedAt,
-                UserName = m.User!.Username
+                Id = cashMovement.Id,
+                CashShiftId = cashMovement.CashShiftId,
+                MovementType = cashMovement.MovementType,
+                Amount = cashMovement.Amount,
+                Description = cashMovement.Description,
+                CreatedAt = cashMovement.CreatedAt,
+                UserName = cashMovement.User?.Username ?? RoleConstants.CASHIER
             });
         }
 
-        private async Task<CashShiftDto> BuildShiftDtoAsync(CashShift shift)
+        /// <summary>
+        /// Construye un DTO con la información detallada del turno de caja,
+        /// incluyendo ventas, movimientos de efectivo y datos del cierre.
+        /// </summary>
+        /// <param name="cashShift">Turno de caja que se utilizará para construir el DTO.</param>
+        /// <returns>DTO con la información detallada y los totales del turno de caja.</returns>
+        private async Task<CashShiftDto> BuildShiftDtoAsync(CashShift cashShift)
         {
-            var fullShift = await unitOfWork.CashShifts.GetByIdWithDetailsAsync(shift.Id) ?? shift;
-            var sales = fullShift.Sales ?? new List<Sale>();
-            var movements = (await unitOfWork.CashShifts.GetMovementsByShiftIdAsync(shift.Id)).ToList();
+            var shiftWithDetails = await unitOfWork.CashShifts
+                .GetByIdWithDetailsAsync(cashShift.Id) ?? cashShift;
+
+            var shiftSales = shiftWithDetails.Sales ?? new List<Sale>();
+            
+            var cashMovements = (await unitOfWork.CashShifts
+                .GetMovementsByShiftIdAsync(cashShift.Id)).ToList(); 
+
+            bool isCashShiftClosed = cashShift.Status == CashShiftStatusesConstants.CLOSED;
 
             return new CashShiftDto
             {
-                Id = shift.Id,
-                UserId = shift.UserId,
-                UserName = $"{shift.User.LastName}{shift.User.FirstName}".Trim(),
-                OpeningDate = shift.OpeningDate,
-                ClosingDate = shift.ClosingDate,
-                InitialCash = shift.InitialCash,
-                RealCash = shift.RealCash,
-                ExpectedCash = shift.ExpectedCash,
-                Difference = shift.Difference,
-                TotalCashSales = shift.Status == "Cerrada" ? shift.TotalCashSales : sales.Where(s => s.PaymentMethodId == 1).Sum(s => s.TotalAmount),
-                TotalDebitSales = shift.Status == "Cerrada" ? shift.TotalDebitSales : sales.Where(s => s.PaymentMethodId == 2).Sum(s => s.TotalAmount),
-                TotalCreditSales = shift.Status == "Cerrada" ? shift.TotalCreditSales : sales.Where(s => s.PaymentMethodId == 3).Sum(s => s.TotalAmount),
-                TotalTransferSales = shift.Status == "Cerrada" ? shift.TotalTransferSales : sales.Where(s => s.PaymentMethodId == 4).Sum(s => s.TotalAmount),
-                TotalQrSales = shift.Status == "Cerrada" ? shift.TotalQrSales : sales.Where(s => s.PaymentMethodId == 5).Sum(s => s.TotalAmount),
-                TotalManualCashIn = shift.Status == "Cerrada" ? shift.TotalManualCashIn : movements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount),
-                TotalManualCashOut = shift.Status == "Cerrada" ? shift.TotalManualCashOut : movements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount),
-                Status = shift.Status,
-                ClosingNotes = shift.ClosingNotes
+                Id = cashShift.Id,
+                UserId = cashShift.UserId,
+                UserName = $"{cashShift.User.LastName} {cashShift.User.FirstName}".Trim(),
+                OpeningDate = cashShift.OpeningDate,
+                ClosingDate = cashShift.ClosingDate,
+                InitialCash = cashShift.InitialCash,
+                RealCash = cashShift.RealCash,
+                ExpectedCash = cashShift.ExpectedCash,
+                Difference = cashShift.Difference,
+                TotalCashSales = isCashShiftClosed ? cashShift.TotalCashSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CASH_ID).Sum(s => s.TotalAmount),
+                TotalDebitSales = isCashShiftClosed ? cashShift.TotalDebitSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.DEBIT_CARD_ID).Sum(s => s.TotalAmount),
+                TotalCreditSales = isCashShiftClosed ? cashShift.TotalCreditSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.CREDIT_CARD_ID).Sum(s => s.TotalAmount),
+                TotalTransferSales = isCashShiftClosed ? cashShift.TotalTransferSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.BANK_TRANSFER_ID).Sum(s => s.TotalAmount),
+                TotalQrSales = isCashShiftClosed ? cashShift.TotalQrSales : shiftSales.Where(s => s.PaymentMethodId == PaymentMethodConstants.MERCADO_PAGO_QR_ID).Sum(s => s.TotalAmount),
+                TotalManualCashIn = isCashShiftClosed ? cashShift.TotalManualCashIn : cashMovements.Where(m => m.MovementType == CashMovementType.CashIn).Sum(m => m.Amount),
+                TotalManualCashOut = isCashShiftClosed ? cashShift.TotalManualCashOut : cashMovements.Where(m => m.MovementType == CashMovementType.CashOut).Sum(m => m.Amount),
+                Status = cashShift.Status,
+                ClosingNotes = cashShift.ClosingNotes
             };
         }
     }

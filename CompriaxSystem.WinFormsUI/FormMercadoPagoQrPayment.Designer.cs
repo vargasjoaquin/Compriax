@@ -17,110 +17,125 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            pnlCard = new Panel();
-            lblAmountTitle = new Label();
-            lblAmount = new Label();
-            picQr = new PictureBox();
-            lblStatus = new Label();
-            btnCancel = new Button();
-            pnlHeader.SuspendLayout();
-            pnlCard.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picQr).BeginInit();
+            picIconCancelPayment = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            panelPaymentCard = new Panel();
+            labelAmountTitle = new Label();
+            labelAmountToPay = new Label();
+            pictureBoxQrCode = new PictureBox();
+            labelPaymentStatus = new Label();
+            buttonCancelPayment = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconCancelPayment).BeginInit();
+            panelHeader.SuspendLayout();
+            panelPaymentCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxQrCode).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconCancelPayment
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(569, 60);
-            pnlHeader.TabIndex = 0;
+            picIconCancelPayment.BackColor = Color.FromArgb(239, 68, 68);
+            picIconCancelPayment.Cursor = Cursors.Hand;
+            picIconCancelPayment.Image = Resources._093_error;
+            picIconCancelPayment.Location = new Point(133, 539);
+            picIconCancelPayment.Name = "picIconCancelPayment";
+            picIconCancelPayment.Size = new Size(37, 45);
+            picIconCancelPayment.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconCancelPayment.TabIndex = 99;
+            picIconCancelPayment.TabStop = false;
             // 
-            // lblTitle
+            // panelHeader
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(20, 16);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(362, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "COBRO CON MERCADO PAGO QR";
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(569, 60);
+            panelHeader.TabIndex = 0;
             // 
-            // pnlCard
+            // labelTitle
             // 
-            pnlCard.BackColor = Color.White;
-            pnlCard.Controls.Add(lblAmountTitle);
-            pnlCard.Controls.Add(lblAmount);
-            pnlCard.Controls.Add(picQr);
-            pnlCard.Controls.Add(lblStatus);
-            pnlCard.Controls.Add(btnCancel);
-            pnlCard.Location = new Point(24, 80);
-            pnlCard.Name = "pnlCard";
-            pnlCard.Size = new Size(517, 608);
-            pnlCard.TabIndex = 1;
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(20, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(362, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "COBRO CON MERCADO PAGO QR";
             // 
-            // lblAmountTitle
+            // panelPaymentCard
             // 
-            lblAmountTitle.AutoSize = true;
-            lblAmountTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblAmountTitle.ForeColor = Color.FromArgb(100, 116, 139);
-            lblAmountTitle.Location = new Point(193, 17);
-            lblAmountTitle.Name = "lblAmountTitle";
-            lblAmountTitle.Size = new Size(157, 23);
-            lblAmountTitle.TabIndex = 0;
-            lblAmountTitle.Text = "TOTAL A COBRAR:";
+            panelPaymentCard.BackColor = Color.White;
+            panelPaymentCard.Controls.Add(labelAmountTitle);
+            panelPaymentCard.Controls.Add(labelAmountToPay);
+            panelPaymentCard.Controls.Add(pictureBoxQrCode);
+            panelPaymentCard.Controls.Add(labelPaymentStatus);
+            panelPaymentCard.Controls.Add(picIconCancelPayment);
+            panelPaymentCard.Controls.Add(buttonCancelPayment);
+            panelPaymentCard.Location = new Point(24, 80);
+            panelPaymentCard.Name = "panelPaymentCard";
+            panelPaymentCard.Size = new Size(517, 608);
+            panelPaymentCard.TabIndex = 1;
             // 
-            // lblAmount
+            // labelAmountTitle
             // 
-            lblAmount.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
-            lblAmount.ForeColor = Color.FromArgb(2, 132, 199);
-            lblAmount.Location = new Point(73, 43);
-            lblAmount.Name = "lblAmount";
-            lblAmount.Size = new Size(392, 50);
-            lblAmount.TabIndex = 1;
-            lblAmount.Text = "$ 0,00";
-            lblAmount.TextAlign = ContentAlignment.MiddleCenter;
+            labelAmountTitle.AutoSize = true;
+            labelAmountTitle.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelAmountTitle.ForeColor = Color.FromArgb(100, 116, 139);
+            labelAmountTitle.Location = new Point(193, 17);
+            labelAmountTitle.Name = "labelAmountTitle";
+            labelAmountTitle.Size = new Size(157, 23);
+            labelAmountTitle.TabIndex = 0;
+            labelAmountTitle.Text = "TOTAL A COBRAR:";
             // 
-            // picQr
+            // labelAmountToPay
             // 
-            picQr.BackColor = Color.White;
-            picQr.BorderStyle = BorderStyle.FixedSingle;
-            picQr.Location = new Point(73, 105);
-            picQr.Name = "picQr";
-            picQr.Size = new Size(392, 375);
-            picQr.SizeMode = PictureBoxSizeMode.Zoom;
-            picQr.TabIndex = 2;
-            picQr.TabStop = false;
+            labelAmountToPay.Font = new Font("Segoe UI", 22F, FontStyle.Bold);
+            labelAmountToPay.ForeColor = Color.FromArgb(2, 132, 199);
+            labelAmountToPay.Location = new Point(73, 43);
+            labelAmountToPay.Name = "labelAmountToPay";
+            labelAmountToPay.Size = new Size(392, 50);
+            labelAmountToPay.TabIndex = 1;
+            labelAmountToPay.Text = "$ 0,00";
+            labelAmountToPay.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // lblStatus
+            // pictureBoxQrCode
             // 
-            lblStatus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            lblStatus.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStatus.Location = new Point(73, 492);
-            lblStatus.Name = "lblStatus";
-            lblStatus.Size = new Size(392, 35);
-            lblStatus.TabIndex = 3;
-            lblStatus.Text = "Esperando pago...";
-            lblStatus.TextAlign = ContentAlignment.MiddleCenter;
+            pictureBoxQrCode.BackColor = Color.White;
+            pictureBoxQrCode.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxQrCode.Location = new Point(73, 105);
+            pictureBoxQrCode.Name = "pictureBoxQrCode";
+            pictureBoxQrCode.Size = new Size(392, 375);
+            pictureBoxQrCode.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxQrCode.TabIndex = 2;
+            pictureBoxQrCode.TabStop = false;
             // 
-            // btnCancel
+            // labelPaymentStatus
             // 
-            btnCancel.BackColor = Color.FromArgb(239, 68, 68);
-            btnCancel.FlatAppearance.BorderSize = 0;
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(90, 539);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(352, 45);
-            btnCancel.TabIndex = 4;
-            btnCancel.Text = "CANCELAR OPERACIÓN";
-            btnCancel.UseVisualStyleBackColor = false;
+            labelPaymentStatus.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            labelPaymentStatus.ForeColor = Color.FromArgb(16, 185, 129);
+            labelPaymentStatus.Location = new Point(73, 492);
+            labelPaymentStatus.Name = "labelPaymentStatus";
+            labelPaymentStatus.Size = new Size(392, 35);
+            labelPaymentStatus.TabIndex = 3;
+            labelPaymentStatus.Text = "Esperando pago...";
+            labelPaymentStatus.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // buttonCancelPayment
+            // 
+            buttonCancelPayment.BackColor = Color.FromArgb(239, 68, 68);
+            buttonCancelPayment.FlatAppearance.BorderSize = 0;
+            buttonCancelPayment.FlatStyle = FlatStyle.Flat;
+            buttonCancelPayment.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            buttonCancelPayment.ForeColor = Color.White;
+            buttonCancelPayment.Location = new Point(90, 539);
+            buttonCancelPayment.Name = "buttonCancelPayment";
+            buttonCancelPayment.Size = new Size(352, 45);
+            buttonCancelPayment.TabIndex = 4;
+            buttonCancelPayment.Text = "CANCELAR OPERACIÓN";
+            buttonCancelPayment.UseVisualStyleBackColor = false;
             // 
             // FormMercadoPagoQrPayment
             // 
@@ -128,29 +143,31 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(569, 711);
-            Controls.Add(pnlCard);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelPaymentCard);
+            Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormMercadoPagoQrPayment";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Cobro con Mercado Pago QR";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlCard.ResumeLayout(false);
-            pnlCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picQr).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCancelPayment).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelPaymentCard.ResumeLayout(false);
+            panelPaymentCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxQrCode).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlCard;
-        private System.Windows.Forms.Label lblAmountTitle;
-        private System.Windows.Forms.Label lblAmount;
-        private System.Windows.Forms.PictureBox picQr;
-        private System.Windows.Forms.Label lblStatus;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelPaymentCard;
+        private System.Windows.Forms.Label labelAmountTitle;
+        private System.Windows.Forms.Label labelAmountToPay;
+        private System.Windows.Forms.PictureBox pictureBoxQrCode;
+        private System.Windows.Forms.Label labelPaymentStatus;
+        private System.Windows.Forms.Button buttonCancelPayment;
+        private System.Windows.Forms.PictureBox picIconCancelPayment;
     }
 }

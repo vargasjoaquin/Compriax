@@ -1,4 +1,5 @@
-﻿using CompriaxSystem.Domain.Enums;
+﻿using CompriaxSystem.Domain.Constants;
+using CompriaxSystem.Domain.Enums;
 using static CompriaxSystem.Application.DTOs.TicketPaymentDataDto;
 
 namespace CompriaxSystem.Application.DTOs
@@ -17,8 +18,8 @@ namespace CompriaxSystem.Application.DTOs
         public byte[]? LogoBytes { get; set; }
 
         public string DocumentTypeName { get; set; } = "Ticket";
-        public string DocumentLetter { get; set; } = "B";
-        public string DocumentTypeCode { get; set; } = "COD. 006";
+        public string DocumentLetter { get; set; } = VoucherLetterCodesConstants.LETTER_B;
+        public string DocumentTypeCode { get; set; } = VoucherLetterCodesConstants.CODE_FACTURA_B;
         public int PointOfSale { get; set; } = 1;
         public string DocumentNumber { get; set; } = null!;
         public DateTime Date { get; set; } = DateTime.Now;
@@ -42,7 +43,7 @@ namespace CompriaxSystem.Application.DTOs
         public decimal PaymentReceived { get; set; }
         public decimal PaymentChange { get; set; }
 
-        public decimal TaxRate { get; set; } = 21.00m;
+        public decimal TaxRate { get; set; } = TaxConstants.STANDARD_VAR_RATE;
         public decimal TaxAmount { get; set; }
         public decimal NetTaxableAmount { get; set; }
 

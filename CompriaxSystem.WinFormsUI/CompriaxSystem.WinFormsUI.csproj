@@ -6,6 +6,7 @@
 		<Nullable>enable</Nullable>
 		<UseWindowsForms>true</UseWindowsForms>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>compriax-system-secrets-f92b09d3-7612-44ca-b5a6-bac9e96daa94</UserSecretsId>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -18,6 +19,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\CompriaxSystem.Application\CompriaxSystem.Application.csproj" />
 		<ProjectReference Include="..\CompriaxSystem.Infrastructure\CompriaxSystem.Infrastructure.csproj" />
+		<ProjectReference Include="..\CompriaxSystem.MercadoPago.Api\CompriaxSystem.MercadoPago.Api.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -35,10 +37,19 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<EmbeddedResource Update="Helpers\FormLicenseWarningDialog.resx">
+		  <Generator></Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Resources.resx">
 			<Generator>ResXFileCodeGenerator</Generator>
 			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 	</ItemGroup>
+	
+	<ItemGroup>
+    <None Update="compriax.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+</ItemGroup>
 
 </Project>

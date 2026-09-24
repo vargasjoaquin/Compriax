@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,41 +30,45 @@ namespace CompriaxSystem.WinFormsUI
             _cashShiftService = cashShiftService;
 
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonLogout, this.picIconLogout);
+            
 
-            lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
-            HoraFecha.Interval = 1000;
-            HoraFecha.Tick -= HoraFecha_Tick;
-            HoraFecha.Tick += HoraFecha_Tick;
-            HoraFecha.Start();
+            labelClockTime.Text = DateTime.Now.ToString("HH:mm:ss");
+            timerSystemClock.Interval = 1000;
+            timerSystemClock.Tick -= HoraFecha_Tick;
+            timerSystemClock.Tick += HoraFecha_Tick;
+            timerSystemClock.Start();
 
-            this.btnLogout.Click -= btnLogout_Click;
-            this.btnLogout.Click += btnLogout_Click;
+            this.buttonLogout.Click -= btnLogout_Click;
+            this.buttonLogout.Click += btnLogout_Click;
 
             this.FormClosing -= FormPanelControl_FormClosing;
             this.FormClosing += FormPanelControl_FormClosing;
 
             this.Load += async (s, e) =>
             {
-                await SetupAppearanceAsync();
-                await LoadDashboardAsync();
+                await ConfigureApplicationAppearanceAndBrandingAsync();
+                await LoadEmbeddedDashboardFormAsync();
             };
 
-            LoadUserData();
+            LoadAuthenticatedUserDataAndNavigation();
         }
-        public async Task SetupAppearanceAsync()
+        public async Task ConfigureApplicationAppearanceAndBrandingAsync()
         {
             if (!await _appearanceLock.WaitAsync(0))
                 return;
 
             try
             {
-                picLogo.Image?.Dispose();
-                picLogo.Image = null;
+                pictureBoxLogo.Image?.Dispose();
+                pictureBoxLogo.Image = null;
 
-                picLogo.Image = Resources.logo_compriax;
-                picLogo.SizeMode = PictureBoxSizeMode.Zoom;
+                pictureBoxLogo.Image = Resources.logo_compriax;
+                pictureBoxLogo.SizeMode = PictureBoxSizeMode.Zoom;
 
-                await RefreshShiftStatusAsync();
+                await RefreshActiveShiftStatusDisplayAsync();
             }
             catch
             {
@@ -74,64 +79,64 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        public async Task RefreshShiftStatusAsync()
+        public async Task RefreshActiveShiftStatusDisplayAsync()
         {
             try
             {
-                var user = _currentUserService.CurrentUser;
-                bool isAdmin = user != null && user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
+                var currentUser = _currentUserService.CurrentUser;
+                bool isAdministratorUser = currentUser != null && currentUser.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
                 var ctx = _currentUserService.OperationalContext;
 
-                if (isAdmin && ctx == null)
+                if (isAdministratorUser && ctx == null)
                 {
-                    lblShiftStatus.Text = " Modo Supervisor (Vista Global)";
-                    lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblShiftStatus.ForeColor = Color.FromArgb(226, 232, 240);
+                    labelShiftStatus.Text = " Modo Supervisor";
+                    labelShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelShiftStatus.ForeColor = Color.FromArgb(226, 232, 240);
                 }
                 else
                 {
-                    var activeShift = await _cashShiftService.GetCurrentActiveShiftAsync();
-                    string regName = ctx?.CashRegisterName ?? "Caja 01";
+                    var currentActiveShift = await _cashShiftService.GetCurrentActiveShiftAsync();
+                    string cashRegisterName = ctx?.CashRegisterName ?? "Caja 01";
 
-                    if (activeShift != null)
+                    if (currentActiveShift != null)
                     {
-                        DateTime localOpening = activeShift.OpeningDate.Kind == DateTimeKind.Utc
-                                                ? activeShift.OpeningDate.ToLocalTime()
-                                                : activeShift.OpeningDate;
+                        DateTime localOpeningDateTime = currentActiveShift.OpeningDate.Kind == DateTimeKind.Utc
+                                                ? currentActiveShift.OpeningDate.ToLocalTime()
+                                                : currentActiveShift.OpeningDate;
 
-                        lblShiftStatus.Text = $" {regName} | Turno #{activeShift.Id} ({localOpening:HH:mm})";
-                        lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
-                        lblShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
+                        labelShiftStatus.Text = $" {cashRegisterName} | Turno #{currentActiveShift.Id} ({localOpeningDateTime:HH:mm})";
+                        labelShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                        labelShiftStatus.ForeColor = Color.FromArgb(16, 185, 129);
                     }
                     else
                     {
-                        lblShiftStatus.Text = $" {regName} | Caja Cerrada";
-                        lblShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
-                        lblShiftStatus.ForeColor = Color.FromArgb(248, 113, 113);
+                        labelShiftStatus.Text = $" {cashRegisterName} | Caja Cerrada";
+                        labelShiftStatus.ImageAlign = ContentAlignment.MiddleLeft;
+                        labelShiftStatus.ForeColor = Color.FromArgb(248, 113, 113);
                     }
                 }
             }
             catch { }
         }
 
-        private void LoadUserData()
+        private void LoadAuthenticatedUserDataAndNavigation()
         {
-            var user = _currentUserService.CurrentUser;
+            var currentUser = _currentUserService.CurrentUser;
 
-            if (user == null)
+            if (currentUser == null)
                 return;
 
-            lblSessionUser.Text = user.FullName.ToUpper();
-            lblRoleName.Text = $"[{user.RoleName.ToUpper()}]";
+            labelSessionUser.Text = currentUser.FullName.ToUpper();
+            labelRoleName.Text = $"[{currentUser.RoleName.ToUpper()}]";
 
-            bool isAdmin = user.RoleName.Equals("Administrador", StringComparison.OrdinalIgnoreCase);
-            BuildNavigationMenu(isAdmin);
+            bool isAdministratorUser = currentUser.RoleName.Equals(RoleConstants.ADMINISTRATOR, StringComparison.OrdinalIgnoreCase);
+            BuildRoleBasedNavigationMenu(isAdministratorUser);
         }
 
-        private void BuildNavigationMenu(bool isAdmin)
+        private void BuildRoleBasedNavigationMenu(bool isAdministratorUser)
         {
-            flowLayoutButtons.SuspendLayout();
-            flowLayoutButtons.Controls.Clear();
+            flowLayoutPanelNavigationButtons.SuspendLayout();
+            flowLayoutPanelNavigationButtons.Controls.Clear();
 
             var menuDefinitions = new List<NavMenuItemHelper>
             {
@@ -140,7 +145,7 @@ namespace CompriaxSystem.WinFormsUI
                     _dashboardForm?.BringToFront();
 
                     if (_dashboardForm != null)
-                        await _dashboardForm.RefreshDashboardAsync();
+                        await _dashboardForm.RefreshDashboardMetricsAndTablesAsync();
                 }),
 
                 NavMenuItemHelper.Group("Punto de Venta ▾", "Terminal POS y Comprobantes", Resources._052_registrar_venta, new List<NavMenuItemHelper>
@@ -186,42 +191,42 @@ namespace CompriaxSystem.WinFormsUI
 
             foreach (var item in menuDefinitions)
             {
-                if (item.RequireAdmin && !isAdmin)
+                if (item.RequireAdmin && !isAdministratorUser)
                     continue;
 
-                var subItemsAuth = item.SubItems.Where(s => !s.RequireAdmin || isAdmin).ToList();
+                var subItemsAuth = item.SubItems.Where(s => !s.RequireAdmin || isAdministratorUser).ToList();
 
                 if (item.HasSubItems && !subItemsAuth.Any())
                     continue;
 
-                var btn = CreateNavButton(item.Title, item.Icon ?? Resources._051_dashboard);
+                var navigationButton = CreateNavigationRibbonButton(item.Title, item.Icon ?? Resources._051_dashboard);
 
                 if (item.HasSubItems)
                 {
-                    var ctxMenu = CreateModernContextMenu(subItemsAuth, isAdmin);
-                    btn.Click += (s, e) => ctxMenu.Show(btn, 0, btn.Height);
+                    var dropdownContextMenu = CreateModernDropdownContextMenu(subItemsAuth, isAdministratorUser);
+                    navigationButton.Click += (s, e) => dropdownContextMenu.Show(navigationButton, 0, navigationButton.Height);
                 }
                 else if (item.TargetFormType != null)
                 {
-                    btn.Click += (s, e) => OpenWindowByType(item.TargetFormType);
+                    navigationButton.Click += (s, e) => OpenOrFocusChildFormByType(item.TargetFormType);
                 }
                 else if (item.CustomAction != null)
                 {
-                    btn.Click += (s, e) => item.CustomAction();
+                    navigationButton.Click += (s, e) => item.CustomAction();
                 }
 
-                flowLayoutButtons.Controls.Add(btn);
+                flowLayoutPanelNavigationButtons.Controls.Add(navigationButton);
             }
 
-            flowLayoutButtons.ResumeLayout(true);
+            flowLayoutPanelNavigationButtons.ResumeLayout(true);
         }
 
-        private static Button CreateNavButton(string title, Image icon)
+        private static Button CreateNavigationRibbonButton(string title, Image icon)
         {
-            var btn = new Button
+            var navigationButton = new Button
             {
                 Size = new Size(130, 78),
-                Image = ResizeImage(icon, 32, 32),
+                Image = ResizeNavigationMenuIcon(icon, 32, 32),
                 ImageAlign = ContentAlignment.TopCenter,
                 Text = title,
                 TextAlign = ContentAlignment.BottomCenter,
@@ -234,13 +239,13 @@ namespace CompriaxSystem.WinFormsUI
                 Margin = new Padding(3, 2, 3, 2)
             };
 
-            btn.FlatAppearance.BorderSize = 0;
-            btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(215, 225, 235);
+            navigationButton.FlatAppearance.BorderSize = 0;
+            navigationButton.FlatAppearance.MouseOverBackColor = Color.FromArgb(215, 225, 235);
 
-            return btn;
+            return navigationButton;
         }
 
-        private ContextMenuStrip CreateModernContextMenu(List<NavMenuItemHelper> items, bool isAdmin)
+        private ContextMenuStrip CreateModernDropdownContextMenu(List<NavMenuItemHelper> items, bool isAdministratorUser)
         {
             var menu = new ContextMenuStrip
             {
@@ -252,17 +257,17 @@ namespace CompriaxSystem.WinFormsUI
 
             foreach (var item in items)
             {
-                if (item.RequireAdmin && !isAdmin)
+                if (item.RequireAdmin && !isAdministratorUser)
                     continue;
 
                 var menuItem = new ToolStripMenuItem(item.Title)
                 {
-                    Image = item.Icon != null ? ResizeImage(item.Icon, 20, 20) : null,
+                    Image = item.Icon != null ? ResizeNavigationMenuIcon(item.Icon, 20, 20) : null,
                     Padding = new Padding(4, 6, 4, 6)
                 };
 
                 if (item.TargetFormType != null)
-                    menuItem.Click += (s, e) => OpenWindowByType(item.TargetFormType);
+                    menuItem.Click += (s, e) => OpenOrFocusChildFormByType(item.TargetFormType);
                 else if (item.CustomAction != null)
                     menuItem.Click += (s, e) => item.CustomAction();
 
@@ -272,38 +277,38 @@ namespace CompriaxSystem.WinFormsUI
             return menu;
         }
 
-        private async Task LoadDashboardAsync()
+        private async Task LoadEmbeddedDashboardFormAsync()
         {
             _dashboardForm = _serviceProvider.GetRequiredService<FormHome>();
             _dashboardForm.TopLevel = false;
             _dashboardForm.FormBorderStyle = FormBorderStyle.None;
             _dashboardForm.Dock = DockStyle.Fill;
 
-            panelContenedor.Controls.Add(_dashboardForm);
+            panelMainContainer.Controls.Add(_dashboardForm);
             _dashboardForm.Show();
 
-            await _dashboardForm.RefreshDashboardAsync();
+            await _dashboardForm.RefreshDashboardMetricsAndTablesAsync();
         }
 
-        private void OpenWindowByType(Type formType)
+        private void OpenOrFocusChildFormByType(Type formType)
         {
-            Form? existing = System.Windows.Forms.Application.OpenForms
+            Form? existingOpenForm = System.Windows.Forms.Application.OpenForms
                 .Cast<Form>()
                 .FirstOrDefault(f => f.GetType() == formType);
 
-            if (existing != null)
+            if (existingOpenForm != null)
             {
-                existing.WindowState = FormWindowState.Normal;
-                existing.BringToFront();
-                existing.Focus();
+                existingOpenForm.WindowState = FormWindowState.Normal;
+                existingOpenForm.BringToFront();
+                existingOpenForm.Focus();
                 return;
             }
 
-            var newForm = (Form)_serviceProvider.GetRequiredService(formType);
-            newForm.Show();
+            var newFormInstance = (Form)_serviceProvider.GetRequiredService(formType);
+            newFormInstance.Show();
         }
 
-        private static Image ResizeImage(Image original, int width, int height)
+        private static Image ResizeNavigationMenuIcon(Image original, int width, int height)
         {
             var resized = new Bitmap(width, height);
             using var g = Graphics.FromImage(resized);
@@ -351,7 +356,18 @@ namespace CompriaxSystem.WinFormsUI
 
         private void HoraFecha_Tick(object? sender, EventArgs e)
         {
-            lblHora.Text = DateTime.Now.ToString("HH:mm:ss");
+            labelClockTime.Text = DateTime.Now.ToString("HH:mm:ss");
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -8,7 +8,7 @@ namespace CompriaxSystem.WinFormsUI
     {
         private readonly ISupplyChainService _supplyChainService;
         private readonly IDocumentService _documentService;
-        private int _selectedSupplierId = 0;
+        private int _selectedSupplierIdentifier = 0;
 
         public FormSuppliers(ISupplyChainService supplyChainService, IDocumentService documentService)
         {
@@ -16,131 +16,156 @@ namespace CompriaxSystem.WinFormsUI
             _documentService = documentService;
             InitializeComponent();
 
+            ButtonIconOverlayHelper.BindEvents(this.buttonExportPdf, this.picIconExportPdf);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonEdit, this.picIconEdit);
+            ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
+
+
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(groupBoxData);
+            UIThemeHelper.ApplyCardStyle(panelSupplierForm);
 
-            this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
-            this.dgvSuppliers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dgvSuppliers, e);
+            this.textBoxTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxId);
+            this.dataGridViewSuppliers.CellFormatting += (s, e) => DataGridViewHelper.ColorRowsByStatus(dataGridViewSuppliers, e);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
-            this.btnExportPdf.Click += async (s, e) => await ExecuteExportPdfAction();
+            this.Load += async (s, e) => await InitializeSuppliersFormAsync();
+            this.buttonSave.Click += async (s, e) => await ExecuteSaveSupplierAsync();
+            this.buttonEdit.Click += async (s, e) => await ExecuteUpdateSupplierAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteDeleteSupplierAsync();
+            this.buttonExportPdf.Click += async (s, e) => await ExecuteExportSuppliersReportToPdfAsync();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializeSuppliersFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvSuppliers, SyncEntityToFields, ResetUI);
+                await RefreshSuppliersGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewSuppliers, SynchronizeSelectedSupplierToFormFields, ResetFormInputFields);
             }
         }
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshSuppliersGridAsync()
         {
-            var suppliers = await _supplyChainService.GetSuppliersAsync();
-            dgvSuppliers.DataSource = null;
-            dgvSuppliers.DataSource = suppliers.ToList();
-            UIHelper.FormatGrid(dgvSuppliers);
+            var suppliersList = await _supplyChainService.GetSuppliersAsync();
+            dataGridViewSuppliers.DataSource = null;
+            dataGridViewSuppliers.DataSource = suppliersList.ToList();
+            UIHelper.FormatGrid(dataGridViewSuppliers);
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedSupplierToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedSupplierToFormFields()
         {
-            if (dgvSuppliers.CurrentRow == null)
+            if (dataGridViewSuppliers.CurrentRow == null)
                 return;
 
-            var dto = (SupplierDto)dgvSuppliers.CurrentRow.DataBoundItem;
+            var supplier = (SupplierDto)dataGridViewSuppliers.CurrentRow.DataBoundItem;
 
-            _selectedSupplierId = dto.Id;
-            txtTaxId.Text = dto.CUIT;
-            txtCompanyName.Text = dto.CompanyName;
-            txtContact.Text = dto.ContactName;
-            txtEmail.Text = dto.Email;
-            txtPhone.Text = dto.Phone;
-            txtAddress.Text = dto.Address;
+            _selectedSupplierIdentifier = supplier.Id;
+            textBoxTaxId.Text = supplier.CUIT;
+            textBoxCompanyName.Text = supplier.CompanyName;
+            textBoxContactName.Text = supplier.ContactName;
+            textBoxEmail.Text = supplier.Email;
+            textBoxPhone.Text = supplier.Phone;
+            textBoxAddress.Text = supplier.Address;
 
-            SetButtonState(isEditing: true);
-            txtTaxId.ReadOnly = true;
+            UpdateButtonStates(isEditing: true);
+            textBoxTaxId.ReadOnly = true;
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveSupplier.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction()
+        private async Task ExecuteSaveSupplierAsync()
         {
-            var dto = MapFieldsToDto(0);
-            var result = await _supplyChainService.UpsertSupplierAsync(dto);
+            var supplier = MapFormInputFieldsToSupplierDto(0);
+            var operationResult = await _supplyChainService.UpsertSupplierAsync(supplier);
 
-            UIHelper.ShowResult(result, "Gestión de Proveedores", async () =>
+            UIHelper.ShowResult(operationResult, "Gestión de Proveedores", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshSuppliersGridAsync();
+                ResetFormInputFields();
             });
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UpdateSupplier.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteEditAction()
+        private async Task ExecuteUpdateSupplierAsync()
         {
-            if (_selectedSupplierId == 0)
+            if (_selectedSupplierIdentifier == 0)
                 return;
 
-            var dto = MapFieldsToDto(_selectedSupplierId);
-            var result = await _supplyChainService.UpsertSupplierAsync(dto);
+            var supplier = MapFormInputFieldsToSupplierDto(_selectedSupplierIdentifier);
+            var operationResult = await _supplyChainService.UpsertSupplierAsync(supplier);
 
-            UIHelper.ShowResult(result, "Gestión de Proveedores", async () =>
+            UIHelper.ShowResult(operationResult, "Gestión de Proveedores", async () =>
             {
-                await RefreshGridAsync();
-                ResetUI();
+                await RefreshSuppliersGridAsync();
+                ResetFormInputFields();
             });
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DeleteSupplier.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDeleteAction()
+        private async Task ExecuteDeleteSupplierAsync()
         {
-            if (_selectedSupplierId == 0)
+            if (_selectedSupplierIdentifier == 0)
                 return;
 
             if (UIHelper.ConfirmMessage("¿Desea eliminar este proveedor?"))
             {
-                var result = await _supplyChainService.DeleteSupplierAsync(_selectedSupplierId);
-                UIHelper.ShowResult(result, "Gestión de Proveedores", async () =>
+                var operationResult = await _supplyChainService.DeleteSupplierAsync(_selectedSupplierIdentifier);
+                UIHelper.ShowResult(operationResult, "Gestión de Proveedores", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshSuppliersGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedSupplierId = 0;
-            UIHelper.CleanControls(groupBoxData);
-            SetButtonState(isEditing: false);
-            txtTaxId.ReadOnly = false;
+            _selectedSupplierIdentifier = 0;
+            UIHelper.CleanControls(panelSupplierForm);
+            UpdateButtonStates(isEditing: false);
+            textBoxTaxId.ReadOnly = false;
         }
 
-        private void SetButtonState(bool isEditing)
+        private void UpdateButtonStates(bool isEditing)
         {
-            btnSave.Enabled = !isEditing;
-            btnEdit.Enabled = isEditing;
-            btnDelete.Enabled = isEditing;
+            buttonSave.Enabled = !isEditing;
+            buttonEdit.Enabled = isEditing;
+            buttonDelete.Enabled = isEditing;
         }
 
-        private SupplierDto MapFieldsToDto(int id)
+        private SupplierDto MapFormInputFieldsToSupplierDto(int id)
         {
             return new SupplierDto
             {
                 Id = id,
-                CUIT = txtTaxId.Text.Trim(),
-                CompanyName = txtCompanyName.Text.Trim(),
-                ContactName = txtContact.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Phone = txtPhone.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
+                CUIT = textBoxTaxId.Text.Trim(),
+                CompanyName = textBoxCompanyName.Text.Trim(),
+                ContactName = textBoxContactName.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
+                Phone = textBoxPhone.Text.Trim(),
+                Address = textBoxAddress.Text.Trim(),
                 IsActive = true
             };
         }
 
-        public async Task ExecuteExportPdfAction()
+        public async Task ExecuteExportSuppliersReportToPdfAsync()
         {
-            if (dgvSuppliers.DataSource is not List<SupplierDto> suppliers || !suppliers.Any())
+            if (dataGridViewSuppliers.DataSource is not List<SupplierDto> suppliersList || !suppliersList.Any())
             {
                 MessageBox.Show("No hay proveedores disponibles para exportar.", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
@@ -148,11 +173,26 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                byte[] pdfBytes = await _documentService.GenerateSuppliersReportAsync(suppliers);
-                string fileName = $"Reporte_Proveedores_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+                byte[] suppliersReportPdfBytes = await _documentService.GenerateSuppliersReportAsync(suppliersList);
+                string reportPdfFileName = $"Reporte_Proveedores_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
 
-                await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Exportar Reporte de Proveedores");
+                await FileExportHelper.SaveAndOpenPdfAsync(this, suppliersReportPdfBytes, reportPdfFileName, "Exportar Reporte de Proveedores");
             }
+        }
+
+        private void labelTitle_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

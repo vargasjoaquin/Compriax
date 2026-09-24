@@ -6,14 +6,8 @@ using CompriaxSystem.Application.Interfaces.Services;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class AuthService(
-        IUnitOfWork unitOfWork,
-        IPasswordHasher passwordHasher,
-        ICurrentUserService currentUserService,
-        IEmailService emailService,
-        IMapper mapper) : IAuthService
+    public class AuthService(IUnitOfWork unitOfWork, IPasswordHasher passwordHasher, ICurrentUserService currentUserService, IEmailService emailService, IMapper mapper) : IAuthService
     {
-
         /// <summary>
         /// Autentica a un usuario en el sistema verificando sus credenciales y estado de cuenta.
         /// </summary>
@@ -25,39 +19,39 @@ namespace CompriaxSystem.Application.Services
             if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 return OperationResult.Failure("Debe ingresar su nombre de usuario y contraseña.");
 
-            string cleanUsername = username.Trim();
-            string inputPassword = password.Trim();
+            string normalizedUsername = username.Trim();
+            string inputPassword = password;
 
             var allUsers = await unitOfWork.Users.GetAllAsync();
-            var user = allUsers.FirstOrDefault(u => u.Username.Equals(cleanUsername, StringComparison.OrdinalIgnoreCase) && !u.IsDeleted);
+            var user = allUsers.FirstOrDefault(u => u.Username.Equals(normalizedUsername, StringComparison.OrdinalIgnoreCase) && !u.IsDeleted);
 
             if (user == null)
-                return OperationResult.Failure($"El usuario '{cleanUsername}' no existe en el sistema.");
+                return OperationResult.Failure($"El usuario '{normalizedUsername}' no existe en el sistema.");
 
             if (!user.IsActive)
                 return OperationResult.Failure($"La cuenta del usuario '{user.Username}' se encuentra desactivada. Contacte a soporte.");
 
             string storedPassword = user.Password.Trim();
-            bool isValid = false;
+            bool isPasswordValid = false;
 
-            bool isBcryptHash = storedPassword.StartsWith("$2");
+            bool isBcryptPassword = storedPassword.StartsWith("$2");
 
-            if (isBcryptHash)
+            if (isBcryptPassword)
             {
                 try
                 {
-                    isValid = passwordHasher.Verify(inputPassword, storedPassword);
+                    isPasswordValid = passwordHasher.Verify(inputPassword, storedPassword);
                 }
                 catch
                 {
-                    isValid = false;
+                    isPasswordValid = false;
                 }
             }
             else
             {
-                isValid = string.Equals(inputPassword, storedPassword, StringComparison.Ordinal);
+                isPasswordValid = string.Equals(inputPassword, storedPassword, StringComparison.Ordinal);
 
-                if (isValid)
+                if (isPasswordValid)
                 {
                     user.Password = passwordHasher.Hash(inputPassword);
                     unitOfWork.Users.Update(user);
@@ -65,7 +59,7 @@ namespace CompriaxSystem.Application.Services
                 }
             }
 
-            if (!isValid)
+            if (!isPasswordValid)
             {
                 return OperationResult.Failure("Contraseña incorrecta. Verifique sus credenciales.");
             }
@@ -87,15 +81,15 @@ namespace CompriaxSystem.Application.Services
             if (string.IsNullOrWhiteSpace(identity))
                 return OperationResult.Failure("Debe ingresar un nombre de usuario o correo electrónico.");
 
-            string clientIdenity = identity.Trim();
+            string normalizedLoginIdentifier = identity.Trim();
             var allUsers = await unitOfWork.Users.GetAllAsync();
             
             var user = allUsers.FirstOrDefault(u =>
-                (u.Username.Equals(clientIdenity, StringComparison.OrdinalIgnoreCase) ||
-                 (u.Email != null && u.Email.Equals(clientIdenity, StringComparison.OrdinalIgnoreCase))) && !u.IsDeleted);
+                (u.Username.Equals(normalizedLoginIdentifier, StringComparison.OrdinalIgnoreCase) ||
+                 (u.Email != null && u.Email.Equals(normalizedLoginIdentifier, StringComparison.OrdinalIgnoreCase))) && !u.IsDeleted);
 
             if (user == null)
-                return OperationResult.Failure($"No se encontró ninguna cuenta activa vinculada a '{clientIdenity}'.");
+                return OperationResult.Failure($"No se encontró ninguna cuenta activa vinculada a '{normalizedLoginIdentifier}'.");
 
             if(string.IsNullOrWhiteSpace(user.Email))
                 return OperationResult.Failure($"El usuario '{user.Username}' no posee un correo electrónico registrado en elsistema. Debe solicitar el blanqueo directamente al Administrador.");
@@ -107,12 +101,12 @@ namespace CompriaxSystem.Application.Services
             user.LastUpdatedBy = "AutoRecovery";
 
             unitOfWork.Users.Update(user);
-            bool updateToDatabase = await unitOfWork.CompleteAsync();
+            bool databaseUpdateSucceeded = await unitOfWork.CompleteAsync();
 
-            if (!updateToDatabase)
+            if (!databaseUpdateSucceeded)
                 return OperationResult.Failure("No se pudo actualizar la credencial temporal en la base de datos.");
 
-            string maskedEmail = MaskEmail(user.Email);
+            string maskedEmailAddress = MaskEmail(user.Email);
             string emailBody = $@"
                 <div style='font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;'>
                     <h2 style='color: #0284c7;'>Compriax POS — Restablecimiento de Credenciales</h2>
@@ -129,14 +123,14 @@ namespace CompriaxSystem.Application.Services
 
             try
             {
-                await emailService.SendEmailAsync(user.Email, "Restablecimiento de Contraseña — Compriax POS", emailBody);
+                await emailService.SendEmailAsync(user.Email, "Restablecimiento de Contraseña — Compriax", emailBody);
             }
             catch (Exception ex)
             {
                 return OperationResult.Ok($"Se generó tu clave temporal: '{temporaryPassword}'. (Aviso: No se pudo enviar el correo SMTP: {ex.Message})");
             }
 
-            return OperationResult.Ok($"¡Contraseña temporal generada con éxito! Se ha enviado a tu correo registrado: {maskedEmail}. Inicia sesión con la clave recibida y cámbiala desde 'Mi Perfil'.");
+            return OperationResult.Ok($"¡Contraseña temporal generada con éxito! Se ha enviado a tu correo registrado: {maskedEmailAddress}. Inicia sesión con la clave recibida y cámbiala desde 'Mi Perfil'.");
         }
 
         /// <summary>
@@ -148,30 +142,41 @@ namespace CompriaxSystem.Application.Services
             currentUserService.OperationalContext = null;
         }
 
+        /// <summary>
+        /// Genera una contraseña temporal aleatoria.
+        /// </summary>
+        /// <returns>Una contraseña temporal generada aleatoriamente.</returns>
         private static string GenerateTemporaryPassword()
         {
-            const string upper = "ABCDEFGHJKLMNPQRSTUVWXYZ";
-            const string numbers = "23456789";
-            var random = new Random();
+            const string uppercaseCharacters = "ABCDEFGHJKLMNPQRSTUVWXYZ";
+            const string numericCharacters = "23456789";
+            
+            var randomGenerator = new Random();
 
-            var part1 = new string(Enumerable.Range(0, 4).Select(_ => upper[random.Next(upper.Length)]).ToArray());
-            var part2 = new string(Enumerable.Range(0, 4).Select(_ => numbers[random.Next(numbers.Length)]).ToArray());
+            var randomLetters = new string(Enumerable.Range(0, 4).Select(_ => uppercaseCharacters[randomGenerator.Next(uppercaseCharacters.Length)]).ToArray()); 
+            var randomNumbers = new string(Enumerable.Range(0, 4).Select(_ => numericCharacters[randomGenerator.Next(numericCharacters.Length)]).ToArray());
 
-            return $"CPX#{part1}{part2}";
+            return $"CPX#{randomLetters}{randomNumbers}";
         }
 
+        /// <summary>
+        /// Oculta parcialmente el nombre de usuario de una dirección de correo electrónico para proteger su privacidad.
+        /// </summary>
+        /// <param name="email">Correo electrónico que se desea enmascarar.</param>
+        /// <returns>Correo electrónico con su nombre de usuario parcialmente oculto.</returns>
         private static string MaskEmail(string email)
         {
-            var parts = email.Split('@');
+            var emailParts = email.Split('@');
             
-            if (parts.Length != 2) 
+            if (emailParts.Length != 2) 
                 return email;
 
-            string name = parts[0];
-            string domain = parts[1];
+            string emailUsername = emailParts[0];
+            string emailDomain = emailParts[1];
 
-            string maskedName = name.Length <= 2 ? name + "***" : name.Substring(0, 2) + new string('*', name.Length - 2);
-            return $"{maskedName}@{domain}";
+            string maskedEmailUsername = emailUsername.Length <= 2 ? emailUsername + "***" : emailUsername.Substring(0, 2) + new string('*', emailUsername.Length - 2);
+
+            return $"{maskedEmailUsername}@{emailDomain}";
         }
     }
 }

@@ -2,6 +2,7 @@
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 
 namespace CompriaxSystem.Application.Services
 {
@@ -22,7 +23,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(p => new DeletedItemDto
                     {
                         Id = p.Id,
-                        EntityType = "Productos",
+                        EntityType = EntityNamesConstants.PRODUCTS,
                         Identifier = p.Barcode,
                         Name = p.Name,
                         AdditionalInfo = p.Category?.Name,
@@ -34,7 +35,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(c => new DeletedItemDto
                     {
                         Id = c.Id,
-                        EntityType = "Clientes",
+                        EntityType = EntityNamesConstants.CUSTOMERS,
                         Identifier = c.DocumentNumber,
                         Name = $"{c.LastName} {c.FirstName}",
                         AdditionalInfo = c.TaxCondition?.Name ?? string.Empty,
@@ -46,7 +47,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(s => new DeletedItemDto
                     {
                         Id = s.Id,
-                        EntityType = "Proveedores",
+                        EntityType = EntityNamesConstants.SUPPLIERS,
                         Identifier = s.CUIT,
                         Name = s.CompanyName,
                         AdditionalInfo = s.ContactName,
@@ -58,7 +59,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(u => new DeletedItemDto
                     {
                         Id = u.Id,
-                        EntityType = "Usuarios",
+                        EntityType = EntityNamesConstants.USERS,
                         Identifier = u.Username,
                         Name = $"{u.FirstName} {u.LastName}".Trim(),
                         AdditionalInfo = u.Role?.Name,
@@ -70,7 +71,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(e => new DeletedItemDto
                     {
                         Id = e.Id,
-                        EntityType = "Empleados",
+                        EntityType = EntityNamesConstants.EMPLOYEES,
                         Identifier = e.EmployeeCode,
                         Name = $"{e.LastName} {e.FirstName}".Trim(),
                         AdditionalInfo = e.Position?.Name,
@@ -82,7 +83,7 @@ namespace CompriaxSystem.Application.Services
                     .Select(c => new DeletedItemDto
                     {
                         Id = c.Id,
-                        EntityType = "Categorías",
+                        EntityType = EntityNamesConstants.CATEGORIES,
                         Identifier = c.Id.ToString(),
                         Name = c.Name,
                         AdditionalInfo = c.Description,
@@ -102,12 +103,14 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado de la restauración.</returns>
         public async Task<OperationResult> RestoreEntityAsync(string entityType, int id)
         {
-            string currentUsername = currentUserService.CurrentUser!.Username;
+            string currentUsername = currentUserService.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
 
             switch (entityType.ToUpperInvariant())
             {
                 case "PRODUCTOS":
+                    
                     var product = await unitOfWork.Products.GetDeletedByIdAsync(id);
+                    
                     if (product == null)
                         return OperationResult.Failure("Producto no encontrado en la papelera.");
 
@@ -119,7 +122,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "CLIENTES":
+                    
                     var customer = await unitOfWork.Customers.GetDeletedByIdAsync(id);
+                    
                     if (customer == null)
                         return OperationResult.Failure("Cliente no encontrado en la papelera.");
 
@@ -131,7 +136,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "PROVEEDORES":
+                    
                     var supplier = await unitOfWork.Suppliers.GetDeletedByIdAsync(id);
+                    
                     if (supplier == null)
                         return OperationResult.Failure("Proveedor no encontrado en la papelera.");
 
@@ -143,7 +150,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "USUARIOS":
+                    
                     var user = await unitOfWork.Users.GetDeletedByIdAsync(id);
+                    
                     if (user == null)
                         return OperationResult.Failure("Usuario no encontrado en la papelera.");
 
@@ -155,7 +164,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "EMPLEADOS":
+                    
                     var employee = await unitOfWork.Employees.GetDeletedByIdAsync(id);
+                    
                     if (employee == null)
                         return OperationResult.Failure("Empleado no encontrado en la papelera.");
 
@@ -167,7 +178,9 @@ namespace CompriaxSystem.Application.Services
                     break;
 
                 case "CATEGORÍAS":
+                    
                     var category = await unitOfWork.Categories.GetDeletedByIdAsync(id);
+                    
                     if (category == null)
                         return OperationResult.Failure("Categoría no encontrada en la papelera.");
 

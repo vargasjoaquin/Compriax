@@ -1,4 +1,6 @@
-﻿namespace CompriaxSystem.WinFormsUI.Helpers
+﻿using System.Runtime.InteropServices;
+
+namespace CompriaxSystem.WinFormsUI.Helpers
 {
     public static class UIThemeHelper
     {
@@ -53,12 +55,56 @@
         }
 
         // ==========================================
-        // 4. ESTILIZADO DE CONTROLES
+        // 4. GESTIÓN DEL ICONO OFICIAL
         // ==========================================
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern bool DestroyIcon(IntPtr handle);
+
+        private static Icon? _cachedAppIcon = null;
+
+        /// <summary>
+        /// Obtiene el icono oficial de la aplicación generado en memoria a partir del recurso institucional.
+        /// </summary>
+        public static Icon? GetAppIcon()
+        {
+            if (_cachedAppIcon != null)
+                return _cachedAppIcon;
+
+            try
+            {
+                if (Resources.logo_compriax != null)
+                {
+                    IntPtr hIcon = Resources.logo_compriax.GetHicon();
+                    using var tempIcon = Icon.FromHandle(hIcon);
+                    _cachedAppIcon = (Icon)tempIcon.Clone();
+                    DestroyIcon(hIcon);
+                    return _cachedAppIcon;
+                }
+            }
+            catch
+            {
+            }
+
+            return null;
+        }
+
+        // ==========================================
+        // 5. ESTILIZADO GLOBAL DE FORMULARIOS
+        // ==========================================
+        /// <summary>
+        /// Aplica fondo, tipografía institucional e icono oficial de ventana a cualquier formulario.
+        /// </summary>
         public static void ApplyFormStyle(Form form)
         {
             form.BackColor = Background;
             form.Font = FontBody;
+
+            var appIcon = GetAppIcon();
+            if (appIcon != null)
+            {
+                form.Icon = appIcon;
+                form.ShowIcon = true;
+            }
         }
 
         public static void ApplyCardStyle(Panel pnl)
@@ -88,4 +134,3 @@
         }
     }
 }
-

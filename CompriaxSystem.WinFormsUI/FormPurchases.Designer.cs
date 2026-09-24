@@ -14,479 +14,567 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            pnlLeftWork = new Panel();
-            dgvCart = new DataGridView();
-            pnlScannerBar = new Panel();
-            lblCodProd = new Label();
-            txtProductCode = new TextBox();
-            btnSearchProduct = new Button();
-            lblProdName = new Label();
-            txtProductName = new TextBox();
-            lblPreCom = new Label();
-            txtPriceBuy = new TextBox();
-            lblCant = new Label();
-            numQuantity = new NumericUpDown();
-            btnAddItem = new Button();
-            btnRemoveItem = new Button();
-            gbSaleInfo = new Panel();
-            lblFecha = new Label();
-            txtDate = new TextBox();
-            lblTipoDoc = new Label();
-            cboDocType = new ComboBox();
-            lblInvoice = new Label();
-            txtInvoiceNumber = new TextBox();
-            lblDni = new Label();
-            txtSupplierDoc = new TextBox();
-            btnSearchSupplier = new Button();
-            lblRazonSocial = new Label();
-            txtSupplierName = new TextBox();
-            txtIdProveedor = new TextBox();
-            pnlRightSummary = new Panel();
-            lblSummaryTitle = new Label();
-            lblPaymentMethod = new Label();
-            cboPaymentMethod = new ComboBox();
-            lblTotalLabel = new Label();
-            txtTotalPay = new TextBox();
-            btnRegister = new Button();
-            picWebcam = new PictureBox();
-            btnToggleCam = new Button();
-            pnlHeader.SuspendLayout();
-            pnlLeftWork.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCart).BeginInit();
-            pnlScannerBar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).BeginInit();
-            gbSaleInfo.SuspendLayout();
-            pnlRightSummary.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picWebcam).BeginInit();
+            picIconSearchSupplier = new PictureBox();
+            picIconSearchProduct = new PictureBox();
+            picIconAddPurchaseItem = new PictureBox();
+            picIconRemovePurchaseItem = new PictureBox();
+            picIconRegisterPurchase = new PictureBox();
+            picIconToggleScannerCamera = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            panelLeftWork = new Panel();
+            dataGridViewPurchaseCart = new DataGridView();
+            panelScannerItemBar = new Panel();
+            labelBarcodePrompt = new Label();
+            textBoxProductBarcode = new TextBox();
+            buttonSearchProduct = new Button();
+            labelProductName = new Label();
+            textBoxProductName = new TextBox();
+            labelBuyPrice = new Label();
+            textBoxBuyPrice = new TextBox();
+            labelQuantityPrompt = new Label();
+            numericUpDownQuantity = new NumericUpDown();
+            buttonAddPurchaseItem = new Button();
+            buttonRemovePurchaseItem = new Button();
+            panelPurchaseHeaderInfo = new Panel();
+            labelDate = new Label();
+            textBoxDate = new TextBox();
+            labelDocumentType = new Label();
+            comboBoxDocumentType = new ComboBox();
+            labelInvoiceNumber = new Label();
+            textBoxInvoiceNumber = new TextBox();
+            labelSupplierTaxId = new Label();
+            textBoxSupplierTaxId = new TextBox();
+            buttonSearchSupplier = new Button();
+            labelSupplierName = new Label();
+            textBoxSupplierName = new TextBox();
+            textBoxSupplierIdHidden = new TextBox();
+            panelRightSummary = new Panel();
+            labelSummaryTitle = new Label();
+            labelPaymentMethod = new Label();
+            comboBoxPaymentMethod = new ComboBox();
+            labelTotalPrompt = new Label();
+            textBoxTotalAmount = new TextBox();
+            buttonRegisterPurchase = new Button();
+            pictureBoxWebcamPreview = new PictureBox();
+            buttonToggleScannerCamera = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconSearchSupplier).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSearchProduct).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconAddPurchaseItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRemovePurchaseItem).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRegisterPurchase).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleScannerCamera).BeginInit();
+            panelHeader.SuspendLayout();
+            panelLeftWork.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseCart).BeginInit();
+            panelScannerItemBar.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).BeginInit();
+            panelPurchaseHeaderInfo.SuspendLayout();
+            panelRightSummary.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
-            // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1350, 56);
-            pnlHeader.TabIndex = 0;
-            // 
-            // lblTitle
-            // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 16);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(551, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "INGRESO DE MERCADERÍA / COMPRA DE STOCK";
-            // 
-            // pnlLeftWork
-            // 
-            pnlLeftWork.BackColor = Color.FromArgb(248, 250, 252);
-            pnlLeftWork.Controls.Add(dgvCart);
-            pnlLeftWork.Controls.Add(pnlScannerBar);
-            pnlLeftWork.Controls.Add(gbSaleInfo);
-            pnlLeftWork.Dock = DockStyle.Fill;
-            pnlLeftWork.Location = new Point(0, 56);
-            pnlLeftWork.Name = "pnlLeftWork";
-            pnlLeftWork.Padding = new Padding(16, 12, 8, 16);
-            pnlLeftWork.Size = new Size(990, 694);
-            pnlLeftWork.TabIndex = 1;
-            // 
-            // dgvCart
-            // 
-            dgvCart.BackgroundColor = Color.White;
-            dgvCart.BorderStyle = BorderStyle.None;
-            dgvCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCart.Dock = DockStyle.Fill;
-            dgvCart.Location = new Point(16, 198);
-            dgvCart.Name = "dgvCart";
-            dgvCart.RowHeadersWidth = 51;
-            dgvCart.Size = new Size(966, 480);
-            dgvCart.TabIndex = 2;
-            // 
-            // pnlScannerBar
-            // 
-            pnlScannerBar.BackColor = Color.White;
-            pnlScannerBar.Controls.Add(lblCodProd);
-            pnlScannerBar.Controls.Add(txtProductCode);
-            pnlScannerBar.Controls.Add(btnSearchProduct);
-            pnlScannerBar.Controls.Add(lblProdName);
-            pnlScannerBar.Controls.Add(txtProductName);
-            pnlScannerBar.Controls.Add(lblPreCom);
-            pnlScannerBar.Controls.Add(txtPriceBuy);
-            pnlScannerBar.Controls.Add(lblCant);
-            pnlScannerBar.Controls.Add(numQuantity);
-            pnlScannerBar.Controls.Add(btnAddItem);
-            pnlScannerBar.Controls.Add(btnRemoveItem);
-            pnlScannerBar.Dock = DockStyle.Top;
-            pnlScannerBar.Location = new Point(16, 97);
-            pnlScannerBar.Name = "pnlScannerBar";
-            pnlScannerBar.Size = new Size(966, 101);
-            pnlScannerBar.TabIndex = 1;
-            // 
-            // lblCodProd
-            // 
-            lblCodProd.AutoSize = true;
-            lblCodProd.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblCodProd.Location = new Point(10, 22);
-            lblCodProd.Name = "lblCodProd";
-            lblCodProd.Size = new Size(93, 20);
-            lblCodProd.TabIndex = 0;
-            lblCodProd.Text = "Cod. Barras:";
-            // 
-            // txtProductCode
-            // 
-            txtProductCode.BorderStyle = BorderStyle.FixedSingle;
-            txtProductCode.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            txtProductCode.Location = new Point(10, 45);
-            txtProductCode.Name = "txtProductCode";
-            txtProductCode.Size = new Size(150, 30);
-            txtProductCode.TabIndex = 1;
-            // 
-            // btnSearchProduct
-            // 
-            btnSearchProduct.FlatStyle = FlatStyle.Flat;
-            btnSearchProduct.Location = new Point(166, 36);
-            btnSearchProduct.Name = "btnSearchProduct";
-            btnSearchProduct.Size = new Size(47, 47);
-            btnSearchProduct.TabIndex = 2;
-            btnSearchProduct.Text = "";
-            btnSearchProduct.UseVisualStyleBackColor = true;
-            // 
-            // lblProdName
-            // 
-            lblProdName.AutoSize = true;
-            lblProdName.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblProdName.Location = new Point(219, 22);
-            lblProdName.Name = "lblProdName";
-            lblProdName.Size = new Size(77, 20);
-            lblProdName.TabIndex = 3;
-            lblProdName.Text = "Producto:";
-            // 
-            // txtProductName
-            // 
-            txtProductName.BorderStyle = BorderStyle.FixedSingle;
-            txtProductName.Font = new Font("Segoe UI", 10F);
-            txtProductName.Location = new Point(219, 45);
-            txtProductName.Name = "txtProductName";
-            txtProductName.ReadOnly = true;
-            txtProductName.Size = new Size(200, 30);
-            txtProductName.TabIndex = 4;
-            // 
-            // lblPreCom
-            // 
-            lblPreCom.AutoSize = true;
-            lblPreCom.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPreCom.Location = new Point(424, 22);
-            lblPreCom.Name = "lblPreCom";
-            lblPreCom.Size = new Size(125, 20);
-            lblPreCom.TabIndex = 5;
-            lblPreCom.Text = "$ Costo Compra:";
-            // 
-            // txtPriceBuy
-            // 
-            txtPriceBuy.BorderStyle = BorderStyle.FixedSingle;
-            txtPriceBuy.Font = new Font("Segoe UI", 10F);
-            txtPriceBuy.Location = new Point(425, 45);
-            txtPriceBuy.Name = "txtPriceBuy";
-            txtPriceBuy.Size = new Size(126, 30);
-            txtPriceBuy.TabIndex = 6;
-            // 
-            // lblCant
-            // 
-            lblCant.AutoSize = true;
-            lblCant.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblCant.Location = new Point(575, 22);
-            lblCant.Name = "lblCant";
-            lblCant.Size = new Size(75, 20);
-            lblCant.TabIndex = 7;
-            lblCant.Text = "Cantidad:";
-            // 
-            // numQuantity
-            // 
-            numQuantity.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            numQuantity.Location = new Point(575, 45);
-            numQuantity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
-            numQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            numQuantity.Name = "numQuantity";
-            numQuantity.Size = new Size(80, 30);
-            numQuantity.TabIndex = 8;
-            numQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
-            // 
-            // btnAddItem
-            // 
-            btnAddItem.BackColor = Color.FromArgb(2, 132, 199);
-            btnAddItem.FlatAppearance.BorderSize = 0;
-            btnAddItem.FlatStyle = FlatStyle.Flat;
-            btnAddItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnAddItem.ForeColor = Color.White;
-            btnAddItem.Location = new Point(665, 25);
-            btnAddItem.Name = "btnAddItem";
-            btnAddItem.Size = new Size(136, 56);
-            btnAddItem.TabIndex = 9;
-            btnAddItem.Text = "AGREGAR";
-            btnAddItem.UseVisualStyleBackColor = false;
-            // 
-            // btnRemoveItem
-            // 
-            btnRemoveItem.BackColor = Color.FromArgb(239, 68, 68);
-            btnRemoveItem.FlatAppearance.BorderSize = 0;
-            btnRemoveItem.FlatStyle = FlatStyle.Flat;
-            btnRemoveItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnRemoveItem.ForeColor = Color.White;
-            btnRemoveItem.Location = new Point(807, 25);
-            btnRemoveItem.Name = "btnRemoveItem";
-            btnRemoveItem.Size = new Size(141, 56);
-            btnRemoveItem.TabIndex = 10;
-            btnRemoveItem.Text = "QUITAR [SUPR]";
-            btnRemoveItem.UseVisualStyleBackColor = false;
-            // 
-            // gbSaleInfo
-            // 
-            gbSaleInfo.BackColor = Color.White;
-            gbSaleInfo.Controls.Add(lblFecha);
-            gbSaleInfo.Controls.Add(txtDate);
-            gbSaleInfo.Controls.Add(lblTipoDoc);
-            gbSaleInfo.Controls.Add(cboDocType);
-            gbSaleInfo.Controls.Add(lblInvoice);
-            gbSaleInfo.Controls.Add(txtInvoiceNumber);
-            gbSaleInfo.Controls.Add(lblDni);
-            gbSaleInfo.Controls.Add(txtSupplierDoc);
-            gbSaleInfo.Controls.Add(btnSearchSupplier);
-            gbSaleInfo.Controls.Add(lblRazonSocial);
-            gbSaleInfo.Controls.Add(txtSupplierName);
-            gbSaleInfo.Controls.Add(txtIdProveedor);
-            gbSaleInfo.Dock = DockStyle.Top;
-            gbSaleInfo.Location = new Point(16, 12);
-            gbSaleInfo.Name = "gbSaleInfo";
-            gbSaleInfo.Size = new Size(966, 85);
-            gbSaleInfo.TabIndex = 0;
-            // 
-            // lblFecha
-            // 
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblFecha.Location = new Point(12, 12);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(53, 20);
-            lblFecha.TabIndex = 0;
-            lblFecha.Text = "Fecha:";
-            // 
-            // txtDate
-            // 
-            txtDate.BorderStyle = BorderStyle.FixedSingle;
-            txtDate.Font = new Font("Segoe UI", 10F);
-            txtDate.Location = new Point(12, 32);
-            txtDate.Name = "txtDate";
-            txtDate.ReadOnly = true;
-            txtDate.Size = new Size(100, 30);
-            txtDate.TabIndex = 1;
-            // 
-            // lblTipoDoc
-            // 
-            lblTipoDoc.AutoSize = true;
-            lblTipoDoc.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblTipoDoc.Location = new Point(122, 12);
-            lblTipoDoc.Name = "lblTipoDoc";
-            lblTipoDoc.Size = new Size(75, 20);
-            lblTipoDoc.TabIndex = 2;
-            lblTipoDoc.Text = "Tipo Doc:";
-            // 
-            // cboDocType
-            // 
-            cboDocType.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboDocType.Font = new Font("Segoe UI", 10F);
-            cboDocType.Location = new Point(122, 32);
-            cboDocType.Name = "cboDocType";
-            cboDocType.Size = new Size(120, 31);
-            cboDocType.TabIndex = 3;
-            // 
-            // lblInvoice
-            // 
-            lblInvoice.AutoSize = true;
-            lblInvoice.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblInvoice.Location = new Point(252, 12);
-            lblInvoice.Name = "lblInvoice";
-            lblInvoice.Size = new Size(87, 20);
-            lblInvoice.TabIndex = 4;
-            lblInvoice.Text = "N° Factura:";
-            // 
-            // txtInvoiceNumber
-            // 
-            txtInvoiceNumber.BorderStyle = BorderStyle.FixedSingle;
-            txtInvoiceNumber.Font = new Font("Segoe UI", 10F);
-            txtInvoiceNumber.Location = new Point(252, 32);
-            txtInvoiceNumber.Name = "txtInvoiceNumber";
-            txtInvoiceNumber.Size = new Size(130, 30);
-            txtInvoiceNumber.TabIndex = 5;
-            // 
-            // lblDni
-            // 
-            lblDni.AutoSize = true;
-            lblDni.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblDni.Location = new Point(395, 12);
-            lblDni.Name = "lblDni";
-            lblDni.Size = new Size(124, 20);
-            lblDni.TabIndex = 6;
-            lblDni.Text = "CUIT Proveedor:";
-            // 
-            // txtSupplierDoc
-            // 
-            txtSupplierDoc.BorderStyle = BorderStyle.FixedSingle;
-            txtSupplierDoc.Font = new Font("Segoe UI", 10F);
-            txtSupplierDoc.Location = new Point(395, 32);
-            txtSupplierDoc.Name = "txtSupplierDoc";
-            txtSupplierDoc.Size = new Size(130, 30);
-            txtSupplierDoc.TabIndex = 7;
-            // 
-            // btnSearchSupplier
-            // 
-            btnSearchSupplier.FlatStyle = FlatStyle.Flat;
-            btnSearchSupplier.Location = new Point(531, 26);
-            btnSearchSupplier.Name = "btnSearchSupplier";
-            btnSearchSupplier.Size = new Size(76, 43);
-            btnSearchSupplier.TabIndex = 8;
-            btnSearchSupplier.Text = "";
-            btnSearchSupplier.UseVisualStyleBackColor = true;
-            // 
-            // lblRazonSocial
-            // 
-            lblRazonSocial.AutoSize = true;
-            lblRazonSocial.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblRazonSocial.Location = new Point(613, 12);
-            lblRazonSocial.Name = "lblRazonSocial";
-            lblRazonSocial.Size = new Size(100, 20);
-            lblRazonSocial.TabIndex = 9;
-            lblRazonSocial.Text = "Razón Social:";
-            // 
-            // txtSupplierName
-            // 
-            txtSupplierName.BorderStyle = BorderStyle.FixedSingle;
-            txtSupplierName.Font = new Font("Segoe UI", 10F);
-            txtSupplierName.Location = new Point(613, 34);
-            txtSupplierName.Name = "txtSupplierName";
-            txtSupplierName.ReadOnly = true;
-            txtSupplierName.Size = new Size(306, 30);
-            txtSupplierName.TabIndex = 10;
-            // 
-            // txtIdProveedor
-            // 
-            txtIdProveedor.Location = new Point(894, 4);
-            txtIdProveedor.Name = "txtIdProveedor";
-            txtIdProveedor.Size = new Size(25, 27);
-            txtIdProveedor.TabIndex = 11;
-            txtIdProveedor.Visible = false;
-            // 
-            // pnlRightSummary
-            // 
-            pnlRightSummary.BackColor = Color.White;
-            pnlRightSummary.Controls.Add(lblSummaryTitle);
-            pnlRightSummary.Controls.Add(lblPaymentMethod);
-            pnlRightSummary.Controls.Add(cboPaymentMethod);
-            pnlRightSummary.Controls.Add(lblTotalLabel);
-            pnlRightSummary.Controls.Add(txtTotalPay);
-            pnlRightSummary.Controls.Add(btnRegister);
-            pnlRightSummary.Controls.Add(picWebcam);
-            pnlRightSummary.Controls.Add(btnToggleCam);
-            pnlRightSummary.Dock = DockStyle.Right;
-            pnlRightSummary.Location = new Point(990, 56);
-            pnlRightSummary.Name = "pnlRightSummary";
-            pnlRightSummary.Padding = new Padding(16);
-            pnlRightSummary.Size = new Size(360, 694);
-            pnlRightSummary.TabIndex = 2;
-            // 
-            // lblSummaryTitle
-            // 
-            lblSummaryTitle.AutoSize = true;
-            lblSummaryTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblSummaryTitle.Location = new Point(16, 16);
-            lblSummaryTitle.Name = "lblSummaryTitle";
-            lblSummaryTitle.Size = new Size(245, 30);
-            lblSummaryTitle.TabIndex = 0;
-            lblSummaryTitle.Text = "TOTAL DE LA COMPRA";
-            // 
-            // lblPaymentMethod
-            // 
-            lblPaymentMethod.AutoSize = true;
-            lblPaymentMethod.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblPaymentMethod.Location = new Point(16, 56);
-            lblPaymentMethod.Name = "lblPaymentMethod";
-            lblPaymentMethod.Size = new Size(117, 20);
-            lblPaymentMethod.TabIndex = 1;
-            lblPaymentMethod.Text = "Medio de Pago:";
-            // 
-            // cboPaymentMethod
-            // 
-            cboPaymentMethod.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboPaymentMethod.Font = new Font("Segoe UI", 10F);
-            cboPaymentMethod.Location = new Point(16, 76);
-            cboPaymentMethod.Name = "cboPaymentMethod";
-            cboPaymentMethod.Size = new Size(328, 31);
-            cboPaymentMethod.TabIndex = 2;
-            // 
-            // lblTotalLabel
-            // 
-            lblTotalLabel.AutoSize = true;
-            lblTotalLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblTotalLabel.Location = new Point(16, 120);
-            lblTotalLabel.Name = "lblTotalLabel";
-            lblTotalLabel.Size = new Size(153, 21);
-            lblTotalLabel.TabIndex = 3;
-            lblTotalLabel.Text = "Total de la Factura:";
-            // 
-            // txtTotalPay
-            // 
-            txtTotalPay.BackColor = Color.FromArgb(248, 250, 252);
-            txtTotalPay.BorderStyle = BorderStyle.FixedSingle;
-            txtTotalPay.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
-            txtTotalPay.ForeColor = Color.FromArgb(16, 185, 129);
-            txtTotalPay.Location = new Point(16, 142);
-            txtTotalPay.Name = "txtTotalPay";
-            txtTotalPay.ReadOnly = true;
-            txtTotalPay.Size = new Size(328, 47);
-            txtTotalPay.TabIndex = 4;
-            txtTotalPay.Text = "$ 0,00";
-            txtTotalPay.TextAlign = HorizontalAlignment.Right;
-            // 
-            // btnRegister
-            // 
-            btnRegister.BackColor = Color.FromArgb(16, 185, 129);
-            btnRegister.FlatAppearance.BorderSize = 0;
-            btnRegister.FlatStyle = FlatStyle.Flat;
-            btnRegister.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            btnRegister.ForeColor = Color.White;
-            btnRegister.Location = new Point(16, 200);
-            btnRegister.Name = "btnRegister";
-            btnRegister.Size = new Size(328, 60);
-            btnRegister.TabIndex = 5;
-            btnRegister.Text = "REGISTRAR COMPRA";
-            btnRegister.UseVisualStyleBackColor = false;
-            // 
-            // picWebcam
-            // 
-            picWebcam.BackColor = Color.Black;
-            picWebcam.BorderStyle = BorderStyle.FixedSingle;
-            picWebcam.Location = new Point(16, 280);
-            picWebcam.Name = "picWebcam";
-            picWebcam.Size = new Size(328, 160);
-            picWebcam.SizeMode = PictureBoxSizeMode.Zoom;
-            picWebcam.TabIndex = 6;
-            picWebcam.TabStop = false;
-            // 
-            // btnToggleCam
-            // 
-            btnToggleCam.FlatStyle = FlatStyle.Flat;
-            btnToggleCam.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnToggleCam.Location = new Point(16, 450);
-            btnToggleCam.Name = "btnToggleCam";
-            btnToggleCam.Size = new Size(328, 36);
-            btnToggleCam.TabIndex = 7;
-            btnToggleCam.Text = "ENCENDER CÁMARA";
-            btnToggleCam.UseVisualStyleBackColor = true;
+            // picIconSearchSupplier
+            // 
+            picIconSearchSupplier.BackColor = Color.FromArgb(255, 255, 255);
+            picIconSearchSupplier.Cursor = Cursors.Hand;
+            picIconSearchSupplier.Image = Resources._080_buscar;
+            picIconSearchSupplier.Location = new Point(531, 26);
+            picIconSearchSupplier.Name = "picIconSearchSupplier";
+            picIconSearchSupplier.Size = new Size(76, 43);
+            picIconSearchSupplier.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSearchSupplier.TabIndex = 99;
+            picIconSearchSupplier.TabStop = false;
+            // 
+            // picIconSearchProduct
+            // 
+            picIconSearchProduct.BackColor = Color.FromArgb(255, 255, 255);
+            picIconSearchProduct.Cursor = Cursors.Hand;
+            picIconSearchProduct.Image = Resources._080_buscar;
+            picIconSearchProduct.Location = new Point(166, 36);
+            picIconSearchProduct.Name = "picIconSearchProduct";
+            picIconSearchProduct.Size = new Size(47, 47);
+            picIconSearchProduct.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSearchProduct.TabIndex = 99;
+            picIconSearchProduct.TabStop = false;
+            // 
+            // picIconAddPurchaseItem
+            // 
+            picIconAddPurchaseItem.BackColor = Color.FromArgb(2, 132, 199);
+            picIconAddPurchaseItem.Cursor = Cursors.Hand;
+            picIconAddPurchaseItem.Image = Resources._075_ingreso_manual;
+            picIconAddPurchaseItem.Location = new Point(665, 25);
+            picIconAddPurchaseItem.Name = "picIconAddPurchaseItem";
+            picIconAddPurchaseItem.Size = new Size(30, 56);
+            picIconAddPurchaseItem.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconAddPurchaseItem.TabIndex = 99;
+            picIconAddPurchaseItem.TabStop = false;
+            // 
+            // picIconRemovePurchaseItem
+            // 
+            picIconRemovePurchaseItem.BackColor = Color.FromArgb(239, 68, 68);
+            picIconRemovePurchaseItem.Cursor = Cursors.Hand;
+            picIconRemovePurchaseItem.Image = Resources._076_retiro_egreso;
+            picIconRemovePurchaseItem.Location = new Point(812, 25);
+            picIconRemovePurchaseItem.Name = "picIconRemovePurchaseItem";
+            picIconRemovePurchaseItem.Size = new Size(35, 56);
+            picIconRemovePurchaseItem.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRemovePurchaseItem.TabIndex = 99;
+            picIconRemovePurchaseItem.TabStop = false;
+            // 
+            // picIconRegisterPurchase
+            // 
+            picIconRegisterPurchase.BackColor = Color.FromArgb(16, 185, 129);
+            picIconRegisterPurchase.Cursor = Cursors.Hand;
+            picIconRegisterPurchase.Image = Resources._052_registrar_venta;
+            picIconRegisterPurchase.Location = new Point(35, 200);
+            picIconRegisterPurchase.Name = "picIconRegisterPurchase";
+            picIconRegisterPurchase.Size = new Size(47, 60);
+            picIconRegisterPurchase.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconRegisterPurchase.TabIndex = 99;
+            picIconRegisterPurchase.TabStop = false;
+            // 
+            // picIconToggleScannerCamera
+            // 
+            picIconToggleScannerCamera.BackColor = Color.FromArgb(255, 255, 255);
+            picIconToggleScannerCamera.Cursor = Cursors.Hand;
+            picIconToggleScannerCamera.Image = Resources._087_camara_encender;
+            picIconToggleScannerCamera.Location = new Point(63, 450);
+            picIconToggleScannerCamera.Name = "picIconToggleScannerCamera";
+            picIconToggleScannerCamera.Size = new Size(41, 47);
+            picIconToggleScannerCamera.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconToggleScannerCamera.TabIndex = 99;
+            picIconToggleScannerCamera.TabStop = false;
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1350, 56);
+            panelHeader.TabIndex = 0;
+            // 
+            // labelTitle
+            // 
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(514, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "COMPRA DE MERCADERÍA Y STOCK";
+            // 
+            // panelLeftWork
+            // 
+            panelLeftWork.BackColor = Color.FromArgb(248, 250, 252);
+            panelLeftWork.Controls.Add(dataGridViewPurchaseCart);
+            panelLeftWork.Controls.Add(panelScannerItemBar);
+            panelLeftWork.Controls.Add(panelPurchaseHeaderInfo);
+            panelLeftWork.Dock = DockStyle.Fill;
+            panelLeftWork.Location = new Point(0, 56);
+            panelLeftWork.Name = "panelLeftWork";
+            panelLeftWork.Padding = new Padding(16, 12, 8, 16);
+            panelLeftWork.Size = new Size(990, 694);
+            panelLeftWork.TabIndex = 1;
+            // 
+            // dataGridViewPurchaseCart
+            // 
+            dataGridViewPurchaseCart.BackgroundColor = Color.White;
+            dataGridViewPurchaseCart.BorderStyle = BorderStyle.None;
+            dataGridViewPurchaseCart.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewPurchaseCart.Dock = DockStyle.Fill;
+            dataGridViewPurchaseCart.Location = new Point(16, 198);
+            dataGridViewPurchaseCart.Name = "dataGridViewPurchaseCart";
+            dataGridViewPurchaseCart.RowHeadersWidth = 51;
+            dataGridViewPurchaseCart.Size = new Size(966, 480);
+            dataGridViewPurchaseCart.TabIndex = 2;
+            // 
+            // panelScannerItemBar
+            // 
+            panelScannerItemBar.BackColor = Color.White;
+            panelScannerItemBar.Controls.Add(labelBarcodePrompt);
+            panelScannerItemBar.Controls.Add(textBoxProductBarcode);
+            panelScannerItemBar.Controls.Add(picIconSearchProduct);
+            panelScannerItemBar.Controls.Add(buttonSearchProduct);
+            panelScannerItemBar.Controls.Add(labelProductName);
+            panelScannerItemBar.Controls.Add(textBoxProductName);
+            panelScannerItemBar.Controls.Add(labelBuyPrice);
+            panelScannerItemBar.Controls.Add(textBoxBuyPrice);
+            panelScannerItemBar.Controls.Add(labelQuantityPrompt);
+            panelScannerItemBar.Controls.Add(numericUpDownQuantity);
+            panelScannerItemBar.Controls.Add(picIconAddPurchaseItem);
+            panelScannerItemBar.Controls.Add(buttonAddPurchaseItem);
+            panelScannerItemBar.Controls.Add(picIconRemovePurchaseItem);
+            panelScannerItemBar.Controls.Add(buttonRemovePurchaseItem);
+            panelScannerItemBar.Dock = DockStyle.Top;
+            panelScannerItemBar.Location = new Point(16, 97);
+            panelScannerItemBar.Name = "panelScannerItemBar";
+            panelScannerItemBar.Size = new Size(966, 101);
+            panelScannerItemBar.TabIndex = 1;
+            // 
+            // labelBarcodePrompt
+            // 
+            labelBarcodePrompt.AutoSize = true;
+            labelBarcodePrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelBarcodePrompt.Location = new Point(10, 22);
+            labelBarcodePrompt.Name = "labelBarcodePrompt";
+            labelBarcodePrompt.Size = new Size(93, 20);
+            labelBarcodePrompt.TabIndex = 0;
+            labelBarcodePrompt.Text = "Cod. Barras:";
+            // 
+            // textBoxProductBarcode
+            // 
+            textBoxProductBarcode.BorderStyle = BorderStyle.FixedSingle;
+            textBoxProductBarcode.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            textBoxProductBarcode.Location = new Point(10, 45);
+            textBoxProductBarcode.Name = "textBoxProductBarcode";
+            textBoxProductBarcode.Size = new Size(150, 30);
+            textBoxProductBarcode.TabIndex = 1;
+            // 
+            // buttonSearchProduct
+            // 
+            buttonSearchProduct.FlatStyle = FlatStyle.Flat;
+            buttonSearchProduct.Location = new Point(166, 36);
+            buttonSearchProduct.Name = "buttonSearchProduct";
+            buttonSearchProduct.Size = new Size(47, 47);
+            buttonSearchProduct.TabIndex = 2;
+            buttonSearchProduct.UseVisualStyleBackColor = true;
+            // 
+            // labelProductName
+            // 
+            labelProductName.AutoSize = true;
+            labelProductName.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelProductName.Location = new Point(219, 22);
+            labelProductName.Name = "labelProductName";
+            labelProductName.Size = new Size(77, 20);
+            labelProductName.TabIndex = 3;
+            labelProductName.Text = "Producto:";
+            // 
+            // textBoxProductName
+            // 
+            textBoxProductName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxProductName.Font = new Font("Segoe UI", 10F);
+            textBoxProductName.Location = new Point(219, 45);
+            textBoxProductName.Name = "textBoxProductName";
+            textBoxProductName.ReadOnly = true;
+            textBoxProductName.Size = new Size(200, 30);
+            textBoxProductName.TabIndex = 4;
+            // 
+            // labelBuyPrice
+            // 
+            labelBuyPrice.AutoSize = true;
+            labelBuyPrice.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelBuyPrice.Location = new Point(424, 22);
+            labelBuyPrice.Name = "labelBuyPrice";
+            labelBuyPrice.Size = new Size(125, 20);
+            labelBuyPrice.TabIndex = 5;
+            labelBuyPrice.Text = "$ Costo Compra:";
+            // 
+            // textBoxBuyPrice
+            // 
+            textBoxBuyPrice.BorderStyle = BorderStyle.FixedSingle;
+            textBoxBuyPrice.Font = new Font("Segoe UI", 10F);
+            textBoxBuyPrice.Location = new Point(425, 45);
+            textBoxBuyPrice.Name = "textBoxBuyPrice";
+            textBoxBuyPrice.Size = new Size(126, 30);
+            textBoxBuyPrice.TabIndex = 6;
+            // 
+            // labelQuantityPrompt
+            // 
+            labelQuantityPrompt.AutoSize = true;
+            labelQuantityPrompt.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelQuantityPrompt.Location = new Point(575, 22);
+            labelQuantityPrompt.Name = "labelQuantityPrompt";
+            labelQuantityPrompt.Size = new Size(75, 20);
+            labelQuantityPrompt.TabIndex = 7;
+            labelQuantityPrompt.Text = "Cantidad:";
+            // 
+            // numericUpDownQuantity
+            // 
+            numericUpDownQuantity.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            numericUpDownQuantity.Location = new Point(575, 45);
+            numericUpDownQuantity.Maximum = new decimal(new int[] { 100000, 0, 0, 0 });
+            numericUpDownQuantity.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            numericUpDownQuantity.Name = "numericUpDownQuantity";
+            numericUpDownQuantity.Size = new Size(80, 30);
+            numericUpDownQuantity.TabIndex = 8;
+            numericUpDownQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            // 
+            // buttonAddPurchaseItem
+            // 
+            buttonAddPurchaseItem.BackColor = Color.FromArgb(2, 132, 199);
+            buttonAddPurchaseItem.FlatAppearance.BorderSize = 0;
+            buttonAddPurchaseItem.FlatStyle = FlatStyle.Flat;
+            buttonAddPurchaseItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonAddPurchaseItem.ForeColor = Color.White;
+            buttonAddPurchaseItem.Location = new Point(665, 25);
+            buttonAddPurchaseItem.Name = "buttonAddPurchaseItem";
+            buttonAddPurchaseItem.Size = new Size(136, 56);
+            buttonAddPurchaseItem.TabIndex = 9;
+            buttonAddPurchaseItem.Text = "AGREGAR";
+            buttonAddPurchaseItem.UseVisualStyleBackColor = false;
+            // 
+            // buttonRemovePurchaseItem
+            // 
+            buttonRemovePurchaseItem.BackColor = Color.FromArgb(239, 68, 68);
+            buttonRemovePurchaseItem.FlatAppearance.BorderSize = 0;
+            buttonRemovePurchaseItem.FlatStyle = FlatStyle.Flat;
+            buttonRemovePurchaseItem.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonRemovePurchaseItem.ForeColor = Color.White;
+            buttonRemovePurchaseItem.Location = new Point(807, 25);
+            buttonRemovePurchaseItem.Name = "buttonRemovePurchaseItem";
+            buttonRemovePurchaseItem.Size = new Size(141, 56);
+            buttonRemovePurchaseItem.TabIndex = 10;
+            buttonRemovePurchaseItem.Text = "QUITAR";
+            buttonRemovePurchaseItem.UseVisualStyleBackColor = false;
+            // 
+            // panelPurchaseHeaderInfo
+            // 
+            panelPurchaseHeaderInfo.BackColor = Color.White;
+            panelPurchaseHeaderInfo.Controls.Add(labelDate);
+            panelPurchaseHeaderInfo.Controls.Add(textBoxDate);
+            panelPurchaseHeaderInfo.Controls.Add(labelDocumentType);
+            panelPurchaseHeaderInfo.Controls.Add(comboBoxDocumentType);
+            panelPurchaseHeaderInfo.Controls.Add(labelInvoiceNumber);
+            panelPurchaseHeaderInfo.Controls.Add(textBoxInvoiceNumber);
+            panelPurchaseHeaderInfo.Controls.Add(labelSupplierTaxId);
+            panelPurchaseHeaderInfo.Controls.Add(textBoxSupplierTaxId);
+            panelPurchaseHeaderInfo.Controls.Add(picIconSearchSupplier);
+            panelPurchaseHeaderInfo.Controls.Add(buttonSearchSupplier);
+            panelPurchaseHeaderInfo.Controls.Add(labelSupplierName);
+            panelPurchaseHeaderInfo.Controls.Add(textBoxSupplierName);
+            panelPurchaseHeaderInfo.Controls.Add(textBoxSupplierIdHidden);
+            panelPurchaseHeaderInfo.Dock = DockStyle.Top;
+            panelPurchaseHeaderInfo.Location = new Point(16, 12);
+            panelPurchaseHeaderInfo.Name = "panelPurchaseHeaderInfo";
+            panelPurchaseHeaderInfo.Size = new Size(966, 85);
+            panelPurchaseHeaderInfo.TabIndex = 0;
+            // 
+            // labelDate
+            // 
+            labelDate.AutoSize = true;
+            labelDate.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelDate.Location = new Point(12, 12);
+            labelDate.Name = "labelDate";
+            labelDate.Size = new Size(53, 20);
+            labelDate.TabIndex = 0;
+            labelDate.Text = "Fecha:";
+            // 
+            // textBoxDate
+            // 
+            textBoxDate.BorderStyle = BorderStyle.FixedSingle;
+            textBoxDate.Font = new Font("Segoe UI", 10F);
+            textBoxDate.Location = new Point(12, 32);
+            textBoxDate.Name = "textBoxDate";
+            textBoxDate.ReadOnly = true;
+            textBoxDate.Size = new Size(100, 30);
+            textBoxDate.TabIndex = 1;
+            // 
+            // labelDocumentType
+            // 
+            labelDocumentType.AutoSize = true;
+            labelDocumentType.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelDocumentType.Location = new Point(122, 12);
+            labelDocumentType.Name = "labelDocumentType";
+            labelDocumentType.Size = new Size(75, 20);
+            labelDocumentType.TabIndex = 2;
+            labelDocumentType.Text = "Tipo Doc:";
+            // 
+            // comboBoxDocumentType
+            // 
+            comboBoxDocumentType.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxDocumentType.Font = new Font("Segoe UI", 10F);
+            comboBoxDocumentType.Location = new Point(122, 32);
+            comboBoxDocumentType.Name = "comboBoxDocumentType";
+            comboBoxDocumentType.Size = new Size(120, 31);
+            comboBoxDocumentType.TabIndex = 3;
+            // 
+            // labelInvoiceNumber
+            // 
+            labelInvoiceNumber.AutoSize = true;
+            labelInvoiceNumber.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelInvoiceNumber.Location = new Point(252, 12);
+            labelInvoiceNumber.Name = "labelInvoiceNumber";
+            labelInvoiceNumber.Size = new Size(87, 20);
+            labelInvoiceNumber.TabIndex = 4;
+            labelInvoiceNumber.Text = "N° Factura:";
+            // 
+            // textBoxInvoiceNumber
+            // 
+            textBoxInvoiceNumber.BorderStyle = BorderStyle.FixedSingle;
+            textBoxInvoiceNumber.Font = new Font("Segoe UI", 10F);
+            textBoxInvoiceNumber.Location = new Point(252, 32);
+            textBoxInvoiceNumber.Name = "textBoxInvoiceNumber";
+            textBoxInvoiceNumber.Size = new Size(130, 30);
+            textBoxInvoiceNumber.TabIndex = 5;
+            // 
+            // labelSupplierTaxId
+            // 
+            labelSupplierTaxId.AutoSize = true;
+            labelSupplierTaxId.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelSupplierTaxId.Location = new Point(395, 12);
+            labelSupplierTaxId.Name = "labelSupplierTaxId";
+            labelSupplierTaxId.Size = new Size(124, 20);
+            labelSupplierTaxId.TabIndex = 6;
+            labelSupplierTaxId.Text = "CUIT Proveedor:";
+            // 
+            // textBoxSupplierTaxId
+            // 
+            textBoxSupplierTaxId.BorderStyle = BorderStyle.FixedSingle;
+            textBoxSupplierTaxId.Font = new Font("Segoe UI", 10F);
+            textBoxSupplierTaxId.Location = new Point(395, 32);
+            textBoxSupplierTaxId.Name = "textBoxSupplierTaxId";
+            textBoxSupplierTaxId.Size = new Size(130, 30);
+            textBoxSupplierTaxId.TabIndex = 7;
+            // 
+            // buttonSearchSupplier
+            // 
+            buttonSearchSupplier.FlatStyle = FlatStyle.Flat;
+            buttonSearchSupplier.Location = new Point(531, 26);
+            buttonSearchSupplier.Name = "buttonSearchSupplier";
+            buttonSearchSupplier.Size = new Size(76, 43);
+            buttonSearchSupplier.TabIndex = 8;
+            buttonSearchSupplier.UseVisualStyleBackColor = true;
+            // 
+            // labelSupplierName
+            // 
+            labelSupplierName.AutoSize = true;
+            labelSupplierName.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelSupplierName.Location = new Point(613, 12);
+            labelSupplierName.Name = "labelSupplierName";
+            labelSupplierName.Size = new Size(100, 20);
+            labelSupplierName.TabIndex = 9;
+            labelSupplierName.Text = "Razón Social:";
+            // 
+            // textBoxSupplierName
+            // 
+            textBoxSupplierName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxSupplierName.Font = new Font("Segoe UI", 10F);
+            textBoxSupplierName.Location = new Point(613, 34);
+            textBoxSupplierName.Name = "textBoxSupplierName";
+            textBoxSupplierName.ReadOnly = true;
+            textBoxSupplierName.Size = new Size(306, 30);
+            textBoxSupplierName.TabIndex = 10;
+            // 
+            // textBoxSupplierIdHidden
+            // 
+            textBoxSupplierIdHidden.Location = new Point(894, 4);
+            textBoxSupplierIdHidden.Name = "textBoxSupplierIdHidden";
+            textBoxSupplierIdHidden.Size = new Size(25, 27);
+            textBoxSupplierIdHidden.TabIndex = 11;
+            textBoxSupplierIdHidden.Visible = false;
+            // 
+            // panelRightSummary
+            // 
+            panelRightSummary.BackColor = Color.White;
+            panelRightSummary.Controls.Add(labelSummaryTitle);
+            panelRightSummary.Controls.Add(labelPaymentMethod);
+            panelRightSummary.Controls.Add(comboBoxPaymentMethod);
+            panelRightSummary.Controls.Add(labelTotalPrompt);
+            panelRightSummary.Controls.Add(textBoxTotalAmount);
+            panelRightSummary.Controls.Add(picIconRegisterPurchase);
+            panelRightSummary.Controls.Add(buttonRegisterPurchase);
+            panelRightSummary.Controls.Add(pictureBoxWebcamPreview);
+            panelRightSummary.Controls.Add(picIconToggleScannerCamera);
+            panelRightSummary.Controls.Add(buttonToggleScannerCamera);
+            panelRightSummary.Dock = DockStyle.Right;
+            panelRightSummary.Location = new Point(990, 56);
+            panelRightSummary.Name = "panelRightSummary";
+            panelRightSummary.Padding = new Padding(16);
+            panelRightSummary.Size = new Size(360, 694);
+            panelRightSummary.TabIndex = 2;
+            // 
+            // labelSummaryTitle
+            // 
+            labelSummaryTitle.AutoSize = true;
+            labelSummaryTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelSummaryTitle.Location = new Point(16, 16);
+            labelSummaryTitle.Name = "labelSummaryTitle";
+            labelSummaryTitle.Size = new Size(245, 30);
+            labelSummaryTitle.TabIndex = 0;
+            labelSummaryTitle.Text = "TOTAL DE LA COMPRA";
+            // 
+            // labelPaymentMethod
+            // 
+            labelPaymentMethod.AutoSize = true;
+            labelPaymentMethod.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelPaymentMethod.Location = new Point(16, 56);
+            labelPaymentMethod.Name = "labelPaymentMethod";
+            labelPaymentMethod.Size = new Size(117, 20);
+            labelPaymentMethod.TabIndex = 1;
+            labelPaymentMethod.Text = "Medio de Pago:";
+            // 
+            // comboBoxPaymentMethod
+            // 
+            comboBoxPaymentMethod.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxPaymentMethod.Font = new Font("Segoe UI", 10F);
+            comboBoxPaymentMethod.Location = new Point(16, 76);
+            comboBoxPaymentMethod.Name = "comboBoxPaymentMethod";
+            comboBoxPaymentMethod.Size = new Size(328, 31);
+            comboBoxPaymentMethod.TabIndex = 2;
+            // 
+            // labelTotalPrompt
+            // 
+            labelTotalPrompt.AutoSize = true;
+            labelTotalPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelTotalPrompt.Location = new Point(16, 120);
+            labelTotalPrompt.Name = "labelTotalPrompt";
+            labelTotalPrompt.Size = new Size(153, 21);
+            labelTotalPrompt.TabIndex = 3;
+            labelTotalPrompt.Text = "Total de la Factura:";
+            // 
+            // textBoxTotalAmount
+            // 
+            textBoxTotalAmount.BackColor = Color.FromArgb(248, 250, 252);
+            textBoxTotalAmount.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTotalAmount.Font = new Font("Segoe UI", 18F, FontStyle.Bold);
+            textBoxTotalAmount.ForeColor = Color.FromArgb(16, 185, 129);
+            textBoxTotalAmount.Location = new Point(16, 142);
+            textBoxTotalAmount.Name = "textBoxTotalAmount";
+            textBoxTotalAmount.ReadOnly = true;
+            textBoxTotalAmount.Size = new Size(328, 47);
+            textBoxTotalAmount.TabIndex = 4;
+            textBoxTotalAmount.Text = "$ 0,00";
+            textBoxTotalAmount.TextAlign = HorizontalAlignment.Right;
+            // 
+            // buttonRegisterPurchase
+            // 
+            buttonRegisterPurchase.BackColor = Color.FromArgb(16, 185, 129);
+            buttonRegisterPurchase.FlatAppearance.BorderSize = 0;
+            buttonRegisterPurchase.FlatStyle = FlatStyle.Flat;
+            buttonRegisterPurchase.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            buttonRegisterPurchase.ForeColor = Color.White;
+            buttonRegisterPurchase.Location = new Point(16, 200);
+            buttonRegisterPurchase.Name = "buttonRegisterPurchase";
+            buttonRegisterPurchase.Size = new Size(328, 60);
+            buttonRegisterPurchase.TabIndex = 5;
+            buttonRegisterPurchase.Text = "REGISTRAR COMPRA";
+            buttonRegisterPurchase.UseVisualStyleBackColor = false;
+            // 
+            // pictureBoxWebcamPreview
+            // 
+            pictureBoxWebcamPreview.BackColor = Color.Black;
+            pictureBoxWebcamPreview.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxWebcamPreview.Location = new Point(16, 280);
+            pictureBoxWebcamPreview.Name = "pictureBoxWebcamPreview";
+            pictureBoxWebcamPreview.Size = new Size(328, 160);
+            pictureBoxWebcamPreview.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxWebcamPreview.TabIndex = 6;
+            pictureBoxWebcamPreview.TabStop = false;
+            // 
+            // buttonToggleScannerCamera
+            // 
+            buttonToggleScannerCamera.FlatStyle = FlatStyle.Flat;
+            buttonToggleScannerCamera.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonToggleScannerCamera.Location = new Point(16, 450);
+            buttonToggleScannerCamera.Name = "buttonToggleScannerCamera";
+            buttonToggleScannerCamera.Size = new Size(328, 47);
+            buttonToggleScannerCamera.TabIndex = 7;
+            buttonToggleScannerCamera.Text = "ENCENDER CÁMARA";
+            buttonToggleScannerCamera.UseVisualStyleBackColor = true;
             // 
             // FormPurchases
             // 
@@ -494,66 +582,78 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1350, 750);
-            Controls.Add(pnlLeftWork);
-            Controls.Add(pnlRightSummary);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelLeftWork);
+            Controls.Add(panelRightSummary);
+            Controls.Add(panelHeader);
             Name = "FormPurchases";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Registro de Compras";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlLeftWork.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvCart).EndInit();
-            pnlScannerBar.ResumeLayout(false);
-            pnlScannerBar.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numQuantity).EndInit();
-            gbSaleInfo.ResumeLayout(false);
-            gbSaleInfo.PerformLayout();
-            pnlRightSummary.ResumeLayout(false);
-            pnlRightSummary.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picWebcam).EndInit();
+            Text = "Registro de Compras de Mercaderia";
+            ((System.ComponentModel.ISupportInitialize)picIconSearchSupplier).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSearchProduct).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconAddPurchaseItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRemovePurchaseItem).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconRegisterPurchase).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconToggleScannerCamera).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelLeftWork.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseCart).EndInit();
+            panelScannerItemBar.ResumeLayout(false);
+            panelScannerItemBar.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownQuantity).EndInit();
+            panelPurchaseHeaderInfo.ResumeLayout(false);
+            panelPurchaseHeaderInfo.PerformLayout();
+            panelRightSummary.ResumeLayout(false);
+            panelRightSummary.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxWebcamPreview).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlLeftWork;
-        private System.Windows.Forms.Panel gbSaleInfo;
-        private System.Windows.Forms.Label lblFecha;
-        private System.Windows.Forms.TextBox txtDate;
-        private System.Windows.Forms.Label lblTipoDoc;
-        private System.Windows.Forms.ComboBox cboDocType;
-        private System.Windows.Forms.Label lblInvoice;
-        private System.Windows.Forms.TextBox txtInvoiceNumber;
-        private System.Windows.Forms.Label lblDni;
-        private System.Windows.Forms.TextBox txtSupplierDoc;
-        private System.Windows.Forms.Button btnSearchSupplier;
-        private System.Windows.Forms.Label lblRazonSocial;
-        private System.Windows.Forms.TextBox txtSupplierName;
-        private System.Windows.Forms.TextBox txtIdProveedor;
-        private System.Windows.Forms.Panel pnlScannerBar;
-        private System.Windows.Forms.Label lblCodProd;
-        private System.Windows.Forms.TextBox txtProductCode;
-        private System.Windows.Forms.Button btnSearchProduct;
-        private System.Windows.Forms.Label lblProdName;
-        private System.Windows.Forms.TextBox txtProductName;
-        private System.Windows.Forms.Label lblPreCom;
-        private System.Windows.Forms.TextBox txtPriceBuy;
-        private System.Windows.Forms.Label lblCant;
-        private System.Windows.Forms.NumericUpDown numQuantity;
-        private System.Windows.Forms.Button btnAddItem;
-        private System.Windows.Forms.Button btnRemoveItem;
-        private System.Windows.Forms.DataGridView dgvCart;
-        private System.Windows.Forms.Panel pnlRightSummary;
-        private System.Windows.Forms.Label lblSummaryTitle;
-        private System.Windows.Forms.Label lblPaymentMethod;
-        private System.Windows.Forms.ComboBox cboPaymentMethod;
-        private System.Windows.Forms.Label lblTotalLabel;
-        private System.Windows.Forms.TextBox txtTotalPay;
-        private System.Windows.Forms.Button btnRegister;
-        private System.Windows.Forms.PictureBox picWebcam;
-        private System.Windows.Forms.Button btnToggleCam;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelLeftWork;
+        private System.Windows.Forms.Panel panelPurchaseHeaderInfo;
+        private System.Windows.Forms.Label labelDate;
+        private System.Windows.Forms.TextBox textBoxDate;
+        private System.Windows.Forms.Label labelDocumentType;
+        private System.Windows.Forms.ComboBox comboBoxDocumentType;
+        private System.Windows.Forms.Label labelInvoiceNumber;
+        private System.Windows.Forms.TextBox textBoxInvoiceNumber;
+        private System.Windows.Forms.Label labelSupplierTaxId;
+        private System.Windows.Forms.TextBox textBoxSupplierTaxId;
+        private System.Windows.Forms.Button buttonSearchSupplier;
+        private System.Windows.Forms.Label labelSupplierName;
+        private System.Windows.Forms.TextBox textBoxSupplierName;
+        private System.Windows.Forms.TextBox textBoxSupplierIdHidden;
+        private System.Windows.Forms.Panel panelScannerItemBar;
+        private System.Windows.Forms.Label labelBarcodePrompt;
+        private System.Windows.Forms.TextBox textBoxProductBarcode;
+        private System.Windows.Forms.Button buttonSearchProduct;
+        private System.Windows.Forms.Label labelProductName;
+        private System.Windows.Forms.TextBox textBoxProductName;
+        private System.Windows.Forms.Label labelBuyPrice;
+        private System.Windows.Forms.TextBox textBoxBuyPrice;
+        private System.Windows.Forms.Label labelQuantityPrompt;
+        private System.Windows.Forms.NumericUpDown numericUpDownQuantity;
+        private System.Windows.Forms.Button buttonAddPurchaseItem;
+        private System.Windows.Forms.Button buttonRemovePurchaseItem;
+        private System.Windows.Forms.DataGridView dataGridViewPurchaseCart;
+        private System.Windows.Forms.Panel panelRightSummary;
+        private System.Windows.Forms.Label labelSummaryTitle;
+        private System.Windows.Forms.Label labelPaymentMethod;
+        private System.Windows.Forms.ComboBox comboBoxPaymentMethod;
+        private System.Windows.Forms.Label labelTotalPrompt;
+        private System.Windows.Forms.TextBox textBoxTotalAmount;
+        private System.Windows.Forms.Button buttonRegisterPurchase;
+        private System.Windows.Forms.PictureBox pictureBoxWebcamPreview;
+        private System.Windows.Forms.Button buttonToggleScannerCamera;
+        private System.Windows.Forms.PictureBox picIconSearchSupplier;
+        private System.Windows.Forms.PictureBox picIconSearchProduct;
+        private System.Windows.Forms.PictureBox picIconAddPurchaseItem;
+        private System.Windows.Forms.PictureBox picIconRemovePurchaseItem;
+        private System.Windows.Forms.PictureBox picIconRegisterPurchase;
+        private System.Windows.Forms.PictureBox picIconToggleScannerCamera;
     }
 }

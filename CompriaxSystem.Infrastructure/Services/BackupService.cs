@@ -8,9 +8,7 @@ using Microsoft.Extensions.Options;
 
 namespace CompriaxSystem.Infrastructure.Services
 {
-    public class BackupService(
-        ApplicationDbContext context,
-        IOptions<DatabaseBackupSettings> options) : IBackupService
+    public class BackupService(ApplicationDbContext context, IOptions<DatabaseBackupSettings> options) : IBackupService
     {
         private readonly DatabaseBackupSettings _settings = options.Value;
 
@@ -28,47 +26,47 @@ namespace CompriaxSystem.Infrastructure.Services
 
             try
             {
-                string targetFolder = _settings.BackupPath;
+                string backupDirectoryPath = _settings.BackupPath;
 
-                if (!Directory.Exists(targetFolder))
+                if (!Directory.Exists(backupDirectoryPath))
                 {
-                    Directory.CreateDirectory(targetFolder);
+                    Directory.CreateDirectory(backupDirectoryPath);
                 }
 
-                string connectionString = context.Database.GetConnectionString()
+                string databaseConnectionString = context.Database.GetConnectionString()
                     ?? throw new InvalidOperationException("Cadena de conexión no disponible.");
 
-                var builder = new SqlConnectionStringBuilder(connectionString);
-                string databaseName = builder.InitialCatalog;
+                var connectionStringBuilder = new SqlConnectionStringBuilder(databaseConnectionString);
+                string databaseName = connectionStringBuilder.InitialCatalog;
 
-                string timeStamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-                string fileName = $"{databaseName}_AutoBackup_{timeStamp}.bak";
-                string fullPath = Path.Combine(targetFolder, fileName);
+                string backupTimestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
+                string backupFileName = $"{databaseName}_AutoBackup_{backupTimestamp}.bak";
+                string backupFilePath = Path.Combine(backupDirectoryPath, backupFileName);
 
-                string sql = $@"
+                string backupSqlCommand = $@"
                     BACKUP DATABASE [{databaseName}] 
                     TO DISK = @backupPath 
                     WITH FORMAT, INIT, COMPRESSION, CHECKSUM, 
                     NAME = 'Compriax-AutoBackup';";
 
-                await using (var conn = new SqlConnection(connectionString))
+                await using (var databaseConnection = new SqlConnection(databaseConnectionString))
                 {
-                    await conn.OpenAsync();
+                    await databaseConnection.OpenAsync();
                     
-                    await using (var cmd = new SqlCommand(sql, conn))
+                    await using (var cmd = new SqlCommand(backupSqlCommand, databaseConnection))
                     {
                         cmd.CommandTimeout = 180;
-                        cmd.Parameters.AddWithValue("@backupPath", fullPath);
+                        cmd.Parameters.AddWithValue("@backupPath", backupFilePath);
                         await cmd.ExecuteNonQueryAsync();
                     }
                 }
 
                 if (_settings.RetentionDays > 0)
                 {
-                    CleanOldBackups(targetFolder, databaseName, _settings.RetentionDays);
+                    CleanOldBackups(backupDirectoryPath, databaseName, _settings.RetentionDays);
                 }
 
-                return OperationResult.Ok($"Backup generado exitosamente en: {fullPath}");
+                return OperationResult.Ok($"Backup generado exitosamente en: {backupFilePath}");
             }
             catch (Exception ex)
             {
@@ -79,22 +77,22 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <summary>
         /// Elimina los archivos de respaldo antiguos que excedan el límite de días de retención configurado.
         /// </summary>
-        /// <param name="folder">Ruta de la carpeta de backups.</param>
-        /// <param name="dbName">Nombre de la base de datos.</param>
+        /// <param name="backupDirectoryPath">Ruta de la carpeta de backups.</param>
+        /// <param name="databaseName">Nombre de la base de datos.</param>
         /// <param name="retentionDays">Cantidad de días a conservar.</param>
-        private static void CleanOldBackups(string folder, string dbName, int retentionDays)
+        private static void CleanOldBackups(string backupDirectoryPath, string databaseName, int retentionDays)
         {
             try
             {
-                var directory = new DirectoryInfo(folder);
-                DateTime thresholdDate = DateTime.Now.AddDays(-retentionDays);
+                var backupDirectory = new DirectoryInfo(backupDirectoryPath);
+                DateTime backupThresholdDate = DateTime.Now.AddDays(-retentionDays);
 
-                var oldFiles = directory.GetFiles($"{dbName}_AutoBackup_*.bak")
-                    .Where(f => f.CreationTime < thresholdDate);
+                var expiredBackupFiles = backupDirectory.GetFiles($"{databaseName}_AutoBackup_*.bak")
+                    .Where(f => f.CreationTime < backupThresholdDate);
 
-                foreach (var file in oldFiles)
+                foreach (var backupFile in expiredBackupFiles)
                 {
-                    file.Delete();
+                    backupFile.Delete();
                 }
             }
             catch

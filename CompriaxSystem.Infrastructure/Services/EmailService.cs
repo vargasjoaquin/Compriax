@@ -26,7 +26,7 @@ namespace CompriaxSystem.Infrastructure.Services
                 return;
             }
 
-            using var message = new MailMessage
+            using var emailMessage = new MailMessage
             {
                 From = new MailAddress(_emailSettings.SenderEmail, _emailSettings.SenderName),
                 Subject = subject,
@@ -34,16 +34,16 @@ namespace CompriaxSystem.Infrastructure.Services
                 IsBodyHtml = true
             };
 
-            message.To.Add(to);
+            emailMessage.To.Add(to);
 
-            using var client = new SmtpClient(_emailSettings.SmtpHost, _emailSettings.SmtpPort)
+            using var smtpClient = new SmtpClient(_emailSettings.SmtpHost, _emailSettings.SmtpPort)
             {
                 Credentials = new NetworkCredential(_emailSettings.SmtpUsername, _emailSettings.SmtpPassword),
                 EnableSsl = _emailSettings.EnableSsl,
                 Timeout = 15000
             };
 
-            await client.SendMailAsync(message);
+            await smtpClient.SendMailAsync(emailMessage);
         }
     }
 }

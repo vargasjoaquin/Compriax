@@ -17,227 +17,261 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            pnlFilters = new Panel();
-            lblStart = new Label();
-            dtpStart = new DateTimePicker();
-            lblEnd = new Label();
-            dtpEnd = new DateTimePicker();
-            lblSupplier = new Label();
-            cboSupplierFilter = new ComboBox();
-            btnSearch = new Button();
-            lblSearch = new Label();
-            cboSearchBy = new ComboBox();
-            txtSearchText = new TextBox();
-            btnExport = new Button();
-            dgvData = new DataGridView();
-            pnlHeader.SuspendLayout();
-            pnlFilters.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvData).BeginInit();
+            picIconSearch = new PictureBox();
+            picIconExportExcel = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            panelFiltersCard = new Panel();
+            labelStartDate = new Label();
+            dateTimePickerStartDate = new DateTimePicker();
+            labelEndDate = new Label();
+            dateTimePickerEndDate = new DateTimePicker();
+            labelSupplierFilter = new Label();
+            comboBoxSupplierFilter = new ComboBox();
+            buttonSearch = new Button();
+            labelSearchCriteriaPrompt = new Label();
+            comboBoxSearchCriteria = new ComboBox();
+            textBoxSearchValue = new TextBox();
+            buttonExportExcel = new Button();
+            dataGridViewPurchaseData = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)picIconSearch).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportExcel).BeginInit();
+            panelHeader.SuspendLayout();
+            panelFiltersCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseData).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconSearch
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1275, 56);
-            pnlHeader.TabIndex = 0;
+            picIconSearch.BackColor = Color.FromArgb(2, 132, 199);
+            picIconSearch.Cursor = Cursors.Hand;
+            picIconSearch.Image = Resources._080_buscar;
+            picIconSearch.Location = new Point(460, 14);
+            picIconSearch.Name = "picIconSearch";
+            picIconSearch.Size = new Size(33, 54);
+            picIconSearch.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSearch.TabIndex = 99;
+            picIconSearch.TabStop = false;
             // 
-            // lblTitle
+            // picIconExportExcel
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 16);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(612, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "HISTORIAL Y REPORTE DE COMPRAS A PROVEEDORES";
+            picIconExportExcel.BackColor = Color.FromArgb(16, 185, 129);
+            picIconExportExcel.Cursor = Cursors.Hand;
+            picIconExportExcel.Image = Resources._084_exportar_excel;
+            picIconExportExcel.Location = new Point(1020, 14);
+            picIconExportExcel.Name = "picIconExportExcel";
+            picIconExportExcel.Size = new Size(43, 63);
+            picIconExportExcel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconExportExcel.TabIndex = 99;
+            picIconExportExcel.TabStop = false;
             // 
-            // pnlFilters
+            // panelHeader
             // 
-            pnlFilters.BackColor = Color.White;
-            pnlFilters.Controls.Add(lblStart);
-            pnlFilters.Controls.Add(dtpStart);
-            pnlFilters.Controls.Add(lblEnd);
-            pnlFilters.Controls.Add(dtpEnd);
-            pnlFilters.Controls.Add(lblSupplier);
-            pnlFilters.Controls.Add(cboSupplierFilter);
-            pnlFilters.Controls.Add(btnSearch);
-            pnlFilters.Controls.Add(lblSearch);
-            pnlFilters.Controls.Add(cboSearchBy);
-            pnlFilters.Controls.Add(txtSearchText);
-            pnlFilters.Controls.Add(btnExport);
-            pnlFilters.Location = new Point(16, 72);
-            pnlFilters.Name = "pnlFilters";
-            pnlFilters.Size = new Size(1233, 90);
-            pnlFilters.TabIndex = 1;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1298, 56);
+            panelHeader.TabIndex = 0;
             // 
-            // lblStart
+            // labelTitle
             // 
-            lblStart.AutoSize = true;
-            lblStart.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblStart.Location = new Point(16, 12);
-            lblStart.Name = "lblStart";
-            lblStart.Size = new Size(61, 21);
-            lblStart.TabIndex = 0;
-            lblStart.Text = "Desde:";
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(575, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "HISTORIAL Y REPORTE DE COMPRAS A PROVEEDORES";
             // 
-            // dtpStart
+            // panelFiltersCard
             // 
-            dtpStart.Font = new Font("Segoe UI", 10F);
-            dtpStart.Format = DateTimePickerFormat.Short;
-            dtpStart.Location = new Point(16, 36);
-            dtpStart.Name = "dtpStart";
-            dtpStart.Size = new Size(115, 30);
-            dtpStart.TabIndex = 1;
+            panelFiltersCard.BackColor = Color.White;
+            panelFiltersCard.Controls.Add(labelStartDate);
+            panelFiltersCard.Controls.Add(dateTimePickerStartDate);
+            panelFiltersCard.Controls.Add(labelEndDate);
+            panelFiltersCard.Controls.Add(dateTimePickerEndDate);
+            panelFiltersCard.Controls.Add(labelSupplierFilter);
+            panelFiltersCard.Controls.Add(comboBoxSupplierFilter);
+            panelFiltersCard.Controls.Add(picIconSearch);
+            panelFiltersCard.Controls.Add(buttonSearch);
+            panelFiltersCard.Controls.Add(labelSearchCriteriaPrompt);
+            panelFiltersCard.Controls.Add(comboBoxSearchCriteria);
+            panelFiltersCard.Controls.Add(textBoxSearchValue);
+            panelFiltersCard.Controls.Add(picIconExportExcel);
+            panelFiltersCard.Controls.Add(buttonExportExcel);
+            panelFiltersCard.Location = new Point(16, 72);
+            panelFiltersCard.Name = "panelFiltersCard";
+            panelFiltersCard.Size = new Size(1270, 90);
+            panelFiltersCard.TabIndex = 1;
             // 
-            // lblEnd
+            // labelStartDate
             // 
-            lblEnd.AutoSize = true;
-            lblEnd.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEnd.Location = new Point(140, 12);
-            lblEnd.Name = "lblEnd";
-            lblEnd.Size = new Size(57, 21);
-            lblEnd.TabIndex = 2;
-            lblEnd.Text = "Hasta:";
+            labelStartDate.AutoSize = true;
+            labelStartDate.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelStartDate.Location = new Point(16, 12);
+            labelStartDate.Name = "labelStartDate";
+            labelStartDate.Size = new Size(61, 21);
+            labelStartDate.TabIndex = 0;
+            labelStartDate.Text = "Desde:";
             // 
-            // dtpEnd
+            // dateTimePickerStartDate
             // 
-            dtpEnd.Font = new Font("Segoe UI", 10F);
-            dtpEnd.Format = DateTimePickerFormat.Short;
-            dtpEnd.Location = new Point(140, 36);
-            dtpEnd.Name = "dtpEnd";
-            dtpEnd.Size = new Size(115, 30);
-            dtpEnd.TabIndex = 3;
+            dateTimePickerStartDate.Font = new Font("Segoe UI", 10F);
+            dateTimePickerStartDate.Format = DateTimePickerFormat.Short;
+            dateTimePickerStartDate.Location = new Point(16, 36);
+            dateTimePickerStartDate.Name = "dateTimePickerStartDate";
+            dateTimePickerStartDate.Size = new Size(115, 30);
+            dateTimePickerStartDate.TabIndex = 1;
             // 
-            // lblSupplier
+            // labelEndDate
             // 
-            lblSupplier.AutoSize = true;
-            lblSupplier.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSupplier.Location = new Point(265, 12);
-            lblSupplier.Name = "lblSupplier";
-            lblSupplier.Size = new Size(94, 21);
-            lblSupplier.TabIndex = 4;
-            lblSupplier.Text = "Proveedor:";
+            labelEndDate.AutoSize = true;
+            labelEndDate.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelEndDate.Location = new Point(140, 12);
+            labelEndDate.Name = "labelEndDate";
+            labelEndDate.Size = new Size(57, 21);
+            labelEndDate.TabIndex = 2;
+            labelEndDate.Text = "Hasta:";
             // 
-            // cboSupplierFilter
+            // dateTimePickerEndDate
             // 
-            cboSupplierFilter.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboSupplierFilter.Font = new Font("Segoe UI", 10F);
-            cboSupplierFilter.Location = new Point(265, 36);
-            cboSupplierFilter.Name = "cboSupplierFilter";
-            cboSupplierFilter.Size = new Size(180, 31);
-            cboSupplierFilter.TabIndex = 5;
+            dateTimePickerEndDate.Font = new Font("Segoe UI", 10F);
+            dateTimePickerEndDate.Format = DateTimePickerFormat.Short;
+            dateTimePickerEndDate.Location = new Point(140, 36);
+            dateTimePickerEndDate.Name = "dateTimePickerEndDate";
+            dateTimePickerEndDate.Size = new Size(115, 30);
+            dateTimePickerEndDate.TabIndex = 3;
             // 
-            // btnSearch
+            // labelSupplierFilter
             // 
-            btnSearch.BackColor = Color.FromArgb(2, 132, 199);
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(460, 14);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(132, 54);
-            btnSearch.TabIndex = 6;
-            btnSearch.Text = "🔍 FILTRAR";
-            btnSearch.UseVisualStyleBackColor = false;
+            labelSupplierFilter.AutoSize = true;
+            labelSupplierFilter.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSupplierFilter.Location = new Point(265, 12);
+            labelSupplierFilter.Name = "labelSupplierFilter";
+            labelSupplierFilter.Size = new Size(94, 21);
+            labelSupplierFilter.TabIndex = 4;
+            labelSupplierFilter.Text = "Proveedor:";
             // 
-            // lblSearch
+            // comboBoxSupplierFilter
             // 
-            lblSearch.AutoSize = true;
-            lblSearch.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSearch.Location = new Point(628, 12);
-            lblSearch.Name = "lblSearch";
-            lblSearch.Size = new Size(95, 21);
-            lblSearch.TabIndex = 7;
-            lblSearch.Text = "Buscar por:";
+            comboBoxSupplierFilter.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxSupplierFilter.Font = new Font("Segoe UI", 10F);
+            comboBoxSupplierFilter.Location = new Point(265, 36);
+            comboBoxSupplierFilter.Name = "comboBoxSupplierFilter";
+            comboBoxSupplierFilter.Size = new Size(180, 31);
+            comboBoxSupplierFilter.TabIndex = 5;
             // 
-            // cboSearchBy
+            // buttonSearch
             // 
-            cboSearchBy.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboSearchBy.Font = new Font("Segoe UI", 10F);
-            cboSearchBy.Location = new Point(628, 34);
-            cboSearchBy.Name = "cboSearchBy";
-            cboSearchBy.Size = new Size(130, 31);
-            cboSearchBy.TabIndex = 8;
+            buttonSearch.BackColor = Color.FromArgb(2, 132, 199);
+            buttonSearch.FlatAppearance.BorderSize = 0;
+            buttonSearch.FlatStyle = FlatStyle.Flat;
+            buttonSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonSearch.ForeColor = Color.White;
+            buttonSearch.Location = new Point(460, 14);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(132, 54);
+            buttonSearch.TabIndex = 6;
+            buttonSearch.Text = "FILTRAR";
+            buttonSearch.UseVisualStyleBackColor = false;
             // 
-            // txtSearchText
+            // labelSearchCriteriaPrompt
             // 
-            txtSearchText.BorderStyle = BorderStyle.FixedSingle;
-            txtSearchText.Font = new Font("Segoe UI", 10F);
-            txtSearchText.Location = new Point(793, 35);
-            txtSearchText.Name = "txtSearchText";
-            txtSearchText.Size = new Size(210, 30);
-            txtSearchText.TabIndex = 9;
+            labelSearchCriteriaPrompt.AutoSize = true;
+            labelSearchCriteriaPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSearchCriteriaPrompt.Location = new Point(628, 12);
+            labelSearchCriteriaPrompt.Name = "labelSearchCriteriaPrompt";
+            labelSearchCriteriaPrompt.Size = new Size(95, 21);
+            labelSearchCriteriaPrompt.TabIndex = 7;
+            labelSearchCriteriaPrompt.Text = "Buscar por:";
             // 
-            // btnExport
+            // comboBoxSearchCriteria
             // 
-            btnExport.BackColor = Color.FromArgb(16, 185, 129);
-            btnExport.FlatAppearance.BorderSize = 0;
-            btnExport.FlatStyle = FlatStyle.Flat;
-            btnExport.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnExport.ForeColor = Color.White;
-            btnExport.Location = new Point(1020, 12);
-            btnExport.Name = "btnExport";
-            btnExport.Size = new Size(201, 65);
-            btnExport.TabIndex = 10;
-            btnExport.Text = "EXPORTAR EXCEL";
-            btnExport.UseVisualStyleBackColor = false;
+            comboBoxSearchCriteria.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxSearchCriteria.Font = new Font("Segoe UI", 10F);
+            comboBoxSearchCriteria.Location = new Point(628, 34);
+            comboBoxSearchCriteria.Name = "comboBoxSearchCriteria";
+            comboBoxSearchCriteria.Size = new Size(130, 31);
+            comboBoxSearchCriteria.TabIndex = 8;
             // 
-            // dgvData
+            // textBoxSearchValue
             // 
-            dgvData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvData.BackgroundColor = Color.White;
-            dgvData.BorderStyle = BorderStyle.None;
-            dgvData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvData.Location = new Point(16, 188);
-            dgvData.Name = "dgvData";
-            dgvData.RowHeadersWidth = 51;
-            dgvData.Size = new Size(1242, 467);
-            dgvData.TabIndex = 2;
+            textBoxSearchValue.BorderStyle = BorderStyle.FixedSingle;
+            textBoxSearchValue.Font = new Font("Segoe UI", 10F);
+            textBoxSearchValue.Location = new Point(793, 35);
+            textBoxSearchValue.Name = "textBoxSearchValue";
+            textBoxSearchValue.Size = new Size(210, 30);
+            textBoxSearchValue.TabIndex = 9;
+            // 
+            // buttonExportExcel
+            // 
+            buttonExportExcel.BackColor = Color.FromArgb(16, 185, 129);
+            buttonExportExcel.FlatAppearance.BorderSize = 0;
+            buttonExportExcel.FlatStyle = FlatStyle.Flat;
+            buttonExportExcel.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            buttonExportExcel.ForeColor = Color.White;
+            buttonExportExcel.Location = new Point(1020, 12);
+            buttonExportExcel.Name = "buttonExportExcel";
+            buttonExportExcel.Size = new Size(231, 65);
+            buttonExportExcel.TabIndex = 10;
+            buttonExportExcel.Text = "EXPORTAR EXCEL";
+            buttonExportExcel.UseVisualStyleBackColor = false;
+            // 
+            // dataGridViewPurchaseData
+            // 
+            dataGridViewPurchaseData.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewPurchaseData.BackgroundColor = Color.White;
+            dataGridViewPurchaseData.BorderStyle = BorderStyle.None;
+            dataGridViewPurchaseData.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewPurchaseData.Location = new Point(16, 188);
+            dataGridViewPurchaseData.Name = "dataGridViewPurchaseData";
+            dataGridViewPurchaseData.RowHeadersWidth = 51;
+            dataGridViewPurchaseData.Size = new Size(1265, 467);
+            dataGridViewPurchaseData.TabIndex = 2;
             // 
             // FormPurchaseReport
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
-            ClientSize = new Size(1275, 675);
-            Controls.Add(dgvData);
-            Controls.Add(pnlFilters);
-            Controls.Add(pnlHeader);
+            ClientSize = new Size(1298, 675);
+            Controls.Add(dataGridViewPurchaseData);
+            Controls.Add(panelFiltersCard);
+            Controls.Add(panelHeader);
             Name = "FormPurchaseReport";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Reporte de Compras";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlFilters.ResumeLayout(false);
-            pnlFilters.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvData).EndInit();
+            Text = "Reporte/Historial de Compras a Proveedores";
+            ((System.ComponentModel.ISupportInitialize)picIconSearch).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconExportExcel).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelFiltersCard.ResumeLayout(false);
+            panelFiltersCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewPurchaseData).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlFilters;
-        private System.Windows.Forms.Label lblStart;
-        private System.Windows.Forms.DateTimePicker dtpStart;
-        private System.Windows.Forms.Label lblEnd;
-        private System.Windows.Forms.DateTimePicker dtpEnd;
-        private System.Windows.Forms.Label lblSupplier;
-        private System.Windows.Forms.ComboBox cboSupplierFilter;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Label lblSearch;
-        private System.Windows.Forms.ComboBox cboSearchBy;
-        private System.Windows.Forms.TextBox txtSearchText;
-        private System.Windows.Forms.Button btnExport;
-        private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelFiltersCard;
+        private System.Windows.Forms.Label labelStartDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerStartDate;
+        private System.Windows.Forms.Label labelEndDate;
+        private System.Windows.Forms.DateTimePicker dateTimePickerEndDate;
+        private System.Windows.Forms.Label labelSupplierFilter;
+        private System.Windows.Forms.ComboBox comboBoxSupplierFilter;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.Label labelSearchCriteriaPrompt;
+        private System.Windows.Forms.ComboBox comboBoxSearchCriteria;
+        private System.Windows.Forms.TextBox textBoxSearchValue;
+        private System.Windows.Forms.Button buttonExportExcel;
+        private System.Windows.Forms.DataGridView dataGridViewPurchaseData;
+        private System.Windows.Forms.PictureBox picIconSearch;
+        private System.Windows.Forms.PictureBox picIconExportExcel;
     }
 }

@@ -13,15 +13,19 @@ namespace CompriaxSystem.WinFormsUI
         {
             _productService = productService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearSearch, this.picIconClearSearch);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCloseDialog, this.picIconCloseDialog);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlSearchCard);
-            UIThemeHelper.ApplyCardStyle(pnlDetailsCard);
+            UIThemeHelper.ApplyCardStyle(panelSearchCard);
+            UIThemeHelper.ApplyCardStyle(panelDetailsCard);
 
             this.KeyPreview = true;
-            this.Load += async (sender, eventArgs) => await InitializeFormAsync();
-            this.btnClose.Click += (sender, eventArgs) => this.Close();
-            this.btnClear.Click += (sender, eventArgs) => ResetDisplay();
+            this.Load += async (sender, eventArgs) => await InitializePriceCheckFormAsync();
+            this.buttonCloseDialog.Click += (sender, eventArgs) => this.Close();
+            this.buttonClearSearch.Click += (sender, eventArgs) => ResetPriceCheckDisplayFields();
 
             // Atajos de teclado dentro de la ventana de consulta
             this.KeyDown += (sender, eventArgs) =>
@@ -37,18 +41,22 @@ namespace CompriaxSystem.WinFormsUI
             };
 
             // Conexión del evento de selección del buscador predictivo
-            quickSearchBox.ProductSelected += (sender, selectedProduct) => DisplayProductPrice(selectedProduct);
+            quickSearchBox.ProductSelected += (sender, selectedProduct) => DisplayProductPriceAndStockDetails(selectedProduct);
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePriceCheckFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
                 try
                 {
-                    var productList = await _productService.GetProductListAsync();
+                    var activeProductsList = await _productService.GetProductListAsync();
 
-                    _cachedProducts = productList
+                    _cachedProducts = activeProductsList
                         .Where(product => product.IsActive)
                         .ToList();
 
@@ -60,57 +68,67 @@ namespace CompriaxSystem.WinFormsUI
                 }
                 finally
                 {
-                    ResetDisplay();
+                    ResetPriceCheckDisplayFields();
                     quickSearchBox.FocusInput();
                 }
             }
         }
 
-        public void DisplayProductPrice(ProductDto product)
+        public void DisplayProductPriceAndStockDetails(ProductDto product)
         {
             if (product == null)
             {
                 return;
             }
 
-            lblProductName.Text = product.Name.ToUpper();
-            lblPrice.Text = product.SellPrice.ToString("C2");
+            labelProductName.Text = product.Name.ToUpper();
+            labelPriceValue.Text = product.SellPrice.ToString("C2");
 
-            lblBarcodeVal.Text = product.Barcode;
-            lblCategoryVal.Text = product.CategoryName;
-            lblBrandVal.Text = product.BrandName;
+            labelBarcodeValue.Text = product.Barcode;
+            labelCategoryValue.Text = product.CategoryName;
+            labelBrandValue.Text = product.BrandName;
 
-            lblStockVal.Text = $"{product.CurrentStock:N0} unidades";
+            labelStockValue.Text = $"{product.CurrentStock:N0} unidades";
 
-            bool isLowStock = product.CurrentStock <= product.MinimumStock;
+            bool isStockBelowThreshold = product.CurrentStock <= product.MinimumStock;
 
-            lblStockVal.ForeColor = isLowStock ? UIThemeHelper.Danger : UIThemeHelper.Success;
-            lblStockBadge.Text = isLowStock ? "STOCK BAJO" : "STOCK DISPONIBLE";
-            lblStockBadge.ForeColor = isLowStock ? UIThemeHelper.Danger : UIThemeHelper.Success;
+            labelStockValue.ForeColor = isStockBelowThreshold ? UIThemeHelper.Danger : UIThemeHelper.Success;
+            labelStockBadge.Text = isStockBelowThreshold ? "STOCK BAJO" : "STOCK DISPONIBLE";
+            labelStockBadge.ForeColor = isStockBelowThreshold ? UIThemeHelper.Danger : UIThemeHelper.Success;
 
             // Imagen del producto si está disponible
-            picProduct.Image?.Dispose();
-            picProduct.Image = ImageHelper.LoadFromBytes(product.Image);
+            pictureBoxProduct.Image?.Dispose();
+            pictureBoxProduct.Image = ImageHelper.LoadFromBytes(product.Image);
 
-            pnlDetailsCard.Visible = true;
+            panelDetailsCard.Visible = true;
             quickSearchBox.FocusInput();
         }
 
-        private void ResetDisplay()
+        private void ResetPriceCheckDisplayFields()
         {
-            lblProductName.Text = "ESCANEE UN CÓDIGO O ESCRIBA UN NOMBRE";
-            lblPrice.Text = "$ 0,00";
-            lblBarcodeVal.Text = "-";
-            lblCategoryVal.Text = "-";
-            lblBrandVal.Text = "-";
-            lblStockVal.Text = "-";
-            lblStockBadge.Text = string.Empty;
+            labelProductName.Text = "ESCANEE UN CÓDIGO O ESCRIBA UN NOMBRE";
+            labelPriceValue.Text = "$ 0,00";
+            labelBarcodeValue.Text = "-";
+            labelCategoryValue.Text = "-";
+            labelBrandValue.Text = "-";
+            labelStockValue.Text = "-";
+            labelStockBadge.Text = string.Empty;
 
-            picProduct.Image?.Dispose();
-            picProduct.Image = null;
+            pictureBoxProduct.Image?.Dispose();
+            pictureBoxProduct.Image = null;
 
             quickSearchBox.Clear();
             quickSearchBox.FocusInput();
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

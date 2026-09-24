@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 
 namespace CompriaxSystem.WinFormsUI
@@ -12,60 +13,88 @@ namespace CompriaxSystem.WinFormsUI
         {
             _storeService = storeService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSaveSettings, this.picIconSaveSettings);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(groupBoxStore);
+            UIThemeHelper.ApplyCardStyle(panelStoreProfileForm);
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.txtTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtTaxId);
+            this.Load += async (s, e) => await InitializeStoreSettingsFormAsync();
+            this.buttonSaveSettings.Click += async (s, e) => await ExecuteSaveStoreProfileSettingsAsync();
+            this.textBoxTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxTaxId);
         }
 
-        public async Task InitializeFormAsync()
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
+       private StoreSettingsDto? _currentSettings;
+
+        public async Task InitializeStoreSettingsFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var settings = await _storeService.GetStoreProfileAsync();
-                txtName.Text = settings.Name;
-                txtTaxId.Text = settings.CUIT;
-                txtAddress.Text = settings.Address;
-                txtPhone.Text = settings.Phone;
-                txtEmail.Text = settings.Email;
+                _currentSettings = await _storeService.GetStoreProfileAsync();
+                textBoxCompanyName.Text = _currentSettings.Name;
+                textBoxTaxId.Text = _currentSettings.CUIT;
+                textBoxAddress.Text = _currentSettings.Address;
+                textBoxPhone.Text = _currentSettings.Phone;
+                textBoxEmail.Text = _currentSettings.Email;
 
-                picLogo.Image = Resources.logo_compriax;
-                picLogo.SizeMode = PictureBoxSizeMode.Zoom;
+                if (_currentSettings.Logo != null && _currentSettings.Logo.Length > 0)
+                    pictureBoxStoreLogo.Image = ImageHelper.LoadFromBytes(_currentSettings.Logo);
+                else
+                    pictureBoxStoreLogo.Image = Resources.logo_compriax;
+                    
+                pictureBoxStoreLogo.SizeMode = PictureBoxSizeMode.Zoom;
             }
         }
 
-        private async Task ExecuteSaveAction()
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SaveStoreProfileSettings.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
+
+        private async Task ExecuteSaveStoreProfileSettingsAsync()
         {
-            var dto = new StoreSettingsDto
+            var updatedStoreSettings = new StoreSettingsDto
             {
-                Name = txtName.Text.Trim(),
-                CUIT = txtTaxId.Text.Trim(),
-                Address = txtAddress.Text.Trim(),
-                Phone = txtPhone.Text.Trim(),
-                Email = txtEmail.Text.Trim(),
-                Logo = null
+                Name = textBoxCompanyName.Text.Trim(),
+                CUIT = textBoxTaxId.Text.Trim(),
+                Address = textBoxAddress.Text.Trim(),
+                Phone = textBoxPhone.Text.Trim(),
+                Email = textBoxEmail.Text.Trim(),
+                Logo = _currentSettings?.Logo,
+                GrossIncomeNumber = _currentSettings?.GrossIncomeNumber,
+                ActivityStartDate = _currentSettings?.ActivityStartDate,
+                TaxConditionId = _currentSettings?.TaxConditionId,
+                PointOfSale = _currentSettings?.PointOfSale ?? TaxConstants.DEFAULT_POINT_OF_SALE,
+                TicketFormat = _currentSettings?.TicketFormat ?? ThermalPrinterConstants.FORMAT_80MM,
+                TicketFooterMessage = _currentSettings?.TicketFooterMessage ?? ThermalPrinterConstants.DEFAULT_FOOTER_MESSAGE,
+                ThermalPrinterName = _currentSettings?.ThermalPrinterName,
+                ShowLogoOnTicket = _currentSettings?.ShowLogoOnTicket ?? true,
+                ShowBarcodeOnTicket = _currentSettings?.ShowBarcodeOnTicket ?? true,
+                AutoPrintTicket = _currentSettings?.AutoPrintTicket ?? false
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _storeService.UpdateStoreProfileAsync(dto);
+                var operationResult = await _storeService.UpdateStoreProfileAsync(updatedStoreSettings);
 
-                if (result.Success)
+                if (operationResult.Success)
                 {
-                    var mainForm = System.Windows.Forms.Application.OpenForms.OfType<FormPanelControl>().FirstOrDefault();
-                    if (mainForm != null)
+                    var activePanelControlForm = System.Windows.Forms.Application.OpenForms.OfType<FormPanelControl>().FirstOrDefault();
+                    if (activePanelControlForm != null)
                     {
-                        await mainForm.SetupAppearanceAsync();
+                        await activePanelControlForm.ConfigureApplicationAppearanceAndBrandingAsync();
                     }
 
                     UIHelper.InfoMessage(this, "¡Configuración guardada y actualizada!", "Ajustes Actualizados");
                 }
                 else
                 {
-                    UIHelper.ShowResult(result, "Configuración del Sistema");
+                    UIHelper.ShowResult(operationResult, "Configuración del Sistema");
                 }
             }
         }

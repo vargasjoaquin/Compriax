@@ -3,20 +3,15 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class SaleService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser,
-        IMapper mapper,
-        IValidator<SaleDto> saleValidator,
-        IAfipService afipService) : ISaleService
+    public class SaleService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IMapper mapper, IValidator<SaleDto> saleValidator, IAfipService afipService) : ISaleService
     {
-
         /// <summary>
         /// Procesa una venta completa: valida stock, autoriza ante AFIP, impacta inventario y registra la transacción en el turno de caja.
         /// </summary>
@@ -29,18 +24,36 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            int currentUserId = currentUser.CurrentUser!.UserId;
-            string currentUsername = currentUser.CurrentUser!.Username;
-            int registerId = currentUser.OperationalContext!.CashRegisterId;
+            if (!currentUser.IsAuthenticated || currentUser.CurrentUser == null)
+                return OperationResult.Failure("Operación no autorizada: No hay una sesión de usuario activa.");
 
-            var activeShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(registerId);
+            int currentUserId = currentUser.CurrentUser.UserId;
+            
+            string currentUsername = currentUser.CurrentUser.Username;
+            
+            int cashRegisterId = currentUser.OperationalContext?.CashRegisterId ?? TaxConstants.DEFAULT_POINT_OF_SALE;
 
-            var lastNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
-            string newDocumentNumber = GenerateNextNumber(lastNumber);
+            var activeCashShift = await unitOfWork.CashShifts.GetActiveShiftByRegisterIdAsync(cashRegisterId);
+
+            //Pre-chequeo de disponibilidad de stock antes de invocar a AFIP
+            foreach (var saleItemDto in saleDto.Items)
+            {
+                var product = await unitOfWork.Products.GetByIdAsync(saleItemDto.ProductId);
+                
+                if (product == null || !product.IsActive)
+                    return OperationResult.Failure($"El producto con ID {saleItemDto.ProductId} no fue encontrado o está inactivo.");
+
+                if (product.CurrentStock < saleItemDto.Quantity)
+                    return OperationResult.Failure($"Stock insuficiente en '{product.Name}'. Disponible: {product.CurrentStock:N0}, Solicitado: {saleItemDto.Quantity}");
+            }
+
+            var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
+            string newDocumentNumber = GenerateNextNumber(lastDocumentNumber);
             
             saleDto.DocumentNumber = newDocumentNumber;
 
             AfipAuthorizeResultDto fiscalResult;
+            
             try
             {
                 fiscalResult = await afipService.AuthorizeInvoiceAsync(saleDto);
@@ -51,17 +64,21 @@ namespace CompriaxSystem.Application.Services
             }
 
             await unitOfWork.BeginTransactionAsync();
+
             try
             {
+                var currentLastDocNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(saleDto.DocumentTypeId);
+                string documentNumber = GenerateNextNumber(currentLastDocNumber);
+
                 var sale = mapper.Map<Sale>(saleDto);
-                
-                sale.DocumentNumber = newDocumentNumber;
+
+                sale.DocumentNumber = documentNumber;
                 sale.DocumentTypeId = saleDto.DocumentTypeId;
-                sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : 1;
+                sale.PaymentMethodId = saleDto.PaymentMethodId > 0 ? saleDto.PaymentMethodId : PaymentMethodConstants.CASH_ID;
                 sale.CustomerId = saleDto.CustomerId;
                 sale.UserId = currentUserId;
-                sale.CashRegisterId = registerId;
-                sale.CashShiftId = activeShift?.Id;
+                sale.CashRegisterId = cashRegisterId;
+                sale.CashShiftId = activeCashShift?.Id;
                 sale.CreatedAt = DateTime.UtcNow;
 
                 sale.SubTotal = saleDto.SubTotal > 0 ? saleDto.SubTotal : saleDto.Items.Sum(x => x.Quantity * x.UnitPrice);
@@ -74,7 +91,7 @@ namespace CompriaxSystem.Application.Services
                 {
                     sale.Cae = fiscalResult.Cae;
                     sale.CaeExpirationDate = fiscalResult.CaeExpirationDate;
-                    sale.PointOfSale = fiscalResult.PointOfSale > 0 ? fiscalResult.PointOfSale : 1;
+                    sale.PointOfSale = fiscalResult.PointOfSale > 0 ? fiscalResult.PointOfSale : TaxConstants.DEFAULT_POINT_OF_SALE;
                     sale.AfipQrUrl = fiscalResult.QrUrl;
                     sale.FiscalStatus = fiscalResult.FiscalStatus;
 
@@ -85,7 +102,7 @@ namespace CompriaxSystem.Application.Services
                 }
                 else
                 {
-                    sale.FiscalStatus = "No Fiscal";
+                    sale.FiscalStatus = FiscalStatusesContstans.NON_FISCAL;
                 }
 
                 sale.DocumentType = null!;
@@ -95,59 +112,68 @@ namespace CompriaxSystem.Application.Services
                 sale.CashShift = null!;
                 sale.CashRegister = null!;
 
-                foreach (var item in sale.SaleItems)
+                foreach (var saleItem in sale.SaleItems)
                 {
-                    item.Product = null!;
-                    item.Sale = null!;
+                    saleItem.Product = null!;
+                    saleItem.Sale = null!;
 
-                    var product = await unitOfWork.Products.GetByIdAsync(item.ProductId);
-
+                    var product = await unitOfWork.Products.GetByIdAsync(saleItem.ProductId);
+                    
                     if (product == null || !product.IsActive)
                     {
                         await unitOfWork.RollbackAsync();
-                        return OperationResult.Failure($"El producto con ID {item.ProductId} no fue encontrado o está inactivo.");
+                        return OperationResult.Failure($"El producto con ID {saleItem.ProductId} no fue encontrado o está inactivo.");
                     }
 
-                    if (product.CurrentStock < item.Quantity)
+                    if (product.CurrentStock < saleItem.Quantity)
                     {
                         await unitOfWork.RollbackAsync();
-                        return OperationResult.Failure($"Stock insuficiente en '{product.Name}'. Disponible: {product.CurrentStock:N0}, Solicitado: {item.Quantity}");
+                        return OperationResult.Failure($"Stock insuficiente en '{product.Name}'. Disponible: {product.CurrentStock:N0}, Solicitado: {saleItem.Quantity}");
                     }
 
-                    item.CostPrice = product.BuyPrice;
-                    product.CurrentStock -= item.Quantity;
+                    saleItem.CostPrice = product.BuyPrice;
+                    product.CurrentStock -= saleItem.Quantity;
+                    product.LastUpdatedAt = DateTime.UtcNow;
+                    product.LastUpdatedBy = currentUsername;
 
                     unitOfWork.Products.Update(product);
 
                     await unitOfWork.Products.AddMovementAsync(new StockMovement
                     {
-                        ProductId = item.ProductId,
+                        ProductId = saleItem.ProductId,
                         UserId = currentUserId,
-                        Quantity = -item.Quantity,
+                        Quantity = -saleItem.Quantity,
                         MovementType = MovementType.Sale,
-                        Remarks = $"Venta Nro: {newDocumentNumber} [Caja #{registerId}]",
+                        Remarks = $"Venta Nro: {documentNumber} [Caja #{cashRegisterId}]",
                         CreatedBy = currentUsername,
                         CreatedAt = DateTime.UtcNow
                     });
                 }
 
                 await unitOfWork.Sales.AddAsync(sale);
-                bool success = await unitOfWork.CompleteAsync();
 
-                if (!success)
+                bool operationSucceeded = await unitOfWork.CompleteAsync();
+
+                if (!operationSucceeded)
                     throw new InvalidOperationException("No se detectaron cambios al persistir la venta.");
 
                 await unitOfWork.CommitAsync();
 
-                string caeTag = !string.IsNullOrWhiteSpace(sale.Cae) ? $" [CAE: {sale.Cae}]" : "";
-                string shiftTag = activeShift != null ? $" [Turno Caja #{activeShift.Id}]" : "";
+                saleDto.DocumentNumber = documentNumber;
+                string caeMessage = !string.IsNullOrWhiteSpace(sale.Cae) ? $" [CAE: {sale.Cae}]" : "";
+                string cashShiftMessage = activeCashShift != null ? $" [Turno Caja #{activeCashShift.Id}]" : "";
 
-                return OperationResult.Ok($"Venta procesada exitosamente. Comprobante: {newDocumentNumber}{caeTag}{shiftTag}");
+                return new OperationResult
+                {
+                    Success = true,
+                    Message = $"Venta procesada exitosamente. Comprobante: {documentNumber}{caeMessage}{cashShiftMessage}",
+                    EntityId = sale.Id
+                };
             }
             catch (Exception ex)
             {
                 await unitOfWork.RollbackAsync();
-                return OperationResult.Failure("Error crítico al persistir la venta: " + (ex.InnerException?.Message ?? ex.Message));
+                return OperationResult.Failure($"Error crítico al persistir la venta: {ex.Message}");
             }
         }
 
@@ -173,18 +199,28 @@ namespace CompriaxSystem.Application.Services
             return OperationResult.Ok();
         }
 
+        /// <summary>
+        /// Obtiene el próximo número de comprobante disponible para un tipo de comprobante.
+        /// </summary>
+        /// <param name="documentTypeId">Id del tipo de documento fiscal.</param>
+        /// <returns>Próximo número de comprobante disponible.</returns>
         public async Task<string> GetNextDocumentNumberAsync(int documentTypeId)
         {
-            var lastNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(documentTypeId);
-            return GenerateNextNumber(lastNumber);
+            var lastDocumentNumber = await unitOfWork.Sales.GetLastDocumentNumberAsync(documentTypeId);
+            return GenerateNextNumber(lastDocumentNumber);
         }
 
-        private static string GenerateNextNumber(string? lastNumber)
+        /// <summary>
+        /// Genera el siguiente número correlativo de comprobante a partir del último número registrado.
+        /// </summary>
+        /// <param name="lastDocumentNumber">Último número de comprobante registrado.</param>
+        /// <returns>Próximo número de comprobante con ocho dígitos.</returns>
+        private static string GenerateNextNumber(string? lastDocumentNumber)
         {
-            if (!string.IsNullOrWhiteSpace(lastNumber) && long.TryParse(lastNumber, out long lastId))
-                return (lastId + 1).ToString().PadLeft(8, '0');
+            if (!string.IsNullOrWhiteSpace(lastDocumentNumber) && long.TryParse(lastDocumentNumber, out long lastDocumentNumberValue))
+                return (lastDocumentNumberValue + 1).ToString().PadLeft(DocumentTypeConstants.DEFAULT_DOCUMENT_PADDING, '0');
 
-            return "00000001";
+            return DocumentTypeConstants.INITIAL_DOCUMENT_NUMBER;
         }
     }
 }

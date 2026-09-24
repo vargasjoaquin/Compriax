@@ -17,365 +17,410 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            btnDownloadPdf = new Button();
-            pnlSearch = new Panel();
-            lblNumDoc = new Label();
-            txtSearchNumber = new TextBox();
-            btnSearch = new Button();
-            btnClear = new Button();
-            pnlInfo = new Panel();
-            lblFecha = new Label();
-            txtDate = new TextBox();
-            lblDocType = new Label();
-            txtDocType = new TextBox();
-            lblUser = new Label();
-            txtUser = new TextBox();
-            lblDniCli = new Label();
-            txtClientDoc = new TextBox();
-            lblNomCli = new Label();
-            txtClientName = new TextBox();
-            lblApeCli = new Label();
-            txtClientLastName = new TextBox();
-            dgvItems = new DataGridView();
-            pnlTotals = new Panel();
-            lblTotal = new Label();
-            txtTotal = new TextBox();
-            lblPago = new Label();
-            txtPaid = new TextBox();
-            lblCambio = new Label();
-            txtChange = new TextBox();
-            pnlHeader.SuspendLayout();
-            pnlSearch.SuspendLayout();
-            pnlInfo.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvItems).BeginInit();
-            pnlTotals.SuspendLayout();
+            picIconDownloadPdf = new PictureBox();
+            picIconSearch = new PictureBox();
+            picIconClearSearch = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            buttonDownloadPdf = new Button();
+            panelSearchCard = new Panel();
+            labelDocumentNumberPrompt = new Label();
+            textBoxSearchDocumentNumber = new TextBox();
+            buttonSearch = new Button();
+            buttonClearSearch = new Button();
+            panelVoucherInfoCard = new Panel();
+            labelIssueDate = new Label();
+            textBoxIssueDate = new TextBox();
+            labelDocumentType = new Label();
+            textBoxDocumentType = new TextBox();
+            labelCashierName = new Label();
+            textBoxCashierName = new TextBox();
+            labelCustomerDoc = new Label();
+            textBoxCustomerDoc = new TextBox();
+            labelCustomerFirstName = new Label();
+            textBoxCustomerFirstName = new TextBox();
+            labelCustomerLastName = new Label();
+            textBoxCustomerLastName = new TextBox();
+            dataGridViewSaleItems = new DataGridView();
+            panelTotalsCard = new Panel();
+            labelTotalPrompt = new Label();
+            textBoxTotalAmount = new TextBox();
+            labelAmountPaidPrompt = new Label();
+            textBoxAmountPaid = new TextBox();
+            labelChangePrompt = new Label();
+            textBoxChangeAmount = new TextBox();
+            ((System.ComponentModel.ISupportInitialize)picIconDownloadPdf).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSearch).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconClearSearch).BeginInit();
+            panelHeader.SuspendLayout();
+            panelSearchCard.SuspendLayout();
+            panelVoucherInfoCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSaleItems).BeginInit();
+            panelTotalsCard.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconDownloadPdf
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(btnDownloadPdf);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1137, 87);
-            pnlHeader.TabIndex = 0;
+            picIconDownloadPdf.BackColor = Color.FromArgb(2, 132, 199);
+            picIconDownloadPdf.Cursor = Cursors.Hand;
+            picIconDownloadPdf.Image = Resources._085_exportar_pdf;
+            picIconDownloadPdf.Location = new Point(884, 12);
+            picIconDownloadPdf.Name = "picIconDownloadPdf";
+            picIconDownloadPdf.Size = new Size(38, 60);
+            picIconDownloadPdf.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconDownloadPdf.TabIndex = 99;
+            picIconDownloadPdf.TabStop = false;
             // 
-            // lblTitle
+            // picIconSearch
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 25);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(514, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "AUDITORÍA Y CONSULTA DE COMPROBANTE";
+            picIconSearch.BackColor = Color.FromArgb(2, 132, 199);
+            picIconSearch.Cursor = Cursors.Hand;
+            picIconSearch.Image = Resources._080_buscar;
+            picIconSearch.Location = new Point(534, 3);
+            picIconSearch.Name = "picIconSearch";
+            picIconSearch.Size = new Size(35, 41);
+            picIconSearch.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSearch.TabIndex = 99;
+            picIconSearch.TabStop = false;
             // 
-            // btnDownloadPdf
+            // picIconClearSearch
             // 
-            btnDownloadPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnDownloadPdf.BackColor = Color.FromArgb(2, 132, 199);
-            btnDownloadPdf.FlatAppearance.BorderSize = 0;
-            btnDownloadPdf.FlatStyle = FlatStyle.Flat;
-            btnDownloadPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnDownloadPdf.ForeColor = Color.White;
-            btnDownloadPdf.Location = new Point(911, 12);
-            btnDownloadPdf.Name = "btnDownloadPdf";
-            btnDownloadPdf.Size = new Size(184, 60);
-            btnDownloadPdf.TabIndex = 1;
-            btnDownloadPdf.Text = "REIMPRIMIR PDF";
-            btnDownloadPdf.UseVisualStyleBackColor = false;
+            picIconClearSearch.BackColor = Color.FromArgb(255, 255, 255);
+            picIconClearSearch.Cursor = Cursors.Hand;
+            picIconClearSearch.Image = Resources._079_eliminar;
+            picIconClearSearch.Location = new Point(670, 3);
+            picIconClearSearch.Name = "picIconClearSearch";
+            picIconClearSearch.Size = new Size(32, 41);
+            picIconClearSearch.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconClearSearch.TabIndex = 99;
+            picIconClearSearch.TabStop = false;
             // 
-            // pnlSearch
+            // panelHeader
             // 
-            pnlSearch.BackColor = Color.White;
-            pnlSearch.Controls.Add(lblNumDoc);
-            pnlSearch.Controls.Add(txtSearchNumber);
-            pnlSearch.Controls.Add(btnSearch);
-            pnlSearch.Controls.Add(btnClear);
-            pnlSearch.Location = new Point(16, 93);
-            pnlSearch.Name = "pnlSearch";
-            pnlSearch.Size = new Size(1068, 51);
-            pnlSearch.TabIndex = 1;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(picIconDownloadPdf);
+            panelHeader.Controls.Add(buttonDownloadPdf);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1137, 87);
+            panelHeader.TabIndex = 0;
             // 
-            // lblNumDoc
+            // labelTitle
             // 
-            lblNumDoc.AutoSize = true;
-            lblNumDoc.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblNumDoc.Location = new Point(16, 15);
-            lblNumDoc.Name = "lblNumDoc";
-            lblNumDoc.Size = new Size(209, 21);
-            lblNumDoc.TabIndex = 0;
-            lblNumDoc.Text = "Número de Comprobante:";
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 25);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(477, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "AUDITORÍA Y CONSULTA DE COMPROBANTE";
             // 
-            // txtSearchNumber
+            // buttonDownloadPdf
             // 
-            txtSearchNumber.BorderStyle = BorderStyle.FixedSingle;
-            txtSearchNumber.Font = new Font("Segoe UI", 10F);
-            txtSearchNumber.Location = new Point(231, 12);
-            txtSearchNumber.Name = "txtSearchNumber";
-            txtSearchNumber.Size = new Size(280, 30);
-            txtSearchNumber.TabIndex = 1;
+            buttonDownloadPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonDownloadPdf.BackColor = Color.FromArgb(2, 132, 199);
+            buttonDownloadPdf.FlatAppearance.BorderSize = 0;
+            buttonDownloadPdf.FlatStyle = FlatStyle.Flat;
+            buttonDownloadPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonDownloadPdf.ForeColor = Color.White;
+            buttonDownloadPdf.Location = new Point(884, 12);
+            buttonDownloadPdf.Name = "buttonDownloadPdf";
+            buttonDownloadPdf.Size = new Size(211, 60);
+            buttonDownloadPdf.TabIndex = 1;
+            buttonDownloadPdf.Text = "RE-IMPRIMIR PDF";
+            buttonDownloadPdf.UseVisualStyleBackColor = false;
             // 
-            // btnSearch
+            // panelSearchCard
             // 
-            btnSearch.BackColor = Color.FromArgb(2, 132, 199);
-            btnSearch.FlatAppearance.BorderSize = 0;
-            btnSearch.FlatStyle = FlatStyle.Flat;
-            btnSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnSearch.ForeColor = Color.White;
-            btnSearch.Location = new Point(534, 3);
-            btnSearch.Name = "btnSearch";
-            btnSearch.Size = new Size(130, 41);
-            btnSearch.TabIndex = 2;
-            btnSearch.Text = "BUSCAR";
-            btnSearch.UseVisualStyleBackColor = false;
+            panelSearchCard.BackColor = Color.White;
+            panelSearchCard.Controls.Add(labelDocumentNumberPrompt);
+            panelSearchCard.Controls.Add(textBoxSearchDocumentNumber);
+            panelSearchCard.Controls.Add(picIconSearch);
+            panelSearchCard.Controls.Add(buttonSearch);
+            panelSearchCard.Controls.Add(picIconClearSearch);
+            panelSearchCard.Controls.Add(buttonClearSearch);
+            panelSearchCard.Location = new Point(16, 93);
+            panelSearchCard.Name = "panelSearchCard";
+            panelSearchCard.Size = new Size(1097, 51);
+            panelSearchCard.TabIndex = 1;
             // 
-            // btnClear
+            // labelDocumentNumberPrompt
             // 
-            btnClear.FlatStyle = FlatStyle.Flat;
-            btnClear.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnClear.Location = new Point(670, 3);
-            btnClear.Name = "btnClear";
-            btnClear.Size = new Size(111, 41);
-            btnClear.TabIndex = 3;
-            btnClear.Text = "LIMPIAR";
-            btnClear.UseVisualStyleBackColor = true;
+            labelDocumentNumberPrompt.AutoSize = true;
+            labelDocumentNumberPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelDocumentNumberPrompt.Location = new Point(16, 15);
+            labelDocumentNumberPrompt.Name = "labelDocumentNumberPrompt";
+            labelDocumentNumberPrompt.Size = new Size(209, 21);
+            labelDocumentNumberPrompt.TabIndex = 0;
+            labelDocumentNumberPrompt.Text = "Número de Comprobante:";
             // 
-            // pnlInfo
+            // textBoxSearchDocumentNumber
             // 
-            pnlInfo.BackColor = Color.White;
-            pnlInfo.Controls.Add(lblFecha);
-            pnlInfo.Controls.Add(txtDate);
-            pnlInfo.Controls.Add(lblDocType);
-            pnlInfo.Controls.Add(txtDocType);
-            pnlInfo.Controls.Add(lblUser);
-            pnlInfo.Controls.Add(txtUser);
-            pnlInfo.Controls.Add(lblDniCli);
-            pnlInfo.Controls.Add(txtClientDoc);
-            pnlInfo.Controls.Add(lblNomCli);
-            pnlInfo.Controls.Add(txtClientName);
-            pnlInfo.Controls.Add(lblApeCli);
-            pnlInfo.Controls.Add(txtClientLastName);
-            pnlInfo.Location = new Point(16, 150);
-            pnlInfo.Name = "pnlInfo";
-            pnlInfo.Size = new Size(1068, 173);
-            pnlInfo.TabIndex = 2;
+            textBoxSearchDocumentNumber.BorderStyle = BorderStyle.FixedSingle;
+            textBoxSearchDocumentNumber.Font = new Font("Segoe UI", 10F);
+            textBoxSearchDocumentNumber.Location = new Point(231, 12);
+            textBoxSearchDocumentNumber.Name = "textBoxSearchDocumentNumber";
+            textBoxSearchDocumentNumber.Size = new Size(280, 30);
+            textBoxSearchDocumentNumber.TabIndex = 1;
             // 
-            // lblFecha
+            // buttonSearch
             // 
-            lblFecha.AutoSize = true;
-            lblFecha.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblFecha.Location = new Point(16, 12);
-            lblFecha.Name = "lblFecha";
-            lblFecha.Size = new Size(123, 21);
-            lblFecha.TabIndex = 0;
-            lblFecha.Text = "Fecha Emisión:";
+            buttonSearch.BackColor = Color.FromArgb(2, 132, 199);
+            buttonSearch.FlatAppearance.BorderSize = 0;
+            buttonSearch.FlatStyle = FlatStyle.Flat;
+            buttonSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonSearch.ForeColor = Color.White;
+            buttonSearch.Location = new Point(534, 3);
+            buttonSearch.Name = "buttonSearch";
+            buttonSearch.Size = new Size(130, 41);
+            buttonSearch.TabIndex = 2;
+            buttonSearch.Text = "BUSCAR";
+            buttonSearch.UseVisualStyleBackColor = false;
             // 
-            // txtDate
+            // buttonClearSearch
             // 
-            txtDate.BorderStyle = BorderStyle.FixedSingle;
-            txtDate.Font = new Font("Segoe UI", 10F);
-            txtDate.Location = new Point(16, 34);
-            txtDate.Name = "txtDate";
-            txtDate.ReadOnly = true;
-            txtDate.Size = new Size(140, 30);
-            txtDate.TabIndex = 1;
+            buttonClearSearch.FlatStyle = FlatStyle.Flat;
+            buttonClearSearch.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonClearSearch.Location = new Point(670, 3);
+            buttonClearSearch.Name = "buttonClearSearch";
+            buttonClearSearch.Size = new Size(130, 41);
+            buttonClearSearch.TabIndex = 3;
+            buttonClearSearch.Text = "LIMPIAR";
+            buttonClearSearch.UseVisualStyleBackColor = true;
             // 
-            // lblDocType
+            // panelVoucherInfoCard
             // 
-            lblDocType.AutoSize = true;
-            lblDocType.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDocType.Location = new Point(170, 12);
-            lblDocType.Name = "lblDocType";
-            lblDocType.Size = new Size(157, 21);
-            lblDocType.TabIndex = 2;
-            lblDocType.Text = "Tipo Comprobante:";
+            panelVoucherInfoCard.BackColor = Color.White;
+            panelVoucherInfoCard.Controls.Add(labelIssueDate);
+            panelVoucherInfoCard.Controls.Add(textBoxIssueDate);
+            panelVoucherInfoCard.Controls.Add(labelDocumentType);
+            panelVoucherInfoCard.Controls.Add(textBoxDocumentType);
+            panelVoucherInfoCard.Controls.Add(labelCashierName);
+            panelVoucherInfoCard.Controls.Add(textBoxCashierName);
+            panelVoucherInfoCard.Controls.Add(labelCustomerDoc);
+            panelVoucherInfoCard.Controls.Add(textBoxCustomerDoc);
+            panelVoucherInfoCard.Controls.Add(labelCustomerFirstName);
+            panelVoucherInfoCard.Controls.Add(textBoxCustomerFirstName);
+            panelVoucherInfoCard.Controls.Add(labelCustomerLastName);
+            panelVoucherInfoCard.Controls.Add(textBoxCustomerLastName);
+            panelVoucherInfoCard.Location = new Point(16, 150);
+            panelVoucherInfoCard.Name = "panelVoucherInfoCard";
+            panelVoucherInfoCard.Size = new Size(1097, 173);
+            panelVoucherInfoCard.TabIndex = 2;
             // 
-            // txtDocType
+            // labelIssueDate
             // 
-            txtDocType.BorderStyle = BorderStyle.FixedSingle;
-            txtDocType.Font = new Font("Segoe UI", 10F);
-            txtDocType.Location = new Point(170, 34);
-            txtDocType.Name = "txtDocType";
-            txtDocType.ReadOnly = true;
-            txtDocType.Size = new Size(160, 30);
-            txtDocType.TabIndex = 3;
+            labelIssueDate.AutoSize = true;
+            labelIssueDate.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelIssueDate.Location = new Point(16, 12);
+            labelIssueDate.Name = "labelIssueDate";
+            labelIssueDate.Size = new Size(123, 21);
+            labelIssueDate.TabIndex = 0;
+            labelIssueDate.Text = "Fecha Emisión:";
             // 
-            // lblUser
+            // textBoxIssueDate
             // 
-            lblUser.AutoSize = true;
-            lblUser.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblUser.Location = new Point(345, 12);
-            lblUser.Name = "lblUser";
-            lblUser.Size = new Size(151, 21);
-            lblUser.TabIndex = 4;
-            lblUser.Text = "Cajero / Operador:";
+            textBoxIssueDate.BorderStyle = BorderStyle.FixedSingle;
+            textBoxIssueDate.Font = new Font("Segoe UI", 10F);
+            textBoxIssueDate.Location = new Point(16, 34);
+            textBoxIssueDate.Name = "textBoxIssueDate";
+            textBoxIssueDate.ReadOnly = true;
+            textBoxIssueDate.Size = new Size(140, 30);
+            textBoxIssueDate.TabIndex = 1;
             // 
-            // txtUser
+            // labelDocumentType
             // 
-            txtUser.BorderStyle = BorderStyle.FixedSingle;
-            txtUser.Font = new Font("Segoe UI", 10F);
-            txtUser.Location = new Point(345, 34);
-            txtUser.Name = "txtUser";
-            txtUser.ReadOnly = true;
-            txtUser.Size = new Size(200, 30);
-            txtUser.TabIndex = 5;
+            labelDocumentType.AutoSize = true;
+            labelDocumentType.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelDocumentType.Location = new Point(170, 12);
+            labelDocumentType.Name = "labelDocumentType";
+            labelDocumentType.Size = new Size(157, 21);
+            labelDocumentType.TabIndex = 2;
+            labelDocumentType.Text = "Tipo Comprobante:";
             // 
-            // lblDniCli
+            // textBoxDocumentType
             // 
-            lblDniCli.AutoSize = true;
-            lblDniCli.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDniCli.Location = new Point(16, 68);
-            lblDniCli.Name = "lblDniCli";
-            lblDniCli.Size = new Size(95, 21);
-            lblDniCli.TabIndex = 6;
-            lblDniCli.Text = "DNI / CUIT:";
+            textBoxDocumentType.BorderStyle = BorderStyle.FixedSingle;
+            textBoxDocumentType.Font = new Font("Segoe UI", 10F);
+            textBoxDocumentType.Location = new Point(170, 34);
+            textBoxDocumentType.Name = "textBoxDocumentType";
+            textBoxDocumentType.ReadOnly = true;
+            textBoxDocumentType.Size = new Size(160, 30);
+            textBoxDocumentType.TabIndex = 3;
             // 
-            // txtClientDoc
+            // labelCashierName
             // 
-            txtClientDoc.BorderStyle = BorderStyle.FixedSingle;
-            txtClientDoc.Font = new Font("Segoe UI", 10F);
-            txtClientDoc.Location = new Point(16, 90);
-            txtClientDoc.Name = "txtClientDoc";
-            txtClientDoc.ReadOnly = true;
-            txtClientDoc.Size = new Size(140, 30);
-            txtClientDoc.TabIndex = 7;
+            labelCashierName.AutoSize = true;
+            labelCashierName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCashierName.Location = new Point(345, 12);
+            labelCashierName.Name = "labelCashierName";
+            labelCashierName.Size = new Size(151, 21);
+            labelCashierName.TabIndex = 4;
+            labelCashierName.Text = "Cajero / Operador:";
             // 
-            // lblNomCli
+            // textBoxCashierName
             // 
-            lblNomCli.AutoSize = true;
-            lblNomCli.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblNomCli.Location = new Point(170, 68);
-            lblNomCli.Name = "lblNomCli";
-            lblNomCli.Size = new Size(77, 21);
-            lblNomCli.TabIndex = 8;
-            lblNomCli.Text = "Nombre:";
+            textBoxCashierName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCashierName.Font = new Font("Segoe UI", 10F);
+            textBoxCashierName.Location = new Point(345, 34);
+            textBoxCashierName.Name = "textBoxCashierName";
+            textBoxCashierName.ReadOnly = true;
+            textBoxCashierName.Size = new Size(200, 30);
+            textBoxCashierName.TabIndex = 5;
             // 
-            // txtClientName
+            // labelCustomerDoc
             // 
-            txtClientName.BorderStyle = BorderStyle.FixedSingle;
-            txtClientName.Font = new Font("Segoe UI", 10F);
-            txtClientName.Location = new Point(170, 90);
-            txtClientName.Name = "txtClientName";
-            txtClientName.ReadOnly = true;
-            txtClientName.Size = new Size(160, 30);
-            txtClientName.TabIndex = 9;
+            labelCustomerDoc.AutoSize = true;
+            labelCustomerDoc.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCustomerDoc.Location = new Point(16, 68);
+            labelCustomerDoc.Name = "labelCustomerDoc";
+            labelCustomerDoc.Size = new Size(95, 21);
+            labelCustomerDoc.TabIndex = 6;
+            labelCustomerDoc.Text = "DNI / CUIT:";
             // 
-            // lblApeCli
+            // textBoxCustomerDoc
             // 
-            lblApeCli.AutoSize = true;
-            lblApeCli.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblApeCli.Location = new Point(345, 68);
-            lblApeCli.Name = "lblApeCli";
-            lblApeCli.Size = new Size(191, 21);
-            lblApeCli.TabIndex = 10;
-            lblApeCli.Text = "Apellido / Razón Social:";
+            textBoxCustomerDoc.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCustomerDoc.Font = new Font("Segoe UI", 10F);
+            textBoxCustomerDoc.Location = new Point(16, 90);
+            textBoxCustomerDoc.Name = "textBoxCustomerDoc";
+            textBoxCustomerDoc.ReadOnly = true;
+            textBoxCustomerDoc.Size = new Size(140, 30);
+            textBoxCustomerDoc.TabIndex = 7;
             // 
-            // txtClientLastName
+            // labelCustomerFirstName
             // 
-            txtClientLastName.BorderStyle = BorderStyle.FixedSingle;
-            txtClientLastName.Font = new Font("Segoe UI", 10F);
-            txtClientLastName.Location = new Point(345, 90);
-            txtClientLastName.Name = "txtClientLastName";
-            txtClientLastName.ReadOnly = true;
-            txtClientLastName.Size = new Size(200, 30);
-            txtClientLastName.TabIndex = 11;
+            labelCustomerFirstName.AutoSize = true;
+            labelCustomerFirstName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCustomerFirstName.Location = new Point(170, 68);
+            labelCustomerFirstName.Name = "labelCustomerFirstName";
+            labelCustomerFirstName.Size = new Size(77, 21);
+            labelCustomerFirstName.TabIndex = 8;
+            labelCustomerFirstName.Text = "Nombre:";
             // 
-            // dgvItems
+            // textBoxCustomerFirstName
             // 
-            dgvItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvItems.BackgroundColor = Color.White;
-            dgvItems.BorderStyle = BorderStyle.None;
-            dgvItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvItems.Location = new Point(16, 329);
-            dgvItems.Name = "dgvItems";
-            dgvItems.RowHeadersWidth = 51;
-            dgvItems.Size = new Size(1101, 299);
-            dgvItems.TabIndex = 3;
+            textBoxCustomerFirstName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCustomerFirstName.Font = new Font("Segoe UI", 10F);
+            textBoxCustomerFirstName.Location = new Point(170, 90);
+            textBoxCustomerFirstName.Name = "textBoxCustomerFirstName";
+            textBoxCustomerFirstName.ReadOnly = true;
+            textBoxCustomerFirstName.Size = new Size(160, 30);
+            textBoxCustomerFirstName.TabIndex = 9;
             // 
-            // pnlTotals
+            // labelCustomerLastName
             // 
-            pnlTotals.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            pnlTotals.BackColor = Color.White;
-            pnlTotals.Controls.Add(lblTotal);
-            pnlTotals.Controls.Add(txtTotal);
-            pnlTotals.Controls.Add(lblPago);
-            pnlTotals.Controls.Add(txtPaid);
-            pnlTotals.Controls.Add(lblCambio);
-            pnlTotals.Controls.Add(txtChange);
-            pnlTotals.Location = new Point(16, 638);
-            pnlTotals.Name = "pnlTotals";
-            pnlTotals.Size = new Size(1101, 60);
-            pnlTotals.TabIndex = 4;
+            labelCustomerLastName.AutoSize = true;
+            labelCustomerLastName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCustomerLastName.Location = new Point(345, 68);
+            labelCustomerLastName.Name = "labelCustomerLastName";
+            labelCustomerLastName.Size = new Size(191, 21);
+            labelCustomerLastName.TabIndex = 10;
+            labelCustomerLastName.Text = "Apellido / Razón Social:";
             // 
-            // lblTotal
+            // textBoxCustomerLastName
             // 
-            lblTotal.AutoSize = true;
-            lblTotal.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            lblTotal.Location = new Point(16, 18);
-            lblTotal.Name = "lblTotal";
-            lblTotal.Size = new Size(73, 25);
-            lblTotal.TabIndex = 0;
-            lblTotal.Text = "TOTAL:";
+            textBoxCustomerLastName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCustomerLastName.Font = new Font("Segoe UI", 10F);
+            textBoxCustomerLastName.Location = new Point(345, 90);
+            textBoxCustomerLastName.Name = "textBoxCustomerLastName";
+            textBoxCustomerLastName.ReadOnly = true;
+            textBoxCustomerLastName.Size = new Size(200, 30);
+            textBoxCustomerLastName.TabIndex = 11;
             // 
-            // txtTotal
+            // dataGridViewSaleItems
             // 
-            txtTotal.BorderStyle = BorderStyle.FixedSingle;
-            txtTotal.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            txtTotal.ForeColor = Color.FromArgb(16, 185, 129);
-            txtTotal.Location = new Point(94, 16);
-            txtTotal.Name = "txtTotal";
-            txtTotal.ReadOnly = true;
-            txtTotal.Size = new Size(180, 34);
-            txtTotal.TabIndex = 1;
-            txtTotal.Text = "$ 0,00";
+            dataGridViewSaleItems.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewSaleItems.BackgroundColor = Color.White;
+            dataGridViewSaleItems.BorderStyle = BorderStyle.None;
+            dataGridViewSaleItems.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewSaleItems.Location = new Point(12, 333);
+            dataGridViewSaleItems.Name = "dataGridViewSaleItems";
+            dataGridViewSaleItems.RowHeadersWidth = 51;
+            dataGridViewSaleItems.Size = new Size(1101, 299);
+            dataGridViewSaleItems.TabIndex = 3;
             // 
-            // lblPago
+            // panelTotalsCard
             // 
-            lblPago.AutoSize = true;
-            lblPago.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblPago.Location = new Point(285, 22);
-            lblPago.Name = "lblPago";
-            lblPago.Size = new Size(95, 21);
-            lblPago.TabIndex = 2;
-            lblPago.Text = "ABONADO:";
+            panelTotalsCard.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            panelTotalsCard.BackColor = Color.White;
+            panelTotalsCard.Controls.Add(labelTotalPrompt);
+            panelTotalsCard.Controls.Add(textBoxTotalAmount);
+            panelTotalsCard.Controls.Add(labelAmountPaidPrompt);
+            panelTotalsCard.Controls.Add(textBoxAmountPaid);
+            panelTotalsCard.Controls.Add(labelChangePrompt);
+            panelTotalsCard.Controls.Add(textBoxChangeAmount);
+            panelTotalsCard.Location = new Point(16, 638);
+            panelTotalsCard.Name = "panelTotalsCard";
+            panelTotalsCard.Size = new Size(1097, 60);
+            panelTotalsCard.TabIndex = 4;
             // 
-            // txtPaid
+            // labelTotalPrompt
             // 
-            txtPaid.BorderStyle = BorderStyle.FixedSingle;
-            txtPaid.Font = new Font("Segoe UI", 10F);
-            txtPaid.Location = new Point(386, 18);
-            txtPaid.Name = "txtPaid";
-            txtPaid.ReadOnly = true;
-            txtPaid.Size = new Size(150, 30);
-            txtPaid.TabIndex = 3;
-            txtPaid.Text = "$ 0,00";
+            labelTotalPrompt.AutoSize = true;
+            labelTotalPrompt.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            labelTotalPrompt.Location = new Point(16, 18);
+            labelTotalPrompt.Name = "labelTotalPrompt";
+            labelTotalPrompt.Size = new Size(73, 25);
+            labelTotalPrompt.TabIndex = 0;
+            labelTotalPrompt.Text = "TOTAL:";
             // 
-            // lblCambio
+            // textBoxTotalAmount
             // 
-            lblCambio.AutoSize = true;
-            lblCambio.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCambio.Location = new Point(552, 24);
-            lblCambio.Name = "lblCambio";
-            lblCambio.Size = new Size(73, 21);
-            lblCambio.TabIndex = 4;
-            lblCambio.Text = "VUELTO:";
+            textBoxTotalAmount.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTotalAmount.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            textBoxTotalAmount.ForeColor = Color.FromArgb(16, 185, 129);
+            textBoxTotalAmount.Location = new Point(94, 16);
+            textBoxTotalAmount.Name = "textBoxTotalAmount";
+            textBoxTotalAmount.ReadOnly = true;
+            textBoxTotalAmount.Size = new Size(180, 34);
+            textBoxTotalAmount.TabIndex = 1;
+            textBoxTotalAmount.Text = "$ 0,00";
             // 
-            // txtChange
+            // labelAmountPaidPrompt
             // 
-            txtChange.BorderStyle = BorderStyle.FixedSingle;
-            txtChange.Font = new Font("Segoe UI", 10F);
-            txtChange.Location = new Point(631, 20);
-            txtChange.Name = "txtChange";
-            txtChange.ReadOnly = true;
-            txtChange.Size = new Size(150, 30);
-            txtChange.TabIndex = 5;
-            txtChange.Text = "$ 0,00";
+            labelAmountPaidPrompt.AutoSize = true;
+            labelAmountPaidPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelAmountPaidPrompt.Location = new Point(285, 22);
+            labelAmountPaidPrompt.Name = "labelAmountPaidPrompt";
+            labelAmountPaidPrompt.Size = new Size(95, 21);
+            labelAmountPaidPrompt.TabIndex = 2;
+            labelAmountPaidPrompt.Text = "ABONADO:";
+            // 
+            // textBoxAmountPaid
+            // 
+            textBoxAmountPaid.BorderStyle = BorderStyle.FixedSingle;
+            textBoxAmountPaid.Font = new Font("Segoe UI", 10F);
+            textBoxAmountPaid.Location = new Point(386, 18);
+            textBoxAmountPaid.Name = "textBoxAmountPaid";
+            textBoxAmountPaid.ReadOnly = true;
+            textBoxAmountPaid.Size = new Size(150, 30);
+            textBoxAmountPaid.TabIndex = 3;
+            textBoxAmountPaid.Text = "$ 0,00";
+            // 
+            // labelChangePrompt
+            // 
+            labelChangePrompt.AutoSize = true;
+            labelChangePrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelChangePrompt.Location = new Point(552, 24);
+            labelChangePrompt.Name = "labelChangePrompt";
+            labelChangePrompt.Size = new Size(73, 21);
+            labelChangePrompt.TabIndex = 4;
+            labelChangePrompt.Text = "VUELTO:";
+            // 
+            // textBoxChangeAmount
+            // 
+            textBoxChangeAmount.BorderStyle = BorderStyle.FixedSingle;
+            textBoxChangeAmount.Font = new Font("Segoe UI", 10F);
+            textBoxChangeAmount.Location = new Point(631, 20);
+            textBoxChangeAmount.Name = "textBoxChangeAmount";
+            textBoxChangeAmount.ReadOnly = true;
+            textBoxChangeAmount.Size = new Size(150, 30);
+            textBoxChangeAmount.TabIndex = 5;
+            textBoxChangeAmount.Text = "$ 0,00";
             // 
             // FormSaleDetail
             // 
@@ -383,56 +428,62 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1137, 718);
-            Controls.Add(pnlTotals);
-            Controls.Add(dgvItems);
-            Controls.Add(pnlInfo);
-            Controls.Add(pnlSearch);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelTotalsCard);
+            Controls.Add(dataGridViewSaleItems);
+            Controls.Add(panelVoucherInfoCard);
+            Controls.Add(panelSearchCard);
+            Controls.Add(panelHeader);
             Name = "FormSaleDetail";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Detalle de Venta";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlSearch.ResumeLayout(false);
-            pnlSearch.PerformLayout();
-            pnlInfo.ResumeLayout(false);
-            pnlInfo.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvItems).EndInit();
-            pnlTotals.ResumeLayout(false);
-            pnlTotals.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picIconDownloadPdf).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSearch).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconClearSearch).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSearchCard.ResumeLayout(false);
+            panelSearchCard.PerformLayout();
+            panelVoucherInfoCard.ResumeLayout(false);
+            panelVoucherInfoCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewSaleItems).EndInit();
+            panelTotalsCard.ResumeLayout(false);
+            panelTotalsCard.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnDownloadPdf;
-        private System.Windows.Forms.Panel pnlSearch;
-        private System.Windows.Forms.Label lblNumDoc;
-        private System.Windows.Forms.TextBox txtSearchNumber;
-        private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnClear;
-        private System.Windows.Forms.Panel pnlInfo;
-        private System.Windows.Forms.Label lblFecha;
-        private System.Windows.Forms.TextBox txtDate;
-        private System.Windows.Forms.Label lblDocType;
-        private System.Windows.Forms.TextBox txtDocType;
-        private System.Windows.Forms.Label lblUser;
-        private System.Windows.Forms.TextBox txtUser;
-        private System.Windows.Forms.Label lblDniCli;
-        private System.Windows.Forms.TextBox txtClientDoc;
-        private System.Windows.Forms.Label lblNomCli;
-        private System.Windows.Forms.TextBox txtClientName;
-        private System.Windows.Forms.Label lblApeCli;
-        private System.Windows.Forms.TextBox txtClientLastName;
-        private System.Windows.Forms.DataGridView dgvItems;
-        private System.Windows.Forms.Panel pnlTotals;
-        private System.Windows.Forms.Label lblTotal;
-        private System.Windows.Forms.TextBox txtTotal;
-        private System.Windows.Forms.Label lblPago;
-        private System.Windows.Forms.TextBox txtPaid;
-        private System.Windows.Forms.Label lblCambio;
-        private System.Windows.Forms.TextBox txtChange;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonDownloadPdf;
+        private System.Windows.Forms.Panel panelSearchCard;
+        private System.Windows.Forms.Label labelDocumentNumberPrompt;
+        private System.Windows.Forms.TextBox textBoxSearchDocumentNumber;
+        private System.Windows.Forms.Button buttonSearch;
+        private System.Windows.Forms.Button buttonClearSearch;
+        private System.Windows.Forms.Panel panelVoucherInfoCard;
+        private System.Windows.Forms.Label labelIssueDate;
+        private System.Windows.Forms.TextBox textBoxIssueDate;
+        private System.Windows.Forms.Label labelDocumentType;
+        private System.Windows.Forms.TextBox textBoxDocumentType;
+        private System.Windows.Forms.Label labelCashierName;
+        private System.Windows.Forms.TextBox textBoxCashierName;
+        private System.Windows.Forms.Label labelCustomerDoc;
+        private System.Windows.Forms.TextBox textBoxCustomerDoc;
+        private System.Windows.Forms.Label labelCustomerFirstName;
+        private System.Windows.Forms.TextBox textBoxCustomerFirstName;
+        private System.Windows.Forms.Label labelCustomerLastName;
+        private System.Windows.Forms.TextBox textBoxCustomerLastName;
+        private System.Windows.Forms.DataGridView dataGridViewSaleItems;
+        private System.Windows.Forms.Panel panelTotalsCard;
+        private System.Windows.Forms.Label labelTotalPrompt;
+        private System.Windows.Forms.TextBox textBoxTotalAmount;
+        private System.Windows.Forms.Label labelAmountPaidPrompt;
+        private System.Windows.Forms.TextBox textBoxAmountPaid;
+        private System.Windows.Forms.Label labelChangePrompt;
+        private System.Windows.Forms.TextBox textBoxChangeAmount;
+        private System.Windows.Forms.PictureBox picIconDownloadPdf;
+        private System.Windows.Forms.PictureBox picIconSearch;
+        private System.Windows.Forms.PictureBox picIconClearSearch;
     }
 }

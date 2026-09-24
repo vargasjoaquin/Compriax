@@ -16,21 +16,21 @@ namespace CompriaxSystem.Application.Services
             if (string.IsNullOrWhiteSpace(phoneNumber))
                 return;
 
-            string cleanNumber = new string(phoneNumber.Where(char.IsDigit).ToArray());
+            string normalizedPhoneNumber = new string(phoneNumber.Where(char.IsDigit).ToArray());
 
-            string message = $"*¡Hola, {customerName}!* 👋%0A%0A" +
+            string whatsappMessage = $"*¡Hola, {customerName}!* 👋%0A%0A" +
                              $"Gracias por tu compra. Aquí puedes descargar tu factura:%0A" +
                              $"{downloadUrl}%0A%0A" +
                              $"*Supermercado Los Dos Chinos* 🛒";
 
-            string encodedMessage = Uri.EscapeDataString(message);
-            string url = $"https://wa.me/{cleanNumber}?text={encodedMessage}";
+            string encodedMessage = Uri.EscapeDataString(whatsappMessage);
+            string whatsappUrl = $"https://wa.me/{normalizedPhoneNumber}?text={encodedMessage}";
 
             await Task.Run(() =>
             {
                 Process.Start(new ProcessStartInfo
                 {
-                    FileName = url,
+                    FileName = whatsappUrl,
                     UseShellExecute = true
                 });
             });

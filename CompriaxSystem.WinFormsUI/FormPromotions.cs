@@ -11,7 +11,7 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IProductService _productService;
         private readonly ICatalogService _catalogService;
 
-        private int _selectedPromoId = 0;
+        private int _selectedPromotionIdentifier = 0;
         private List<PromotionDto> _promotionsList = new();
 
         public FormPromotions(
@@ -23,24 +23,30 @@ namespace CompriaxSystem.WinFormsUI
             _productService = productService;
             _catalogService = catalogService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSave, this.picIconSave);
+            ButtonIconOverlayHelper.BindEvents(this.buttonEdit, this.picIconEdit);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleStatus, this.picIconToggleStatus);
+            ButtonIconOverlayHelper.BindEvents(this.buttonDelete, this.picIconDelete);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(gbPromo);
+            UIThemeHelper.ApplyCardStyle(panelPromotionForm);
 
-            this.dgvPromotions.CellFormatting += DgvPromotions_CellFormatting;
+            this.dataGridViewPromotions.CellFormatting += DgvPromotions_CellFormatting;
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.cboType.SelectedIndexChanged += (s, e) => AdjustFieldsByPromotionType();
-            this.btnSave.Click += async (s, e) => await ExecuteSaveAction();
-            this.btnEdit.Click += async (s, e) => await ExecuteEditAction();
-            this.btnToggle.Click += async (s, e) => await ExecuteToggleAction();
-            this.btnDelete.Click += async (s, e) => await ExecuteDeleteAction();
-            this.txtSearch.TextChanged += (s, e) => FilterPromotions();
+            this.Load += async (s, e) => await InitializePromotionsFormAsync();
+            this.comboBoxPromotionType.SelectedIndexChanged += (s, e) => AdjustInputFieldsBasedOnSelectedPromotionType();
+            this.buttonSave.Click += async (s, e) => await ExecuteSavePromotionAsync();
+            this.buttonEdit.Click += async (s, e) => await ExecuteUpdatePromotionAsync();
+            this.buttonToggleStatus.Click += async (s, e) => await ExecuteTogglePromotionStatusAsync();
+            this.buttonDelete.Click += async (s, e) => await ExecuteDeletePromotionRuleAsync();
+            this.textBoxSearch.TextChanged += (s, e) => FilterPromotionsListBySearchCriteria();
         }
 
         private void DgvPromotions_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
         {
-            if (dgvPromotions.Columns[e.ColumnIndex].Name == "StatusSummary" && e.Value != null)
+            if (dataGridViewPromotions.Columns[e.ColumnIndex].Name == "StatusSummary" && e.Value != null)
             {
                 string status = e.Value.ToString()!;
                 if (status.Contains("Inactiva") || status.Contains("Vencida"))
@@ -55,36 +61,40 @@ namespace CompriaxSystem.WinFormsUI
                 }
             }
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePromotionsFormAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                cboType.DataSource = Enum.GetValues(typeof(PromotionType))
+                comboBoxPromotionType.DataSource = Enum.GetValues(typeof(PromotionType))
                     .Cast<PromotionType>()
-                    .Select(t => new { Id = t, Name = GetPromoTypeName(t) })
+                    .Select(t => new { Id = t, Name = GetPromotionTypeDisplayName(t) })
                     .ToList();
-                cboType.DisplayMember = "Name";
-                cboType.ValueMember = "Id";
+                comboBoxPromotionType.DisplayMember = "Name";
+                comboBoxPromotionType.ValueMember = "Id";
 
-                var products = (await _productService.GetProductListAsync()).ToList();
-                products.Insert(0, new ProductDto { Id = 0, Name = "[ Ninguno / Aplica a otro ]" });
-                cboProduct.DataSource = products;
-                cboProduct.DisplayMember = "Name";
-                cboProduct.ValueMember = "Id";
+                var availableProductsList = (await _productService.GetProductListAsync()).ToList();
+                availableProductsList.Insert(0, new ProductDto { Id = 0, Name = "[ Ninguno / Aplica a otro ]" });
+                comboBoxApplicableProduct.DataSource = availableProductsList;
+                comboBoxApplicableProduct.DisplayMember = "Name";
+                comboBoxApplicableProduct.ValueMember = "Id";
 
-                var categories = (await _catalogService.GetActiveCategoriesAsync()).ToList();
-                categories.Insert(0, new CategoryDto { Id = 0, Name = "[ Ninguna / Aplica a otro ]" });
-                cboCategory.DataSource = categories;
-                cboCategory.DisplayMember = "Name";
-                cboCategory.ValueMember = "Id";
+                var availableCategoriesList = (await _catalogService.GetActiveCategoriesAsync()).ToList();
+                availableCategoriesList.Insert(0, new CategoryDto { Id = 0, Name = "[ Ninguna / Aplica a otro ]" });
+                comboBoxApplicableCategory.DataSource = availableCategoriesList;
+                comboBoxApplicableCategory.DisplayMember = "Name";
+                comboBoxApplicableCategory.ValueMember = "Id";
 
-                await RefreshGridAsync();
-                UIHelper.AttachManagedSelection(this, dgvPromotions, SyncEntityToFields, ResetUI);
+                await RefreshPromotionsGridAsync();
+                UIHelper.AttachManagedSelection(this, dataGridViewPromotions, SynchronizeSelectedPromotionToFormFields, ResetFormInputFields);
             }
         }
 
-        private static string GetPromoTypeName(PromotionType type) => type switch
+        private static string GetPromotionTypeDisplayName(PromotionType type) => type switch
         {
             PromotionType.PercentageOnProduct => "% Descuento en Producto",
             PromotionType.PercentageOnCategory => "% Descuento en Categoría",
@@ -93,150 +103,165 @@ namespace CompriaxSystem.WinFormsUI
             _ => "Otro"
         };
 
-        private async Task RefreshGridAsync()
+        private async Task RefreshPromotionsGridAsync()
         {
-            var data = await _promotionService.GetAllPromotionsAsync();
-            _promotionsList = data.ToList();
-            FilterPromotions();
-            DataGridViewHelper.ApplyStyle(dgvPromotions);
+            var allPromotionsList = await _promotionService.GetAllPromotionsAsync();
+            _promotionsList = allPromotionsList.ToList();
+            FilterPromotionsListBySearchCriteria();
+            DataGridViewHelper.ApplyStyle(dataGridViewPromotions);
         }
 
-        private void FilterPromotions()
+        private void FilterPromotionsListBySearchCriteria()
         {
-            string search = txtSearch.Text.Trim().ToLower();
+            string searchQueryText = textBoxSearch.Text.Trim().ToLower();
 
-            var filtered = _promotionsList.Where(p =>
-                p.Name.ToLower().Contains(search) ||
-                (p.ProductName != null && p.ProductName.ToLower().Contains(search)) ||
-                (p.CategoryName != null && p.CategoryName.ToLower().Contains(search)) ||
-                p.PromotionTypeName.ToLower().Contains(search)
+            var filteredPromotionsList = _promotionsList.Where(selectedPromotion =>
+                selectedPromotion.Name.ToLower().Contains(searchQueryText) ||
+                (selectedPromotion.ProductName != null && selectedPromotion.ProductName.ToLower().Contains(searchQueryText)) ||
+                (selectedPromotion.CategoryName != null && selectedPromotion.CategoryName.ToLower().Contains(searchQueryText)) ||
+                selectedPromotion.PromotionTypeName.ToLower().Contains(searchQueryText)
             ).ToList();
 
-            dgvPromotions.DataSource = null;
-            dgvPromotions.DataSource = filtered;
-            UIHelper.FormatGrid(dgvPromotions);
+            dataGridViewPromotions.DataSource = null;
+            dataGridViewPromotions.DataSource = filteredPromotionsList;
+            UIHelper.FormatGrid(dataGridViewPromotions);
         }
 
-        private void AdjustFieldsByPromotionType()
+        private void AdjustInputFieldsBasedOnSelectedPromotionType()
         {
-            if (cboType.SelectedValue is not PromotionType selectedType)
+            if (comboBoxPromotionType.SelectedValue is not PromotionType selectedType)
                 return;
 
             bool isProd = selectedType == PromotionType.PercentageOnProduct || selectedType == PromotionType.BuyXPayY;
             bool isCat = selectedType == PromotionType.PercentageOnCategory;
             bool isNxM = selectedType == PromotionType.BuyXPayY;
 
-            cboProduct.Enabled = isProd;
-            cboCategory.Enabled = isCat;
-            numDiscount.Enabled = !isNxM;
-            numRequired.Enabled = isNxM;
-            numPay.Enabled = isNxM;
+            comboBoxApplicableProduct.Enabled = isProd;
+            comboBoxApplicableCategory.Enabled = isCat;
+            numericUpDownDiscountPercentage.Enabled = !isNxM;
+            numericUpDownRequiredQuantity.Enabled = isNxM;
+            numericUpDownPayQuantity.Enabled = isNxM;
 
             if (!isProd)
-                cboProduct.SelectedValue = 0;
+                comboBoxApplicableProduct.SelectedValue = 0;
             
             if (!isCat)
-                cboCategory.SelectedValue = 0;
+                comboBoxApplicableCategory.SelectedValue = 0;
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedPromotionToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedPromotionToFormFields()
         {
-            if (dgvPromotions.CurrentRow == null)
+            if (dataGridViewPromotions.CurrentRow == null)
                 return;
 
-            var p = (PromotionDto)dgvPromotions.CurrentRow.DataBoundItem;
-            _selectedPromoId = p.Id;
-            txtName.Text = p.Name;
+            var selectedPromotion = (PromotionDto)dataGridViewPromotions.CurrentRow.DataBoundItem;
+            _selectedPromotionIdentifier = selectedPromotion.Id;
+            textBoxPromotionName.Text = selectedPromotion.Name;
 
-            if (txtDescription != null) 
-                txtDescription.Text = p.Description;
+            if (textBoxDescription != null) 
+                textBoxDescription.Text = selectedPromotion.Description;
 
-            cboType.SelectedValue = p.PromotionType;
-            cboProduct.SelectedValue = p.ProductId.HasValue ? p.ProductId.Value : 0;
-            cboCategory.SelectedValue = p.CategoryId.HasValue ? p.CategoryId.Value : 0;
+            comboBoxPromotionType.SelectedValue = selectedPromotion.PromotionType;
+            comboBoxApplicableProduct.SelectedValue = selectedPromotion.ProductId.HasValue ? selectedPromotion.ProductId.Value : 0;
+            comboBoxApplicableCategory.SelectedValue = selectedPromotion.CategoryId.HasValue ? selectedPromotion.CategoryId.Value : 0;
 
-            numDiscount.Value = p.DiscountPercentage.HasValue ? p.DiscountPercentage.Value : 0;
-            numRequired.Value = p.RequiredQuantity.HasValue ? p.RequiredQuantity.Value : 2;
-            numPay.Value = p.PayQuantity.HasValue ? p.PayQuantity.Value : 1;
+            numericUpDownDiscountPercentage.Value = selectedPromotion.DiscountPercentage.HasValue ? selectedPromotion.DiscountPercentage.Value : 0;
+            numericUpDownRequiredQuantity.Value = selectedPromotion.RequiredQuantity.HasValue ? selectedPromotion.RequiredQuantity.Value : 2;
+            numericUpDownPayQuantity.Value = selectedPromotion.PayQuantity.HasValue ? selectedPromotion.PayQuantity.Value : 1;
 
-            dtpStart.Value = p.StartDate;
-            dtpEnd.Value = p.EndDate;
+            dateTimePickerStartDate.Value = selectedPromotion.StartDate;
+            dateTimePickerEndDate.Value = selectedPromotion.EndDate;
 
-            SetButtonState(isEditing: true);
-            AdjustFieldsByPromotionType();
+            UpdateButtonStates(isEditing: true);
+            AdjustInputFieldsBasedOnSelectedPromotionType();
         }
 
-        private void ResetUI()
+        private void ResetFormInputFields()
         {
-            _selectedPromoId = 0;
-            UIHelper.CleanControls(gbPromo);
+            _selectedPromotionIdentifier = 0;
+            UIHelper.CleanControls(panelPromotionForm);
 
-            cboType.SelectedIndex = 0;
-            cboProduct.SelectedValue = 0;
-            cboCategory.SelectedValue = 0;
-            numDiscount.Value = 0;
-            numRequired.Value = 2;
-            numPay.Value = 1;
-            dtpStart.Value = DateTime.Today;
-            dtpEnd.Value = DateTime.Today.AddMonths(1);
+            comboBoxPromotionType.SelectedIndex = 0;
+            comboBoxApplicableProduct.SelectedValue = 0;
+            comboBoxApplicableCategory.SelectedValue = 0;
+            numericUpDownDiscountPercentage.Value = 0;
+            numericUpDownRequiredQuantity.Value = 2;
+            numericUpDownPayQuantity.Value = 1;
+            dateTimePickerStartDate.Value = DateTime.Today;
+            dateTimePickerEndDate.Value = DateTime.Today.AddMonths(1);
 
-            SetButtonState(isEditing: false);
-            AdjustFieldsByPromotionType();
+            UpdateButtonStates(isEditing: false);
+            AdjustInputFieldsBasedOnSelectedPromotionType();
         }
 
-        private void SetButtonState(bool isEditing)
+        private void UpdateButtonStates(bool isEditing)
         {
-            btnSave.Enabled = !isEditing;
-            btnEdit.Enabled = isEditing;
-            btnToggle.Enabled = isEditing;
-            btnDelete.Enabled = isEditing;
+            buttonSave.Enabled = !isEditing;
+            buttonEdit.Enabled = isEditing;
+            buttonToggleStatus.Enabled = isEditing;
+            buttonDelete.Enabled = isEditing;
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SavePromotion.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSaveAction() => await ProcessAction(0);
-        private async Task ExecuteEditAction()
+        private async Task ExecuteSavePromotionAsync() => await ProcessSaveOrUpdatePromotionAsync(0);
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de UpdatePromotion.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
+        private async Task ExecuteUpdatePromotionAsync()
         {
-            if (_selectedPromoId == 0)
+            if (_selectedPromotionIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una promoción de la lista para poder editarla.", "Selección Requerida");
                 return;
             }
-            await ProcessAction(_selectedPromoId);
+            await ProcessSaveOrUpdatePromotionAsync(_selectedPromotionIdentifier);
         }
 
-        private async Task ProcessAction(int id)
+        private async Task ProcessSaveOrUpdatePromotionAsync(int id)
         {
-            var promotionType = (PromotionType)cboType.SelectedValue!;
+            var promotionType = (PromotionType)comboBoxPromotionType.SelectedValue!;
 
-            var dto = new PromotionDto
+            var promotion = new PromotionDto
             {
                 Id = id,
-                Name = txtName.Text.Trim(),
-                Description = txtDescription?.Text?.Trim(),
+                Name = textBoxPromotionName.Text.Trim(),
+                Description = textBoxDescription?.Text?.Trim(),
                 PromotionType = promotionType,
-                ProductId = cboProduct.SelectedValue is int prodId && prodId > 0 ? prodId : null,
-                CategoryId = cboCategory.SelectedValue is int catId && catId > 0 ? catId : null,
-                DiscountPercentage = promotionType != PromotionType.BuyXPayY ? numDiscount.Value : null,
-                RequiredQuantity = promotionType == PromotionType.BuyXPayY ? (int)numRequired.Value : null,
-                PayQuantity = promotionType == PromotionType.BuyXPayY ? (int)numPay.Value : null,
-                StartDate = dtpStart.Value.Date,
-                EndDate = dtpEnd.Value.Date.AddHours(23).AddMinutes(59),
+                ProductId = comboBoxApplicableProduct.SelectedValue is int prodId && prodId > 0 ? prodId : null,
+                CategoryId = comboBoxApplicableCategory.SelectedValue is int catId && catId > 0 ? catId : null,
+                DiscountPercentage = promotionType != PromotionType.BuyXPayY ? numericUpDownDiscountPercentage.Value : null,
+                RequiredQuantity = promotionType == PromotionType.BuyXPayY ? (int)numericUpDownRequiredQuantity.Value : null,
+                PayQuantity = promotionType == PromotionType.BuyXPayY ? (int)numericUpDownPayQuantity.Value : null,
+                StartDate = dateTimePickerStartDate.Value.Date,
+                EndDate = dateTimePickerEndDate.Value.Date.AddHours(23).AddMinutes(59),
                 IsActive = true
             };
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _promotionService.UpsertPromotionAsync(dto);
+                var result = await _promotionService.UpsertPromotionAsync(promotion);
                 UIHelper.ShowResult(result, "Promociones", async () =>
                 {
-                    await RefreshGridAsync();
-                    ResetUI();
+                    await RefreshPromotionsGridAsync();
+                    ResetFormInputFields();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de TogglePromotionStatus.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteToggleAction()
+        private async Task ExecuteTogglePromotionStatusAsync()
         {
-            if (_selectedPromoId == 0)
+            if (_selectedPromotionIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una promoción de la lista para cambiar su estado.", "Selección Requerida");
                 return;
@@ -244,16 +269,20 @@ namespace CompriaxSystem.WinFormsUI
 
             using (new WaitCursorHelper(this))
             {
-                var result = await _promotionService.ToggleStatusAsync(_selectedPromoId);
+                var result = await _promotionService.ToggleStatusAsync(_selectedPromotionIdentifier);
                 UIHelper.ShowResult(result, "Estado", async () => {
-                    await RefreshGridAsync();
+                    await RefreshPromotionsGridAsync();
                 });
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DeletePromotionRule.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDeleteAction()
+        private async Task ExecuteDeletePromotionRuleAsync()
         {
-            if (_selectedPromoId == 0)
+            if (_selectedPromotionIdentifier == 0)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una promoción de la lista para eliminarla.", "Selección Requerida");
                 return;
@@ -263,14 +292,24 @@ namespace CompriaxSystem.WinFormsUI
             {
                 using (new WaitCursorHelper(this))
                 {
-                    var result = await _promotionService.DeletePromotionAsync(_selectedPromoId);
+                    var result = await _promotionService.DeletePromotionAsync(_selectedPromotionIdentifier);
                     UIHelper.ShowResult(result, "Promociones", async () =>
                     {
-                        await RefreshGridAsync();
-                        ResetUI();
+                        await RefreshPromotionsGridAsync();
+                        ResetFormInputFields();
                     });
                 }
             }
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

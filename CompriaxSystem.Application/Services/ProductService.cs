@@ -3,17 +3,14 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class ProductService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser,
-        IMapper mapper,
-        IValidator<ProductCreateDto> validator) : IProductService
+    public class ProductService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IMapper mapper, IValidator<ProductCreateDto> validator) : IProductService
     {
         /// <summary>
         /// Obtiene todos los productos incluyendo sus categorías y marcas.
@@ -48,9 +45,9 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            var existing = await unitOfWork.Products.GetByBarcodeAsync(dto.Barcode);
+            var existingProduct = await unitOfWork.Products.GetByBarcodeAsync(dto.Barcode);
             
-            if (existing != null)
+            if (existingProduct != null)
                 return OperationResult.Failure("Código de barras ya registrado.");
 
             await unitOfWork.BeginTransactionAsync();
@@ -69,23 +66,27 @@ namespace CompriaxSystem.Application.Services
                 {
                     Product = product,
                     ProductId = product.Id,
-                    UserId = currentUser.CurrentUser!.UserId,
+                    UserId = currentUser.CurrentUser?.UserId ?? RoleConstants.ADMINISTRATOR_ROLE_ID,
                     Quantity = dto.InitialStock,
                     MovementType = MovementType.Initial,
                     Remarks = "Stock inicial",
-                    CreatedBy = currentUser.CurrentUser!.Username
+                    CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME
                 });
 
                 await unitOfWork.CompleteAsync();
                 await unitOfWork.CommitAsync();
 
-                return new OperationResult { Success = true, Message = "Producto creado.", EntityId = product.Id };
+                return new OperationResult 
+                { 
+                    Success = true,
+                    Message = "Producto creado.",
+                    EntityId = product.Id };
             }
             catch (Exception ex)
             {
                 await unitOfWork.RollbackAsync();
-                string realMsg = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                return OperationResult.Failure("Error de Base de Datos: " + realMsg);
+                
+                return OperationResult.Failure($"Error de Base de Datos: {ex.Message}");
             }
         }
 
@@ -107,16 +108,45 @@ namespace CompriaxSystem.Application.Services
             if (product == null)
                 return OperationResult.Failure("Producto no encontrado.");
 
-            var existingBarcode = await unitOfWork.Products.GetByBarcodeAsync(dto.Barcode);
+            var existingBarcodeProduct = await unitOfWork.Products.GetByBarcodeAsync(dto.Barcode);
             
-            if (existingBarcode != null && existingBarcode.Id != id)
+            if (existingBarcodeProduct != null && existingBarcodeProduct.Id != id)
                 return OperationResult.Failure("El nuevo código de barras ya pertenece a otro producto.");
 
-            mapper.Map(dto, product);
-            var success = await unitOfWork.CompleteAsync();
+            int previousStock = product.CurrentStock;
+            int updatedStock = dto.InitialStock;
 
-            return success
-                ? new OperationResult { Success = true, Message = "Producto actualizado.", EntityId = product.Id }
+            mapper.Map(dto, product);
+
+            product.LastUpdatedAt = DateTime.UtcNow;
+            product.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
+
+            if (previousStock != updatedStock)
+            {
+                int difference = updatedStock - previousStock;
+                await unitOfWork.Products.AddMovementAsync(new StockMovement
+                {
+                    ProductId = product.Id,
+                    UserId = currentUser.CurrentUser?.UserId ?? RoleConstants.ADMINISTRATOR_ROLE_ID,
+                    Quantity = difference,
+                    MovementType = MovementType.Adjustment,
+                    Remarks = $"Ajuste directo en edición de producto ({previousStock} -> {updatedStock})",
+                    CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME,
+                    CreatedAt = DateTime.UtcNow
+                });
+            }
+
+            unitOfWork.Products.Update(product);
+
+            var operationSucceeded = await unitOfWork.CompleteAsync();
+
+            return operationSucceeded
+                ? new OperationResult
+                {
+                    Success = true,
+                    Message = "Producto actualizado.",
+                    EntityId = product.Id
+                }
                 : OperationResult.Failure("Sin cambios detectados.");
         }
 
@@ -138,30 +168,37 @@ namespace CompriaxSystem.Application.Services
             product.LastUpdatedAt = DateTime.UtcNow;
 
             unitOfWork.Products.Update(product);
-            var result = await unitOfWork.CompleteAsync();
+            
+            var operationSucceeded = await unitOfWork.CompleteAsync();
 
-            return result
+            return operationSucceeded
                 ? OperationResult.Ok($"Producto '{product.Name}' retirado correctamente.")
                 : OperationResult.Failure("No se detectaron cambios en la base de datos.");
         }
 
+        /// <summary>
+        /// Busca productos activos que coincidan con un término de búsqueda en su nombre, código de barras, descripción o marca.
+        /// </summary>
+        /// <param name="searchTerm">Término utilizado para realizar la búsqueda.</param>
+        /// <returns>Colección de hasta 15 productos coincidentes.</returns>
         public async Task<IEnumerable<ProductDto>> SearchProductsAsync(string searchTerm)
         {
             if (string.IsNullOrWhiteSpace(searchTerm))
                 return Enumerable.Empty<ProductDto>();
 
-            var cleanTerm = searchTerm.Trim();
+            var normalizedSearchTerm = searchTerm.Trim();
+            
             var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
 
-            var matches = allProducts.Where(p =>
+            var matchingProducts = allProducts.Where(p =>
                 !p.IsDeleted && p.IsActive &&
-                (p.Name.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase) ||
-                 p.Barcode.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase) ||
-                 (p.Description != null && p.Description.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase)) ||
-                 (p.Brand != null && p.Brand.Name.Contains(cleanTerm, StringComparison.OrdinalIgnoreCase))))
-                .Take(15);
+                (p.Name.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase) ||
+                 p.Barcode.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase) ||
+                 (p.Description != null && p.Description.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase)) ||
+                 (p.Brand != null && p.Brand.Name.Contains(normalizedSearchTerm, StringComparison.OrdinalIgnoreCase))))
+                .Take(ProductConstants.DEFAULT_CATALOG_SEARCH_LIMIT);
 
-            return mapper.Map<IEnumerable<ProductDto>>(matches);
+            return mapper.Map<IEnumerable<ProductDto>>(matchingProducts);
         }
     }
 }
