@@ -27,65 +27,104 @@ namespace CompriaxSystem.WinFormsUI
 
             ApplicationConfiguration.Initialize();
 
-            using (var startupScope = host.Services.CreateScope())
+            Process? MercadoPagoProcess = null;
+
+            try
             {
-                var services = startupScope.ServiceProvider;
-
-                try
+                using (var startupScope = host.Services.CreateScope())
                 {
-                    var db = services.GetRequiredService<ApplicationDbContext>();
-                    
-                    if (!db.Database.CanConnect())
+                    var services = startupScope.ServiceProvider;
+
+                    try
                     {
-                        throw new InvalidOperationException("No se pudo conectar a SQL Server. Verifique que la base de datos 'Compriax' exista y el servicio esté en ejecución.");
+                        var db = services.GetRequiredService<ApplicationDbContext>();
+
+                        if (!db.Database.CanConnect())
+                        {
+                            throw new InvalidOperationException("No se pudo conectar a SQL Server. Verifique que la base de datos 'Compriax' exista y el servicio esté en ejecución.");
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
-                    MessageBox.Show(
-                        $"Error al conectar con la base de datos SQL Server:\n\n{realError}",
-                        "Error de Base de Datos",
-                        MessageBoxButtons.OK,
-                        MessageBoxIcon.Error);
-                    return;
-                }
-
-                var licenseService = services.GetRequiredService<ILicenseManagerService>();
-                var licenseValidation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
-
-                if (!licenseValidation.Success || licenseService.CurrentLicense == null || !licenseService.CurrentLicense.IsValid || licenseService.CurrentLicense.IsExpired)
-                {
-                    // Licencia no instalada, alterada o expirada -> Bloqueo y diálogo de activación
-                    string failureMessage = licenseValidation.Message;
-
-                    using var activationForm = new FormLicenseActivation(licenseService, failureMessage);
-
-                    if (activationForm.ShowDialog() != DialogResult.OK)
+                    catch (Exception ex)
                     {
+                        string realError = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                        MessageBox.Show(
+                            $"Error al conectar con la base de datos SQL Server:\n\n{realError}",
+                            "Error de Base de Datos",
+                            MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                         return;
                     }
-                }
-                else if (licenseService.CurrentLicense.IsExpiredSoon)
-                {
-                    // Licencia válida pero próxima a vencer (<= 7 días) -> Mostrar aviso diario
-                    using var warningDialog = new FormLicenseWarningDialog(licenseService.CurrentLicense, licenseService);
 
-                    warningDialog.ShowDialog();
+                    var licenseService = services.GetRequiredService<ILicenseManagerService>();
+                    var licenseValidation = licenseService.ValidateInstalledLicenseAsync().GetAwaiter().GetResult();
+
+                    if (!licenseValidation.Success || licenseService.CurrentLicense == null || !licenseService.CurrentLicense.IsValid || licenseService.CurrentLicense.IsExpired)
+                    {
+                        // Licencia no instalada, alterada o expirada -> Bloqueo y diálogo de activación
+                        string failureMessage = licenseValidation.Message;
+
+                        using var activationForm = new FormLicenseActivation(licenseService, failureMessage);
+
+                        if (activationForm.ShowDialog() != DialogResult.OK)
+                        {
+                            return;
+                        }
+                    }
+                    else if (licenseService.CurrentLicense.IsExpiredSoon)
+                    {
+                        // Licencia válida pero próxima a vencer (<= 7 días) -> Mostrar aviso diario
+                        using var warningDialog = new FormLicenseWarningDialog(licenseService.CurrentLicense, licenseService);
+
+                        warningDialog.ShowDialog();
+                    }
+
+                    string MercadoPagoExecutablePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "MercadoPago", "CompriaxSystem.MercadoPago.Api.exe");
+
+                    if (File.Exists(MercadoPagoExecutablePath))
+                    {
+                        try
+                        {
+                            MercadoPagoProcess = Process.Start(new ProcessStartInfo
+                            {
+                                FileName = MercadoPagoExecutablePath,
+                                WorkingDirectory = Path.GetDirectoryName(MercadoPagoExecutablePath)!,
+                                CreateNoWindow = true,
+                                UseShellExecute = false,
+                                WindowStyle = ProcessWindowStyle.Hidden
+                            });
+                        }
+                        catch
+                        {
+                        }
+                    }
+
+                    try
+                    {
+                        var recordingService = services.GetRequiredService<ISecurityRecordingService>();
+                        recordingService.Start();
+                    }
+                    catch
+                    {
+                    }
                 }
 
-                try
+                var loginForm = host.Services.GetRequiredService<FormLogin>();
+                System.Windows.Forms.Application.Run(loginForm);
+            }
+            finally
+            {
+                if (MercadoPagoProcess != null && !MercadoPagoProcess.HasExited)
                 {
-                    var recordingService = services.GetRequiredService<ISecurityRecordingService>();
-                    recordingService.Start();
-                }
-                catch
-                {
+                    try
+                    {
+                        MercadoPagoProcess.Kill(entireProcessTree: true);
+                        MercadoPagoProcess.Dispose();
+                    }
+                    catch
+                    {
+                    }
                 }
             }
-
-            var loginForm = host.Services.GetRequiredService<FormLogin>();
-            System.Windows.Forms.Application.Run(loginForm);
         }
 
         static IHostBuilder CreateHostBuilder() =>
