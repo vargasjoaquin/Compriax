@@ -8,15 +8,16 @@ using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CustomerService(
-        IUnitOfWork unitOfWork,
-        IMapper mapper,
-        IValidator<CustomerDto> validator) : ICustomerService
+    public class CustomerService(IUnitOfWork unitOfWork, IMapper mapper, IValidator<CustomerDto> validator) : ICustomerService
     {
+        /// <summary>
+        /// Obtiene todos los clientes activos.
+        /// </summary>
+        /// <returns>Una colección de DTOs de clientes activos.</returns>
         public async Task<IEnumerable<CustomerDto>> GetAllActiveAsync()
         {
-            var customers = await unitOfWork.Customers.GetAllActiveAsync();
-            return mapper.Map<IEnumerable<CustomerDto>>(customers);
+            var activeCustomers = await unitOfWork.Customers.GetAllActiveAsync();
+            return mapper.Map<IEnumerable<CustomerDto>>(activeCustomers);
         }
 
         /// <summary>
@@ -31,20 +32,21 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            string documentNumber = dto.DocumentNumber.Trim();
+            string normalizedDocumentNumber = dto.DocumentNumber.Trim();
 
-            var allCustomers = await unitOfWork.Customers.GetAllActiveAsync();
-            bool documentNumberExists = allCustomers.Any(c => c.DocumentNumber.Equals(documentNumber, StringComparison.OrdinalIgnoreCase) && c.Id != dto.Id);
+            var activeCustomers = await unitOfWork.Customers.GetAllActiveAsync();
+            
+            bool documentNumberExists = activeCustomers.Any(c => c.DocumentNumber.Equals(normalizedDocumentNumber, StringComparison.OrdinalIgnoreCase) && c.Id != dto.Id);
 
             if (documentNumberExists)
-                return OperationResult.Failure($"El número de documento '{documentNumber}' ya pertenece a otro cliente registrado.");
+                return OperationResult.Failure($"El número de documento '{normalizedDocumentNumber}' ya pertenece a otro cliente registrado.");
 
             try
             {
                 if (dto.Id == 0)
                 {
                     var customer = mapper.Map<Customer>(dto);
-                    customer.DocumentNumber = documentNumber;
+                    customer.DocumentNumber = normalizedDocumentNumber;
                     await unitOfWork.Customers.AddAsync(customer);
                 }
                 else
@@ -55,18 +57,19 @@ namespace CompriaxSystem.Application.Services
                         return OperationResult.Failure("Cliente no encontrado.");
 
                     mapper.Map(dto, customer);
-                    customer.DocumentNumber = documentNumber;
+                    customer.DocumentNumber = normalizedDocumentNumber;
                     unitOfWork.Customers.Update(customer);
                 }
 
-                var success = await unitOfWork.CompleteAsync();
-                return success
+                var operationSucceeded = await unitOfWork.CompleteAsync();
+                
+                return operationSucceeded
                     ? OperationResult.Ok("Cliente guardado con éxito.")
                     : OperationResult.Failure("No se realizaron cambios en la base de datos.");
             }
             catch (Exception ex)
             {
-                return OperationResult.Failure("Error de persistencia: " + ex.Message);
+                return OperationResult.Failure($"Error de persistencia: {ex.Message}");
             }
         }
 

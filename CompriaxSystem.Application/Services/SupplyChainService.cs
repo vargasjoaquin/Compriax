@@ -3,19 +3,14 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Domain.Enums;
-using DocumentFormat.OpenXml.Drawing;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class SupplyChainService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser,
-        IMapper mapper,
-        IValidator<SupplierDto> supplierValidator,
-        IValidator<PurchaseCreateDto> purchaseValidator) : ISupplyChainService
+    public class SupplyChainService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IMapper mapper, IValidator<SupplierDto> supplierValidator, IValidator<PurchaseCreateDto> purchaseValidator) : ISupplyChainService
     {
         /// <summary>
         /// Obtiene todos los proveedores.
@@ -39,18 +34,20 @@ namespace CompriaxSystem.Application.Services
             if (!validation.IsValid)
                 return validation.ToResult();
 
-            string cuit = dto.CUIT.Trim();
+            string normalizedCuit = dto.CUIT.Trim();
 
             var allSuppliers = await unitOfWork.Suppliers.GetAllAsync();
-            bool cuitExists = allSuppliers.Any(s => s.CUIT.Equals(cuit, StringComparison.OrdinalIgnoreCase) && s.Id != dto.Id);
+            
+            bool cuitAlreadyExists = allSuppliers.Any(s => s.CUIT.Equals(normalizedCuit, StringComparison.OrdinalIgnoreCase) && s.Id != dto.Id);
 
-            if (cuitExists)
-                return OperationResult.Failure($"El CUIT '{cuit}' ya se encuentra registrado por otro proveedor activo.");
+            if (cuitAlreadyExists)
+                return OperationResult.Failure($"El CUIT '{normalizedCuit}' ya se encuentra registrado por otro proveedor activo.");
 
             if (dto.Id == 0)
             {
                 var supplier = mapper.Map<Supplier>(dto);
-                supplier.CUIT = cuit;
+                supplier.CUIT = normalizedCuit;
+                
                 await unitOfWork.Suppliers.AddAsync(supplier);
             }
             else
@@ -61,7 +58,8 @@ namespace CompriaxSystem.Application.Services
                     return OperationResult.Failure("Proveedor no encontrado.");
 
                 mapper.Map(dto, supplier);
-                supplier.CUIT = cuit;
+                supplier.CUIT = normalizedCuit;
+                
                 unitOfWork.Suppliers.Update(supplier);
             }
 
@@ -83,6 +81,7 @@ namespace CompriaxSystem.Application.Services
                 return OperationResult.Failure("Proveedor no encontrado.");
 
             var purchases = await unitOfWork.Purchases.GetHistoryAsync(DateTime.MinValue, DateTime.MaxValue);
+            
             bool hasPurchases = purchases.Any(p => p.SupplierId == id);
 
             supplier.IsDeleted = true;
@@ -109,9 +108,11 @@ namespace CompriaxSystem.Application.Services
                 return validation.ToResult();
 
             int currentUserId = currentUser.CurrentUser!.UserId;
-            string currentUsername = !string.IsNullOrWhiteSpace(currentUser.CurrentUser?.Username) ? currentUser.CurrentUser.Username : "admin";
+            
+            string currentUsername = !string.IsNullOrWhiteSpace(currentUser.CurrentUser?.Username) ? currentUser.CurrentUser.Username : RoleConstants.DEFAULT_ADMIN_USERNAME;
 
             await unitOfWork.BeginTransactionAsync();
+            
             try
             {
                 var purchase = mapper.Map<Purchase>(dto);
@@ -119,12 +120,12 @@ namespace CompriaxSystem.Application.Services
                 purchase.DocumentTypeId = dto.DocumentTypeId;
                 purchase.SupplierId = dto.SupplierId;
                 purchase.UserId = currentUserId;
-                purchase.PaymentMethodId = dto.PaymentMethodId > 0 ? dto.PaymentMethodId : 1;
+                purchase.PaymentMethodId = dto.PaymentMethodId > 0 ? dto.PaymentMethodId : PaymentMethodConstants.CASH_ID;
                 purchase.DocumentNumber = dto.DocumentNumber.Trim();
                 purchase.TotalAmount = dto.Items.Sum(x => x.Quantity * x.BuyPrice);
                 purchase.SubTotal = purchase.TotalAmount;
                 purchase.TaxAmount = 0;
-                purchase.Status = "Completada";
+                purchase.Status = PurchaseStatusesConstants.COMPLETED;
                 purchase.CreatedAt = DateTime.UtcNow;
 
                 purchase.DocumentType = null!;
@@ -132,27 +133,27 @@ namespace CompriaxSystem.Application.Services
                 purchase.User = null!;
                 purchase.PaymentMethod = null!;
 
-                foreach (var item in purchase.PurchaseItems)
+                foreach (var purchaseItem in purchase.PurchaseItems)
                 {
-                    item.Product = null!;
-                    item.Purchase = null!;
-                    item.SubTotal = item.Quantity * item.BuyPrice;
+                    purchaseItem.Product = null!;
+                    purchaseItem.Purchase = null!;
+                    purchaseItem.SubTotal = purchaseItem.Quantity * purchaseItem.BuyPrice;
 
-                    var product = await unitOfWork.Products.GetByIdAsync(item.ProductId);
+                    var product = await unitOfWork.Products.GetByIdAsync(purchaseItem.ProductId);
                     
                     if (product == null)
                         continue;
 
-                    product.CurrentStock += item.Quantity;
-                    product.BuyPrice = item.BuyPrice;
+                    product.CurrentStock += purchaseItem.Quantity;
+                    product.BuyPrice = purchaseItem.BuyPrice;
                     product.LastUpdatedAt = DateTime.UtcNow;
                     product.LastUpdatedBy = currentUsername;
 
                     await unitOfWork.Products.AddMovementAsync(new StockMovement
                     {
-                        ProductId = item.ProductId,
+                        ProductId = purchaseItem.ProductId,
                         UserId = currentUserId,
-                        Quantity = item.Quantity,
+                        Quantity = purchaseItem.Quantity,
                         MovementType = MovementType.Purchase,
                         Remarks = $"Compra Nro: {dto.DocumentNumber}",
                         CreatedBy = currentUsername,
@@ -161,9 +162,10 @@ namespace CompriaxSystem.Application.Services
                 }
 
                 await unitOfWork.Purchases.AddAsync(purchase);
-                bool success = await unitOfWork.CompleteAsync();
+                
+                bool operationSucceeded = await unitOfWork.CompleteAsync();
 
-                if (!success)
+                if (!operationSucceeded)
                     throw new InvalidOperationException("No se detectaron cambios al persistir la compra.");
 
                 await unitOfWork.CommitAsync();
@@ -173,7 +175,7 @@ namespace CompriaxSystem.Application.Services
             catch (Exception ex)
             {
                 await unitOfWork.RollbackAsync();
-                return OperationResult.Failure("Fallo crítico en el registro de compra: " + ex.Message);
+                return OperationResult.Failure($"Fallo crítico en el registro de compra: {ex.Message}");
             }
         }
 
@@ -184,90 +186,90 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Una cadena con el formato de prefijo y número correlativo.</returns>
         public async Task<string> GetNextPurchaseNumberAsync(int documentTypeId)
         {
-            var lastNumber = await unitOfWork.Purchases.GetLastDocumentNumberAsync(documentTypeId);
+            var lastDocumentNumber = await unitOfWork.Purchases.GetLastDocumentNumberAsync(documentTypeId);
             var getDocumentTypes = await unitOfWork.GetDocumentTypesAsync();
             var documentsType = getDocumentTypes.FirstOrDefault(x => x.Id == documentTypeId);
 
-            string prefix = "FAC-X";
+            string documentPrefix = DocumentPrefixConstants.DEFAULT;
 
             if (documentsType != null)
             {
-                string name = documentsType.Name.ToUpperInvariant();
+                string documentTypeName = documentsType.Name.ToUpperInvariant();
 
                 // 1. Facturas y Comprobantes Directos
-                if (name.Contains("CLIENTE CASUAL")) 
-                    prefix = "FAC-CAS";
-                else if (name.Contains("FACTURA A") && !name.Contains("TICKET"))
-                    prefix = "FAC-A";
-                else if (name.Contains("FACTURA B") && !name.Contains("TICKET")) 
-                    prefix = "FAC-B";
-                else if (name.Contains("FACTURA C")) 
-                    prefix = "FAC-C";
-                else if (name.Contains("FACTURA M")) 
-                    prefix = "FAC-M";
-                else if (name.Contains("EXPORTACIÓN") || name.Contains("EXPORTACION"))
-                    prefix = "FAC-E";
+                if (documentTypeName.Contains("CLIENTE CASUAL"))
+                    documentPrefix = DocumentPrefixConstants.CASUAL_CUSTOMER;
+                else if (documentTypeName.Contains("FACTURA A") && !documentTypeName.Contains("TICKET"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_A;
+                else if (documentTypeName.Contains("FACTURA B") && !documentTypeName.Contains("TICKET"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_B;
+                else if (documentTypeName.Contains("FACTURA C"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_C;
+                else if (documentTypeName.Contains("FACTURA M"))
+                    documentPrefix = DocumentPrefixConstants.INVOICE_M;
+                else if (documentTypeName.Contains("EXPORTACIÓN") || documentTypeName.Contains("EXPORTACION"))
+                    documentPrefix = DocumentPrefixConstants.EXPORT_INVOICE_E;
 
                 // 2. Tickets
-                else if (name.Contains("TICKET FACTURA A"))
-                    prefix = "TKT-A";
-                else if (name.Contains("TICKET FACTURA B")) 
-                    prefix = "TKT-B";
-                else if (name.Contains("TICKET CONSUMIDOR FINAL")) 
-                    prefix = "TKT-CF";
+                else if (documentTypeName.Contains("TICKET FACTURA A"))
+                    documentPrefix = DocumentPrefixConstants.TICKET_INVOICE_A;
+                else if (documentTypeName.Contains("TICKET FACTURA B"))
+                    documentPrefix = DocumentPrefixConstants.TICKET_INVOICE_B;
+                else if (documentTypeName.Contains("TICKET CONSUMIDOR FINAL"))
+                    documentPrefix = DocumentPrefixConstants.TICKET_FINAL_CONSUMER;
 
                 // 3. Notas de Débito
-                else if (name.Contains("NOTA DE DÉBITO A") || name.Contains("NOTA DE DEBITO A"))
-                    prefix = "ND-A";
-                else if (name.Contains("NOTA DE DÉBITO B") || name.Contains("NOTA DE DEBITO B")) 
-                    prefix = "ND-B";
-                else if (name.Contains("NOTA DE DÉBITO C") || name.Contains("NOTA DE DEBITO C"))
-                    prefix = "ND-C";
-                else if (name.Contains("NOTA DE DÉBITO M") || name.Contains("NOTA DE DEBITO M"))
-                    prefix = "ND-M";
+                else if (documentTypeName.Contains("NOTA DE DÉBITO A") || documentTypeName.Contains("NOTA DE DEBITO A"))
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_A;
+                else if (documentTypeName.Contains("NOTA DE DÉBITO B") || documentTypeName.Contains("NOTA DE DEBITO B"))
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_B;
+                else if (documentTypeName.Contains("NOTA DE DÉBITO C") || documentTypeName.Contains("NOTA DE DEBITO C"))
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_C;
+                else if (documentTypeName.Contains("NOTA DE DÉBITO M") || documentTypeName.Contains("NOTA DE DEBITO M"))
+                    documentPrefix = DocumentPrefixConstants.DEBIT_NOTE_M;
 
                 // 4. Notas de Crédito
-                else if (name.Contains("NOTA DE CRÉDITO A") || name.Contains("NOTA DE CREDITO A")) 
-                    prefix = "NC-A";
-                else if (name.Contains("NOTA DE CRÉDITO B") || name.Contains("NOTA DE CREDITO B")) 
-                    prefix = "NC-B";
-                else if (name.Contains("NOTA DE CRÉDITO C") || name.Contains("NOTA DE CREDITO C")) 
-                    prefix = "NC-C";
-                else if (name.Contains("NOTA DE CRÉDITO M") || name.Contains("NOTA DE CREDITO M")) 
-                    prefix = "NC-M";
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO A") || documentTypeName.Contains("NOTA DE CREDITO A"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_A;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO B") || documentTypeName.Contains("NOTA DE CREDITO B"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_B;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO C") || documentTypeName.Contains("NOTA DE CREDITO C"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_C;
+                else if (documentTypeName.Contains("NOTA DE CRÉDITO M") || documentTypeName.Contains("NOTA DE CREDITO M"))
+                    documentPrefix = DocumentPrefixConstants.CREDIT_NOTE_M;
 
                 // 5. Recibos
-                else if (name.Contains("RECIBO A")) 
-                    prefix = "REC-A";
-                else if (name.Contains("RECIBO B"))
-                    prefix = "REC-B";
-                else if (name.Contains("RECIBO C")) 
-                    prefix = "REC-C";
+                else if (documentTypeName.Contains("RECIBO A"))
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_A;
+                else if (documentTypeName.Contains("RECIBO B"))
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_B;
+                else if (documentTypeName.Contains("RECIBO C"))
+                    documentPrefix = DocumentPrefixConstants.RECEIPT_C;
 
                 // 6. Remitos y Presupuestos
-                else if (name.Contains("REMITO R")) 
-                    prefix = "REM-R";
-                else if (name.Contains("REMITO X")) 
-                    prefix = "REM-X";
-                else if (name.Contains("PRESUPUESTO"))
-                    prefix = "PRE";
-                else if (name.Contains("COMPROBANTE X"))
-                    prefix = "CMP-X";
+                else if (documentTypeName.Contains("REMITO R"))
+                    documentPrefix = DocumentPrefixConstants.DELIVERY_NOTE_R;
+                else if (documentTypeName.Contains("REMITO X"))
+                    documentPrefix = DocumentPrefixConstants.DELIVERY_NOTE_X;
+                else if (documentTypeName.Contains("PRESUPUESTO"))
+                    documentPrefix = DocumentPrefixConstants.QUOTATION;
+                else if (documentTypeName.Contains("COMPROBANTE X"))
+                    documentPrefix = DocumentPrefixConstants.VOUCHER_X;
             }
 
-            long nextValue = 1;
-            
-            if (!string.IsNullOrWhiteSpace(lastNumber))
-            {
-                var match = System.Text.RegularExpressions.Regex.Match(lastNumber, @"\d+$");
+            long nextDocumentNumber = 1;
 
-                if (match.Success && long.TryParse(match.Value, out long lastValue))
+            if (!string.IsNullOrWhiteSpace(lastDocumentNumber))
+            {
+                var numberMatch = System.Text.RegularExpressions.Regex.Match(lastDocumentNumber, @"\d+$");
+
+                if (numberMatch.Success && long.TryParse(numberMatch.Value, out long lastNumericValue))
                 {
-                    nextValue = lastValue + 1;
+                    nextDocumentNumber = lastNumericValue + 1;
                 }
             }
 
-            return $"{prefix}-{nextValue:D8}";
+            return $"{documentPrefix}-{nextDocumentNumber:D8}";
         }
     }
 }

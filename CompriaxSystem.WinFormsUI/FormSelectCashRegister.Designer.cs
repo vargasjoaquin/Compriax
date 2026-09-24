@@ -17,125 +17,168 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            pnlCard = new Panel();
-            lblRegister = new Label();
-            cboRegister = new ComboBox();
-            lblStatusInfo = new Label();
-            btnConfirm = new Button();
-            btnCancel = new Button();
-            pnlHeader.SuspendLayout();
-            pnlCard.SuspendLayout();
+            picIconConfirmSelection = new PictureBox();
+            picIconCancel = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            panelSelectionCard = new Panel();
+            labelRegisterPrompt = new Label();
+            comboBoxRegisterSelection = new ComboBox();
+            labelRegisterStatusInfo = new Label();
+            buttonConfirmSelection = new Button();
+            buttonCancel = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconConfirmSelection).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCancel).BeginInit();
+            panelHeader.SuspendLayout();
+            panelSelectionCard.SuspendLayout();
             SuspendLayout();
-
-            // pnlHeader
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(440, 56);
-            pnlHeader.TabIndex = 0;
-
-            // lblTitle
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 16);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(330, 28);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "SELECCIONAR CAJA DE COBRO";
-
-            // pnlCard
-            pnlCard.BackColor = Color.White;
-            pnlCard.Controls.Add(lblRegister);
-            pnlCard.Controls.Add(cboRegister);
-            pnlCard.Controls.Add(lblStatusInfo);
-            pnlCard.Controls.Add(btnConfirm);
-            pnlCard.Controls.Add(btnCancel);
-            pnlCard.Location = new Point(20, 72);
-            pnlCard.Name = "pnlCard";
-            pnlCard.Size = new Size(400, 220);
-            pnlCard.TabIndex = 1;
-
-            // lblRegister
-            lblRegister.AutoSize = true;
-            lblRegister.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblRegister.Location = new Point(20, 16);
-            lblRegister.Name = "lblRegister";
-            lblRegister.Size = new Size(239, 21);
-            lblRegister.TabIndex = 0;
-            lblRegister.Text = "Seleccionar Caja / Puesto POS:";
-
-            // cboRegister
-            cboRegister.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboRegister.Font = new Font("Segoe UI", 10.5F);
-            cboRegister.Location = new Point(20, 40);
-            cboRegister.Name = "cboRegister";
-            cboRegister.Size = new Size(360, 31);
-            cboRegister.TabIndex = 1;
-
-            // lblStatusInfo
-            lblStatusInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            lblStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
-            lblStatusInfo.Location = new Point(20, 80);
-            lblStatusInfo.Name = "lblStatusInfo";
-            lblStatusInfo.Size = new Size(360, 22);
-            lblStatusInfo.TabIndex = 2;
-            lblStatusInfo.Text = "Caja disponible";
-
-            // btnConfirm
-            btnConfirm.BackColor = Color.FromArgb(16, 185, 129);
-            btnConfirm.FlatAppearance.BorderSize = 0;
-            btnConfirm.FlatStyle = FlatStyle.Flat;
-            btnConfirm.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
-            btnConfirm.ForeColor = Color.White;
-            btnConfirm.Location = new Point(20, 115);
-            btnConfirm.Name = "btnConfirm";
-            btnConfirm.Size = new Size(360, 44);
-            btnConfirm.TabIndex = 3;
-            btnConfirm.Text = "INGRESAR A LA CAJA";
-            btnConfirm.UseVisualStyleBackColor = false;
-
-            // btnCancel
-            btnCancel.FlatStyle = FlatStyle.Flat;
-            btnCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnCancel.Location = new Point(20, 168);
-            btnCancel.Name = "btnCancel";
-            btnCancel.Size = new Size(360, 34);
-            btnCancel.TabIndex = 4;
-            btnCancel.Text = "CANCELAR";
-            btnCancel.UseVisualStyleBackColor = true;
-
+            // 
+            // picIconConfirmSelection
+            // 
+            picIconConfirmSelection.BackColor = Color.FromArgb(16, 185, 129);
+            picIconConfirmSelection.Cursor = Cursors.Hand;
+            picIconConfirmSelection.Image = Resources._092_exito;
+            picIconConfirmSelection.Location = new Point(80, 115);
+            picIconConfirmSelection.Name = "picIconConfirmSelection";
+            picIconConfirmSelection.Size = new Size(31, 44);
+            picIconConfirmSelection.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconConfirmSelection.TabIndex = 99;
+            picIconConfirmSelection.TabStop = false;
+            // 
+            // picIconCancel
+            // 
+            picIconCancel.BackColor = Color.FromArgb(255, 255, 255);
+            picIconCancel.Cursor = Cursors.Hand;
+            picIconCancel.Image = Resources._093_error;
+            picIconCancel.Location = new Point(126, 168);
+            picIconCancel.Name = "picIconCancel";
+            picIconCancel.Size = new Size(34, 34);
+            picIconCancel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconCancel.TabIndex = 99;
+            picIconCancel.TabStop = false;
+            // 
+            // panelHeader
+            // 
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(440, 56);
+            panelHeader.TabIndex = 0;
+            // 
+            // labelTitle
+            // 
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 16);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(303, 28);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "SELECCIONAR CAJA DE COBRO";
+            // 
+            // panelSelectionCard
+            // 
+            panelSelectionCard.BackColor = Color.White;
+            panelSelectionCard.Controls.Add(labelRegisterPrompt);
+            panelSelectionCard.Controls.Add(comboBoxRegisterSelection);
+            panelSelectionCard.Controls.Add(labelRegisterStatusInfo);
+            panelSelectionCard.Controls.Add(picIconConfirmSelection);
+            panelSelectionCard.Controls.Add(buttonConfirmSelection);
+            panelSelectionCard.Controls.Add(picIconCancel);
+            panelSelectionCard.Controls.Add(buttonCancel);
+            panelSelectionCard.Location = new Point(20, 72);
+            panelSelectionCard.Name = "panelSelectionCard";
+            panelSelectionCard.Size = new Size(400, 220);
+            panelSelectionCard.TabIndex = 1;
+            // 
+            // labelRegisterPrompt
+            // 
+            labelRegisterPrompt.AutoSize = true;
+            labelRegisterPrompt.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelRegisterPrompt.Location = new Point(20, 16);
+            labelRegisterPrompt.Name = "labelRegisterPrompt";
+            labelRegisterPrompt.Size = new Size(139, 21);
+            labelRegisterPrompt.TabIndex = 0;
+            labelRegisterPrompt.Text = "Seleccionar Caja:";
+            // 
+            // comboBoxRegisterSelection
+            // 
+            comboBoxRegisterSelection.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxRegisterSelection.Font = new Font("Segoe UI", 10.5F);
+            comboBoxRegisterSelection.Location = new Point(20, 40);
+            comboBoxRegisterSelection.Name = "comboBoxRegisterSelection";
+            comboBoxRegisterSelection.Size = new Size(360, 31);
+            comboBoxRegisterSelection.TabIndex = 1;
+            // 
+            // labelRegisterStatusInfo
+            // 
+            labelRegisterStatusInfo.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            labelRegisterStatusInfo.ForeColor = Color.FromArgb(16, 185, 129);
+            labelRegisterStatusInfo.Location = new Point(20, 80);
+            labelRegisterStatusInfo.Name = "labelRegisterStatusInfo";
+            labelRegisterStatusInfo.Size = new Size(360, 22);
+            labelRegisterStatusInfo.TabIndex = 2;
+            labelRegisterStatusInfo.Text = "Caja disponible";
+            // 
+            // buttonConfirmSelection
+            // 
+            buttonConfirmSelection.BackColor = Color.FromArgb(16, 185, 129);
+            buttonConfirmSelection.FlatAppearance.BorderSize = 0;
+            buttonConfirmSelection.FlatStyle = FlatStyle.Flat;
+            buttonConfirmSelection.Font = new Font("Segoe UI", 10F, FontStyle.Bold);
+            buttonConfirmSelection.ForeColor = Color.White;
+            buttonConfirmSelection.Location = new Point(20, 115);
+            buttonConfirmSelection.Name = "buttonConfirmSelection";
+            buttonConfirmSelection.Size = new Size(360, 44);
+            buttonConfirmSelection.TabIndex = 3;
+            buttonConfirmSelection.Text = "INGRESAR A LA CAJA";
+            buttonConfirmSelection.UseVisualStyleBackColor = false;
+            // 
+            // buttonCancel
+            // 
+            buttonCancel.FlatStyle = FlatStyle.Flat;
+            buttonCancel.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonCancel.Location = new Point(20, 168);
+            buttonCancel.Name = "buttonCancel";
+            buttonCancel.Size = new Size(360, 34);
+            buttonCancel.TabIndex = 4;
+            buttonCancel.Text = "CANCELAR";
+            buttonCancel.UseVisualStyleBackColor = true;
+            // 
             // FormSelectCashRegister
+            // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(440, 310);
-            Controls.Add(pnlCard);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelSelectionCard);
+            Controls.Add(panelHeader);
             FormBorderStyle = FormBorderStyle.None;
             Name = "FormSelectCashRegister";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Selección de Caja";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlCard.ResumeLayout(false);
-            pnlCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)picIconConfirmSelection).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconCancel).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelSelectionCard.ResumeLayout(false);
+            panelSelectionCard.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Panel pnlCard;
-        private System.Windows.Forms.Label lblRegister;
-        private System.Windows.Forms.ComboBox cboRegister;
-        private System.Windows.Forms.Label lblStatusInfo;
-        private System.Windows.Forms.Button btnConfirm;
-        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Panel panelSelectionCard;
+        private System.Windows.Forms.Label labelRegisterPrompt;
+        private System.Windows.Forms.ComboBox comboBoxRegisterSelection;
+        private System.Windows.Forms.Label labelRegisterStatusInfo;
+        private System.Windows.Forms.Button buttonConfirmSelection;
+        private System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.PictureBox picIconConfirmSelection;
+        private System.Windows.Forms.PictureBox picIconCancel;
     }
 }

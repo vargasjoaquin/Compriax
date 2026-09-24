@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.DTOs;
+using CompriaxSystem.Domain.Constants;
 using System.ComponentModel;
 using System.Drawing.Drawing2D;
 using System.Globalization;
@@ -105,6 +106,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
         private void AttachListToParentForm()
         {
             var parentForm = this.FindForm();
+            
             if (parentForm != null && !_lstMatches.IsDisposed)
             {
                 if (!parentForm.Controls.Contains(_lstMatches))
@@ -183,7 +185,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
                     (NormalizeString(product.Name).Contains(normalizedQuery) ||
                      NormalizeString(product.Barcode).Contains(normalizedQuery) ||
                      (!string.IsNullOrEmpty(product.Description) && NormalizeString(product.Description).Contains(normalizedQuery))))
-                .Take(8)
+                .Take(ProductConstants.DEFAULT_QUICK_SEARCH_SUGGESTIONS_LIMIT)
                 .ToList();
 
             if (_filteredMatches.Any())
@@ -294,6 +296,7 @@ namespace CompriaxSystem.WinFormsUI.Controls
         private void ShowPopupMatches()
         {
             var parentForm = this.FindForm();
+            
             if (parentForm == null || !_filteredMatches.Any())
             {
                 HidePopup();
@@ -325,7 +328,9 @@ namespace CompriaxSystem.WinFormsUI.Controls
         private void RepositionPopup()
         {
             var parentForm = this.FindForm();
-            if (parentForm == null) return;
+            
+            if (parentForm == null)
+                return;
 
             Point screenPoint = this.PointToScreen(new Point(0, Height + 2));
             Point formPoint = parentForm.PointToClient(screenPoint);

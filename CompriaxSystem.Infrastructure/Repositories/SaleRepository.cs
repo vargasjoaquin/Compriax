@@ -2,6 +2,7 @@
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Infrastructure.Persistence;
+using CompriaxSystem.Domain.Constants;
 
 namespace CompriaxSystem.Infrastructure.Repositories
 {
@@ -28,7 +29,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .Select(s => s.DocumentNumber)
                 .FirstOrDefaultAsync();
 
-            return last ?? "00000000";
+            return last ?? DocumentTypeConstants.EMPTY_DOCUMENT_NUMBER;
         }
 
         public async Task<bool> SaveChangesAsync() => await context.SaveChangesAsync() > 0;

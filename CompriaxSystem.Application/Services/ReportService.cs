@@ -8,106 +8,126 @@ namespace CompriaxSystem.Application.Services
     public class ReportService(IUnitOfWork unitOfWork) : IReportService
     {
         /// <summary>
-        /// Genera las métricas consolidadas para el Dashboard, incluyendo ventas, stock crítico y productos más vendidos.
+        /// Genera las métricas consolidadas para el Dashboard,
+        /// incluyendo ventas, stock crítico y productos más vendidos.
         /// </summary>
-        /// <returns>DTO con estadísticas generales de gestión.</returns>
+        /// <returns>DTO con las estadísticas generales de gestión.</returns>
         public async Task<DashboardDto> GetDashboardStatsAsync()
         {
-            var today = DateTime.Today;
-            var tomorrow = today.AddDays(1);
-            var sevenDaysAgo = today.AddDays(-7);
+                        var localNow = DateTime.Now;
+            var localToday = localNow.Date;
 
-            var salesToday = (await unitOfWork.Sales.GetHistoryAsync(today, tomorrow)).ToList();
-            var salesWeek = (await unitOfWork.Sales.GetHistoryAsync(sevenDaysAgo, tomorrow)).ToList();
+            var todayUtcStart = localToday.ToUniversalTime();
+            var tomorrowUtcEnd = localToday.AddDays(1).ToUniversalTime();
+            var sevenDaysAgoUtcStart = localToday.AddDays(-7).ToUniversalTime();
 
-            var products = (await unitOfWork.Products.GetAllWithDetailsAsync()).ToList();
-            int lowStockCount = products.Count(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock);
+            var todaySales = (await unitOfWork.Sales.GetHistoryAsync(todayUtcStart, tomorrowUtcEnd)).ToList();
 
-            var criticalStock = products
-                .Where(p => !p.IsDeleted && p.CurrentStock <= p.MinimumStock)
-                .OrderBy(p => p.CurrentStock)
+            var weekSales = (await unitOfWork.Sales.GetHistoryAsync(sevenDaysAgoUtcStart, tomorrowUtcEnd)).ToList();
+
+            var product = (await unitOfWork.Products.GetAllWithDetailsAsync()).ToList();
+
+            int lowStockProductCount = product.Count(product => !product.IsDeleted && product.CurrentStock <= product.MinimumStock);
+
+            var criticalStockProducts = product
+                .Where(product =>
+                    !product.IsDeleted &&
+                    product.CurrentStock <= product.MinimumStock)
+                .OrderBy(product => product.CurrentStock)
                 .Take(5)
-                .Select(p => new CriticalStockDto
+                .Select(product => new CriticalStockDto
                 {
-                    ProductName = p.Name,
-                    CurrentStock = p.CurrentStock,
-                    MinimumStock = p.MinimumStock
+                    ProductName = product.Name,
+                    CurrentStock = product.CurrentStock,
+                    MinimumStock = product.MinimumStock
                 })
                 .ToList();
 
-            var topProducts = salesToday
-                .SelectMany(s => s.SaleItems)
-                .GroupBy(i => i.Product != null ? i.Product.Name : $"Producto #{i.ProductId}")
-                .Select(g => new TopProductDto
+            var topSellingProducts = todaySales
+                .SelectMany(sale => sale.SaleItems)
+                .GroupBy(saleItem =>
+                    saleItem.Product != null
+                        ? saleItem.Product.Name
+                        : $"Producto #{saleItem.ProductId}")
+                .Select(productGroup => new TopProductDto
                 {
-                    ProductName = g.Key,
-                    QuantitySold = g.Sum(x => x.Quantity)
+                    ProductName = productGroup.Key,
+                    QuantitySold = productGroup.Sum(
+                        saleItem => saleItem.Quantity)
                 })
-                .OrderByDescending(x => x.QuantitySold)
+                .OrderByDescending(
+                    product => product.QuantitySold)
                 .Take(5)
                 .ToList();
 
-            var categorySales = salesToday
-                .SelectMany(s => s.SaleItems)
-                .GroupBy(i => i.Product.Category.Name)
-                .Select(g => new CategorySalesDto
+            var salesByCategory = todaySales
+                .SelectMany(sale => sale.SaleItems)
+                .GroupBy(saleItem => saleItem.Product.Category.Name)
+                .Select(categoryGroup => new CategorySalesDto
                 {
-                    CategoryName = g.Key,
-                    TotalRevenue = g.Sum(x => x.SubTotal)
+                    CategoryName = categoryGroup.Key,
+                    TotalRevenue = categoryGroup.Sum(
+                        saleItem => saleItem.SubTotal)
                 })
                 .ToList();
 
             return new DashboardDto
             {
-                TotalSalesToday = salesToday.Sum(s => s.TotalAmount),
-                TotalSalesWeek = salesWeek.Sum(s => s.TotalAmount),
-                SalesCountToday = salesToday.Count,
-                ProductsLowStockCount = lowStockCount,
-                TopSellingProducts = topProducts,
-                SalesByCategory = categorySales,
-                CriticalStockList = criticalStock
+                TotalSalesToday = todaySales.Sum(sale => sale.TotalAmount),
+                TotalSalesWeek = weekSales.Sum(sale => sale.TotalAmount),
+                SalesCountToday = todaySales.Count,
+                ProductsLowStockCount = lowStockProductCount,
+                TopSellingProducts = topSellingProducts,
+                SalesByCategory = salesByCategory,
+                CriticalStockList = criticalStockProducts
             };
         }
 
         /// <summary>
-        /// Recupera el historial de ventas detallado filtrado por fecha y caja registradora.
+        /// Recupera el historial detallado de ventas filtrado por fecha
+        /// y, opcionalmente, por caja registradora.
         /// </summary>
-        /// <param name="start">Fecha desde.</param>
-        /// <param name="end">Fecha hasta.</param>
-        /// <param name="cashRegisterId">Id de la caja.</param>
-        /// <returns>Colección de reportes de venta.</returns>
-        public async Task<IEnumerable<SalesReportDto>> GetSalesHistoryAsync(DateTime start, DateTime end, int? cashRegisterId = null)
+        /// <param name="startDate">Fecha inicial del período.</param>
+        /// <param name="endDate">Fecha final del período.</param>
+        /// <param name="cashRegisterId">
+        /// Identificador de la caja registradora utilizada como filtro.
+        /// </param>
+        /// <returns>Colección de reportes de ventas.</returns>
+        public async Task<IEnumerable<SalesReportDto>> GetSalesHistoryAsync(DateTime startDate, DateTime endDate, int? cashRegisterId = null)
         {
-            var sales = await unitOfWork.Sales.GetHistoryAsync(start.Date, end.Date.AddDays(1), cashRegisterId);
+                        var startUtc = startDate.Date.ToUniversalTime();
+            var endUtc = endDate.Date.AddDays(1).ToUniversalTime();
+            var salesHistory = await unitOfWork.Sales.GetHistoryAsync(startUtc, endUtc, cashRegisterId);
 
-            return sales
-                .OrderByDescending(s => s.CreatedAt)
-                .Select(s => new SalesReportDto
+            return salesHistory
+                .OrderByDescending(sale => sale.CreatedAt)
+                .Select(sale => new SalesReportDto
                 {
-                    SaleId = s.Id,
-                    CashRegisterName = s.CashRegister != null ? s.CashRegister.Name : "Caja Principal",
-                    DocumentNumber = s.DocumentNumber,
-                    DocumentType = s.DocumentType != null ? s.DocumentType.Name : "N/A",
-                    Date = s.CreatedAt,
-                    CustomerName = s.Customer != null
-                        ? $"{s.Customer.LastName}, {s.Customer.FirstName}".Trim()
-                        : "Consumidor Final",
-                    CashierName = s.User != null ? s.User.Username : "N/A",
-
-                    TotalAmount = s.TotalAmount
+                    SaleId = sale.Id,
+                    CashRegisterName = sale.CashRegister != null ? sale.CashRegister.Name : "Caja Principal",
+                    DocumentNumber = sale.DocumentNumber,
+                    DocumentType = sale.DocumentType != null ? sale.DocumentType.Name : "N/A",
+                    Date = sale.CreatedAt,
+                    CustomerName = sale.Customer != null ? $"{sale.Customer.LastName} {sale.Customer.FirstName}".Trim() : "Consumidor Final",
+                    CashierName = sale.User != null ? sale.User.Username : "N/A",
+                    TotalAmount = sale.TotalAmount
                 })
                 .ToList();
         }
 
         /// <summary>
-        /// Obtiene los detalles completos de una venta, incluyendo sus ítems, mediante su id.
+        /// Obtiene los detalles completos de una venta,
+        /// incluyendo sus ítems, mediante su identificador.
         /// </summary>
-        /// <param name="saleId">Id de la venta.</param>
-        /// <returns>DTO con el detalle de la venta o null.</returns>
+        /// <param name="saleId">Identificador de la venta.</param>
+        /// <returns>
+        /// DTO con el detalle de la venta o null si no existe.
+        /// </returns>
         public async Task<SaleDto?> GetSaleDetailsAsync(int saleId)
         {
-            var sale = await unitOfWork.Sales.GetByIdWithDetailsAsync(saleId);
-            
+            var sale = await unitOfWork.Sales
+                .GetByIdWithDetailsAsync(saleId);
+
             if (sale == null)
                 return null;
 
@@ -117,44 +137,59 @@ namespace CompriaxSystem.Application.Services
         /// <summary>
         /// Busca los datos de una venta utilizando su número de comprobante.
         /// </summary>
-        /// <param name="documentNumber">Número de documento fiscal.</param>
-        /// <returns>DTO de la venta encontrada.</returns>
+        /// <param name="documentNumber">Número de comprobante o documento fiscal.</param>
+        /// <returns>DTO de la venta encontrada o null si no existe.</returns>
         public async Task<SaleDto?> GetSaleByDocumentNumberAsync(string documentNumber)
         {
-            var sale = await unitOfWork.Sales.GetByDocumentNumberAsync(documentNumber.Trim());
-            
-            if (sale == null) 
+            var sale= await unitOfWork.Sales.GetByDocumentNumberAsync(documentNumber.Trim());
+
+            if (sale == null)
                 return null;
 
             return MapToSaleDto(sale);
         }
 
         /// <summary>
-        /// Recupera el historial de compras realizadas a proveedores en un rango de fechas.
+        /// Recupera el historial de compras realizadas a proveedores
+        /// dentro de un rango de fechas y, opcionalmente, filtradas por proveedor.
         /// </summary>
-        /// <param name="start">Fecha inicial.</param>
-        /// <param name="end">Fecha final.</param>
-        /// <param name="supplierId">Id del proveedor para filtrar.</param>
-        /// <returns>Colección de reportes de compra.</returns>
-        public async Task<IEnumerable<PurchaseReportDto>> GetPurchaseHistoryAsync(DateTime start, DateTime end, int? supplierId)
+        /// <param name="startDate">Fecha inicial del período.</param>
+        /// <param name="endDate">Fecha final del período.</param>
+        /// <param name="supplierId">Id del proveedor utilizado como filtro.</param>
+        /// <returns>Colección de reportes de compras.</returns>
+        public async Task<IEnumerable<PurchaseReportDto>> GetPurchaseHistoryAsync(DateTime startDate, DateTime endDate,int? supplierId)
         {
-            var purchases = await unitOfWork.Purchases.GetHistoryAsync(start.Date, end.Date.AddDays(1));
+                        var startUtc = startDate.Date.ToUniversalTime();
+            var endUtc = endDate.Date.AddDays(1).ToUniversalTime();
+            var purchase = await unitOfWork.Purchases.GetHistoryAsync(startUtc, endUtc);
 
             if (supplierId.HasValue && supplierId.Value > 0)
-                purchases = purchases.Where(p => p.SupplierId == supplierId.Value);
-
-            return purchases.Select(p => new PurchaseReportDto
             {
-                Date = p.CreatedAt,
-                DocumentType = p.DocumentType?.Name,
-                DocumentNumber = p.DocumentNumber,
-                TotalAmount = p.TotalAmount,
-                CashierName = p.User?.Username,
-                SupplierTaxId = p.Supplier?.CUIT,
-                SupplierName = p.Supplier?.CompanyName
-            }).ToList();
+                purchase = purchase.Where(purchase => purchase.SupplierId == supplierId.Value);
+            }
+
+            return purchase
+                .Select(purchase => new PurchaseReportDto
+                {
+                    Date = purchase.CreatedAt,
+                    DocumentType = purchase.DocumentType?.Name,
+                    DocumentNumber = purchase.DocumentNumber,
+                    TotalAmount = purchase.TotalAmount,
+                    CashierName = purchase.User?.Username,
+                    SupplierTaxId = purchase.Supplier?.CUIT,
+                    SupplierName = purchase.Supplier?.CompanyName
+                })
+                .ToList();
         }
 
+        /// <summary>
+        /// Convierte una entidad de venta en su DTO correspondiente,
+        /// incluyendo la información del cliente, usuario, comprobante e ítems.
+        /// </summary>
+        /// <param name="sale">
+        /// Entidad de venta que se desea convertir.
+        /// </param>
+        /// <returns>DTO con la información completa de la venta.</returns>
         private static SaleDto MapToSaleDto(Sale sale)
         {
             return new SaleDto
@@ -169,15 +204,17 @@ namespace CompriaxSystem.Application.Services
                 CashierName = sale.User?.Username,
                 PaymentReceived = sale.PaymentReceived,
                 TotalAmount = sale.TotalAmount,
-                Items = (sale.SaleItems).Select(i => new SaleItemDto
-                {
-                    ProductId = i.ProductId,
-                    ProductName = i.Product?.Name ?? $"Producto #{i.ProductId}",
-                    CategoryId = i.Product?.CategoryId,
-                    Quantity = i.Quantity,
-                    UnitPrice = i.UnitPrice,
-                    DiscountAmount = i.DiscountAmount
-                }).ToList()
+                Items = sale.SaleItems
+                    .Select(saleItem => new SaleItemDto
+                    {
+                        ProductId = saleItem.ProductId,
+                        ProductName = saleItem.Product?.Name ?? $"Producto #{saleItem.ProductId}",
+                        CategoryId = saleItem.Product?.CategoryId,
+                        Quantity = saleItem.Quantity,
+                        UnitPrice = saleItem.UnitPrice,
+                        DiscountAmount = saleItem.DiscountAmount
+                    })
+                    .ToList()
             };
         }
     }

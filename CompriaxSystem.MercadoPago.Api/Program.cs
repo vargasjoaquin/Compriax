@@ -30,17 +30,23 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "CompriaxSystem Mercado Pago API", Version = "v1" });
+    c.SwaggerDoc("v1", new()
+    {
+        Title = "CompriaxSystem Mercado Pago API",
+        Version = "v1",
+        Description = "Microservicio de integración de pagos QR y webhooks para Compriax POS"
+    });
 });
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+app.UseSwagger();
+app.UseSwaggerUI(c =>
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "CompriaxSystem Mercado Pago API v1");
+    c.RoutePrefix = string.Empty;
+});
 
 app.UseHttpsRedirection();
 app.UseAuthorization();

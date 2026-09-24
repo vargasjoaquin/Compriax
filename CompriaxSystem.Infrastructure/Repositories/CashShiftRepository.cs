@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompriaxSystem.Application.Interfaces.Repositories;
+﻿using CompriaxSystem.Application.Interfaces.Repositories;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 
 namespace CompriaxSystem.Infrastructure.Repositories
 {
@@ -19,7 +20,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
                 .Include(cs => cs.CashMovements)
                 .Include(cs => cs.Sales)
                 .ThenInclude(s => s.PaymentMethod)
-                .FirstOrDefaultAsync(cs => cs.UserId == userId && cs.Status == "Abierta");
+                .FirstOrDefaultAsync(cs => cs.UserId == userId && cs.Status == CashShiftStatusesConstants.OPEN);
         }
 
         /// <summary>
@@ -32,7 +33,7 @@ namespace CompriaxSystem.Infrastructure.Repositories
             return await context.CashShifts
                 .Include(cs => cs.User)
                 .Include(cs => cs.CashRegister)
-                .FirstOrDefaultAsync(cs => cs.CashRegisterId == registerId && cs.Status == "Abierta");
+                .FirstOrDefaultAsync(cs => cs.CashRegisterId == registerId && cs.Status == CashShiftStatusesConstants.OPEN);
         }
 
         /// <summary>

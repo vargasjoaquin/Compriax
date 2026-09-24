@@ -1,4 +1,6 @@
-﻿namespace CompriaxSystem.Application.DTOs
+﻿using CompriaxSystem.Domain.Constants;
+
+namespace CompriaxSystem.Application.DTOs
 {
     public class AfipAuthorizeResultDto
     {
@@ -8,7 +10,7 @@
         public int PointOfSale { get; set; }
         public long InvoiceNumber { get; set; }
         public string QrUrl { get; set; } = null!;
-        public string FiscalStatus { get; set; } = "Aprobado";
+        public string FiscalStatus { get; set; } = FiscalStatusesContstans.APPROVED;
         public string? ErrorMessage { get; set; }
     }
 }

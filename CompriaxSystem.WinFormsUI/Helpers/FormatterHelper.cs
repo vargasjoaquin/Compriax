@@ -55,7 +55,7 @@ namespace CompriaxSystem.WinFormsUI.Helpers
 
             string rawText = new string(currentEdit.Text.Where(char.IsLetterOrDigit).ToArray()).ToUpper();
 
-            if (rawText.Length > 4)
+            if (rawText.Length >= 16 || (rawText.Length > 4 && nextEdit != null))
             {
                 _isFormattingKey = true;
 
@@ -74,6 +74,11 @@ namespace CompriaxSystem.WinFormsUI.Helpers
                     _isFormattingKey = false;
                 }
                 return;
+            }
+
+            if (nextEdit == null && rawText.Length > 4)
+            {
+                rawText = rawText.Substring(0, 4);
             }
 
             if (currentEdit.Text != rawText)

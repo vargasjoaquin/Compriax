@@ -22,33 +22,32 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <returns>Una colección de nombres de cámaras detectadas.</returns>
         public IEnumerable<string> GetAvailableCameras()
         {
-            var deviceNames = new List<string>();
+            var cameraDeviceNames = new List<string>();
 
             try
             {
-                DsDevice[] devices = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
+                DsDevice[] videoDevices = DsDevice.GetDevicesOfCat(FilterCategory.VideoInputDevice);
                 
-                foreach (var device in devices)
+                foreach (var videoDevice in videoDevices)
                 {
-                    deviceNames.Add(device.Name);
+                    cameraDeviceNames.Add(videoDevice.Name);
                 }
             }
             catch
             {
             }
 
-            if (deviceNames.Count == 0)
+            if (cameraDeviceNames.Count == 0)
             {
                 for (int i = 0; i < 5; i++)
                 {
-                    using var tempCap = new VideoCapture(i);
+                    using var temporaryVideoCapture = new VideoCapture(i);
                     
-                    if (tempCap.IsOpened())
-                        deviceNames.Add($"Camera Device {i}");
+                    if (temporaryVideoCapture.IsOpened())
+                        cameraDeviceNames.Add($"Camera Device {i}");
                 }
             }
-
-            return deviceNames;
+            return cameraDeviceNames;
         }
 
         /// <summary>
@@ -80,21 +79,21 @@ namespace CompriaxSystem.Infrastructure.Services
             if (_videoCapture == null || !_videoCapture.IsOpened())
                 return;
 
-            using Mat frame = new Mat();
-            _videoCapture.Read(frame);
+            using Mat videoFrame = new Mat();
+            _videoCapture.Read(videoFrame);
 
-            if (frame.Empty())
+            if (videoFrame.Empty())
                 return;
 
-            var converted = BitmapConverter.ToBitmap(frame);
+            var capturedBitmap = BitmapConverter.ToBitmap(videoFrame);
 
             lock (_syncLock)
             {
                 _lastFrame?.Dispose();
-                _lastFrame = converted;
+                _lastFrame = capturedBitmap;
             }
 
-            _onFrameReceived?.Invoke((Bitmap)converted.Clone());
+            _onFrameReceived?.Invoke((Bitmap)capturedBitmap.Clone());
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using CompriaxSystem.WinFormsUI.Helpers;
 using System.Media;
@@ -15,13 +16,10 @@ namespace CompriaxSystem.WinFormsUI
         private readonly IBarcodeService _barcodeService;
         private readonly IDocumentService _documentService;
         private readonly ICurrentUserService _currentUser;
+        private readonly CameraScannerController _cameraController;
 
         private List<PurchaseItemCreateDto> _items = new();
         private ProductDto? _foundProduct;
-
-        private bool _isCameraActive = false;
-        private string _lastScannedBarcode = string.Empty;
-        private DateTime _lastScanTime = DateTime.MinValue;
 
         // Banderas de control de concurrencia
         private bool _isInitializing = false;
@@ -45,76 +43,93 @@ namespace CompriaxSystem.WinFormsUI
             _currentUser = currentUser;
 
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearchSupplier, this.picIconSearchSupplier);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearchProduct, this.picIconSearchProduct);
+            ButtonIconOverlayHelper.BindEvents(this.buttonAddPurchaseItem, this.picIconAddPurchaseItem);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRemovePurchaseItem, this.picIconRemovePurchaseItem);
+            ButtonIconOverlayHelper.BindEvents(this.buttonRegisterPurchase, this.picIconRegisterPurchase);
+            ButtonIconOverlayHelper.BindEvents(this.buttonToggleScannerCamera, this.picIconToggleScannerCamera);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(gbSaleInfo);
-            UIThemeHelper.ApplyCardStyle(pnlScannerBar);
-            UIThemeHelper.ApplyCardStyle(pnlRightSummary);
+            UIThemeHelper.ApplyCardStyle(panelPurchaseHeaderInfo);
+            UIThemeHelper.ApplyCardStyle(panelScannerItemBar);
+            UIThemeHelper.ApplyCardStyle(panelRightSummary);
 
-            this.txtSupplierDoc.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(txtSupplierDoc);
-            this.cboDocType.SelectedIndexChanged += async (s, e) => await UpdateNextInvoiceNumber();
+            _cameraController = new CameraScannerController(
+               cameraService,
+               barcodeService,
+               pictureBoxWebcamPreview,
+               buttonToggleScannerCamera,
+               barcode => _ = ProcessScannedProductBarcodeAsync(barcode));
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.btnSearchSupplier.Click += async (s, e) => await ExecuteSearchSupplierAction();
-            this.btnSearchProduct.Click += async (s, e) => await ExecuteProductSearchAction();
-            this.btnAddItem.Click += (s, e) => ExecuteAddManualItemAction();
-            this.btnRemoveItem.Click += (s, e) => ExecuteRemoveFromCartAction();
-            this.btnRegister.Click += async (s, e) => await ExecuteRegisterPurchaseAction();
-            this.dgvCart.CellDoubleClick += (s, e) => ExecuteRemoveFromCartAction();
-            this.btnToggleCam.Click += (s, e) => ToggleCamera();
-            this.FormClosing += (s, e) => StopCamera();
+            this.textBoxSupplierTaxId.TextChanged += (s, e) => FormatterHelper.HandleCuitFormat(textBoxSupplierTaxId);
+            this.comboBoxDocumentType.SelectedIndexChanged += async (s, e) => await UpdateNextPurchaseInvoiceNumberAsync();
 
-            this.txtProductCode.KeyDown += async (s, e) =>
+            this.Load += async (s, e) => await InitializePurchasesFormAsync();
+            this.buttonSearchSupplier.Click += async (s, e) => await ExecuteSearchSupplierByCuitAsync();
+            this.buttonSearchProduct.Click += async (s, e) => await ExecuteSearchProductByBarcodeAsync();
+            this.buttonAddPurchaseItem.Click += (s, e) => ExecuteAddManualItemToPurchaseCart();
+            this.buttonRemovePurchaseItem.Click += (s, e) => ExecuteRemoveSelectedItemFromPurchaseCart();
+            this.buttonRegisterPurchase.Click += async (s, e) => await ExecuteRegisterPurchaseInvoiceAsync();
+            this.dataGridViewPurchaseCart.CellDoubleClick += (s, e) => ExecuteRemoveSelectedItemFromPurchaseCart();
+
+            this.textBoxProductBarcode.KeyDown += async (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
                     e.SuppressKeyPress = true;
                     e.Handled = true;
-                    await ProcessScannedBarcodeAsync(txtProductCode.Text.Trim());
+                    await ProcessScannedProductBarcodeAsync(textBoxProductBarcode.Text.Trim());
                 }
             };
 
-            this.dgvCart.KeyDown += (s, e) =>
+            this.dataGridViewPurchaseCart.KeyDown += (s, e) =>
             {
                 if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
                 {
                     e.Handled = true;
                     e.SuppressKeyPress = true;
-                    ExecuteRemoveFromCartAction();
+                    ExecuteRemoveSelectedItemFromPurchaseCart();
                 }
             };
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePurchasesFormAsync()
         {
             _isInitializing = true;
-            txtInvoiceNumber.ReadOnly = true;
+            textBoxInvoiceNumber.ReadOnly = true;
 
             using (new WaitCursorHelper(this))
             {
-                var docTypes = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
-                var paymentMethods = (await _lookupService.GetPaymentMethodsAsync()).ToList();
+                var documentTypesList = (await _lookupService.GetDocumentTypesAsync()).OrderBy(d => d.Id).ToList();
+                var paymentMethodsList = (await _lookupService.GetPaymentMethodsAsync()).ToList();
 
-                cboDocType.DisplayMember = "Name";
-                cboDocType.ValueMember = "Id";
-                cboDocType.DataSource = docTypes;
+                comboBoxDocumentType.DisplayMember = "Name";
+                comboBoxDocumentType.ValueMember = "Id";
+                comboBoxDocumentType.DataSource = documentTypesList;
 
-                cboPaymentMethod.DisplayMember = "Name";
-                cboPaymentMethod.ValueMember = "Id";
-                cboPaymentMethod.DataSource = paymentMethods;
+                comboBoxPaymentMethod.DisplayMember = "Name";
+                comboBoxPaymentMethod.ValueMember = "Id";
+                comboBoxPaymentMethod.DataSource = paymentMethodsList;
 
-                if (paymentMethods.Any())
+                if (paymentMethodsList.Any())
                 {
-                    cboPaymentMethod.SelectedIndex = 0;
+                    comboBoxPaymentMethod.SelectedIndex = 0;
                 }
 
                 _isInitializing = false;
 
-                await ResetUI();
+                await ResetPurchaseFormSessionAsync();
             }
         }
 
-        private async Task UpdateNextInvoiceNumber()
+        private async Task UpdateNextPurchaseInvoiceNumberAsync()
         {
             if (_isInitializing || _isUpdatingInvoiceNumber)
                 return;
@@ -123,9 +138,9 @@ namespace CompriaxSystem.WinFormsUI
 
             try
             {
-                if (cboDocType.SelectedValue is int id && id >= 0)
+                if (comboBoxDocumentType.SelectedValue is int id && id >= 0)
                 {
-                    txtInvoiceNumber.Text = await _supplyService.GetNextPurchaseNumberAsync(id);
+                    textBoxInvoiceNumber.Text = await _supplyService.GetNextPurchaseNumberAsync(id);
                 }
             }
             finally
@@ -134,96 +149,100 @@ namespace CompriaxSystem.WinFormsUI
             }
         }
 
-        private async Task ResetUI()
+        private async Task ResetPurchaseFormSessionAsync()
         {
             _items.Clear();
             _foundProduct = null;
             UIHelper.CleanControls(this);
-            txtIdProveedor.Clear();
-            txtSupplierDoc.Clear();
-            txtSupplierName.Clear();
-            ClearProductArea();
+            textBoxSupplierIdHidden.Clear();
+            textBoxSupplierTaxId.Clear();
+            textBoxSupplierName.Clear();
+            ClearProductEntryFields();
 
-            txtDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
-            txtTotalPay.Text = "$ 0,00";
+            textBoxDate.Text = DateTime.Now.ToString("dd/MM/yyyy");
+            textBoxTotalAmount.Text = "$ 0,00";
 
-            if (cboDocType.Items.Count > 0 && cboDocType.SelectedIndex == -1)
+            if (comboBoxDocumentType.Items.Count > 0 && comboBoxDocumentType.SelectedIndex == -1)
             {
-                cboDocType.SelectedIndex = 0;
+                comboBoxDocumentType.SelectedIndex = 0;
             }
 
-            await UpdateNextInvoiceNumber();
-            RefreshGrid();
-            txtProductCode.Focus();
+            await UpdateNextPurchaseInvoiceNumberAsync();
+            RefreshPurchaseCartGridAndTotals();
+            textBoxProductBarcode.Focus();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de RegisterPurchaseInvoice.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteRegisterPurchaseAction()
+        private async Task ExecuteRegisterPurchaseInvoiceAsync()
         {
             if (!_items.Any())
             {
                 UIHelper.WarnMessage(this, "El listado de compra está vacío. Agregue al menos un producto.", "Compra Vacía");
-                txtProductCode.Focus();
+                textBoxProductBarcode.Focus();
                 return;
             }
 
-            if (string.IsNullOrWhiteSpace(txtIdProveedor.Text) || !int.TryParse(txtIdProveedor.Text, out int supplierId) || supplierId <= 0)
+            if (string.IsNullOrWhiteSpace(textBoxSupplierIdHidden.Text) || !int.TryParse(textBoxSupplierIdHidden.Text, out int supplierId) || supplierId <= 0)
             {
                 UIHelper.WarnMessage(this, "Debe buscar y seleccionar el proveedor mediante su CUIT.", "Proveedor Requerido");
-                txtSupplierDoc.Focus();
+                textBoxSupplierTaxId.Focus();
                 return;
             }
 
             int paymentMethodId = 1;
-            string paymentMethodName = "Efectivo";
+            string paymentMethodName = PaymentMethodConstants.CASH;
 
-            if (cboPaymentMethod.SelectedValue is int pId && pId > 0)
+            if (comboBoxPaymentMethod.SelectedValue is int pId && pId > 0)
             {
                 paymentMethodId = pId;
-                paymentMethodName = cboPaymentMethod.Text;
+                paymentMethodName = comboBoxPaymentMethod.Text;
             }
-            else if (cboPaymentMethod.SelectedItem is PaymentMethod pm && pm.Id > 0)
+            else if (comboBoxPaymentMethod.SelectedItem is PaymentMethod pm && pm.Id > 0)
             {
                 paymentMethodId = pm.Id;
                 paymentMethodName = pm.Name;
             }
 
-            btnRegister.Enabled = false;
+            buttonRegisterPurchase.Enabled = false;
 
             try
             {
                 using (new WaitCursorHelper(this))
                 {
-                    string supplierName = txtSupplierName.Text.Trim();
-                    string supplierCuit = txtSupplierDoc.Text.Trim();
-                    string registeredBy = _currentUser.CurrentUser?.FullName ?? "Administrador";
+                    string supplierName = textBoxSupplierName.Text.Trim();
+                    string supplierCuit = textBoxSupplierTaxId.Text.Trim();
+                    string registeredBy = _currentUser.CurrentUser?.FullName ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
 
-                    var dto = new PurchaseCreateDto
+                    var product = new PurchaseCreateDto
                     {
                         SupplierId = supplierId,
-                        DocumentTypeId = (int)(cboDocType.SelectedValue ?? 1),
-                        DocumentTypeName = cboDocType.Text,
+                        DocumentTypeId = (int)(comboBoxDocumentType.SelectedValue ?? 1),
+                        DocumentTypeName = comboBoxDocumentType.Text,
                         PaymentMethodId = paymentMethodId,
                         PaymentMethodName = paymentMethodName,
-                        DocumentNumber = txtInvoiceNumber.Text.Trim(),
+                        DocumentNumber = textBoxInvoiceNumber.Text.Trim(),
                         TotalAmount = _items.Sum(x => x.SubTotal),
                         Items = _items.ToList()
                     };
 
-                    var result = await _supplyService.ProcessPurchaseAsync(dto);
+                    var result = await _supplyService.ProcessPurchaseAsync(product);
 
                     if (result.Success)
                     {
                         try
                         {
-                            byte[] pdfBytes = await _documentService.GeneratePurchaseReceiptAsync(
-                                dto, supplierName, supplierCuit, registeredBy);
+                            byte[] purchaseReceiptPdfBytes = await _documentService.GeneratePurchaseReceiptAsync(
+                                product, supplierName, supplierCuit, registeredBy);
 
-                            string fileName = $"FacturaCompra_{dto.DocumentNumber.Replace('/', '-')}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
-                            await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Comprobante de Compra");
+                            string fileName = $"FacturaCompra_{product.DocumentNumber.Replace('/', '-')}_{DateTime.Now:yyyyMMdd_HHmm}.pdf";
+                            await FileExportHelper.SaveAndOpenPdfAsync(this, purchaseReceiptPdfBytes, fileName, "Comprobante de Compra");
                         }
                         catch { }
 
-                        await ResetUI();
+                        await ResetPurchaseFormSessionAsync();
                         UIHelper.ShowResult(result, "Compra Registrada");
                     }
                     else
@@ -238,161 +257,169 @@ namespace CompriaxSystem.WinFormsUI
             }
             finally
             {
-                btnRegister.Enabled = true;
+                buttonRegisterPurchase.Enabled = true;
             }
         }
 
-        private async Task ProcessScannedBarcodeAsync(string barcode)
+        private async Task ProcessScannedProductBarcodeAsync(string barcode)
         {
             if (string.IsNullOrWhiteSpace(barcode))
                 return;
 
-            var product = await _productService.GetByBarcodeAsync(barcode);
+            var matchedProduct = await _productService.GetByBarcodeAsync(barcode);
 
-            if (product == null)
+            if (matchedProduct == null)
             {
                 SystemSounds.Asterisk.Play();
                 UIHelper.WarnMessage(this, $"El código '{barcode}' no corresponde a ningún producto.", "No Encontrado");
-                txtProductCode.SelectAll();
-                txtProductCode.Focus();
+                textBoxProductBarcode.SelectAll();
+                textBoxProductBarcode.Focus();
                 return;
             }
 
             SystemSounds.Beep.Play();
-            _foundProduct = product;
-            txtProductName.Text = product.Name;
-            txtPriceBuy.Text = product.BuyPrice.ToString("N2");
+            _foundProduct = matchedProduct;
+            textBoxProductName.Text = matchedProduct.Name;
+            textBoxBuyPrice.Text = matchedProduct.BuyPrice.ToString("N2");
 
-            AddProductToPurchaseList(product, product.BuyPrice, 1, isIncremental: true);
-            ClearProductArea();
+            AddProductToPurchaseItemsList(matchedProduct, matchedProduct.BuyPrice, 1, isIncremental: true);
+            ClearProductEntryFields();
         }
 
-        private void AddProductToPurchaseList(ProductDto product, decimal buyPrice, int quantity, bool isIncremental)
+        private void AddProductToPurchaseItemsList(ProductDto matchedProduct, decimal parsedPurchaseBuyPrice, int quantity, bool isIncremental)
         {
-            if (product == null) return;
+            if (matchedProduct == null) return;
 
             if (quantity <= 0)
             {
                 UIHelper.WarnMessage(this, "La cantidad a comprar debe ser mayor a 0.", "Cantidad Inválida");
-                numQuantity.Focus();
+                numericUpDownQuantity.Focus();
                 return;
             }
 
-            if (buyPrice <= 0)
+            if (parsedPurchaseBuyPrice <= 0)
             {
                 UIHelper.WarnMessage(this, "El precio de costo debe ser mayor a $ 0.00.", "Precio Inválido");
-                txtPriceBuy.Focus();
+                textBoxBuyPrice.Focus();
                 return;
             }
 
-            var existing = _items.FirstOrDefault(x => x.ProductId == product.Id);
+            var existing = _items.FirstOrDefault(x => x.ProductId == matchedProduct.Id);
 
             if (existing != null)
             {
                 existing.Quantity = isIncremental ? (existing.Quantity + quantity) : quantity;
-                existing.BuyPrice = buyPrice;
+                existing.BuyPrice = parsedPurchaseBuyPrice;
             }
             else
             {
                 _items.Add(new PurchaseItemCreateDto
                 {
-                    ProductId = product.Id,
-                    ProductName = product.Name,
-                    BuyPrice = buyPrice,
+                    ProductId = matchedProduct.Id,
+                    ProductName = matchedProduct.Name,
+                    BuyPrice = parsedPurchaseBuyPrice,
                     Quantity = quantity
                 });
             }
 
-            RefreshGrid();
+            RefreshPurchaseCartGridAndTotals();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SearchProductByBarcode.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteProductSearchAction()
+        private async Task ExecuteSearchProductByBarcodeAsync()
         {
-            if (string.IsNullOrWhiteSpace(txtProductCode.Text))
+            if (string.IsNullOrWhiteSpace(textBoxProductBarcode.Text))
                 return;
 
             using (new WaitCursorHelper(this))
             {
-                _foundProduct = await _productService.GetByBarcodeAsync(txtProductCode.Text.Trim());
+                _foundProduct = await _productService.GetByBarcodeAsync(textBoxProductBarcode.Text.Trim());
 
                 if (_foundProduct != null)
                 {
-                    txtProductName.Text = _foundProduct.Name;
-                    txtPriceBuy.Text = _foundProduct.BuyPrice.ToString("N2");
-                    txtPriceBuy.Focus();
-                    txtPriceBuy.SelectAll();
+                    textBoxProductName.Text = _foundProduct.Name;
+                    textBoxBuyPrice.Text = _foundProduct.BuyPrice.ToString("N2");
+                    textBoxBuyPrice.Focus();
+                    textBoxBuyPrice.SelectAll();
                 }
                 else
                 {
-                    UIHelper.WarnMessage(this, $"No se encontró ningún producto con el código '{txtProductCode.Text.Trim()}'.", "Producto No Encontrado");
-                    txtProductCode.SelectAll();
-                    txtProductCode.Focus();
+                    UIHelper.WarnMessage(this, $"No se encontró ningún producto con el código '{textBoxProductBarcode.Text.Trim()}'.", "Producto No Encontrado");
+                    textBoxProductBarcode.SelectAll();
+                    textBoxProductBarcode.Focus();
                 }
             }
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SearchSupplierByCuit.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSearchSupplierAction()
+        private async Task ExecuteSearchSupplierByCuitAsync()
         {
-            if (string.IsNullOrWhiteSpace(txtSupplierDoc.Text))
+            if (string.IsNullOrWhiteSpace(textBoxSupplierTaxId.Text))
             {
                 UIHelper.WarnMessage(this, "Por favor, ingrese el número de CUIT del proveedor a buscar.", "Campo Requerido");
-                txtSupplierDoc.Focus();
+                textBoxSupplierTaxId.Focus();
                 return;
             }
 
             using (new WaitCursorHelper(this))
             {
-                var list = await _supplyService.GetSuppliersAsync();
-                var supplier = list.FirstOrDefault(x => x.CUIT == txtSupplierDoc.Text.Trim());
+                var suppliersList = await _supplyService.GetSuppliersAsync();
+                var foundSupplier = suppliersList.FirstOrDefault(x => x.CUIT == textBoxSupplierTaxId.Text.Trim());
 
-                if (supplier != null)
+                if (foundSupplier != null)
                 {
-                    txtIdProveedor.Text = supplier.Id.ToString();
-                    txtSupplierName.Text = supplier.CompanyName;
-                    txtProductCode.Focus();
+                    textBoxSupplierIdHidden.Text = foundSupplier.Id.ToString();
+                    textBoxSupplierName.Text = foundSupplier.CompanyName;
+                    textBoxProductBarcode.Focus();
                 }
                 else
                 {
-                    UIHelper.WarnMessage(this, $"No se encontró ningún proveedor registrado con el CUIT '{txtSupplierDoc.Text.Trim()}'.", "Proveedor No Encontrado");
-                    txtSupplierDoc.SelectAll();
-                    txtSupplierDoc.Focus();
+                    UIHelper.WarnMessage(this, $"No se encontró ningún proveedor registrado con el CUIT '{textBoxSupplierTaxId.Text.Trim()}'.", "Proveedor No Encontrado");
+                    textBoxSupplierTaxId.SelectAll();
+                    textBoxSupplierTaxId.Focus();
                 }
             }
         }
 
-        private void ExecuteAddManualItemAction()
+        private void ExecuteAddManualItemToPurchaseCart()
         {
             if (_foundProduct == null)
             {
                 UIHelper.WarnMessage(this, "Primero debe buscar o escanear un producto antes de agregarlo.", "Producto Requerido");
-                txtProductCode.Focus();
+                textBoxProductBarcode.Focus();
                 return;
             }
 
-            if (!decimal.TryParse(txtPriceBuy.Text.Replace("$", "").Trim(), out decimal buyPrice) || buyPrice <= 0)
+            if (!decimal.TryParse(textBoxBuyPrice.Text.Replace("$", "").Trim(), out decimal parsedPurchaseBuyPrice) || parsedPurchaseBuyPrice <= 0)
             {
                 UIHelper.WarnMessage(this, "Debe ingresar un precio de costo válido y mayor a $ 0.00.", "Precio Inválido");
-                txtPriceBuy.SelectAll();
-                txtPriceBuy.Focus();
+                textBoxBuyPrice.SelectAll();
+                textBoxBuyPrice.Focus();
                 return;
             }
 
-            if (numQuantity.Value <= 0)
+            if (numericUpDownQuantity.Value <= 0)
             {
                 UIHelper.WarnMessage(this, "La cantidad comprada debe ser mayor a 0.", "Cantidad Inválida");
-                numQuantity.Focus();
+                numericUpDownQuantity.Focus();
                 return;
             }
 
-            AddProductToPurchaseList(_foundProduct, buyPrice, (int)numQuantity.Value, isIncremental: true);
-            ClearProductArea();
+            AddProductToPurchaseItemsList(_foundProduct, parsedPurchaseBuyPrice, (int)numericUpDownQuantity.Value, isIncremental: true);
+            ClearProductEntryFields();
         }
 
-        private void ExecuteRemoveFromCartAction()
+        private void ExecuteRemoveSelectedItemFromPurchaseCart()
         {
             PurchaseItemCreateDto? itemToRemove = null;
 
-            if (dgvCart.CurrentRow != null && dgvCart.CurrentRow.DataBoundItem is PurchaseItemCreateDto selectedFromGrid)
+            if (dataGridViewPurchaseCart.CurrentRow != null && dataGridViewPurchaseCart.CurrentRow.DataBoundItem is PurchaseItemCreateDto selectedFromGrid)
             {
                 itemToRemove = selectedFromGrid;
             }
@@ -410,96 +437,38 @@ namespace CompriaxSystem.WinFormsUI
             if (UIHelper.ConfirmMessage($"¿Desea quitar '{itemToRemove.ProductName}' de la compra actual?", "Quitar Artículo"))
             {
                 _items.Remove(itemToRemove);
-                RefreshGrid();
-                ClearProductArea();
-                txtProductCode.Focus();
+                RefreshPurchaseCartGridAndTotals();
+                ClearProductEntryFields();
+                textBoxProductBarcode.Focus();
             }
         }
 
-        private void RefreshGrid()
+        private void RefreshPurchaseCartGridAndTotals()
         {
-            dgvCart.DataSource = null;
-            dgvCart.DataSource = _items.ToList();
-            DataGridViewHelper.ApplyStyle(dgvCart);
-            txtTotalPay.Text = _items.Sum(x => x.SubTotal).ToString("C2");
+            dataGridViewPurchaseCart.DataSource = null;
+            dataGridViewPurchaseCart.DataSource = _items.ToList();
+            DataGridViewHelper.ApplyStyle(dataGridViewPurchaseCart);
+            textBoxTotalAmount.Text = _items.Sum(x => x.SubTotal).ToString("C2");
         }
 
-        private void ClearProductArea()
+        private void ClearProductEntryFields()
         {
             _foundProduct = null;
-            txtProductCode.Clear();
-            txtProductName.Clear();
-            txtPriceBuy.Clear();
-            numQuantity.Value = 1;
-            txtProductCode.Focus();
-        }
-
-        private void ToggleCamera()
-        {
-            if (!_isCameraActive)
-            {
-                _cameraService.StartStreaming(0, OnFrameCaptured);
-                _isCameraActive = true;
-                btnToggleCam.Text = "APAGAR CÁMARA";
-                btnToggleCam.BackColor = Color.Firebrick;
-            }
-            else
-            {
-                StopCamera();
-            }
-        }
-
-        private void StopCamera()
-        {
-            if (_isCameraActive)
-            {
-                _cameraService.StopStreaming();
-                _isCameraActive = false;
-                if (picWebcam.Image != null)
-                {
-                    picWebcam.Image.Dispose();
-                    picWebcam.Image = null;
-                }
-
-                btnToggleCam.Text = "CÁMARA";
-                btnToggleCam.BackColor = Color.Navy;
-            }
-        }
-
-        private void OnFrameCaptured(Bitmap frame)
-        {
-            if (!this.IsDisposed && picWebcam.InvokeRequired)
-            {
-                this.Invoke(new Action(() =>
-                {
-                    picWebcam.Image?.Dispose();
-                    picWebcam.Image = (Bitmap)frame.Clone();
-                }));
-            }
-
-            string? decodedText = _barcodeService.DecodeBarcode(frame);
-
-            if (!string.IsNullOrEmpty(decodedText))
-            {
-                if (decodedText == _lastScannedBarcode && (DateTime.Now - _lastScanTime).TotalSeconds < 2.5)
-                {
-                    frame.Dispose();
-                    return;
-                }
-
-                _lastScannedBarcode = decodedText;
-                _lastScanTime = DateTime.Now;
-
-                if (!this.IsDisposed)
-                {
-                    this.Invoke(new Action(async () =>
-                    {
-                        await ProcessScannedBarcodeAsync(decodedText);
-                    }));
-                }
-            }
-
-            frame.Dispose();
+            textBoxProductBarcode.Clear();
+            textBoxProductName.Clear();
+            textBoxBuyPrice.Clear();
+            numericUpDownQuantity.Value = 1;
+            textBoxProductBarcode.Focus();
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

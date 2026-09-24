@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,7 +23,7 @@ namespace CompriaxSystem.Domain.Entities
         public decimal PaymentReceived { get; set; }
         public decimal PaymentChange { get; set; }
 
-        public int PaymentMethodId { get; set; } = 1;
+        public int PaymentMethodId { get; set; } = PaymentMethodConstants.CASH_ID;
         public virtual PaymentMethod PaymentMethod { get; set; } = null!;
 
         public int? CashShiftId { get; set; }
@@ -32,7 +33,7 @@ namespace CompriaxSystem.Domain.Entities
         public virtual CashRegister? CashRegister { get; set; }
 
         // Datos Fiscales Oficiales (AFIP / ARCA)
-        public int PointOfSale { get; set; } = 1;
+        public int PointOfSale { get; set; } = TaxConstants.DEFAULT_POINT_OF_SALE;
         public string? Cae { get; set; }
         public DateTime? CaeExpirationDate { get; set; }
         public string? AfipQrUrl { get; set; }
@@ -46,3 +47,4 @@ namespace CompriaxSystem.Domain.Entities
         public virtual ICollection<SaleItem> SaleItems { get; set; } = new List<SaleItem>();
     }
 }
+

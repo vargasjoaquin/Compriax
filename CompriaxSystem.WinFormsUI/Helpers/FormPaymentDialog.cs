@@ -2,222 +2,124 @@
 
 namespace CompriaxSystem.WinFormsUI.Helpers
 {
-    public class FormPaymentDialog : Form
+    public partial class FormPaymentDialog : Form
     {
-        public decimal TotalAmount { get; }
-        public decimal AmountPaid => numAmountPaid.Value;
-        public decimal Change => Math.Max(0, AmountPaid - TotalAmount);
-        public int SelectedPaymentMethodId => (int)(cboPaymentMethod.SelectedValue ?? 1);
-        public string SelectedPaymentMethodName => cboPaymentMethod.Text;
+        /// <summary>
+        /// Obtiene el importe total a cobrar en la venta.
+        /// </summary>
+        public decimal TotalAmount { get; private set; }
 
-        private readonly NumericUpDown numAmountPaid;
-        private readonly ComboBox cboPaymentMethod;
-        private readonly Label lblChangeAmount;
-        private readonly Button btnConfirm;
+        /// <summary>
+        /// Obtiene el importe en efectivo o digital entregado por el cliente.
+        /// </summary>
+        public decimal AmountPaid => numericUpDownAmountPaid.Value;
 
+        /// <summary>
+        /// Obtiene el importe correspondiente al cambio o vuelto a entregar al cliente.
+        /// </summary>
+        public decimal ChangeAmount => Math.Max(0, AmountPaid - TotalAmount);
+
+        /// <summary>
+        /// Alias de compatibilidad para el cambio.
+        /// </summary>
+        public decimal Change => ChangeAmount;
+
+        /// <summary>
+        /// Obtiene el identificador del medio de pago seleccionado.
+        /// </summary>
+        public int SelectedPaymentMethodId => (int)(comboBoxPaymentMethod.SelectedValue ?? 1);
+
+        /// <summary>
+        /// Obtiene el nombre del medio de pago seleccionado.
+        /// </summary>
+        public string SelectedPaymentMethodName => comboBoxPaymentMethod.Text;
+
+        /// <summary>
+        /// Constructor sin parámetros para soporte de previsualización en el Diseñador Visual de Visual Studio.
+        /// </summary>
+        public FormPaymentDialog() : this(0, Enumerable.Empty<PaymentMethod>())
+        {
+        }
+
+        /// <summary>
+        /// Inicializa una nueva instancia de la clase <see cref="FormPaymentDialog"/> con el total a cobrar y los medios de pago disponibles.
+        /// </summary>
+        /// <param name="totalAmount">Monto total facturado.</param>
+        /// <param name="paymentMethods">Catálogo de medios de pago activos.</param>
         public FormPaymentDialog(decimal totalAmount, IEnumerable<PaymentMethod> paymentMethods)
         {
+            InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
             TotalAmount = totalAmount;
 
-            this.Text = "Cobro de Venta";
-            this.Size = new Size(520, 560);
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.FormBorderStyle = FormBorderStyle.FixedDialog;
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.BackColor = UIThemeHelper.Background;
-            this.KeyPreview = true;
+            ButtonIconOverlayHelper.BindEvents(this.buttonConfirmPayment, this.picIconConfirmPayment);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
 
-            var pnlTotal = new Panel
+            labelTotalValue.Text = totalAmount.ToString("C2");
+            numericUpDownAmountPaid.Value = totalAmount;
+
+            var methodsList = paymentMethods.ToList();
+            if (methodsList.Any())
             {
-                Dock = DockStyle.Top,
-                Height = 110,
-                BackColor = UIThemeHelper.SidebarBackground
-            };
-
-            var lblTotalTitle = new Label
-            {
-                Text = "TOTAL A COBRAR",
-                Font = UIThemeHelper.FontSubHeader,
-                ForeColor = UIThemeHelper.TextMuted,
-                Location = new Point(20, 15),
-                AutoSize = true
-            };
-
-            var lblTotalValue = new Label
-            {
-                Text = totalAmount.ToString("C2"),
-                Font = UIThemeHelper.FontDisplayLarge,
-                ForeColor = Color.White,
-                Location = new Point(20, 40),
-                AutoSize = true
-            };
-
-            pnlTotal.Controls.AddRange(new Control[] { lblTotalTitle, lblTotalValue });
-
-            var lblMethod = new Label
-            {
-                Text = "Medio de Pago:",
-                Font = UIThemeHelper.FontBodyBold,
-                Location = new Point(25, 130),
-                AutoSize = true
-            };
-
-            cboPaymentMethod = new ComboBox
-            {
-                Location = new Point(25, 155),
-                Size = new Size(450, 32),
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                Font = new Font("Segoe UI", 11F),
-                DataSource = paymentMethods.ToList(),
-                DisplayMember = "Name",
-                ValueMember = "Id"
-            };
-
-            var lblPaid = new Label
-            {
-                Text = "Monto Recibido del Cliente ($):",
-                Font = UIThemeHelper.FontBodyBold,
-                Location = new Point(25, 205),
-                AutoSize = true
-            };
-
-            numAmountPaid = new NumericUpDown
-            {
-                Location = new Point(25, 230),
-                Size = new Size(450, 38),
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
-                Maximum = 100000000,
-                DecimalPlaces = 2,
-                Value = totalAmount
-            };
-
-            var pnlQuickBills = new FlowLayoutPanel
-            {
-                Location = new Point(25, 280),
-                Size = new Size(450, 80),
-                BackColor = Color.Transparent
-            };
-
-            int[] quickValues = { 1000, 2000, 5000, 10000, 20000 };
-            foreach (var val in quickValues)
-            {
-                var btnBill = new Button
-                {
-                    Text = $"+${val:N0}",
-                    Size = new Size(82, 34),
-                    FlatStyle = FlatStyle.Flat,
-                    BackColor = UIThemeHelper.Surface,
-                    Font = UIThemeHelper.FontBodyBold,
-                    Cursor = Cursors.Hand
-                };
-                btnBill.FlatAppearance.BorderColor = UIThemeHelper.Border;
-                btnBill.Click += (s, e) => numAmountPaid.Value += val;
-                pnlQuickBills.Controls.Add(btnBill);
+                comboBoxPaymentMethod.DataSource = methodsList;
+                comboBoxPaymentMethod.DisplayMember = "Name";
+                comboBoxPaymentMethod.ValueMember = "Id";
+                comboBoxPaymentMethod.SelectedIndex = 0;
             }
 
-            var btnExact = new Button
-            {
-                Text = "EXACTO",
-                Size = new Size(170, 34),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = UIThemeHelper.PrimaryLight,
-                ForeColor = UIThemeHelper.PrimaryDark,
-                Font = UIThemeHelper.FontBodyBold,
-                Cursor = Cursors.Hand
-            };
-            btnExact.FlatAppearance.BorderSize = 0;
-            btnExact.Click += (s, e) => numAmountPaid.Value = totalAmount;
-            pnlQuickBills.Controls.Add(btnExact);
+            // Atajos de botones de billetes rápidos
+            this.buttonAdd1000.Click += (s, e) => numericUpDownAmountPaid.Value += 1000;
+            this.buttonAdd2000.Click += (s, e) => numericUpDownAmountPaid.Value += 2000;
+            this.buttonAdd5000.Click += (s, e) => numericUpDownAmountPaid.Value += 5000;
+            this.buttonAdd10000.Click += (s, e) => numericUpDownAmountPaid.Value += 10000;
+            this.buttonAdd20000.Click += (s, e) => numericUpDownAmountPaid.Value += 20000;
+            this.buttonExactAmount.Click += (s, e) => numericUpDownAmountPaid.Value = TotalAmount;
 
-            var pnlChange = new Panel
-            {
-                Location = new Point(25, 370),
-                Size = new Size(450, 65),
-                BackColor = UIThemeHelper.Surface
-            };
-            UIThemeHelper.ApplyCardStyle(pnlChange);
+            this.buttonConfirmPayment.Click += (s, e) => ExecuteConfirmPayment();
+            this.buttonCancel.Click += (s, e) => this.DialogResult = DialogResult.Cancel;
 
-            var lblChangeTitle = new Label
-            {
-                Text = "SU VUELTO:",
-                Font = UIThemeHelper.FontBodyBold,
-                Location = new Point(15, 22),
-                AutoSize = true
-            };
-
-            lblChangeAmount = new Label
-            {
-                Text = "$ 0.00",
-                Font = new Font("Segoe UI", 16F, FontStyle.Bold),
-                ForeColor = UIThemeHelper.Success,
-                Location = new Point(150, 15),
-                Size = new Size(280, 35),
-                TextAlign = ContentAlignment.MiddleRight
-            };
-
-            pnlChange.Controls.AddRange(new Control[] { lblChangeTitle, lblChangeAmount });
-
-            btnConfirm = new Button
-            {
-                Text = "✓ CONFIRMAR PAGO (ENTER)",
-                Location = new Point(225, 455),
-                Size = new Size(250, 48)
-            };
-            UIThemeHelper.ApplyButtonSuccess(btnConfirm);
-
-            var btnCancel = new Button
-            {
-                Text = "CANCELAR (ESC)",
-                Location = new Point(25, 455),
-                Size = new Size(185, 48)
-            };
-            UIThemeHelper.ApplyButtonDanger(btnCancel);
-
-            btnConfirm.Click += (s, e) => TryConfirm();
-            btnCancel.Click += (s, e) => this.DialogResult = DialogResult.Cancel;
-
-            numAmountPaid.ValueChanged += (s, e) => UpdateChange();
-            numAmountPaid.KeyUp += (s, e) => UpdateChange();
+            this.numericUpDownAmountPaid.ValueChanged += (s, e) => UpdatePaymentChangeCalculation();
+            this.numericUpDownAmountPaid.KeyUp += (s, e) => UpdatePaymentChangeCalculation();
 
             this.KeyDown += (s, e) =>
             {
-                if (e.KeyCode == Keys.Enter) TryConfirm();
+                if (e.KeyCode == Keys.Enter) ExecuteConfirmPayment();
                 if (e.KeyCode == Keys.Escape) this.DialogResult = DialogResult.Cancel;
             };
 
-            this.Controls.AddRange(new Control[] {
-                pnlTotal, lblMethod, cboPaymentMethod, lblPaid, numAmountPaid,
-                pnlQuickBills, pnlChange, btnCancel, btnConfirm
-            });
-
             this.Shown += (s, e) =>
             {
-                numAmountPaid.Focus();
-                numAmountPaid.Select(0, numAmountPaid.Text.Length);
+                numericUpDownAmountPaid.Focus();
+                numericUpDownAmountPaid.Select(0, numericUpDownAmountPaid.Text.Length);
             };
         }
 
-        private void UpdateChange()
+        /// <summary>
+        /// Actualiza el importe visual del vuelto según el monto abonado por el cliente.
+        /// </summary>
+        private void UpdatePaymentChangeCalculation()
         {
-            decimal diff = numAmountPaid.Value - TotalAmount;
-            lblChangeAmount.Text = (diff >= 0 ? diff : 0).ToString("C2");
-            lblChangeAmount.ForeColor = diff >= 0 ? UIThemeHelper.Success : UIThemeHelper.Danger;
+            decimal difference = numericUpDownAmountPaid.Value - TotalAmount;
+            labelChangeAmount.Text = (difference >= 0 ? difference : 0).ToString("C2");
+            labelChangeAmount.ForeColor = difference >= 0 ? Color.FromArgb(16, 185, 129) : Color.FromArgb(239, 68, 68);
         }
 
-        private void TryConfirm()
+        /// <summary>
+        /// Valida que el pago sea suficiente y confirma la operación.
+        /// </summary>
+        private void ExecuteConfirmPayment()
         {
-            if (numAmountPaid.Value < TotalAmount)
+            if (numericUpDownAmountPaid.Value < TotalAmount)
             {
                 MessageBox.Show(
-                    $"El monto recibido (${numAmountPaid.Value:N2}) es menor al total a pagar (${TotalAmount:N2}).",
+                    $"El monto recibido (${numericUpDownAmountPaid.Value:N2}) es menor al total a pagar (${TotalAmount:N2}).",
                     "Pago Insuficiente", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                numAmountPaid.Focus();
+                numericUpDownAmountPaid.Focus();
                 return;
             }
 
             this.DialogResult = DialogResult.OK;
         }
-
     }
 }
+

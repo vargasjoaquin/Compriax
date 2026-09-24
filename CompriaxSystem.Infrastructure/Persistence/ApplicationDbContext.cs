@@ -1,7 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
-using CompriaxSystem.Application.Interfaces.Services;
+﻿using CompriaxSystem.Application.Interfaces.Services;
 using CompriaxSystem.Domain.Common;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace CompriaxSystem.Infrastructure.Persistence
@@ -92,7 +93,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 entity.HasIndex(u => u.RoleId)
                       .IsUnique()
-                      .HasFilter("[RoleId] = 1 AND [IsDeleted] = 0")
+                      .HasFilter($"[RoleId] = {RoleConstants.ADMINISTRATOR_ROLE_ID} AND [IsDeleted] = 0")
                       .HasDatabaseName("UQ_Users_SingleActiveAdmin");
 
                 entity.HasOne(u => u.Role)
@@ -138,7 +139,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             {
                 entity.ToTable("Products");
                 entity.HasKey(p => p.Id);
-                entity.HasIndex(p => p.Barcode).IsUnique();
+                entity.HasIndex(p => p.Barcode).IsUnique().HasFilter("[IsDeleted] = 0").HasDatabaseName("UQ_Products_ActiveBarcode");
 
                 entity.Property(p => p.Barcode).IsRequired().HasMaxLength(50);
                 entity.Property(p => p.Name).IsRequired().HasMaxLength(100);
@@ -435,7 +436,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
 
                 entity.HasIndex(cs => cs.CashRegisterId)
                       .IsUnique()
-                      .HasFilter("[Status] = 'Abierta'")
+                      .HasFilter($"[Status] = '{CashShiftStatusesConstants.OPEN}'")
                       .HasDatabaseName("UQ_CashShifts_SingleActiveShiftPerRegister");
 
                 entity.Property(cs => cs.InitialCash).HasPrecision(18, 2);
@@ -490,7 +491,7 @@ namespace CompriaxSystem.Infrastructure.Persistence
             {
                 entity.ToTable("CashRegisters");
                 entity.HasKey(cr => cr.Id);
-                entity.HasIndex(cr => cr.Number).IsUnique();
+                entity.HasIndex(cr => cr.Number).IsUnique().HasFilter("[IsDeleted] = 0").HasDatabaseName("UQ_CashRegisters_ActiveNumber");
 
                 entity.Property(cr => cr.Number).IsRequired();
                 entity.Property(cr => cr.Name).IsRequired().HasMaxLength(50);
@@ -532,7 +533,6 @@ namespace CompriaxSystem.Infrastructure.Persistence
             // =========================================================================
             // 9. TRANSACCIONES DE PAGOS MEDIANTE MERCADO PAGO (QR)
             // =========================================================================
-
             modelBuilder.Entity<MercadoPagoPaymentStatues>(entity =>
             {
                 entity.ToTable("MercadoPagoPaymentStatuses");

@@ -17,186 +17,201 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblHeaderTitle = new Label();
-            groupBoxStore = new Panel();
-            lblName = new Label();
-            txtName = new TextBox();
-            lblTaxId = new Label();
-            txtTaxId = new TextBox();
-            lblAddress = new Label();
-            txtAddress = new TextBox();
-            lblPhone = new Label();
-            txtPhone = new TextBox();
-            lblEmail = new Label();
-            txtEmail = new TextBox();
-            picLogo = new PictureBox();
-            btnSave = new Button();
-            pnlHeader.SuspendLayout();
-            groupBoxStore.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picLogo).BeginInit();
+            picIconSaveSettings = new PictureBox();
+            panelHeader = new Panel();
+            labelHeaderTitle = new Label();
+            panelStoreProfileForm = new Panel();
+            labelCompanyName = new Label();
+            textBoxCompanyName = new TextBox();
+            labelTaxId = new Label();
+            textBoxTaxId = new TextBox();
+            labelAddress = new Label();
+            textBoxAddress = new TextBox();
+            labelPhone = new Label();
+            textBoxPhone = new TextBox();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            pictureBoxStoreLogo = new PictureBox();
+            buttonSaveSettings = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconSaveSettings).BeginInit();
+            panelHeader.SuspendLayout();
+            panelStoreProfileForm.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxStoreLogo).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconSaveSettings
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblHeaderTitle);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1000, 56);
-            pnlHeader.TabIndex = 0;
+            picIconSaveSettings.BackColor = Color.FromArgb(2, 132, 199);
+            picIconSaveSettings.Cursor = Cursors.Hand;
+            picIconSaveSettings.Image = Resources._077_guardar;
+            picIconSaveSettings.Location = new Point(281, 380);
+            picIconSaveSettings.Name = "picIconSaveSettings";
+            picIconSaveSettings.Size = new Size(54, 52);
+            picIconSaveSettings.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSaveSettings.TabIndex = 99;
+            picIconSaveSettings.TabStop = false;
             // 
-            // lblHeaderTitle
+            // panelHeader
             // 
-            lblHeaderTitle.AutoSize = true;
-            lblHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblHeaderTitle.ForeColor = Color.White;
-            lblHeaderTitle.Location = new Point(16, 16);
-            lblHeaderTitle.Name = "lblHeaderTitle";
-            lblHeaderTitle.Size = new Size(503, 30);
-            lblHeaderTitle.TabIndex = 0;
-            lblHeaderTitle.Text = "AJUSTES DEL COMERCIO Y DATOS FISCALES";
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelHeaderTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1000, 56);
+            panelHeader.TabIndex = 0;
             // 
-            // groupBoxStore
+            // labelHeaderTitle
             // 
-            groupBoxStore.BackColor = Color.White;
-            groupBoxStore.Controls.Add(lblName);
-            groupBoxStore.Controls.Add(txtName);
-            groupBoxStore.Controls.Add(lblTaxId);
-            groupBoxStore.Controls.Add(txtTaxId);
-            groupBoxStore.Controls.Add(lblAddress);
-            groupBoxStore.Controls.Add(txtAddress);
-            groupBoxStore.Controls.Add(lblPhone);
-            groupBoxStore.Controls.Add(txtPhone);
-            groupBoxStore.Controls.Add(lblEmail);
-            groupBoxStore.Controls.Add(txtEmail);
-            groupBoxStore.Controls.Add(picLogo);
-            groupBoxStore.Controls.Add(btnSave);
-            groupBoxStore.Location = new Point(24, 76);
-            groupBoxStore.Name = "groupBoxStore";
-            groupBoxStore.Size = new Size(950, 460);
-            groupBoxStore.TabIndex = 1;
+            labelHeaderTitle.AutoSize = true;
+            labelHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelHeaderTitle.ForeColor = Color.White;
+            labelHeaderTitle.Location = new Point(16, 16);
+            labelHeaderTitle.Name = "labelHeaderTitle";
+            labelHeaderTitle.Size = new Size(466, 30);
+            labelHeaderTitle.TabIndex = 0;
+            labelHeaderTitle.Text = "AJUSTES DEL COMERCIO Y DATOS FISCALES";
             // 
-            // lblName
+            // panelStoreProfileForm
             // 
-            lblName.AutoSize = true;
-            lblName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblName.Location = new Point(24, 20);
-            lblName.Name = "lblName";
-            lblName.Size = new Size(270, 21);
-            lblName.TabIndex = 0;
-            lblName.Text = "Razón Social / Nombre Comercial:";
+            panelStoreProfileForm.BackColor = Color.White;
+            panelStoreProfileForm.Controls.Add(labelCompanyName);
+            panelStoreProfileForm.Controls.Add(textBoxCompanyName);
+            panelStoreProfileForm.Controls.Add(labelTaxId);
+            panelStoreProfileForm.Controls.Add(textBoxTaxId);
+            panelStoreProfileForm.Controls.Add(labelAddress);
+            panelStoreProfileForm.Controls.Add(textBoxAddress);
+            panelStoreProfileForm.Controls.Add(labelPhone);
+            panelStoreProfileForm.Controls.Add(textBoxPhone);
+            panelStoreProfileForm.Controls.Add(labelEmail);
+            panelStoreProfileForm.Controls.Add(textBoxEmail);
+            panelStoreProfileForm.Controls.Add(pictureBoxStoreLogo);
+            panelStoreProfileForm.Controls.Add(picIconSaveSettings);
+            panelStoreProfileForm.Controls.Add(buttonSaveSettings);
+            panelStoreProfileForm.Location = new Point(24, 76);
+            panelStoreProfileForm.Name = "panelStoreProfileForm";
+            panelStoreProfileForm.Size = new Size(950, 460);
+            panelStoreProfileForm.TabIndex = 1;
             // 
-            // txtName
+            // labelCompanyName
             // 
-            txtName.BorderStyle = BorderStyle.FixedSingle;
-            txtName.Font = new Font("Segoe UI", 10.5F);
-            txtName.Location = new Point(24, 42);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(440, 31);
-            txtName.TabIndex = 1;
+            labelCompanyName.AutoSize = true;
+            labelCompanyName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCompanyName.Location = new Point(24, 20);
+            labelCompanyName.Name = "labelCompanyName";
+            labelCompanyName.Size = new Size(158, 21);
+            labelCompanyName.TabIndex = 0;
+            labelCompanyName.Text = "Nombre Comercial:";
             // 
-            // lblTaxId
+            // textBoxCompanyName
             // 
-            lblTaxId.AutoSize = true;
-            lblTaxId.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblTaxId.Location = new Point(24, 85);
-            lblTaxId.Name = "lblTaxId";
-            lblTaxId.Size = new Size(104, 21);
-            lblTaxId.TabIndex = 2;
-            lblTaxId.Text = "CUIT Oficial:";
+            textBoxCompanyName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCompanyName.Font = new Font("Segoe UI", 10.5F);
+            textBoxCompanyName.Location = new Point(24, 42);
+            textBoxCompanyName.Name = "textBoxCompanyName";
+            textBoxCompanyName.Size = new Size(440, 31);
+            textBoxCompanyName.TabIndex = 1;
             // 
-            // txtTaxId
+            // labelTaxId
             // 
-            txtTaxId.BorderStyle = BorderStyle.FixedSingle;
-            txtTaxId.Font = new Font("Segoe UI", 10.5F);
-            txtTaxId.Location = new Point(24, 107);
-            txtTaxId.Name = "txtTaxId";
-            txtTaxId.Size = new Size(440, 31);
-            txtTaxId.TabIndex = 3;
+            labelTaxId.AutoSize = true;
+            labelTaxId.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelTaxId.Location = new Point(24, 85);
+            labelTaxId.Name = "labelTaxId";
+            labelTaxId.Size = new Size(104, 21);
+            labelTaxId.TabIndex = 2;
+            labelTaxId.Text = "CUIT Oficial:";
             // 
-            // lblAddress
+            // textBoxTaxId
             // 
-            lblAddress.AutoSize = true;
-            lblAddress.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblAddress.Location = new Point(24, 150);
-            lblAddress.Name = "lblAddress";
-            lblAddress.Size = new Size(168, 21);
-            lblAddress.TabIndex = 4;
-            lblAddress.Text = "Dirección Comercial:";
+            textBoxTaxId.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTaxId.Font = new Font("Segoe UI", 10.5F);
+            textBoxTaxId.Location = new Point(24, 107);
+            textBoxTaxId.Name = "textBoxTaxId";
+            textBoxTaxId.Size = new Size(440, 31);
+            textBoxTaxId.TabIndex = 3;
             // 
-            // txtAddress
+            // labelAddress
             // 
-            txtAddress.BorderStyle = BorderStyle.FixedSingle;
-            txtAddress.Font = new Font("Segoe UI", 10.5F);
-            txtAddress.Location = new Point(24, 172);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(440, 31);
-            txtAddress.TabIndex = 5;
+            labelAddress.AutoSize = true;
+            labelAddress.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelAddress.Location = new Point(24, 150);
+            labelAddress.Name = "labelAddress";
+            labelAddress.Size = new Size(168, 21);
+            labelAddress.TabIndex = 4;
+            labelAddress.Text = "Dirección Comercial:";
             // 
-            // lblPhone
+            // textBoxAddress
             // 
-            lblPhone.AutoSize = true;
-            lblPhone.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblPhone.Location = new Point(24, 215);
-            lblPhone.Name = "lblPhone";
-            lblPhone.Size = new Size(177, 21);
-            lblPhone.TabIndex = 6;
-            lblPhone.Text = "Teléfono de Contacto:";
+            textBoxAddress.BorderStyle = BorderStyle.FixedSingle;
+            textBoxAddress.Font = new Font("Segoe UI", 10.5F);
+            textBoxAddress.Location = new Point(24, 172);
+            textBoxAddress.Name = "textBoxAddress";
+            textBoxAddress.Size = new Size(440, 31);
+            textBoxAddress.TabIndex = 5;
             // 
-            // txtPhone
+            // labelPhone
             // 
-            txtPhone.BorderStyle = BorderStyle.FixedSingle;
-            txtPhone.Font = new Font("Segoe UI", 10.5F);
-            txtPhone.Location = new Point(24, 237);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(440, 31);
-            txtPhone.TabIndex = 7;
+            labelPhone.AutoSize = true;
+            labelPhone.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelPhone.Location = new Point(24, 215);
+            labelPhone.Name = "labelPhone";
+            labelPhone.Size = new Size(177, 21);
+            labelPhone.TabIndex = 6;
+            labelPhone.Text = "Teléfono de Contacto:";
             // 
-            // lblEmail
+            // textBoxPhone
             // 
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEmail.Location = new Point(24, 280);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(271, 21);
-            lblEmail.TabIndex = 8;
-            lblEmail.Text = "Correo Electrónico de Facturación:";
+            textBoxPhone.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPhone.Font = new Font("Segoe UI", 10.5F);
+            textBoxPhone.Location = new Point(24, 237);
+            textBoxPhone.Name = "textBoxPhone";
+            textBoxPhone.Size = new Size(440, 31);
+            textBoxPhone.TabIndex = 7;
             // 
-            // txtEmail
+            // labelEmail
             // 
-            txtEmail.BorderStyle = BorderStyle.FixedSingle;
-            txtEmail.Font = new Font("Segoe UI", 10.5F);
-            txtEmail.Location = new Point(24, 302);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(440, 31);
-            txtEmail.TabIndex = 9;
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelEmail.Location = new Point(24, 280);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(155, 21);
+            labelEmail.TabIndex = 8;
+            labelEmail.Text = "Correo Electrónico:";
             // 
-            // picLogo
+            // textBoxEmail
             // 
-            picLogo.BackColor = Color.FromArgb(248, 250, 252);
-            picLogo.BorderStyle = BorderStyle.FixedSingle;
-            picLogo.Location = new Point(540, 45);
-            picLogo.Name = "picLogo";
-            picLogo.Size = new Size(360, 251);
-            picLogo.SizeMode = PictureBoxSizeMode.Zoom;
-            picLogo.TabIndex = 11;
-            picLogo.TabStop = false;
+            textBoxEmail.BorderStyle = BorderStyle.FixedSingle;
+            textBoxEmail.Font = new Font("Segoe UI", 10.5F);
+            textBoxEmail.Location = new Point(24, 302);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(440, 31);
+            textBoxEmail.TabIndex = 9;
             // 
-            // btnSave
+            // pictureBoxStoreLogo
             // 
-            btnSave.BackColor = Color.FromArgb(2, 132, 199);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(24, 380);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(876, 52);
-            btnSave.TabIndex = 13;
-            btnSave.Text = "GUARDAR CONFIGURACIÓN";
-            btnSave.UseVisualStyleBackColor = false;
+            pictureBoxStoreLogo.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxStoreLogo.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxStoreLogo.Location = new Point(540, 45);
+            pictureBoxStoreLogo.Name = "pictureBoxStoreLogo";
+            pictureBoxStoreLogo.Size = new Size(360, 251);
+            pictureBoxStoreLogo.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxStoreLogo.TabIndex = 11;
+            pictureBoxStoreLogo.TabStop = false;
+            // 
+            // buttonSaveSettings
+            // 
+            buttonSaveSettings.BackColor = Color.FromArgb(2, 132, 199);
+            buttonSaveSettings.FlatAppearance.BorderSize = 0;
+            buttonSaveSettings.FlatStyle = FlatStyle.Flat;
+            buttonSaveSettings.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonSaveSettings.ForeColor = Color.White;
+            buttonSaveSettings.Location = new Point(24, 380);
+            buttonSaveSettings.Name = "buttonSaveSettings";
+            buttonSaveSettings.Size = new Size(876, 52);
+            buttonSaveSettings.TabIndex = 13;
+            buttonSaveSettings.Text = "GUARDAR CONFIGURACIÓN";
+            buttonSaveSettings.UseVisualStyleBackColor = false;
             // 
             // FormSettings
             // 
@@ -204,35 +219,37 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1000, 560);
-            Controls.Add(groupBoxStore);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelStoreProfileForm);
+            Controls.Add(panelHeader);
             Name = "FormSettings";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Perfil de la Empresa";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            groupBoxStore.ResumeLayout(false);
-            groupBoxStore.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picLogo).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSaveSettings).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelStoreProfileForm.ResumeLayout(false);
+            panelStoreProfileForm.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxStoreLogo).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblHeaderTitle;
-        private System.Windows.Forms.Panel groupBoxStore;
-        private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblTaxId;
-        private System.Windows.Forms.TextBox txtTaxId;
-        private System.Windows.Forms.Label lblAddress;
-        private System.Windows.Forms.TextBox txtAddress;
-        private System.Windows.Forms.Label lblPhone;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.PictureBox picLogo;
-        private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeaderTitle;
+        private System.Windows.Forms.Panel panelStoreProfileForm;
+        private System.Windows.Forms.Label labelCompanyName;
+        private System.Windows.Forms.TextBox textBoxCompanyName;
+        private System.Windows.Forms.Label labelTaxId;
+        private System.Windows.Forms.TextBox textBoxTaxId;
+        private System.Windows.Forms.Label labelAddress;
+        private System.Windows.Forms.TextBox textBoxAddress;
+        private System.Windows.Forms.Label labelPhone;
+        private System.Windows.Forms.TextBox textBoxPhone;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.PictureBox pictureBoxStoreLogo;
+        private System.Windows.Forms.Button buttonSaveSettings;
+        private System.Windows.Forms.PictureBox picIconSaveSettings;
     }
 }

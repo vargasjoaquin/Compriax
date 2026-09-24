@@ -1,4 +1,5 @@
 ﻿using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using SkiaSharp;
 using System.Drawing;
 using ZXing;
@@ -11,38 +12,40 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <summary>
         /// Genera una imagen de código de barras (EAN13 o Code128) con etiqueta de texto incluida.
         /// </summary>
-        /// <param name="data">Información a codificar.</param>
+        /// <param name="barcodeData">Información a codificar.</param>
         /// <param name="width">Ancho de la imagen.</param>
         /// <param name="height">Alto de la imagen.</param>
         /// <returns>Objeto Image con el código de barras generado.</returns>
-        public Image GenerateBarcode(string data, int width = 380, int height = 95)
+        public Image GenerateBarcode(string barcodeData, int width = 380, int height = 95)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(data))
-                    data = "0000000000000";
+                if (string.IsNullOrWhiteSpace(barcodeData))
+                    barcodeData = ProductConstants.EMPTY_BARCODE_FALLBACK;
 
-                var barcode = new BarcodeStandard.Barcode();
-                barcode.IncludeLabel = true;
+                var barcodeGenerator = new BarcodeStandard.Barcode();
+                barcodeGenerator.IncludeLabel = true;
 
-                var type = data.Length == 13 && data.All(char.IsDigit) ? BarcodeStandard.Type.Ean13 : BarcodeStandard.Type.Code128;
+                var barcodeType = barcodeData.Length == 13 && barcodeData.All(char.IsDigit) ? BarcodeStandard.Type.Ean13 : BarcodeStandard.Type.Code128;
 
-                using (var skImage = barcode.Encode(type, data, SKColors.Black, SKColors.White, width, height))
-                using (var skData = skImage.Encode(SKEncodedImageFormat.Png, 100))
-                using (var ms = new MemoryStream(skData.ToArray()))
+                using (var barcodeImage = barcodeGenerator.Encode(barcodeType, barcodeData, SKColors.Black, SKColors.White, width, height))
+                
+                using (var barcodeImageData = barcodeImage.Encode(SKEncodedImageFormat.Png, 100))
+                
+                using (var barcodeMemoryStream = new MemoryStream(barcodeImageData.ToArray()))
                 {
-                    return Image.FromStream(ms);
+                    return Image.FromStream(barcodeMemoryStream);
                 }
             }
             catch (Exception ex)
             {
-                Bitmap errorImg = new Bitmap(width, height);
-                using (Graphics g = Graphics.FromImage(errorImg))
+                Bitmap errorImage = new Bitmap(width, height);
+                using (Graphics graphics = Graphics.FromImage(errorImage))
                 {
-                    g.Clear(Color.White);
-                    g.DrawString("Codigo de barras invalido.", new Font("Arial", 8), Brushes.Red, 10, 10);
+                    graphics.Clear(Color.White);
+                    graphics.DrawString("Codigo de barras invalido.", new Font("Arial", 8), Brushes.Red, 10, 10);
                 }
-                return errorImg;
+                return errorImage;
             }
         }
 
@@ -55,7 +58,7 @@ namespace CompriaxSystem.Infrastructure.Services
         {
             try
             {
-                var reader = new BarcodeReader
+                var barcodeReader = new BarcodeReader
                 {
                     AutoRotate = true,
                     Options = new ZXing.Common.DecodingOptions
@@ -69,8 +72,8 @@ namespace CompriaxSystem.Infrastructure.Services
                     }
                 };
 
-                var result = reader.Decode(image);
-                return result?.Text;
+                var decodeResult = barcodeReader.Decode(image);
+                return decodeResult?.Text;
             }
             catch
             {

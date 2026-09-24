@@ -16,95 +16,109 @@ namespace CompriaxSystem.WinFormsUI
             _registerService = registerService;
             _currentUserService = currentUserService;
             InitializeComponent();
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonConfirmSelection, this.picIconConfirmSelection);
+            ButtonIconOverlayHelper.BindEvents(this.buttonCancel, this.picIconCancel);
+            
 
             UIThemeHelper.ApplyFormStyle(this);
-            UIThemeHelper.ApplyCardStyle(pnlCard);
-            pnlHeader.BackColor = UIThemeHelper.SidebarBackground;
+            UIThemeHelper.ApplyCardStyle(panelSelectionCard);
+            panelHeader.BackColor = UIThemeHelper.SidebarBackground;
 
-            this.Load += async (s, e) => await LoadCashRegistersAsync();
-            this.cboRegister.SelectedIndexChanged += (s, e) => UpdateRegisterStatusLabel();
-            this.btnConfirm.Click += (s, e) => ExecuteConfirm();
-            this.btnCancel.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
+            this.Load += async (s, e) => await LoadActiveCashRegistersListAsync();
+            this.comboBoxRegisterSelection.SelectedIndexChanged += (s, e) => UpdateSelectedRegisterStatusDisplay();
+            this.buttonConfirmSelection.Click += (s, e) => ExecuteConfirmCashRegisterAssignment();
+            this.buttonCancel.Click += (s, e) => { this.DialogResult = DialogResult.Cancel; this.Close(); };
         }
 
-        private async Task LoadCashRegistersAsync()
+        private async Task LoadActiveCashRegistersListAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var registers = (await _registerService.GetAllRegistersAsync())
+                var activeCashRegistersList = (await _registerService.GetAllRegistersAsync())
                     .Where(r => r.IsActive)
                     .ToList();
 
-                cboRegister.DataSource = registers;
-                cboRegister.DisplayMember = "Name";
-                cboRegister.ValueMember = "Id";
+                comboBoxRegisterSelection.DataSource = activeCashRegistersList;
+                comboBoxRegisterSelection.DisplayMember = "Name";
+                comboBoxRegisterSelection.ValueMember = "Id";
 
-                if (registers.Any())
-                    cboRegister.SelectedIndex = 0;
+                if (activeCashRegistersList.Any())
+                    comboBoxRegisterSelection.SelectedIndex = 0;
 
-                UpdateRegisterStatusLabel();
+                UpdateSelectedRegisterStatusDisplay();
             }
         }
 
-        private void UpdateRegisterStatusLabel()
+        private void UpdateSelectedRegisterStatusDisplay()
         {
-            if (cboRegister.SelectedItem is CashRegisterDto reg)
+            if (comboBoxRegisterSelection.SelectedItem is CashRegisterDto selectedCashRegister)
             {
-                string currentUsername = _currentUserService.CurrentUser?.Username ?? string.Empty;
+                string currentSessionUsername = _currentUserService.CurrentUser?.Username ?? string.Empty;
 
-                if (reg.HasOpenShift)
+                if (selectedCashRegister.HasOpenShift)
                 {
-                    bool isMyOwnShift = !string.IsNullOrWhiteSpace(reg.CurrentCashierName) &&
-                                        reg.CurrentCashierName.Equals(currentUsername, StringComparison.OrdinalIgnoreCase);
+                    bool isCurrentCashierOpenShift = !string.IsNullOrWhiteSpace(selectedCashRegister.CurrentCashierName) &&
+                                        selectedCashRegister.CurrentCashierName.Equals(currentSessionUsername, StringComparison.OrdinalIgnoreCase);
 
-                    if (isMyOwnShift)
+                    if (isCurrentCashierOpenShift)
                     {
-                        lblStatusInfo.Text = $" Tu turno sigue abierto (#{reg.CurrentShiftId})";
-                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
-                        lblStatusInfo.ForeColor = UIThemeHelper.Success;
-                        btnConfirm.Enabled = true;
+                        labelRegisterStatusInfo.Text = $" Tu turno sigue abierto (#{selectedCashRegister.CurrentShiftId})";
+                        labelRegisterStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        labelRegisterStatusInfo.ForeColor = UIThemeHelper.Success;
+                        buttonConfirmSelection.Enabled = true;
                     }
                     else
                     {
-                        lblStatusInfo.Text = $" OCUPADA: Turno #{reg.CurrentShiftId} por '{reg.CurrentCashierName}'";
-                        lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
-                        lblStatusInfo.ForeColor = UIThemeHelper.Danger;
-                        btnConfirm.Enabled = false;
+                        labelRegisterStatusInfo.Text = $" OCUPADA: Turno #{selectedCashRegister.CurrentShiftId} por '{selectedCashRegister.CurrentCashierName}'";
+                        labelRegisterStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                        labelRegisterStatusInfo.ForeColor = UIThemeHelper.Danger;
+                        buttonConfirmSelection.Enabled = false;
                     }
                 }
                 else
                 {
-                    lblStatusInfo.Text = " Caja disponible (Sin turno abierto)";
-                    lblStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
-                    lblStatusInfo.ForeColor = UIThemeHelper.Success;
-                    btnConfirm.Enabled = true;
+                    labelRegisterStatusInfo.Text = " Caja disponible (Sin turno abierto)";
+                    labelRegisterStatusInfo.ImageAlign = ContentAlignment.MiddleLeft;
+                    labelRegisterStatusInfo.ForeColor = UIThemeHelper.Success;
+                    buttonConfirmSelection.Enabled = true;
                 }
             }
         }
 
-        private void ExecuteConfirm()
+        private void ExecuteConfirmCashRegisterAssignment()
         {
-            if (cboRegister.SelectedItem is not CashRegisterDto register)
+            if (comboBoxRegisterSelection.SelectedItem is not CashRegisterDto selectedRegisterToAssign)
             {
                 UIHelper.WarnMessage(this, "Debe seleccionar una caja válida.", "Selección Requerida");
                 return;
             }
 
-            string currentUsername = _currentUserService.CurrentUser?.Username ?? string.Empty;
+            string currentSessionUsername = _currentUserService.CurrentUser?.Username ?? string.Empty;
 
-            if (register.HasOpenShift &&
-                !string.IsNullOrWhiteSpace(register.CurrentCashierName) &&
-                !register.CurrentCashierName.Equals(currentUsername, StringComparison.OrdinalIgnoreCase))
+            if (selectedRegisterToAssign.HasOpenShift &&
+                !string.IsNullOrWhiteSpace(selectedRegisterToAssign.CurrentCashierName) &&
+                !selectedRegisterToAssign.CurrentCashierName.Equals(currentSessionUsername, StringComparison.OrdinalIgnoreCase))
             {
                 UIHelper.WarnMessage(this,
-                    $"La '{register.Name}' está siendo operada actualmente por '{register.CurrentCashierName}'.\n\nPor favor, seleccione otra caja disponible.",
+                    $"La '{selectedRegisterToAssign.Name}' está siendo operada actualmente por '{selectedRegisterToAssign.CurrentCashierName}'.\n\nPor favor, seleccione otra caja disponible.",
                     "Caja Ocupada");
                 return;
             }
 
-            _currentUserService.SetCashRegister(register.Id, register.Number, register.Name);
+            _currentUserService.SetCashRegister(selectedRegisterToAssign.Id, selectedRegisterToAssign.Number, selectedRegisterToAssign.Name);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
     }
 }
+
+
+
+
+
+
+
+
+
+

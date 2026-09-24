@@ -10,166 +10,225 @@ namespace CompriaxSystem.Application.Services
 {
     public class SecurityRecordingService : ISecurityRecordingService, IDisposable
     {
-        private readonly SecurityRecordingSettings _settings;
+        private readonly SecurityRecordingSettings _recordingSettings;
         private readonly string _recordingsRootPath;
 
-        private readonly object _syncLock = new();
+        private readonly object _synchronizationLock = new();
         private System.Timers.Timer? _captureTimer;
         private VideoCapture? _videoCapture;
         private VideoWriter? _videoWriter;
-        private DateTime? _currentSegmentStart;
-        private bool _autoRecordingEnabled = true;
+        private DateTime? _currentSegmentStartTime;
+        private bool _isAutoRecordingEnabled = true;
 
-        public bool IsAutoRecordingEnabled => _autoRecordingEnabled;
+        public bool IsAutoRecordingEnabled => _isAutoRecordingEnabled;
         public bool IsCurrentlyRecording => _videoWriter != null;
-
         public event Action<Bitmap>? FrameCaptured;
 
         public SecurityRecordingService(IOptions<SecurityRecordingSettings> options)
         {
-            _settings = options.Value;
-            _recordingsRootPath = Path.IsPathRooted(_settings.RecordingsRootPath)
-                ? _settings.RecordingsRootPath
-                : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _settings.RecordingsRootPath);
+            _recordingSettings = options.Value;
+
+            _recordingsRootPath = Path.IsPathRooted(_recordingSettings.RecordingsRootPath)
+                    ? _recordingSettings.RecordingsRootPath : Path.Combine(AppDomain.CurrentDomain.BaseDirectory, _recordingSettings.RecordingsRootPath);
         }
 
+        /// <summary>
+        /// Inicia la captura de video desde la cámara configurada.
+        /// </summary>
         public void Start()
         {
-            if (_captureTimer != null) return;
+            if (_captureTimer != null)
+                return;
 
-            _videoCapture = new VideoCapture(_settings.CameraIndex);
+            _videoCapture = new VideoCapture(_recordingSettings.CameraIndex);
+
             if (!_videoCapture.IsOpened())
                 return;
 
-            _captureTimer = new System.Timers.Timer(1000.0 / _settings.RecordingFps);
+            _captureTimer = new System.Timers.Timer(1000.0 / _recordingSettings.RecordingFps);
+
             _captureTimer.Elapsed += OnTimerElapsed;
             _captureTimer.Start();
         }
 
+        /// <summary>
+        /// Detiene la captura de video y libera los recursos asociados.
+        /// </summary>
         public void Stop()
         {
             _captureTimer?.Stop();
             _captureTimer?.Dispose();
             _captureTimer = null;
 
-            lock (_syncLock)
+            lock (_synchronizationLock)
             {
                 CloseWriter();
+
                 _videoCapture?.Release();
                 _videoCapture?.Dispose();
                 _videoCapture = null;
             }
         }
 
-        public void SetAutoRecordingEnabled(bool enabled) => _autoRecordingEnabled = enabled;
+        /// <summary>
+        /// Habilita o deshabilita la grabación automática.
+        /// </summary>
+        /// <param name="isEnabled">
+        /// Indica si la grabación automática debe permanecer habilitada.
+        /// </param>
+        public void SetAutoRecordingEnabled(bool isEnabled)
+        {
+            _isAutoRecordingEnabled = isEnabled;
+        }
 
+        /// <summary>
+        /// Procesa cada intervalo del temporizador y captura un nuevo cuadro de video.
+        /// </summary>
+        /// <param name="sender">Objeto que originó el evento.</param>
+        /// <param name="e">Información asociada al evento del temporizador.</param>
         private void OnTimerElapsed(object? sender, ElapsedEventArgs e)
         {
-            lock (_syncLock)
+            lock (_synchronizationLock)
             {
                 if (_videoCapture == null || !_videoCapture.IsOpened())
+                {
+                    return;
+                }
+
+                using var videoFrame = new Mat();
+
+                _videoCapture.Read(videoFrame);
+
+                if (videoFrame.Empty())
                     return;
 
-                using var frame = new Mat();
-                _videoCapture.Read(frame);
-                if (frame.Empty())
-                    return;
+                EvaluateRecordingSchedule(videoFrame);
 
-                EvaluateRecordingSchedule(frame);
+                var bitmapFrame = BitmapConverter.ToBitmap(videoFrame);
 
-                var bmp = BitmapConverter.ToBitmap(frame);
-                FrameCaptured?.Invoke(bmp); // copia independiente para quien esté escuchando
+                FrameCaptured?.Invoke(bitmapFrame);
             }
         }
 
-        private void EvaluateRecordingSchedule(Mat frame)
+        /// <summary>
+        /// Evalúa el horario de grabación y determina si el cuadro actual
+        /// debe almacenarse en el segmento correspondiente.
+        /// </summary>
+        /// <param name="videoFrame">Cuadro de video que se está procesando.</param>
+        private void EvaluateRecordingSchedule(Mat videoFrame)
         {
-            var now = DateTime.Now;
-            var (isStoreOpen, segmentStart, segmentEnd) = GetCurrentSegment(now);
-            bool shouldRecord = _autoRecordingEnabled && isStoreOpen;
+            var currentDateTime = DateTime.Now;
 
-            if (!shouldRecord)
+            var (isStoreOpen, segmentStartTime, segmentEndTime) = GetCurrentSegment(currentDateTime);
+
+            bool shouldRecordAutomatically = _isAutoRecordingEnabled && isStoreOpen;
+
+            if (!shouldRecordAutomatically)
             {
                 CloseWriter();
                 return;
             }
 
-            if (_videoWriter == null || _currentSegmentStart != segmentStart)
+            if (_videoWriter == null || _currentSegmentStartTime != segmentStartTime)
             {
                 CloseWriter();
-                OpenWriter(frame, now, segmentStart, segmentEnd);
+                OpenWriter(videoFrame, currentDateTime, segmentStartTime, segmentEndTime);
             }
 
-            _videoWriter?.Write(frame);
+            _videoWriter?.Write(videoFrame);
         }
 
-        private (bool isOpen, DateTime segmentStart, DateTime segmentEnd) GetCurrentSegment(DateTime now)
+        /// <summary>
+        /// Determina el segmento de grabación correspondiente al momento actual
+        /// teniendo en cuenta los horarios de apertura y cierre del establecimiento.
+        /// </summary>
+        /// <param name="currentDateTime">Fecha y hora actual utilizada para evaluar el horario.</param>
+        /// <returns>Indica si el establecimiento está abierto y proporciona el inicio y finalización del segmento de grabación.</returns>
+        private (bool isOpen, DateTime segmentStartTime, DateTime segmentEndTime) GetCurrentSegment(DateTime currentDateTime)
         {
-            int openH = _settings.StoreOpenHour;
-            int closeH = _settings.StoreCloseHour;
+            int storeOpenHour = _recordingSettings.StoreOpenHour;
+            int storeCloseHour = _recordingSettings.StoreCloseHour;
 
-            bool crossMidnight = closeH < openH;
-            bool isActive;
-            DateTime logicalOpen;
+            bool crossesMidnight = storeCloseHour < storeOpenHour;
 
-            if (!crossMidnight)
+            bool isRecordingScheduleActive;
+            DateTime logicalOpeningTime;
+
+            if (!crossesMidnight)
             {
-                logicalOpen = now.Date.AddHours(openH);
-                var logicalClose = now.Date.AddHours(closeH);
-                isActive = now >= logicalOpen && now < logicalClose;
+                logicalOpeningTime = currentDateTime.Date.AddHours(storeOpenHour);
+
+                var logicalClosingTime = currentDateTime.Date.AddHours(storeCloseHour);
+
+                isRecordingScheduleActive = currentDateTime >= logicalOpeningTime && currentDateTime < logicalClosingTime;
             }
             else
             {
-                if (now.Hour >= openH)
+                if (currentDateTime.Hour >= storeOpenHour)
                 {
-                    isActive = true;
-                    logicalOpen = now.Date.AddHours(openH);
+                    isRecordingScheduleActive = true;
+                    logicalOpeningTime = currentDateTime.Date.AddHours(storeOpenHour);
                 }
-                else if (now.Hour < closeH)
+                else if (currentDateTime.Hour < storeCloseHour)
                 {
-                    isActive = true;
-                    logicalOpen = now.Date.AddDays(-1).AddHours(openH);
+                    isRecordingScheduleActive = true;
+                    logicalOpeningTime = currentDateTime.Date.AddDays(-1).AddHours(storeOpenHour);
                 }
                 else
                 {
-                    isActive = false;
-                    logicalOpen = now.Date.AddHours(openH);
+                    isRecordingScheduleActive = false;
+                    logicalOpeningTime = currentDateTime.Date.AddHours(storeOpenHour);
                 }
             }
 
-            if (!isActive)
+            if (!isRecordingScheduleActive)
                 return (false, default, default);
 
-            var timeSinceOpen = now - logicalOpen;
-            double hoursSinceOpen = timeSinceOpen.TotalHours;
+            var elapsedTimeSinceOpening = currentDateTime - logicalOpeningTime;
 
-            int segmentIndex = (int)(hoursSinceOpen / _settings.SegmentHours);
-            var segStart = logicalOpen.AddHours(segmentIndex * _settings.SegmentHours);
-            var segEnd = segStart.AddHours(_settings.SegmentHours);
+            double elapsedHoursSinceOpening = elapsedTimeSinceOpening.TotalHours;
 
-            DateTime actualClose = !crossMidnight
-                ? now.Date.AddHours(closeH)
-                : logicalOpen.AddDays(1).Date.AddHours(closeH);
+            int recordingSegmentIndex = (int)(elapsedHoursSinceOpening / _recordingSettings.SegmentHours);
 
-            if (segEnd > actualClose)
-                segEnd = actualClose;
+            var segmentStartTime = logicalOpeningTime.AddHours(recordingSegmentIndex * _recordingSettings.SegmentHours);
 
-            return (true, segStart, segEnd);
+            var segmentEndTime = segmentStartTime.AddHours(_recordingSettings.SegmentHours);
+
+            DateTime actualClosingTime = !crossesMidnight ? currentDateTime.Date.AddHours(storeCloseHour) : logicalOpeningTime.AddDays(1).Date.AddHours(storeCloseHour);
+
+            if (segmentEndTime > actualClosingTime)
+                segmentEndTime = actualClosingTime;
+
+            return (true,segmentStartTime, segmentEndTime);
         }
 
-        private void OpenWriter(Mat frame, DateTime now, DateTime segStart, DateTime segEnd)
+        /// <summary>
+        /// Abre un nuevo archivo de video correspondiente al segmento de grabación actual.
+        /// </summary>
+        /// <param name="videoFrame">Cuadro de video utilizado para determinar la resolución de la grabación.</param>
+        /// <param name="currentDateTime">Fecha y hora utilizada para generar la carpeta de almacenamiento.</param>
+        /// <param name="segmentStartTime">Fecha y hora de inicio del segmento.</param>
+        /// <param name="segmentEndTime">Fecha y hora de finalización del segmento.</param>
+        private void OpenWriter(Mat videoFrame, DateTime currentDateTime, DateTime segmentStartTime,DateTime segmentEndTime)
         {
-            var folder = Path.Combine(_recordingsRootPath, now.ToString("dd-MM-yyyy"));
-            Directory.CreateDirectory(folder);
+            var recordingFolderPath = Path.Combine(_recordingsRootPath, currentDateTime.ToString("dd-MM-yyyy"));
 
-            var fileName = $"backup_{segStart:HH}-{segEnd:HH}.mp4";
-            var fullPath = Path.Combine(folder, fileName);
+            Directory.CreateDirectory(recordingFolderPath);
 
-            var fourcc = VideoWriter.FourCC('m', 'p', '4', 'v');
-            _videoWriter = new VideoWriter(fullPath, fourcc, _settings.RecordingFps, new OpenCvSharp.Size(frame.Width, frame.Height));
-            _currentSegmentStart = segStart;
+            var recordingFileName = $"backup_{segmentStartTime:HH}-{segmentEndTime:HH}.mp4";
+
+            var recordingFilePath = Path.Combine(recordingFolderPath, recordingFileName);
+
+            var videoCodec = VideoWriter.FourCC('m', 'p', '4', 'v');
+
+            _videoWriter = new VideoWriter(recordingFilePath, videoCodec, _recordingSettings.RecordingFps, new OpenCvSharp.Size(videoFrame.Width, videoFrame.Height));
+
+            _currentSegmentStartTime = segmentStartTime;
         }
 
+        /// <summary>
+        /// Cierra la grabación de video actual y libera los recursos asociados.
+        /// </summary>
         private void CloseWriter()
         {
             if (_videoWriter != null)
@@ -177,10 +236,16 @@ namespace CompriaxSystem.Application.Services
                 _videoWriter.Release();
                 _videoWriter.Dispose();
                 _videoWriter = null;
-                _currentSegmentStart = null;
+                _currentSegmentStartTime = null;
             }
         }
 
-        public void Dispose() => Stop();
+        /// <summary>
+        /// Libera los recursos utilizados por el servicio de grabación.
+        /// </summary>
+        public void Dispose()
+        {
+            Stop();
+        }
     }
 }

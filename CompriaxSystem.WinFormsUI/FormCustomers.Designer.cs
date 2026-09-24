@@ -14,339 +14,399 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblTitle = new Label();
-            btnExportPdf = new Button();
-            pnlMain = new Panel();
-            dgvCustomers = new DataGridView();
-            groupBox1 = new Panel();
-            lblDni = new Label();
-            txtDni = new TextBox();
-            lblCuil = new Label();
-            txtCuil = new TextBox();
-            lblNombre = new Label();
-            txtName = new TextBox();
-            lblApellido = new Label();
-            txtLastName = new TextBox();
-            lblFiscal = new Label();
-            cboTaxCondition = new ComboBox();
-            lblTel = new Label();
-            txtPhone = new TextBox();
-            lblDir = new Label();
-            txtAddress = new TextBox();
-            lblCiu = new Label();
-            txtCity = new TextBox();
-            lblEmail = new Label();
-            txtEmail = new TextBox();
-            btnSave = new Button();
-            btnEdit = new Button();
-            btnDelete = new Button();
-            pnlHeader.SuspendLayout();
-            pnlMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dgvCustomers).BeginInit();
-            groupBox1.SuspendLayout();
+            picIconExportPdf = new PictureBox();
+            picIconSave = new PictureBox();
+            picIconEdit = new PictureBox();
+            picIconDelete = new PictureBox();
+            panelHeader = new Panel();
+            labelTitle = new Label();
+            buttonExportPdf = new Button();
+            panelMain = new Panel();
+            dataGridViewCustomers = new DataGridView();
+            panelCustomerForm = new Panel();
+            labelDocumentNumber = new Label();
+            textBoxDocumentNumber = new TextBox();
+            labelTaxCode = new Label();
+            textBoxTaxCode = new TextBox();
+            labelFirstName = new Label();
+            textBoxFirstName = new TextBox();
+            labelLastName = new Label();
+            textBoxLastName = new TextBox();
+            labelTaxCondition = new Label();
+            comboBoxTaxCondition = new ComboBox();
+            labelPhone = new Label();
+            textBoxPhone = new TextBox();
+            labelAddress = new Label();
+            textBoxAddress = new TextBox();
+            labelCity = new Label();
+            textBoxCity = new TextBox();
+            labelEmail = new Label();
+            textBoxEmail = new TextBox();
+            buttonSave = new Button();
+            buttonEdit = new Button();
+            buttonDelete = new Button();
+            ((System.ComponentModel.ISupportInitialize)picIconExportPdf).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSave).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconEdit).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconDelete).BeginInit();
+            panelHeader.SuspendLayout();
+            panelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewCustomers).BeginInit();
+            panelCustomerForm.SuspendLayout();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconExportPdf
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblTitle);
-            pnlHeader.Controls.Add(btnExportPdf);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1163, 79);
-            pnlHeader.TabIndex = 0;
+            picIconExportPdf.BackColor = Color.FromArgb(2, 132, 199);
+            picIconExportPdf.Cursor = Cursors.Hand;
+            picIconExportPdf.Image = Resources._085_exportar_pdf;
+            picIconExportPdf.Location = new Point(950, 29);
+            picIconExportPdf.Name = "picIconExportPdf";
+            picIconExportPdf.Size = new Size(22, 22);
+            picIconExportPdf.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconExportPdf.TabIndex = 99;
+            picIconExportPdf.TabStop = false;
             // 
-            // lblTitle
+            // picIconSave
             // 
-            lblTitle.AutoSize = true;
-            lblTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblTitle.ForeColor = Color.White;
-            lblTitle.Location = new Point(16, 22);
-            lblTitle.Name = "lblTitle";
-            lblTitle.Size = new Size(282, 30);
-            lblTitle.TabIndex = 0;
-            lblTitle.Text = "GESTIÓN DE CLIENTES";
+            picIconSave.BackColor = Color.FromArgb(16, 185, 129);
+            picIconSave.Cursor = Cursors.Hand;
+            picIconSave.Image = Resources._077_guardar;
+            picIconSave.Location = new Point(881, 27);
+            picIconSave.Name = "picIconSave";
+            picIconSave.Size = new Size(43, 45);
+            picIconSave.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSave.TabIndex = 99;
+            picIconSave.TabStop = false;
             // 
-            // btnExportPdf
+            // picIconEdit
             // 
-            btnExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            btnExportPdf.BackColor = Color.FromArgb(2, 132, 199);
-            btnExportPdf.FlatAppearance.BorderSize = 0;
-            btnExportPdf.FlatStyle = FlatStyle.Flat;
-            btnExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnExportPdf.ForeColor = Color.White;
-            btnExportPdf.Location = new Point(936, 12);
-            btnExportPdf.Name = "btnExportPdf";
-            btnExportPdf.Size = new Size(211, 55);
-            btnExportPdf.TabIndex = 1;
-            btnExportPdf.Text = "EXPORTAR PDF";
-            btnExportPdf.UseVisualStyleBackColor = false;
+            picIconEdit.BackColor = Color.FromArgb(255, 255, 255);
+            picIconEdit.Cursor = Cursors.Hand;
+            picIconEdit.Image = Resources._078_editar;
+            picIconEdit.Location = new Point(904, 89);
+            picIconEdit.Name = "picIconEdit";
+            picIconEdit.Size = new Size(40, 55);
+            picIconEdit.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconEdit.TabIndex = 99;
+            picIconEdit.TabStop = false;
             // 
-            // pnlMain
+            // picIconDelete
             // 
-            pnlMain.BackColor = Color.FromArgb(248, 250, 252);
-            pnlMain.Controls.Add(dgvCustomers);
-            pnlMain.Controls.Add(groupBox1);
-            pnlMain.Dock = DockStyle.Fill;
-            pnlMain.Location = new Point(0, 79);
-            pnlMain.Name = "pnlMain";
-            pnlMain.Padding = new Padding(16, 12, 16, 16);
-            pnlMain.Size = new Size(1163, 624);
-            pnlMain.TabIndex = 1;
+            picIconDelete.BackColor = Color.FromArgb(239, 68, 68);
+            picIconDelete.Cursor = Cursors.Hand;
+            picIconDelete.Image = Resources._079_eliminar;
+            picIconDelete.Location = new Point(895, 150);
+            picIconDelete.Name = "picIconDelete";
+            picIconDelete.Size = new Size(39, 62);
+            picIconDelete.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconDelete.TabIndex = 99;
+            picIconDelete.TabStop = false;
             // 
-            // dgvCustomers
+            // panelHeader
             // 
-            dgvCustomers.BackgroundColor = Color.White;
-            dgvCustomers.BorderStyle = BorderStyle.None;
-            dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCustomers.Dock = DockStyle.Fill;
-            dgvCustomers.Location = new Point(16, 239);
-            dgvCustomers.Name = "dgvCustomers";
-            dgvCustomers.RowHeadersWidth = 51;
-            dgvCustomers.Size = new Size(1131, 369);
-            dgvCustomers.TabIndex = 1;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelTitle);
+            panelHeader.Controls.Add(picIconExportPdf);
+            panelHeader.Controls.Add(buttonExportPdf);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1163, 79);
+            panelHeader.TabIndex = 0;
             // 
-            // groupBox1
+            // labelTitle
             // 
-            groupBox1.BackColor = Color.White;
-            groupBox1.Controls.Add(lblDni);
-            groupBox1.Controls.Add(txtDni);
-            groupBox1.Controls.Add(lblCuil);
-            groupBox1.Controls.Add(txtCuil);
-            groupBox1.Controls.Add(lblNombre);
-            groupBox1.Controls.Add(txtName);
-            groupBox1.Controls.Add(lblApellido);
-            groupBox1.Controls.Add(txtLastName);
-            groupBox1.Controls.Add(lblFiscal);
-            groupBox1.Controls.Add(cboTaxCondition);
-            groupBox1.Controls.Add(lblTel);
-            groupBox1.Controls.Add(txtPhone);
-            groupBox1.Controls.Add(lblDir);
-            groupBox1.Controls.Add(txtAddress);
-            groupBox1.Controls.Add(lblCiu);
-            groupBox1.Controls.Add(txtCity);
-            groupBox1.Controls.Add(lblEmail);
-            groupBox1.Controls.Add(txtEmail);
-            groupBox1.Controls.Add(btnSave);
-            groupBox1.Controls.Add(btnEdit);
-            groupBox1.Controls.Add(btnDelete);
-            groupBox1.Dock = DockStyle.Top;
-            groupBox1.Location = new Point(16, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(1131, 227);
-            groupBox1.TabIndex = 0;
+            labelTitle.AutoSize = true;
+            labelTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelTitle.ForeColor = Color.White;
+            labelTitle.Location = new Point(16, 22);
+            labelTitle.Name = "labelTitle";
+            labelTitle.Size = new Size(245, 30);
+            labelTitle.TabIndex = 0;
+            labelTitle.Text = "GESTIÓN DE CLIENTES";
             // 
-            // lblDni
+            // buttonExportPdf
             // 
-            lblDni.AutoSize = true;
-            lblDni.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDni.Location = new Point(20, 16);
-            lblDni.Name = "lblDni";
-            lblDni.Size = new Size(149, 21);
-            lblDni.TabIndex = 0;
-            lblDni.Text = "DNI / Documento:";
+            buttonExportPdf.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            buttonExportPdf.BackColor = Color.FromArgb(2, 132, 199);
+            buttonExportPdf.FlatAppearance.BorderSize = 0;
+            buttonExportPdf.FlatStyle = FlatStyle.Flat;
+            buttonExportPdf.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonExportPdf.ForeColor = Color.White;
+            buttonExportPdf.Location = new Point(936, 12);
+            buttonExportPdf.Name = "buttonExportPdf";
+            buttonExportPdf.Size = new Size(211, 55);
+            buttonExportPdf.TabIndex = 1;
+            buttonExportPdf.Text = "EXPORTAR PDF";
+            buttonExportPdf.UseVisualStyleBackColor = false;
             // 
-            // txtDni
+            // panelMain
             // 
-            txtDni.BorderStyle = BorderStyle.FixedSingle;
-            txtDni.Font = new Font("Segoe UI", 10F);
-            txtDni.Location = new Point(20, 42);
-            txtDni.Name = "txtDni";
-            txtDni.Size = new Size(160, 30);
-            txtDni.TabIndex = 1;
+            panelMain.BackColor = Color.FromArgb(248, 250, 252);
+            panelMain.Controls.Add(dataGridViewCustomers);
+            panelMain.Controls.Add(panelCustomerForm);
+            panelMain.Dock = DockStyle.Fill;
+            panelMain.Location = new Point(0, 79);
+            panelMain.Name = "panelMain";
+            panelMain.Padding = new Padding(16, 12, 16, 16);
+            panelMain.Size = new Size(1163, 624);
+            panelMain.TabIndex = 1;
             // 
-            // lblCuil
+            // dataGridViewCustomers
             // 
-            lblCuil.AutoSize = true;
-            lblCuil.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCuil.Location = new Point(195, 16);
-            lblCuil.Name = "lblCuil";
-            lblCuil.Size = new Size(100, 21);
-            lblCuil.TabIndex = 2;
-            lblCuil.Text = "CUIL / CUIT:";
+            dataGridViewCustomers.BackgroundColor = Color.White;
+            dataGridViewCustomers.BorderStyle = BorderStyle.None;
+            dataGridViewCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCustomers.Dock = DockStyle.Fill;
+            dataGridViewCustomers.Location = new Point(16, 239);
+            dataGridViewCustomers.Name = "dataGridViewCustomers";
+            dataGridViewCustomers.RowHeadersWidth = 51;
+            dataGridViewCustomers.Size = new Size(1131, 369);
+            dataGridViewCustomers.TabIndex = 1;
             // 
-            // txtCuil
+            // panelCustomerForm
             // 
-            txtCuil.BorderStyle = BorderStyle.FixedSingle;
-            txtCuil.Font = new Font("Segoe UI", 10F);
-            txtCuil.Location = new Point(195, 42);
-            txtCuil.Name = "txtCuil";
-            txtCuil.Size = new Size(160, 30);
-            txtCuil.TabIndex = 3;
+            panelCustomerForm.BackColor = Color.White;
+            panelCustomerForm.Controls.Add(labelDocumentNumber);
+            panelCustomerForm.Controls.Add(textBoxDocumentNumber);
+            panelCustomerForm.Controls.Add(labelTaxCode);
+            panelCustomerForm.Controls.Add(textBoxTaxCode);
+            panelCustomerForm.Controls.Add(labelFirstName);
+            panelCustomerForm.Controls.Add(textBoxFirstName);
+            panelCustomerForm.Controls.Add(labelLastName);
+            panelCustomerForm.Controls.Add(textBoxLastName);
+            panelCustomerForm.Controls.Add(labelTaxCondition);
+            panelCustomerForm.Controls.Add(comboBoxTaxCondition);
+            panelCustomerForm.Controls.Add(labelPhone);
+            panelCustomerForm.Controls.Add(textBoxPhone);
+            panelCustomerForm.Controls.Add(labelAddress);
+            panelCustomerForm.Controls.Add(textBoxAddress);
+            panelCustomerForm.Controls.Add(labelCity);
+            panelCustomerForm.Controls.Add(textBoxCity);
+            panelCustomerForm.Controls.Add(labelEmail);
+            panelCustomerForm.Controls.Add(textBoxEmail);
+            panelCustomerForm.Controls.Add(picIconSave);
+            panelCustomerForm.Controls.Add(buttonSave);
+            panelCustomerForm.Controls.Add(picIconEdit);
+            panelCustomerForm.Controls.Add(buttonEdit);
+            panelCustomerForm.Controls.Add(picIconDelete);
+            panelCustomerForm.Controls.Add(buttonDelete);
+            panelCustomerForm.Dock = DockStyle.Top;
+            panelCustomerForm.Location = new Point(16, 12);
+            panelCustomerForm.Name = "panelCustomerForm";
+            panelCustomerForm.Size = new Size(1131, 227);
+            panelCustomerForm.TabIndex = 0;
             // 
-            // lblNombre
+            // labelDocumentNumber
             // 
-            lblNombre.AutoSize = true;
-            lblNombre.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblNombre.Location = new Point(370, 16);
-            lblNombre.Name = "lblNombre";
-            lblNombre.Size = new Size(77, 21);
-            lblNombre.TabIndex = 4;
-            lblNombre.Text = "Nombre:";
+            labelDocumentNumber.AutoSize = true;
+            labelDocumentNumber.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelDocumentNumber.Location = new Point(20, 16);
+            labelDocumentNumber.Name = "labelDocumentNumber";
+            labelDocumentNumber.Size = new Size(149, 21);
+            labelDocumentNumber.TabIndex = 0;
+            labelDocumentNumber.Text = "DNI / Documento:";
             // 
-            // txtName
+            // textBoxDocumentNumber
             // 
-            txtName.BorderStyle = BorderStyle.FixedSingle;
-            txtName.Font = new Font("Segoe UI", 10F);
-            txtName.Location = new Point(370, 42);
-            txtName.Name = "txtName";
-            txtName.Size = new Size(200, 30);
-            txtName.TabIndex = 5;
+            textBoxDocumentNumber.BorderStyle = BorderStyle.FixedSingle;
+            textBoxDocumentNumber.Font = new Font("Segoe UI", 10F);
+            textBoxDocumentNumber.Location = new Point(20, 42);
+            textBoxDocumentNumber.Name = "textBoxDocumentNumber";
+            textBoxDocumentNumber.Size = new Size(160, 30);
+            textBoxDocumentNumber.TabIndex = 1;
             // 
-            // lblApellido
+            // labelTaxCode
             // 
-            lblApellido.AutoSize = true;
-            lblApellido.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblApellido.Location = new Point(585, 16);
-            lblApellido.Name = "lblApellido";
-            lblApellido.Size = new Size(79, 21);
-            lblApellido.TabIndex = 6;
-            lblApellido.Text = "Apellido:";
+            labelTaxCode.AutoSize = true;
+            labelTaxCode.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelTaxCode.Location = new Point(195, 16);
+            labelTaxCode.Name = "labelTaxCode";
+            labelTaxCode.Size = new Size(100, 21);
+            labelTaxCode.TabIndex = 2;
+            labelTaxCode.Text = "CUIL / CUIT:";
             // 
-            // txtLastName
+            // textBoxTaxCode
             // 
-            txtLastName.BorderStyle = BorderStyle.FixedSingle;
-            txtLastName.Font = new Font("Segoe UI", 10F);
-            txtLastName.Location = new Point(585, 42);
-            txtLastName.Name = "txtLastName";
-            txtLastName.Size = new Size(200, 30);
-            txtLastName.TabIndex = 7;
+            textBoxTaxCode.BorderStyle = BorderStyle.FixedSingle;
+            textBoxTaxCode.Font = new Font("Segoe UI", 10F);
+            textBoxTaxCode.Location = new Point(195, 42);
+            textBoxTaxCode.Name = "textBoxTaxCode";
+            textBoxTaxCode.Size = new Size(160, 30);
+            textBoxTaxCode.TabIndex = 3;
             // 
-            // lblFiscal
+            // labelFirstName
             // 
-            lblFiscal.AutoSize = true;
-            lblFiscal.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblFiscal.Location = new Point(20, 88);
-            lblFiscal.Name = "lblFiscal";
-            lblFiscal.Size = new Size(138, 21);
-            lblFiscal.TabIndex = 8;
-            lblFiscal.Text = "Condición Fiscal:";
+            labelFirstName.AutoSize = true;
+            labelFirstName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelFirstName.Location = new Point(370, 16);
+            labelFirstName.Name = "labelFirstName";
+            labelFirstName.Size = new Size(77, 21);
+            labelFirstName.TabIndex = 4;
+            labelFirstName.Text = "Nombre:";
             // 
-            // cboTaxCondition
+            // textBoxFirstName
             // 
-            cboTaxCondition.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboTaxCondition.Font = new Font("Segoe UI", 10F);
-            cboTaxCondition.Location = new Point(20, 113);
-            cboTaxCondition.Name = "cboTaxCondition";
-            cboTaxCondition.Size = new Size(160, 31);
-            cboTaxCondition.TabIndex = 9;
+            textBoxFirstName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxFirstName.Font = new Font("Segoe UI", 10F);
+            textBoxFirstName.Location = new Point(370, 42);
+            textBoxFirstName.Name = "textBoxFirstName";
+            textBoxFirstName.Size = new Size(200, 30);
+            textBoxFirstName.TabIndex = 5;
             // 
-            // lblTel
+            // labelLastName
             // 
-            lblTel.AutoSize = true;
-            lblTel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblTel.Location = new Point(195, 88);
-            lblTel.Name = "lblTel";
-            lblTel.Size = new Size(81, 21);
-            lblTel.TabIndex = 10;
-            lblTel.Text = "Teléfono:";
+            labelLastName.AutoSize = true;
+            labelLastName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelLastName.Location = new Point(585, 16);
+            labelLastName.Name = "labelLastName";
+            labelLastName.Size = new Size(79, 21);
+            labelLastName.TabIndex = 6;
+            labelLastName.Text = "Apellido:";
             // 
-            // txtPhone
+            // textBoxLastName
             // 
-            txtPhone.BorderStyle = BorderStyle.FixedSingle;
-            txtPhone.Font = new Font("Segoe UI", 10F);
-            txtPhone.Location = new Point(195, 113);
-            txtPhone.Name = "txtPhone";
-            txtPhone.Size = new Size(160, 30);
-            txtPhone.TabIndex = 11;
+            textBoxLastName.BorderStyle = BorderStyle.FixedSingle;
+            textBoxLastName.Font = new Font("Segoe UI", 10F);
+            textBoxLastName.Location = new Point(585, 42);
+            textBoxLastName.Name = "textBoxLastName";
+            textBoxLastName.Size = new Size(200, 30);
+            textBoxLastName.TabIndex = 7;
             // 
-            // lblDir
+            // labelTaxCondition
             // 
-            lblDir.AutoSize = true;
-            lblDir.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblDir.Location = new Point(370, 88);
-            lblDir.Name = "lblDir";
-            lblDir.Size = new Size(87, 21);
-            lblDir.TabIndex = 12;
-            lblDir.Text = "Dirección:";
+            labelTaxCondition.AutoSize = true;
+            labelTaxCondition.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelTaxCondition.Location = new Point(20, 88);
+            labelTaxCondition.Name = "labelTaxCondition";
+            labelTaxCondition.Size = new Size(138, 21);
+            labelTaxCondition.TabIndex = 8;
+            labelTaxCondition.Text = "Condición Fiscal:";
             // 
-            // txtAddress
+            // comboBoxTaxCondition
             // 
-            txtAddress.BorderStyle = BorderStyle.FixedSingle;
-            txtAddress.Font = new Font("Segoe UI", 10F);
-            txtAddress.Location = new Point(370, 113);
-            txtAddress.Name = "txtAddress";
-            txtAddress.Size = new Size(200, 30);
-            txtAddress.TabIndex = 13;
+            comboBoxTaxCondition.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxTaxCondition.Font = new Font("Segoe UI", 10F);
+            comboBoxTaxCondition.Location = new Point(20, 113);
+            comboBoxTaxCondition.Name = "comboBoxTaxCondition";
+            comboBoxTaxCondition.Size = new Size(160, 31);
+            comboBoxTaxCondition.TabIndex = 9;
             // 
-            // lblCiu
+            // labelPhone
             // 
-            lblCiu.AutoSize = true;
-            lblCiu.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblCiu.Location = new Point(585, 88);
-            lblCiu.Name = "lblCiu";
-            lblCiu.Size = new Size(68, 21);
-            lblCiu.TabIndex = 14;
-            lblCiu.Text = "Ciudad:";
+            labelPhone.AutoSize = true;
+            labelPhone.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelPhone.Location = new Point(195, 88);
+            labelPhone.Name = "labelPhone";
+            labelPhone.Size = new Size(81, 21);
+            labelPhone.TabIndex = 10;
+            labelPhone.Text = "Teléfono:";
             // 
-            // txtCity
+            // textBoxPhone
             // 
-            txtCity.BorderStyle = BorderStyle.FixedSingle;
-            txtCity.Font = new Font("Segoe UI", 10F);
-            txtCity.Location = new Point(585, 113);
-            txtCity.Name = "txtCity";
-            txtCity.Size = new Size(200, 30);
-            txtCity.TabIndex = 15;
+            textBoxPhone.BorderStyle = BorderStyle.FixedSingle;
+            textBoxPhone.Font = new Font("Segoe UI", 10F);
+            textBoxPhone.Location = new Point(195, 113);
+            textBoxPhone.Name = "textBoxPhone";
+            textBoxPhone.Size = new Size(160, 30);
+            textBoxPhone.TabIndex = 11;
             // 
-            // lblEmail
+            // labelAddress
             // 
-            lblEmail.AutoSize = true;
-            lblEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblEmail.Location = new Point(20, 158);
-            lblEmail.Name = "lblEmail";
-            lblEmail.Size = new Size(155, 21);
-            lblEmail.TabIndex = 16;
-            lblEmail.Text = "Correo electronico:";
+            labelAddress.AutoSize = true;
+            labelAddress.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelAddress.Location = new Point(370, 88);
+            labelAddress.Name = "labelAddress";
+            labelAddress.Size = new Size(87, 21);
+            labelAddress.TabIndex = 12;
+            labelAddress.Text = "Dirección:";
             // 
-            // txtEmail
+            // textBoxAddress
             // 
-            txtEmail.BorderStyle = BorderStyle.FixedSingle;
-            txtEmail.Font = new Font("Segoe UI", 10F);
-            txtEmail.Location = new Point(20, 182);
-            txtEmail.Name = "txtEmail";
-            txtEmail.Size = new Size(335, 30);
-            txtEmail.TabIndex = 17;
+            textBoxAddress.BorderStyle = BorderStyle.FixedSingle;
+            textBoxAddress.Font = new Font("Segoe UI", 10F);
+            textBoxAddress.Location = new Point(370, 113);
+            textBoxAddress.Name = "textBoxAddress";
+            textBoxAddress.Size = new Size(200, 30);
+            textBoxAddress.TabIndex = 13;
             // 
-            // btnSave
+            // labelCity
             // 
-            btnSave.BackColor = Color.FromArgb(16, 185, 129);
-            btnSave.FlatAppearance.BorderSize = 0;
-            btnSave.FlatStyle = FlatStyle.Flat;
-            btnSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(830, 16);
-            btnSave.Name = "btnSave";
-            btnSave.Size = new Size(286, 66);
-            btnSave.TabIndex = 18;
-            btnSave.Text = "GUARDAR CLIENTE";
-            btnSave.UseVisualStyleBackColor = false;
+            labelCity.AutoSize = true;
+            labelCity.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelCity.Location = new Point(585, 88);
+            labelCity.Name = "labelCity";
+            labelCity.Size = new Size(68, 21);
+            labelCity.TabIndex = 14;
+            labelCity.Text = "Ciudad:";
             // 
-            // btnEdit
+            // textBoxCity
             // 
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnEdit.Location = new Point(830, 88);
-            btnEdit.Name = "btnEdit";
-            btnEdit.Size = new Size(286, 56);
-            btnEdit.TabIndex = 19;
-            btnEdit.Text = "EDITAR CLIENTE";
-            btnEdit.UseVisualStyleBackColor = true;
+            textBoxCity.BorderStyle = BorderStyle.FixedSingle;
+            textBoxCity.Font = new Font("Segoe UI", 10F);
+            textBoxCity.Location = new Point(585, 113);
+            textBoxCity.Name = "textBoxCity";
+            textBoxCity.Size = new Size(200, 30);
+            textBoxCity.TabIndex = 15;
             // 
-            // btnDelete
+            // labelEmail
             // 
-            btnDelete.BackColor = Color.FromArgb(239, 68, 68);
-            btnDelete.FlatAppearance.BorderSize = 0;
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDelete.ForeColor = Color.White;
-            btnDelete.Location = new Point(830, 150);
-            btnDelete.Name = "btnDelete";
-            btnDelete.Size = new Size(286, 62);
-            btnDelete.TabIndex = 20;
-            btnDelete.Text = "ELIMINAR CLIENTE";
-            btnDelete.UseVisualStyleBackColor = false;
+            labelEmail.AutoSize = true;
+            labelEmail.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelEmail.Location = new Point(20, 158);
+            labelEmail.Name = "labelEmail";
+            labelEmail.Size = new Size(155, 21);
+            labelEmail.TabIndex = 16;
+            labelEmail.Text = "Correo electronico:";
+            // 
+            // textBoxEmail
+            // 
+            textBoxEmail.BorderStyle = BorderStyle.FixedSingle;
+            textBoxEmail.Font = new Font("Segoe UI", 10F);
+            textBoxEmail.Location = new Point(20, 182);
+            textBoxEmail.Name = "textBoxEmail";
+            textBoxEmail.Size = new Size(335, 30);
+            textBoxEmail.TabIndex = 17;
+            // 
+            // buttonSave
+            // 
+            buttonSave.BackColor = Color.FromArgb(16, 185, 129);
+            buttonSave.FlatAppearance.BorderSize = 0;
+            buttonSave.FlatStyle = FlatStyle.Flat;
+            buttonSave.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonSave.ForeColor = Color.White;
+            buttonSave.Location = new Point(830, 16);
+            buttonSave.Name = "buttonSave";
+            buttonSave.Size = new Size(286, 66);
+            buttonSave.TabIndex = 18;
+            buttonSave.Text = "GUARDAR";
+            buttonSave.UseVisualStyleBackColor = false;
+            // 
+            // buttonEdit
+            // 
+            buttonEdit.FlatStyle = FlatStyle.Flat;
+            buttonEdit.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonEdit.Location = new Point(830, 88);
+            buttonEdit.Name = "buttonEdit";
+            buttonEdit.Size = new Size(286, 56);
+            buttonEdit.TabIndex = 19;
+            buttonEdit.Text = "EDITAR";
+            buttonEdit.UseVisualStyleBackColor = true;
+            // 
+            // buttonDelete
+            // 
+            buttonDelete.BackColor = Color.FromArgb(239, 68, 68);
+            buttonDelete.FlatAppearance.BorderSize = 0;
+            buttonDelete.FlatStyle = FlatStyle.Flat;
+            buttonDelete.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonDelete.ForeColor = Color.White;
+            buttonDelete.Location = new Point(830, 150);
+            buttonDelete.Name = "buttonDelete";
+            buttonDelete.Size = new Size(286, 62);
+            buttonDelete.TabIndex = 20;
+            buttonDelete.Text = "ELIMINAR";
+            buttonDelete.UseVisualStyleBackColor = false;
             // 
             // FormCustomers
             // 
@@ -354,48 +414,56 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1163, 703);
-            Controls.Add(pnlMain);
-            Controls.Add(pnlHeader);
+            Controls.Add(panelMain);
+            Controls.Add(panelHeader);
             Name = "FormCustomers";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Registro de Clientes";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            pnlMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            Text = "Gestión de Clientes";
+            ((System.ComponentModel.ISupportInitialize)picIconExportPdf).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSave).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconEdit).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconDelete).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridViewCustomers).EndInit();
+            panelCustomerForm.ResumeLayout(false);
+            panelCustomerForm.PerformLayout();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblTitle;
-        private System.Windows.Forms.Button btnExportPdf;
-        private System.Windows.Forms.Panel pnlMain;
-        private System.Windows.Forms.Panel groupBox1;
-        private System.Windows.Forms.Label lblDni;
-        private System.Windows.Forms.TextBox txtDni;
-        private System.Windows.Forms.Label lblCuil;
-        private System.Windows.Forms.TextBox txtCuil;
-        private System.Windows.Forms.Label lblNombre;
-        private System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Label lblApellido;
-        private System.Windows.Forms.TextBox txtLastName;
-        private System.Windows.Forms.Label lblFiscal;
-        private System.Windows.Forms.ComboBox cboTaxCondition;
-        private System.Windows.Forms.Label lblTel;
-        private System.Windows.Forms.TextBox txtPhone;
-        private System.Windows.Forms.Label lblDir;
-        private System.Windows.Forms.TextBox txtAddress;
-        private System.Windows.Forms.Label lblCiu;
-        private System.Windows.Forms.TextBox txtCity;
-        private System.Windows.Forms.Label lblEmail;
-        private System.Windows.Forms.TextBox txtEmail;
-        private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnEdit;
-        private System.Windows.Forms.Button btnDelete;
-        private System.Windows.Forms.DataGridView dgvCustomers;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelTitle;
+        private System.Windows.Forms.Button buttonExportPdf;
+        private System.Windows.Forms.Panel panelMain;
+        private System.Windows.Forms.Panel panelCustomerForm;
+        private System.Windows.Forms.Label labelDocumentNumber;
+        private System.Windows.Forms.TextBox textBoxDocumentNumber;
+        private System.Windows.Forms.Label labelTaxCode;
+        private System.Windows.Forms.TextBox textBoxTaxCode;
+        private System.Windows.Forms.Label labelFirstName;
+        private System.Windows.Forms.TextBox textBoxFirstName;
+        private System.Windows.Forms.Label labelLastName;
+        private System.Windows.Forms.TextBox textBoxLastName;
+        private System.Windows.Forms.Label labelTaxCondition;
+        private System.Windows.Forms.ComboBox comboBoxTaxCondition;
+        private System.Windows.Forms.Label labelPhone;
+        private System.Windows.Forms.TextBox textBoxPhone;
+        private System.Windows.Forms.Label labelAddress;
+        private System.Windows.Forms.TextBox textBoxAddress;
+        private System.Windows.Forms.Label labelCity;
+        private System.Windows.Forms.TextBox textBoxCity;
+        private System.Windows.Forms.Label labelEmail;
+        private System.Windows.Forms.TextBox textBoxEmail;
+        private System.Windows.Forms.Button buttonSave;
+        private System.Windows.Forms.Button buttonEdit;
+        private System.Windows.Forms.Button buttonDelete;
+        private System.Windows.Forms.DataGridView dataGridViewCustomers;
+        private System.Windows.Forms.PictureBox picIconExportPdf;
+        private System.Windows.Forms.PictureBox picIconSave;
+        private System.Windows.Forms.PictureBox picIconEdit;
+        private System.Windows.Forms.PictureBox picIconDelete;
     }
 }

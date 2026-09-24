@@ -12,13 +12,13 @@ namespace CompriaxSystem.Infrastructure.Services
         /// <returns>Colección de nombres de impresoras.</returns>
         public IEnumerable<string> GetInstalledPrinters()
         {
-            var printers = new List<string>();
+            var installedPrinterNames = new List<string>();
 
             foreach (string printer in PrinterSettings.InstalledPrinters)
             {
-                printers.Add(printer);
+                installedPrinterNames.Add(printer);
             }
-            return printers;
+            return installedPrinterNames;
         }
 
         /// <summary>
@@ -37,29 +37,30 @@ namespace CompriaxSystem.Infrastructure.Services
             {
                 try
                 {
-                    string tempFile = Path.Combine(Path.GetTempPath(), $"ticket_print_{Guid.NewGuid()}.pdf");
-                    File.WriteAllBytes(tempFile, pdfBytes);
+                    string temporaryPdfFilePath = Path.Combine(Path.GetTempPath(), $"ticket_print_{Guid.NewGuid()}.pdf");
+                    File.WriteAllBytes(temporaryPdfFilePath, pdfBytes);
 
-                    var psi = new ProcessStartInfo
+                    var printProcessStartInfo = new ProcessStartInfo
                     {
-                        FileName = tempFile,
+                        FileName = temporaryPdfFilePath,
                         UseShellExecute = true
                     };
 
                     if (!string.IsNullOrWhiteSpace(printerName))
                     {
-                        psi.Verb = "printto";
-                        psi.Arguments = $"\"{printerName}\"";
+                        printProcessStartInfo.Verb = "printto";
+                        printProcessStartInfo.Arguments = $"\"{printerName}\"";
                     }
                     else
                     {
-                        psi.Verb = "print";
+                        printProcessStartInfo.Verb = "print";
                     }
 
-                    psi.CreateNoWindow = true;
-                    psi.WindowStyle = ProcessWindowStyle.Hidden;
+                    printProcessStartInfo.CreateNoWindow = true;
+                    printProcessStartInfo.WindowStyle = ProcessWindowStyle.Hidden;
 
-                    using var process = Process.Start(psi);
+                    using var printProcess = Process.Start(printProcessStartInfo);
+
                     return true;
                 }
                 catch

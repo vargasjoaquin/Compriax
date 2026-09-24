@@ -17,124 +17,166 @@
 
         private void InitializeComponent()
         {
-            pnlHeader = new Panel();
-            lblHeader = new Label();
-            gbGenerator = new Panel();
-            picBarcodePreview = new PictureBox();
-            lblSelectedProductName = new Label();
-            btnGenerate = new Button();
-            btnPrint = new Button();
-            btnDownload = new Button();
-            dgvProducts = new DataGridView();
-            pnlHeader.SuspendLayout();
-            gbGenerator.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)picBarcodePreview).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)dgvProducts).BeginInit();
+            picIconGenerateLabel = new PictureBox();
+            picIconPrintLabel = new PictureBox();
+            picIconSaveLabelImage = new PictureBox();
+            panelHeader = new Panel();
+            labelHeaderTitle = new Label();
+            panelLabelGeneratorCard = new Panel();
+            pictureBoxBarcodePreview = new PictureBox();
+            labelSelectedProductName = new Label();
+            buttonGenerateLabel = new Button();
+            buttonPrintLabel = new Button();
+            buttonSaveLabelImage = new Button();
+            dataGridViewProducts = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)picIconGenerateLabel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconPrintLabel).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSaveLabelImage).BeginInit();
+            panelHeader.SuspendLayout();
+            panelLabelGeneratorCard.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxBarcodePreview).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewProducts).BeginInit();
             SuspendLayout();
             // 
-            // pnlHeader
+            // picIconGenerateLabel
             // 
-            pnlHeader.BackColor = Color.FromArgb(15, 23, 42);
-            pnlHeader.Controls.Add(lblHeader);
-            pnlHeader.Dock = DockStyle.Top;
-            pnlHeader.Location = new Point(0, 0);
-            pnlHeader.Name = "pnlHeader";
-            pnlHeader.Size = new Size(1065, 56);
-            pnlHeader.TabIndex = 0;
+            picIconGenerateLabel.BackColor = Color.FromArgb(2, 132, 199);
+            picIconGenerateLabel.Cursor = Cursors.Hand;
+            picIconGenerateLabel.Image = Resources._088_generar_codigo;
+            picIconGenerateLabel.Location = new Point(710, 72);
+            picIconGenerateLabel.Name = "picIconGenerateLabel";
+            picIconGenerateLabel.Size = new Size(44, 82);
+            picIconGenerateLabel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconGenerateLabel.TabIndex = 99;
+            picIconGenerateLabel.TabStop = false;
             // 
-            // lblHeader
+            // picIconPrintLabel
             // 
-            lblHeader.AutoSize = true;
-            lblHeader.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
-            lblHeader.ForeColor = Color.White;
-            lblHeader.Location = new Point(16, 16);
-            lblHeader.Name = "lblHeader";
-            lblHeader.Size = new Size(723, 30);
-            lblHeader.TabIndex = 0;
-            lblHeader.Text = "GENERADOR DE ETIQUETAS DE GÓNDOLA Y CÓDIGO DE BARRAS";
+            picIconPrintLabel.BackColor = Color.FromArgb(16, 185, 129);
+            picIconPrintLabel.Cursor = Cursors.Hand;
+            picIconPrintLabel.Image = Resources._082_imprimir;
+            picIconPrintLabel.Location = new Point(772, 181);
+            picIconPrintLabel.Name = "picIconPrintLabel";
+            picIconPrintLabel.Size = new Size(51, 53);
+            picIconPrintLabel.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconPrintLabel.TabIndex = 99;
+            picIconPrintLabel.TabStop = false;
             // 
-            // gbGenerator
+            // picIconSaveLabelImage
             // 
-            gbGenerator.BackColor = Color.White;
-            gbGenerator.Controls.Add(picBarcodePreview);
-            gbGenerator.Controls.Add(lblSelectedProductName);
-            gbGenerator.Location = new Point(16, 72);
-            gbGenerator.Name = "gbGenerator";
-            gbGenerator.Size = new Size(663, 271);
-            gbGenerator.TabIndex = 1;
+            picIconSaveLabelImage.BackColor = Color.FromArgb(255, 255, 255);
+            picIconSaveLabelImage.Cursor = Cursors.Hand;
+            picIconSaveLabelImage.Image = Resources._077_guardar;
+            picIconSaveLabelImage.Location = new Point(789, 276);
+            picIconSaveLabelImage.Name = "picIconSaveLabelImage";
+            picIconSaveLabelImage.Size = new Size(44, 52);
+            picIconSaveLabelImage.SizeMode = PictureBoxSizeMode.Zoom;
+            picIconSaveLabelImage.TabIndex = 99;
+            picIconSaveLabelImage.TabStop = false;
             // 
-            // picBarcodePreview
+            // panelHeader
             // 
-            picBarcodePreview.BackColor = Color.FromArgb(248, 250, 252);
-            picBarcodePreview.BorderStyle = BorderStyle.FixedSingle;
-            picBarcodePreview.Location = new Point(16, 16);
-            picBarcodePreview.Name = "picBarcodePreview";
-            picBarcodePreview.Size = new Size(632, 172);
-            picBarcodePreview.SizeMode = PictureBoxSizeMode.Zoom;
-            picBarcodePreview.TabIndex = 0;
-            picBarcodePreview.TabStop = false;
+            panelHeader.BackColor = Color.FromArgb(15, 23, 42);
+            panelHeader.Controls.Add(labelHeaderTitle);
+            panelHeader.Dock = DockStyle.Top;
+            panelHeader.Location = new Point(0, 0);
+            panelHeader.Name = "panelHeader";
+            panelHeader.Size = new Size(1065, 56);
+            panelHeader.TabIndex = 0;
             // 
-            // lblSelectedProductName
+            // labelHeaderTitle
             // 
-            lblSelectedProductName.AutoSize = true;
-            lblSelectedProductName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            lblSelectedProductName.ForeColor = Color.FromArgb(2, 132, 199);
-            lblSelectedProductName.Location = new Point(16, 219);
-            lblSelectedProductName.Name = "lblSelectedProductName";
-            lblSelectedProductName.Size = new Size(246, 21);
-            lblSelectedProductName.TabIndex = 1;
-            lblSelectedProductName.Text = "Ningún producto seleccionado";
+            labelHeaderTitle.AutoSize = true;
+            labelHeaderTitle.Font = new Font("Segoe UI", 13F, FontStyle.Bold);
+            labelHeaderTitle.ForeColor = Color.White;
+            labelHeaderTitle.Location = new Point(16, 16);
+            labelHeaderTitle.Name = "labelHeaderTitle";
+            labelHeaderTitle.Size = new Size(450, 30);
+            labelHeaderTitle.TabIndex = 0;
+            labelHeaderTitle.Text = "GENERADOR DE ETIQUETAS";
             // 
-            // btnGenerate
+            // panelLabelGeneratorCard
             // 
-            btnGenerate.BackColor = Color.FromArgb(2, 132, 199);
-            btnGenerate.FlatAppearance.BorderSize = 0;
-            btnGenerate.FlatStyle = FlatStyle.Flat;
-            btnGenerate.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
-            btnGenerate.ForeColor = Color.White;
-            btnGenerate.Location = new Point(695, 72);
-            btnGenerate.Name = "btnGenerate";
-            btnGenerate.Size = new Size(351, 82);
-            btnGenerate.TabIndex = 2;
-            btnGenerate.Text = "GENERAR CODIGO DE BARRAS";
-            btnGenerate.UseVisualStyleBackColor = false;
+            panelLabelGeneratorCard.BackColor = Color.White;
+            panelLabelGeneratorCard.Controls.Add(pictureBoxBarcodePreview);
+            panelLabelGeneratorCard.Controls.Add(labelSelectedProductName);
+            panelLabelGeneratorCard.Location = new Point(16, 72);
+            panelLabelGeneratorCard.Name = "panelLabelGeneratorCard";
+            panelLabelGeneratorCard.Size = new Size(663, 271);
+            panelLabelGeneratorCard.TabIndex = 1;
             // 
-            // btnPrint
+            // pictureBoxBarcodePreview
             // 
-            btnPrint.BackColor = Color.FromArgb(16, 185, 129);
-            btnPrint.FlatAppearance.BorderSize = 0;
-            btnPrint.FlatStyle = FlatStyle.Flat;
-            btnPrint.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
-            btnPrint.ForeColor = Color.White;
-            btnPrint.Location = new Point(695, 160);
-            btnPrint.Name = "btnPrint";
-            btnPrint.Size = new Size(351, 95);
-            btnPrint.TabIndex = 3;
-            btnPrint.Text = "IMPRIMIR CODIGO DE BARRAS";
-            btnPrint.UseVisualStyleBackColor = false;
+            pictureBoxBarcodePreview.BackColor = Color.FromArgb(248, 250, 252);
+            pictureBoxBarcodePreview.BorderStyle = BorderStyle.FixedSingle;
+            pictureBoxBarcodePreview.Location = new Point(16, 16);
+            pictureBoxBarcodePreview.Name = "pictureBoxBarcodePreview";
+            pictureBoxBarcodePreview.Size = new Size(632, 172);
+            pictureBoxBarcodePreview.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBoxBarcodePreview.TabIndex = 0;
+            pictureBoxBarcodePreview.TabStop = false;
             // 
-            // btnDownload
+            // labelSelectedProductName
             // 
-            btnDownload.FlatStyle = FlatStyle.Flat;
-            btnDownload.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            btnDownload.Location = new Point(695, 261);
-            btnDownload.Name = "btnDownload";
-            btnDownload.Size = new Size(351, 82);
-            btnDownload.TabIndex = 4;
-            btnDownload.Text = "GUARDAR CODIGO DE BARRAS";
-            btnDownload.UseVisualStyleBackColor = true;
+            labelSelectedProductName.AutoSize = true;
+            labelSelectedProductName.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            labelSelectedProductName.ForeColor = Color.FromArgb(2, 132, 199);
+            labelSelectedProductName.Location = new Point(16, 219);
+            labelSelectedProductName.Name = "labelSelectedProductName";
+            labelSelectedProductName.Size = new Size(246, 21);
+            labelSelectedProductName.TabIndex = 1;
+            labelSelectedProductName.Text = "Ningún producto seleccionado";
             // 
-            // dgvProducts
+            // buttonGenerateLabel
             // 
-            dgvProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dgvProducts.BackgroundColor = Color.White;
-            dgvProducts.BorderStyle = BorderStyle.None;
-            dgvProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvProducts.Location = new Point(16, 349);
-            dgvProducts.Name = "dgvProducts";
-            dgvProducts.RowHeadersWidth = 51;
-            dgvProducts.Size = new Size(1030, 315);
-            dgvProducts.TabIndex = 5;
+            buttonGenerateLabel.BackColor = Color.FromArgb(2, 132, 199);
+            buttonGenerateLabel.FlatAppearance.BorderSize = 0;
+            buttonGenerateLabel.FlatStyle = FlatStyle.Flat;
+            buttonGenerateLabel.Font = new Font("Segoe UI", 9.5F, FontStyle.Bold);
+            buttonGenerateLabel.ForeColor = Color.White;
+            buttonGenerateLabel.Location = new Point(695, 72);
+            buttonGenerateLabel.Name = "buttonGenerateLabel";
+            buttonGenerateLabel.Size = new Size(351, 82);
+            buttonGenerateLabel.TabIndex = 2;
+            buttonGenerateLabel.Text = "GENERAR CODIGO DE BARRAS";
+            buttonGenerateLabel.UseVisualStyleBackColor = false;
+            // 
+            // buttonPrintLabel
+            // 
+            buttonPrintLabel.BackColor = Color.FromArgb(16, 185, 129);
+            buttonPrintLabel.FlatAppearance.BorderSize = 0;
+            buttonPrintLabel.FlatStyle = FlatStyle.Flat;
+            buttonPrintLabel.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            buttonPrintLabel.ForeColor = Color.White;
+            buttonPrintLabel.Location = new Point(695, 160);
+            buttonPrintLabel.Name = "buttonPrintLabel";
+            buttonPrintLabel.Size = new Size(351, 95);
+            buttonPrintLabel.TabIndex = 3;
+            buttonPrintLabel.Text = "IMPRIMIR";
+            buttonPrintLabel.UseVisualStyleBackColor = false;
+            // 
+            // buttonSaveLabelImage
+            // 
+            buttonSaveLabelImage.FlatStyle = FlatStyle.Flat;
+            buttonSaveLabelImage.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            buttonSaveLabelImage.Location = new Point(695, 261);
+            buttonSaveLabelImage.Name = "buttonSaveLabelImage";
+            buttonSaveLabelImage.Size = new Size(351, 82);
+            buttonSaveLabelImage.TabIndex = 4;
+            buttonSaveLabelImage.Text = "GUARDAR";
+            buttonSaveLabelImage.UseVisualStyleBackColor = true;
+            // 
+            // dataGridViewProducts
+            // 
+            dataGridViewProducts.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridViewProducts.BackgroundColor = Color.White;
+            dataGridViewProducts.BorderStyle = BorderStyle.None;
+            dataGridViewProducts.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewProducts.Location = new Point(16, 349);
+            dataGridViewProducts.Name = "dataGridViewProducts";
+            dataGridViewProducts.RowHeadersWidth = 51;
+            dataGridViewProducts.Size = new Size(1030, 315);
+            dataGridViewProducts.TabIndex = 5;
             // 
             // FormPrintPrices
             // 
@@ -142,34 +184,43 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(248, 250, 252);
             ClientSize = new Size(1065, 679);
-            Controls.Add(dgvProducts);
-            Controls.Add(btnDownload);
-            Controls.Add(btnPrint);
-            Controls.Add(btnGenerate);
-            Controls.Add(gbGenerator);
-            Controls.Add(pnlHeader);
+            Controls.Add(dataGridViewProducts);
+            Controls.Add(picIconSaveLabelImage);
+            Controls.Add(buttonSaveLabelImage);
+            Controls.Add(picIconPrintLabel);
+            Controls.Add(buttonPrintLabel);
+            Controls.Add(picIconGenerateLabel);
+            Controls.Add(buttonGenerateLabel);
+            Controls.Add(panelLabelGeneratorCard);
+            Controls.Add(panelHeader);
             Name = "FormPrintPrices";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Etiquetas de Precio";
-            pnlHeader.ResumeLayout(false);
-            pnlHeader.PerformLayout();
-            gbGenerator.ResumeLayout(false);
-            gbGenerator.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)picBarcodePreview).EndInit();
-            ((System.ComponentModel.ISupportInitialize)dgvProducts).EndInit();
+            Text = "Generador de Etiquetas de Precio";
+            ((System.ComponentModel.ISupportInitialize)picIconGenerateLabel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconPrintLabel).EndInit();
+            ((System.ComponentModel.ISupportInitialize)picIconSaveLabelImage).EndInit();
+            panelHeader.ResumeLayout(false);
+            panelHeader.PerformLayout();
+            panelLabelGeneratorCard.ResumeLayout(false);
+            panelLabelGeneratorCard.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBoxBarcodePreview).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridViewProducts).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel pnlHeader;
-        private System.Windows.Forms.Label lblHeader;
-        private System.Windows.Forms.Panel gbGenerator;
-        private System.Windows.Forms.PictureBox picBarcodePreview;
-        private System.Windows.Forms.Label lblSelectedProductName;
-        private System.Windows.Forms.Button btnGenerate;
-        private System.Windows.Forms.Button btnPrint;
-        private System.Windows.Forms.Button btnDownload;
-        private System.Windows.Forms.DataGridView dgvProducts;
+        private System.Windows.Forms.Panel panelHeader;
+        private System.Windows.Forms.Label labelHeaderTitle;
+        private System.Windows.Forms.Panel panelLabelGeneratorCard;
+        private System.Windows.Forms.PictureBox pictureBoxBarcodePreview;
+        private System.Windows.Forms.Label labelSelectedProductName;
+        private System.Windows.Forms.Button buttonGenerateLabel;
+        private System.Windows.Forms.Button buttonPrintLabel;
+        private System.Windows.Forms.Button buttonSaveLabelImage;
+        private System.Windows.Forms.DataGridView dataGridViewProducts;
+        private System.Windows.Forms.PictureBox picIconGenerateLabel;
+        private System.Windows.Forms.PictureBox picIconPrintLabel;
+        private System.Windows.Forms.PictureBox picIconSaveLabelImage;
     }
 }

@@ -1,5 +1,6 @@
 ﻿using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.WinFormsUI.Helpers;
 
 namespace CompriaxSystem.WinFormsUI
@@ -15,104 +16,121 @@ namespace CompriaxSystem.WinFormsUI
             _reportService = reportService;
             _documentService = documentService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonDownloadPdf, this.picIconDownloadPdf);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSearch, this.picIconSearch);
+            ButtonIconOverlayHelper.BindEvents(this.buttonClearSearch, this.picIconClearSearch);
+            
 
-            this.btnSearch.Click += async (s, e) => await ExecuteSearchAction();
-            this.btnClear.Click += (s, e) => ResetUI();
-            this.btnDownloadPdf.Click += async (s, e) => await ExecuteDownloadPdfAction();
+            this.buttonSearch.Click += async (s, e) => await ExecuteSearchSaleByDocumentNumberAsync();
+            this.buttonClearSearch.Click += (s, e) => ResetSaleDetailFormFields();
+            this.buttonDownloadPdf.Click += async (s, e) => await ExecuteDownloadAndOpenSaleReceiptPdfAsync();
 
-            this.txtSearchNumber.KeyDown += async (s, e) =>
+            this.textBoxSearchDocumentNumber.KeyDown += async (s, e) =>
             {
                 if (e.KeyCode == Keys.Enter)
                 {
                     e.SuppressKeyPress = true;
                     e.Handled = true;
-                    await ExecuteSearchAction();
+                    await ExecuteSearchSaleByDocumentNumberAsync();
                 }
             };
         }
 
-        public async void LoadByNumber(string docNumber)
+        public async void LoadSaleDetailsByDocumentNumber(string docNumber)
         {
-            txtSearchNumber.Text = docNumber;
-            await ExecuteSearchAction();
+            textBoxSearchDocumentNumber.Text = docNumber;
+            await ExecuteSearchSaleByDocumentNumberAsync();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de SearchSaleByDocumentNumber.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteSearchAction()
+        private async Task ExecuteSearchSaleByDocumentNumberAsync()
         {
-            if (string.IsNullOrWhiteSpace(txtSearchNumber.Text))
+            if (string.IsNullOrWhiteSpace(textBoxSearchDocumentNumber.Text))
             {
                 UIHelper.WarnMessage(this, "Debe ingresar un número de comprobante para realizar la búsqueda.", "Búsqueda Requerida");
-                txtSearchNumber.Focus();
+                textBoxSearchDocumentNumber.Focus();
                 return;
             }
 
             using (new WaitCursorHelper(this))
             {
-                _currentSale = await _reportService.GetSaleByDocumentNumberAsync(txtSearchNumber.Text.Trim());
+                _currentSale = await _reportService.GetSaleByDocumentNumberAsync(textBoxSearchDocumentNumber.Text.Trim());
 
                 if (_currentSale != null)
                 {
-                    SyncEntityToFields();
+                    SynchronizeSaleDetailsToFormFields();
                 }
                 else
                 {
-                    UIHelper.WarnMessage(this, $"No se encontró ninguna venta registrada con el comprobante N.° '{txtSearchNumber.Text.Trim()}'.", "Comprobante Inexistente");
-                    ResetUI();
+                    UIHelper.WarnMessage(this, $"No se encontró ninguna venta registrada con el comprobante N.° '{textBoxSearchDocumentNumber.Text.Trim()}'.", "Comprobante Inexistente");
+                    ResetSaleDetailFormFields();
                 }
             }
         }
+        /// <summary>
+        /// Sincroniza la entidad SaleDetailsToFormFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSaleDetailsToFormFields()
         {
             if (_currentSale == null)
                 return;
 
-            txtDate.Text = _currentSale.Date.ToString("dd/MM/yyyy HH:mm");
-            txtDocType.Text = _currentSale.DocumentTypeName;
-            txtUser.Text = _currentSale.CashierName;
-            txtClientDoc.Text = _currentSale.CustomerDoc;
+            textBoxIssueDate.Text = _currentSale.Date.ToString("dd/MM/yyyy HH:mm");
+            textBoxDocumentType.Text = _currentSale.DocumentTypeName;
+            textBoxCashierName.Text = _currentSale.CashierName;
+            textBoxCustomerDoc.Text = _currentSale.CustomerDoc;
 
-            if (!string.IsNullOrWhiteSpace(_currentSale.CustomerName) && _currentSale.CustomerName != "Consumidor Final")
+            if (!string.IsNullOrWhiteSpace(_currentSale.CustomerName) && _currentSale.CustomerName != TaxConstants.DEFAULT_TAX_CONDITION_NAME)
             {
-                var parts = _currentSale.CustomerName.Split(' ', 2);
-                txtClientName.Text = parts.Length > 0 ? parts[0] : _currentSale.CustomerName;
-                txtClientLastName.Text = parts.Length > 1 ? parts[1] : "";
+                var customerNameParts = _currentSale.CustomerName.Split(' ', 2);
+                textBoxCustomerFirstName.Text = customerNameParts.Length > 0 ? customerNameParts[0] : _currentSale.CustomerName;
+                textBoxCustomerLastName.Text = customerNameParts.Length > 1 ? customerNameParts[1] : "";
             }
             else
             {
-                txtClientName.Text = "Consumidor";
-                txtClientLastName.Text = "Final";
+                textBoxCustomerFirstName.Text = "Consumidor";
+                textBoxCustomerLastName.Text = "Final";
             }
 
-            dgvItems.DataSource = null;
-            dgvItems.AutoGenerateColumns = true;
-            dgvItems.DataSource = _currentSale.Items.ToList();
+            dataGridViewSaleItems.DataSource = null;
+            dataGridViewSaleItems.AutoGenerateColumns = true;
+            dataGridViewSaleItems.DataSource = _currentSale.Items.ToList();
 
-            UIHelper.FormatGrid(dgvItems);
+            UIHelper.FormatGrid(dataGridViewSaleItems);
 
-            txtTotal.Text = _currentSale.TotalAmount.ToString("C2");
-            txtPaid.Text = _currentSale.PaymentReceived.ToString("C2");
-            txtChange.Text = _currentSale.PaymentChange.ToString("C2");
+            textBoxTotalAmount.Text = _currentSale.TotalAmount.ToString("C2");
+            textBoxAmountPaid.Text = _currentSale.PaymentReceived.ToString("C2");
+            textBoxChangeAmount.Text = _currentSale.PaymentChange.ToString("C2");
         }
 
-        private void ResetUI()
+        private void ResetSaleDetailFormFields()
         {
             _currentSale = null;
             UIHelper.CleanControls(this);
-            txtSearchNumber.Clear();
-            dgvItems.DataSource = null;
-            txtTotal.Text = "$ 0.00";
-            txtPaid.Text = "$ 0.00";
-            txtChange.Text = "$ 0.00";
-            txtSearchNumber.Focus();
+            textBoxSearchDocumentNumber.Clear();
+            dataGridViewSaleItems.DataSource = null;
+            textBoxTotalAmount.Text = "$ 0.00";
+            textBoxAmountPaid.Text = "$ 0.00";
+            textBoxChangeAmount.Text = "$ 0.00";
+            textBoxSearchDocumentNumber.Focus();
         }
+        /// <summary>
+        /// Ejecuta de manera asincrona la accion de DownloadAndOpenSaleReceiptPdf.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la operacion.</returns>
 
-        private async Task ExecuteDownloadPdfAction()
+        private async Task ExecuteDownloadAndOpenSaleReceiptPdfAsync()
         {
             if (_currentSale == null)
             {
                 UIHelper.WarnMessage(this, "Primero debe buscar y cargar un comprobante de venta en pantalla para poder descargarlo en PDF.", "Selección Requerida");
-                txtSearchNumber.Focus();
+                textBoxSearchDocumentNumber.Focus();
                 return;
             }
 
@@ -120,10 +138,10 @@ namespace CompriaxSystem.WinFormsUI
             {
                 try
                 {
-                    byte[] pdfBytes = await _documentService.GenerateSaleReceiptAsync(_currentSale, _currentSale.DocumentNumber, _currentSale.CashierName);
-                    string fileName = $"FacturaVenta_{_currentSale.DocumentNumber}_{DateTime.Now:yyyyMMdd}.pdf";
+                    byte[] saleReceiptPdfBytes = await _documentService.GenerateSaleReceiptAsync(_currentSale, _currentSale.DocumentNumber, _currentSale.CashierName);
+                    string saleReceiptFileName = $"FacturaVenta_{_currentSale.DocumentNumber}_{DateTime.Now:yyyyMMdd}.pdf";
 
-                    await FileExportHelper.SaveAndOpenPdfAsync(this, pdfBytes, fileName, "Descargar Comprobante de Venta");
+                    await FileExportHelper.SaveAndOpenPdfAsync(this, saleReceiptPdfBytes, saleReceiptFileName, "Descargar Comprobante de Venta");
                 }
                 catch (Exception ex)
                 {
@@ -133,3 +151,14 @@ namespace CompriaxSystem.WinFormsUI
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+

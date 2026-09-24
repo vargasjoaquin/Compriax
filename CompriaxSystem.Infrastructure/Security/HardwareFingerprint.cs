@@ -13,19 +13,22 @@ namespace CompriaxSystem.Infrastructure.Security
         /// <returns>Una cadena hexadecimal SHA256 que identifica unívocamente a la máquina.</returns>
         public static string GetMachineHardwareId()
         {
-            var sb = new StringBuilder();
-            sb.Append(GetWmiProperty("Win32_Processor", "ProcessorId"));
-            sb.Append(GetWmiProperty("Win32_BaseBoard", "SerialNumber"));
-            sb.Append(GetWmiProperty("Win32_DiskDrive", "SerialNumber"));
+            var hardwareIdentifierBuilder = new StringBuilder();
 
-            string raw = sb.ToString();
-            if (string.IsNullOrWhiteSpace(raw))
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_Processor", "ProcessorId"));
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_BaseBoard", "SerialNumber"));
+            hardwareIdentifierBuilder.Append(GetWmiProperty("Win32_DiskDrive", "SerialNumber"));
+
+            string hardwareIdentifierSource = hardwareIdentifierBuilder.ToString();
+            
+            if (string.IsNullOrWhiteSpace(hardwareIdentifierSource))
             {
-                raw = Environment.MachineName + Environment.UserName + Environment.OSVersion;
+                hardwareIdentifierSource = Environment.MachineName + Environment.UserName + Environment.OSVersion;
             }
 
-            byte[] hash = SHA256.HashData(Encoding.UTF8.GetBytes(raw));
-            return Convert.ToHexString(hash);
+            byte[] hardwareHash = SHA256.HashData(Encoding.UTF8.GetBytes(hardwareIdentifierSource));
+            
+            return Convert.ToHexString(hardwareHash);
         }
 
         /// <summary>
@@ -41,12 +44,12 @@ namespace CompriaxSystem.Infrastructure.Security
             {
                 using var searcher = new ManagementObjectSearcher($"SELECT {propertyName} FROM {wmiClass}");
                 
-                foreach (var item in searcher.Get())
+                foreach (var hardwareItem in searcher.Get())
                 {
-                    var value = item[propertyName]?.ToString();
+                    var propertyValue = hardwareItem[propertyName]?.ToString();
                     
-                    if (!string.IsNullOrWhiteSpace(value))
-                        return value.Trim();
+                    if (!string.IsNullOrWhiteSpace(propertyValue))
+                        return propertyValue.Trim();
                 }
             }
             catch 

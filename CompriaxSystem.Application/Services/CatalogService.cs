@@ -3,16 +3,13 @@ using CompriaxSystem.Application.Common;
 using CompriaxSystem.Application.DTOs;
 using CompriaxSystem.Application.Interfaces.Repositories;
 using CompriaxSystem.Application.Interfaces.Services;
+using CompriaxSystem.Domain.Constants;
 using CompriaxSystem.Domain.Entities;
 using FluentValidation;
 
 namespace CompriaxSystem.Application.Services
 {
-    public class CatalogService(
-        IUnitOfWork unitOfWork,
-        ICurrentUserService currentUser,
-        IMapper mapper,
-        IValidator<CategoryDto> categoryValidator) : ICatalogService
+    public class CatalogService(IUnitOfWork unitOfWork, ICurrentUserService currentUser, IMapper mapper, IValidator<CategoryDto> categoryValidator) : ICatalogService
     {
         /// <summary>
         /// Obtiene todas las categorías activas.
@@ -20,8 +17,8 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Una colección de DTOs de categorías activas.</returns>
         public async Task<IEnumerable<CategoryDto>> GetActiveCategoriesAsync()
         {
-            var categories = await unitOfWork.Categories.GetAllAsync();
-            return mapper.Map<IEnumerable<CategoryDto>>(categories);
+            var activeCategories = await unitOfWork.Categories.GetAllAsync();
+            return mapper.Map<IEnumerable<CategoryDto>>(activeCategories);
         }
 
         /// <summary>
@@ -43,15 +40,17 @@ namespace CompriaxSystem.Application.Services
         public async Task<OperationResult> CreateCategoryAsync(CategoryDto dto)
         {
             var validation = await categoryValidator.ValidateAsync(dto);
-
             if (!validation.IsValid)
                 return validation.ToResult();
 
             var category = mapper.Map<Category>(dto);
+            category.CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
+            category.CreatedAt = DateTime.UtcNow;
+
             await unitOfWork.Categories.AddAsync(category);
 
             return await unitOfWork.CompleteAsync()
-                ? OperationResult.Ok("Categoría creada exitosamente.")
+                ? OperationResult.Ok("Categoría­ creada exitosamente.")
                 : OperationResult.Failure("Error al guardar la categoría.");
         }
 
@@ -62,12 +61,20 @@ namespace CompriaxSystem.Application.Services
         /// <returns>Resultado de la actualización.</returns>
         public async Task<OperationResult> UpdateCategoryAsync(CategoryDto dto)
         {
-            var category = await unitOfWork.Categories.GetByIdAsync(dto.Id);
+            var validation = await categoryValidator.ValidateAsync(dto);
+            
+            if (!validation.IsValid)
+                return validation.ToResult();
 
+            var category = await unitOfWork.Categories.GetByIdAsync(dto.Id);
+            
             if (category == null)
                 return OperationResult.Failure("Categoría no encontrada.");
 
             mapper.Map(dto, category);
+            category.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
+            category.LastUpdatedAt = DateTime.UtcNow;
+
             unitOfWork.Categories.Update(category);
 
             return await unitOfWork.CompleteAsync()
@@ -87,14 +94,14 @@ namespace CompriaxSystem.Application.Services
             if (category == null)
                 return OperationResult.Failure("Categoría no encontrada.");
 
-            var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
-            bool hasActiveProducts = allProducts.Any(p => p.CategoryId == id && !p.IsDeleted);
+            var products = await unitOfWork.Products.GetAllWithDetailsAsync();
+            bool hasActiveProducts = products.Any(p => p.CategoryId == id && !p.IsDeleted);
 
             if (hasActiveProducts)
                 return OperationResult.Failure("No se puede eliminar la categoría porque tiene productos activos vinculados. Reasigne o elimine los productos primero.");
 
             category.IsDeleted = true;
-            category.LastUpdatedBy = currentUser.CurrentUser?.Username;
+            category.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
             category.LastUpdatedAt = DateTime.UtcNow;
 
             unitOfWork.Categories.Update(category);
@@ -108,26 +115,43 @@ namespace CompriaxSystem.Application.Services
         /// Obtiene el listado de marcas registradas.
         /// </summary>
         /// <returns>Colección de entidades de marca.</returns>
-        public async Task<IEnumerable<Brand>> GetBrandsAsync() => await unitOfWork.Brands.GetAllAsync();
-
-        /// <summary>
-        /// Registra una nueva marca en el sistema.
-        /// </summary>
-        /// <param name="name">Nombre de la marca.</param>
-        /// <returns>Resultado de la creación.</returns>
-        public async Task<Brand?> GetBrandByIdAsync(int id) => await unitOfWork.Brands.GetByIdAsync(id);
-
-        /// <summary>
-        /// Registra una nueva marca en el sistema.
-        /// </summary>
-        /// <param name="name">Nombre de la marca.</param>
-        /// <returns>Resultado de la creación.</returns>
-        public async Task<OperationResult> CreateBrandAsync(string name)
+        public async Task<IEnumerable<Brand>> GetBrandsAsync()
         {
-            if (string.IsNullOrWhiteSpace(name))
+            return await unitOfWork.Brands.GetAllAsync();
+        }
+
+        /// <summary>
+        /// Registra una nueva marca en el sistema.
+        /// </summary>
+        /// <param name="name">Nombre de la marca.</param>
+        /// <returns>Resultado de la creación.</returns>
+        public async Task<Brand?> GetBrandByIdAsync(int id)
+        {
+            return await unitOfWork.Brands.GetByIdAsync(id);
+        }
+
+        /// <summary>
+        /// Registra una nueva marca en el sistema.
+        /// </summary>
+        /// <param name="name">Nombre de la marca.</param>
+        /// <returns>Resultado de la creación.</returns>
+        public async Task<OperationResult> CreateBrandAsync(string brandName)
+        {
+            if (string.IsNullOrWhiteSpace(brandName))
                 return OperationResult.Failure("El nombre de la marca es obligatorio y no puede estar vacío.");
 
-            var brand = new Brand { Name = name.Trim() };
+            string normalizedBrandName = brandName.Trim();
+            
+            if (normalizedBrandName.Length > 50)
+                return OperationResult.Failure("El nombre de la marca no puede superar los 50 caracteres.");
+
+            var brand = new Brand 
+            { 
+                Name = normalizedBrandName,
+                CreatedAt = DateTime.UtcNow,
+                CreatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME
+            };
+            
             await unitOfWork.Brands.AddAsync(brand);
 
             return await unitOfWork.CompleteAsync()
@@ -141,17 +165,25 @@ namespace CompriaxSystem.Application.Services
         /// <param name="id">Id de la marca.</param>
         /// <param name="name">Nombre de la marca.</param>
         /// <returns>Resultado de la actualización.</returns>
-        public async Task<OperationResult> UpdateBrandAsync(int id, string name)
+        public async Task<OperationResult> UpdateBrandAsync(int id, string brandName)
         {
-            if (string.IsNullOrWhiteSpace(name))
+            if (string.IsNullOrWhiteSpace(brandName))
                 return OperationResult.Failure("El nombre de la marca es obligatorio y no puede estar vacío.");
+
+            string normalizedBrandName = brandName.Trim();
+            
+            if (normalizedBrandName.Length > 50)
+                return OperationResult.Failure("El nombre de la marca no puede superar los 50 caracteres.");
 
             var brand = await unitOfWork.Brands.GetByIdAsync(id);
 
             if (brand == null)
                 return OperationResult.Failure("La marca que intenta actualizar no fue encontrada.");
 
-            brand.Name = name.Trim();
+            brand.Name = normalizedBrandName;
+            brand.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
+            brand.LastUpdatedAt = DateTime.UtcNow;
+
             unitOfWork.Brands.Update(brand);
 
             return await unitOfWork.CompleteAsync()
@@ -171,14 +203,15 @@ namespace CompriaxSystem.Application.Services
             if (brand == null)
                 return OperationResult.Failure("Marca no encontrada.");
 
-            var allProducts = await unitOfWork.Products.GetAllWithDetailsAsync();
-            bool hasActiveProducts = allProducts.Any(p => p.BrandId == id && !p.IsDeleted);
+            var products = await unitOfWork.Products.GetAllWithDetailsAsync();
+
+            bool hasActiveProducts = products.Any(p => p.BrandId == id && !p.IsDeleted);
 
             if (hasActiveProducts)
                 return OperationResult.Failure("No se puede eliminar la marca porque tiene productos activos vinculados.");
 
             brand.IsDeleted = true;
-            brand.LastUpdatedBy = currentUser.CurrentUser?.Username;
+            brand.LastUpdatedBy = currentUser.CurrentUser?.Username ?? RoleConstants.DEFAULT_ADMIN_USERNAME;
             brand.LastUpdatedAt = DateTime.UtcNow;
 
             unitOfWork.Brands.Update(brand);

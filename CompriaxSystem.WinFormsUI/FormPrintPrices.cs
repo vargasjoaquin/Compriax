@@ -18,38 +18,51 @@ namespace CompriaxSystem.WinFormsUI
             _productService = productService;
             _barcodeService = barcodeService;
             InitializeComponent();
+            UIThemeHelper.ApplyFormStyle(this);
+            
+            ButtonIconOverlayHelper.BindEvents(this.buttonGenerateLabel, this.picIconGenerateLabel);
+            ButtonIconOverlayHelper.BindEvents(this.buttonPrintLabel, this.picIconPrintLabel);
+            ButtonIconOverlayHelper.BindEvents(this.buttonSaveLabelImage, this.picIconSaveLabelImage);
+            
 
-            this.Load += async (s, e) => await InitializeFormAsync();
-            this.dgvProducts.CellClick += (s, e) => SyncEntityToFields();
-            this.btnGenerate.Click += (s, e) => ExecuteGenerateLabelAction();
-            this.btnPrint.Click += (s, e) => ExecutePrintAction();
-            this.btnDownload.Click += (s, e) => ExecuteDownloadImageAction();
+            this.Load += async (s, e) => await InitializePriceLabelsCatalogAsync();
+            this.dataGridViewProducts.CellClick += (s, e) => SynchronizeSelectedProductToLabelFields();
+            this.buttonGenerateLabel.Click += (s, e) => ExecuteGenerateProductShelfLabel();
+            this.buttonPrintLabel.Click += (s, e) => ExecutePrintShelfLabel();
+            this.buttonSaveLabelImage.Click += (s, e) => ExecuteSaveShelfLabelAsImageAsync();
         }
+        /// <summary>
+        /// Inicializa asincronamente los origenes de datos, catalogos y controles visuales del formulario.
+        /// </summary>
+        /// <returns>Una tarea asincrona que representa la inicializacion completa.</returns>
 
-        public async Task InitializeFormAsync()
+        public async Task InitializePriceLabelsCatalogAsync()
         {
             using (new WaitCursorHelper(this))
             {
-                var data = await _productService.GetProductListAsync();
-                dgvProducts.DataSource = null;
-                dgvProducts.DataSource = data.ToList();
-                CustomizeGridColumns();
+                var productsCatalogList = await _productService.GetProductListAsync();
+                dataGridViewProducts.DataSource = null;
+                dataGridViewProducts.DataSource = productsCatalogList.ToList();
+                ConfigureProductsGridColumns();
 
-                UIHelper.AttachManagedSelection(this, dgvProducts, SyncEntityToFields, ResetUI);
-                ResetUI();
+                UIHelper.AttachManagedSelection(this, dataGridViewProducts, SynchronizeSelectedProductToLabelFields, ResetLabelGeneratorFields);
+                ResetLabelGeneratorFields();
             }
         }
+        /// <summary>
+        /// Sincroniza la entidad SelectedProductToLabelFields seleccionada con los campos de entrada de la interfaz.
+        /// </summary>
 
-        private void SyncEntityToFields()
+        private void SynchronizeSelectedProductToLabelFields()
         {
-            if (dgvProducts.CurrentRow == null)
+            if (dataGridViewProducts.CurrentRow == null)
                 return;
 
-            _selectedProduct = (ProductDto)dgvProducts.CurrentRow.DataBoundItem;
-            lblSelectedProductName.Text = $"SELECCIONADO: {_selectedProduct.Name} ({_selectedProduct.Barcode})";
+            _selectedProduct = (ProductDto)dataGridViewProducts.CurrentRow.DataBoundItem;
+            labelSelectedProductName.Text = $"SELECCIONADO: {_selectedProduct.Name} ({_selectedProduct.Barcode})";
         }
 
-        private void ExecuteGenerateLabelAction()
+        private void ExecuteGenerateProductShelfLabel()
         {
             if (_selectedProduct == null)
             {
@@ -77,31 +90,33 @@ namespace CompriaxSystem.WinFormsUI
                         g.DrawRectangle(borderPen, 1, 1, labelWidth - 3, labelHeight - 3);
                     }
 
-                    string productName = _selectedProduct.Name.Trim();
-                    if (productName.Length > 32) productName = productName.Substring(0, 32) + "...";
+                    string truncatedProductName = _selectedProduct.Name.Trim();
+
+                    if (truncatedProductName.Length > 32)
+                        truncatedProductName = truncatedProductName.Substring(0, 32) + "...";
 
                     using (Font titleFont = new Font("Segoe UI", 12, FontStyle.Bold))
                     using (StringFormat sfCenter = new StringFormat { Alignment = StringAlignment.Center })
                     {
                         Rectangle titleRect = new Rectangle(10, 15, labelWidth - 20, 30);
-                        g.DrawString(productName.ToUpper(), titleFont, Brushes.Black, titleRect, sfCenter);
+                        g.DrawString(truncatedProductName.ToUpper(), titleFont, Brushes.Black, titleRect, sfCenter);
                     }
 
                     int barcodeWidth = 380;
                     int barcodeHeight = 90;
-                    using (Image barcodeImg = _barcodeService.GenerateBarcode(_selectedProduct.Barcode, barcodeWidth, barcodeHeight))
+                    using (Image generatedBarcodeImage = _barcodeService.GenerateBarcode(_selectedProduct.Barcode, barcodeWidth, barcodeHeight))
                     {
                         int barcodeX = (labelWidth - barcodeWidth) / 2;
                         int barcodeY = 55;
-                        g.DrawImage(barcodeImg, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
+                        g.DrawImage(generatedBarcodeImage, barcodeX, barcodeY, barcodeWidth, barcodeHeight);
                     }
 
                     using (Font priceFont = new Font("Segoe UI", 28, FontStyle.Bold))
                     using (StringFormat sfPrice = new StringFormat { Alignment = StringAlignment.Center })
                     {
                         Rectangle priceRect = new Rectangle(10, 160, labelWidth - 20, 50);
-                        string priceText = _selectedProduct.SellPrice.ToString("C2");
-                        g.DrawString(priceText, priceFont, Brushes.DarkBlue, priceRect, sfPrice);
+                        string formattedPriceText = _selectedProduct.SellPrice.ToString("C2");
+                        g.DrawString(formattedPriceText, priceFont, Brushes.DarkBlue, priceRect, sfPrice);
                     }
 
                     using (Font tagFont = new Font("Segoe UI", 7, FontStyle.Italic))
@@ -110,12 +125,12 @@ namespace CompriaxSystem.WinFormsUI
                     }
                 }
 
-                ImageHelper.Clear(picBarcodePreview);
-                picBarcodePreview.Image = (Bitmap)_generatedLabel.Clone();
+                ImageHelper.Clear(pictureBoxBarcodePreview);
+                pictureBoxBarcodePreview.Image = (Bitmap)_generatedLabel.Clone();
             }
         }
 
-        private void ExecutePrintAction()
+        private void ExecutePrintShelfLabel()
         {
             if (_generatedLabel == null)
             {
@@ -123,8 +138,8 @@ namespace CompriaxSystem.WinFormsUI
                 return;
             }
 
-            PrintDocument pd = new PrintDocument();
-            pd.PrintPage += (s, ev) =>
+            PrintDocument printDocument = new PrintDocument();
+            printDocument.PrintPage += (s, ev) =>
             {
                 if (_generatedLabel != null && ev.Graphics != null)
                 {
@@ -140,12 +155,12 @@ namespace CompriaxSystem.WinFormsUI
                 }
             };
 
-            using PrintDialog diag = new PrintDialog { Document = pd };
-            if (diag.ShowDialog() == DialogResult.OK)
-                pd.Print();
+            using PrintDialog printDialog = new PrintDialog { Document = printDocument };
+            if (printDialog.ShowDialog() == DialogResult.OK)
+                printDocument.Print();
         }
 
-        private async void ExecuteDownloadImageAction()
+        private async void ExecuteSaveShelfLabelAsImageAsync()
         {
             if (_generatedLabel == null)
             {
@@ -155,32 +170,43 @@ namespace CompriaxSystem.WinFormsUI
 
             using var ms = new MemoryStream();
             _generatedLabel.Save(ms, System.Drawing.Imaging.ImageFormat.Png);
-            byte[] imageBytes = ms.ToArray();
+            byte[] encodedPngBytes = ms.ToArray();
 
             string defaultFileName = $"Etiqueta_{_selectedProduct?.Barcode ?? "Codigo"}.png";
-            await FileExportHelper.SaveAndOpenFileAsync(this, imageBytes, defaultFileName, "Imagen PNG (*.png)|*.png|Imagen JPG (*.jpg)|*.jpg", "Guardar Etiqueta de Precio");
+            await FileExportHelper.SaveAndOpenFileAsync(this, encodedPngBytes, defaultFileName, "Imagen PNG (*.png)|*.png|Imagen JPG (*.jpg)|*.jpg", "Guardar Etiqueta de Precio");
         }
 
-        private void CustomizeGridColumns()
+        private void ConfigureProductsGridColumns()
         {
-            UIHelper.FormatGrid(dgvProducts);
+            UIHelper.FormatGrid(dataGridViewProducts);
 
             string[] columnsToHide = { "CurrentStock", "MinimumStock", "StockStatus", "BuyPrice" };
             foreach (var col in columnsToHide)
             {
-                if (dgvProducts.Columns.Contains(col))
-                    dgvProducts.Columns[col].Visible = false;
+                if (dataGridViewProducts.Columns.Contains(col))
+                    dataGridViewProducts.Columns[col].Visible = false;
             }
         }
 
-        private void ResetUI()
+        private void ResetLabelGeneratorFields()
         {
             _selectedProduct = null;
             _generatedLabel?.Dispose();
             _generatedLabel = null;
 
-            ImageHelper.Clear(picBarcodePreview);
-            lblSelectedProductName.Text = "Ningún producto seleccionado";
+            ImageHelper.Clear(pictureBoxBarcodePreview);
+            labelSelectedProductName.Text = "Ningún producto seleccionado";
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
